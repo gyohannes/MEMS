@@ -1,0 +1,54 @@
+<div class="header">
+  <h2>
+    Procurement Request
+  </h2>
+</div>
+<div class="body">
+  <p>
+    <label>Organization structure:</label>
+    <%= @procurement_request.organization_structure %>
+  </p>
+
+  <p>
+    <label>Facility:</label>
+    <%= @procurement_request.facility %>
+  </p>
+
+  <p>
+    <label>User:</label>
+    <%= @procurement_request.user %>
+  </p>
+
+  <p>
+    <label>Contact phone:</label>
+    <%= @procurement_request.contact_phone %>
+  </p>
+
+  <p>
+    <label>Contact email:</label>
+    <%= @procurement_request.contact_email %>
+  </p>
+
+  <p>
+    <label>Request to:</label>
+    <%= @procurement_request.request_to %>
+  </p>
+  <label>Equipments</label>
+  <table class="table">
+    <tr>
+      <th>Equipment</th>
+      <th>Specification</th>
+      <th>Quanitity</th>
+    </tr>
+    <% @procurement_request.procurement_request_equipments.each do |eq| %>
+      <tr>
+        <td><%= eq.equipment_name %></td>
+        <td><%= eq.specification %></td>
+        <td><%= eq.quantity %></td>
+      </tr>
+    <% end %>
+  </table>
+<hr/>
+        <%= link_to 'Edit', edit_procurement_request_path(@procurement_request) %> |
+        <%= link_to 'Back', procurement_requests_path %>
+</div>

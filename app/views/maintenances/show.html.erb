@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Equipment:</strong>
+  <%= @maintenance.equipment %>
+</p>
+
+<p>
+  <strong>Maintenance type:</strong>
+  <%= @maintenance.maintenance_type %>
+</p>
+
+<p>
+  <strong>Problem:</strong>
+  <%= @maintenance.problem %>
+</p>
+
+<p>
+  <strong>Action taken:</strong>
+  <%= @maintenance.action_taken %>
+</p>
+
+<p>
+  <strong>Spare parts used:</strong>
+  <%= @maintenance.spare_parts_used %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @maintenance.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @maintenance.end_date %>
+</p>
+
+<p>
+  <strong>Maintenance cost:</strong>
+  <%= @maintenance.maintenance_cost %>
+</p>
+
+<p>
+  <strong>Maintained by:</strong>
+  <%= @maintenance.maintained_by %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @maintenance.contact_address %>
+</p>
+
+<p>
+  <strong>Preventive maintenance date:</strong>
+  <%= @maintenance.preventive_maintenance_date %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @maintenance.note %>
+</p>
+
+<%= link_to 'Edit', edit_maintenance_path(@maintenance) %> |
+<%= link_to 'Back', maintenances_path %>

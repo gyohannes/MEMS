@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @spare_part_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @spare_part_request.facility %>
+</p>
+
+<p>
+  <strong>Spare part name:</strong>
+  <%= @spare_part_request.spare_part_name %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @spare_part_request.model %>
+</p>
+
+<p>
+  <strong>Volts ampere:</strong>
+  <%= @spare_part_request.volts_ampere %>
+</p>
+
+<p>
+  <strong>Power requirement:</strong>
+  <%= @spare_part_request.power_requirement %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @spare_part_request.quantity %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @spare_part_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @spare_part_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @spare_part_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Request to institution:</strong>
+  <%= @spare_part_request.request_to_institution %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @spare_part_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @spare_part_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_spare_part_request_path(@spare_part_request) %> |
+<%= link_to 'Back', spare_part_requests_path %>

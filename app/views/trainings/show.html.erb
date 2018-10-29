@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @training.contact %>
+</p>
+
+<p>
+  <strong>Equipment name:</strong>
+  <%= @training.equipment_name %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @training.model %>
+</p>
+
+<p>
+  <strong>Training type:</strong>
+  <%= @training.training_type %>
+</p>
+
+<p>
+  <strong>Trainer name:</strong>
+  <%= @training.trainer_name %>
+</p>
+
+<p>
+  <strong>Training sponsor:</strong>
+  <%= @training.training_sponsor %>
+</p>
+
+<p>
+  <strong>Training date:</strong>
+  <%= @training.training_date %>
+</p>
+
+<%= link_to 'Edit', edit_training_path(@training) %> |
+<%= link_to 'Back', trainings_path %>

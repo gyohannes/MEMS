@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @disposal_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @disposal_request.facility %>
+</p>
+
+<p>
+  <strong>Equipment:</strong>
+  <%= @disposal_request.equipment %>
+</p>
+
+<p>
+  <strong>Disposal description:</strong>
+  <%= @disposal_request.disposal_description %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @disposal_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @disposal_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @disposal_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @disposal_request.contact_address %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @disposal_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @disposal_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_disposal_request_path(@disposal_request) %> |
+<%= link_to 'Back', disposal_requests_path %>

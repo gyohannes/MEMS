@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization_structure: one
+  facility: one
+  toolkit_name: MyString
+  toolkit_description: MyText
+  quantity: 1.5
+  requested_to: MyString
+  request_to_org_structure: 1
+  request_to_facility: 1
+  requested_by: MyString
+  contact_address: MyText
+  request_date: 2018-09-05
+
+two:
+  organization_structure: two
+  facility: two
+  toolkit_name: MyString
+  toolkit_description: MyText
+  quantity: 1.5
+  requested_to: MyString
+  request_to_org_structure: 1
+  request_to_facility: 1
+  requested_by: MyString
+  contact_address: MyText
+  request_date: 2018-09-05

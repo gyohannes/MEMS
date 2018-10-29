@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="body">
+    <p>
+      <strong>Store:</strong>
+      <%= @receife.store %>
+    </p>
+
+    <p>
+      <strong>Deliverer name:</strong>
+      <%= @receife.deliverer_name %>
+    </p>
+
+    <p>
+      <strong>Recipient name:</strong>
+      <%= @receife.recipient_name %>
+    </p>
+
+    <p>
+      <strong>Witness name:</strong>
+      <%= @receife.witness_name %>
+    </p>
+
+    <p>
+      <strong>Delivery date:</strong>
+      <%= @receife.delivery_date %>
+    </p>
+
+    <p>
+      <strong>Remark:</strong>
+      <%= @receife.remark %>
+    </p>
+
+    <table border="1" style="width: 100%;">
+      <tr>
+        <th>Equipment</th>
+        <th>Model</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+      <% total= 0 %>
+      <% @receife.receive_equipments.each do |ri| %>
+          <tr>
+            <td><%= ri.equipment_name %></td>
+            <td><%= ri.model %></td>
+            <td><%= ri.description %></td>
+            <td><%= q=ri.quantity %></td>
+            <td><%= p=ri.unit_cost %></td>
+            <td><%= t = (q || 0) * (p || 0)  %></td>
+          </tr>
+          <% total += t %>
+      <% end %>
+      <tr>
+        <th colspan="5"><%=t :total %></th>
+        <td><%= total %></td>
+      </tr>
+    </table>
+    <hr/>
+    <%= link_to 'Edit', edit_receife_path(@receife) %> |
+    <%= link_to 'Download Model 19', receife_path(@receife,:format=>:pdf),:class=>'btn' %> |
+    <%= link_to 'Back', receives_path %>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="header">
+  <h3>
+    <a href="javascript:void(0);" class="list-group-item">
+      <span class="badge bg-cyan"><%= @equipment.status %></span> <%= @equipment %>
+    </a>
+  </h3>
+</div>
+<div class="body">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs tab-nav-right" role="tablist">
+    <li role="presentation" class="active"><a href="#equipment_details" data-toggle="tab">Basic Info</a></li>
+    <li role="presentation"><a href="#equipment_installation" data-toggle="tab">Installation</a></li>
+    <li role="presentation"><a href="#acceptance_test" data-toggle="tab">Acceptance Test</a></li>
+    <li role="presentation"><a href="#maintenance" data-toggle="tab">Maintenance</a></li>
+    <li role="presentation"><a href="#trainings" data-toggle="tab">Trainings</a></li>
+    <li role="presentation"><a href="#disposal" data-toggle="tab">Disposal</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="equipment_details">
+      <%= render 'equipment_detail' %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="equipment_installation">
+      <%= render partial: 'installations/installation', locals: { :@installation => @equipment.installation } %>
+      <%= link_to 'Register Installation', new_installation_path(equipment: @equipment.id) if @equipment.installation.blank? %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="acceptance_test">
+      <%= render partial: 'acceptance_tests/acceptance_test', locals: { :@acceptance_test => @equipment.acceptance_test } %>
+      <%= link_to 'Acceptance Test', new_acceptance_test_path(equipment: @equipment.id) if @equipment.acceptance_test.blank? %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="maintenance">
+      <div class="body table-responsive">
+      <%= render partial: 'maintenances/maintenances', locals: { :@maintenances => @equipment.maintenances } %>
+        <hr/>
+      <%= link_to 'New Maintenance', new_maintenance_path(equipment: @equipment.id) %>
+      </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="trainings">
+      <div class="body table-responsive">
+        <%= render partial: 'trainings/trainings', locals: { :@trainings => @equipment.trainings } %>
+        <hr/>
+        <%= link_to 'New Training', new_training_path(equipment: @equipment.id) %>
+      </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="disposal">
+      <%= render partial: 'disposals/disposal', locals: { :@disposal => @equipment.disposal } %>
+      <%= link_to 'Register Disposal', new_disposal_path(equipment: @equipment.id) if @equipment.disposal.blank? %>
+    </div>
+
+  </div>
+</div>
+
+

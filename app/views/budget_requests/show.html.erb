@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @budget_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @budget_request.facility %>
+</p>
+
+<p>
+  <strong>Budget name:</strong>
+  <%= @budget_request.budget_name %>
+</p>
+
+<p>
+  <strong>Budget description:</strong>
+  <%= @budget_request.budget_description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @budget_request.amount %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @budget_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @budget_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @budget_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @budget_request.contact_address %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @budget_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @budget_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_budget_request_path(@budget_request) %> |
+<%= link_to 'Back', budget_requests_path %>

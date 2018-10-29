@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @user.password %>
+</p>
+
+<p>
+  <strong>Password confirmation:</strong>
+  <%= @user.password_confirmation %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <strong>Father name:</strong>
+  <%= @user.father_name %>
+</p>
+
+<p>
+  <strong>Grand father name:</strong>
+  <%= @user.grand_father_name %>
+</p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @user.organization_structure_id %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @user.facility_id %>
+</p>
+
+<p>
+  <strong>Institution:</strong>
+  <%= @user.institution_id %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

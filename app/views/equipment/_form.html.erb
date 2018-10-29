@@ -1,0 +1,35 @@
+<%= simple_form_for(@equipment,wrapper: :vertical_form) do |f| %>
+    <%= hidden_field_tag 'organization_structure', @organization_structure.try(:id) %>
+  <%= f.error_notification %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.association :facility, collection: @facilities %>
+      <%= f.input :equipment_name %>
+      <%= f.association :equipment_category %>
+      <%= f.input :model %>
+      <%= f.input :serial_number %>
+      <%= f.input :tag_number %>
+      <%= f.input :volt_ampere, label: 'Volt/Ampere' %>
+      <%= f.input :power_requirement %>
+      <%= f.input :manufacturer %>
+      <%= f.input :country, label: 'Country of Origin' %>
+    </div>
+  <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+    <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
+                discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :purchased_year, start_year: Date.today.year - 100, end_year: Date.today.year,
+                discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :purchase_price %>
+    <%= f.input :supplier_id, collection: @suppliers %>
+    <%= f.input :warranty_agreement_note %>
+    <%= f.input :local_representative_id, collection: @local_representatives %>
+    <%= f.input :remark %>
+    <%= f.input :status, collection: Equipment::STATUSES %>
+  </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

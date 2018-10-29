@@ -1,0 +1,44 @@
+<div class="header">
+  <h2>
+    Specification Requests
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Organization structure</th>
+      <th>Facility</th>
+      <th>Requested to</th>
+      <th>Equipment name</th>
+      <th>Quantity</th>
+      <th>Requested by</th>
+      <th>Requested date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @specification_requests.each do |specification_request| %>
+      <tr>
+        <td><%= specification_request.organization_structure %></td>
+        <td><%= specification_request.facility %></td>
+        <td><%= specification_request.requested_to %></td>
+        <td><%= specification_request.equipment_name %></td>
+        <td><%= specification_request.quantity %></td>
+        <td><%= specification_request.requested_by %></td>
+        <td><%= specification_request.requested_date %></td>
+        <td>
+          <%= link_to 'Details', specification_request %> |
+          <%= link_to 'Edit', edit_specification_request_path(specification_request) %> |
+          <%= link_to 'Delete', specification_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<%= link_to 'New Specification Request', new_specification_request_path %>
+</div>

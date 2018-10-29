@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  maintenance_type: MyString
+  problem: MyText
+  action_taken: MyText
+  spare_parts_used: MyText
+  start_date: 2018-06-28
+  end_date: 2018-06-28
+  maintenance_cost: 1.5
+  maintained_by: MyString
+  contact_address: MyString
+  preventive_maintenance_date: 2018-06-28
+  note: MyText
+
+two:
+  equipment: two
+  maintenance_type: MyString
+  problem: MyText
+  action_taken: MyText
+  spare_parts_used: MyText
+  start_date: 2018-06-28
+  end_date: 2018-06-28
+  maintenance_cost: 1.5
+  maintained_by: MyString
+  contact_address: MyString
+  preventive_maintenance_date: 2018-06-28
+  note: MyText

@@ -1,0 +1,25 @@
+
+<%= simple_form_for(@training_request) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-sm-6 left_form">
+        <%= f.association :organization_structure %>
+        <%= f.association :facility %>
+        <%= f.input :trainee_type %>
+        <%= f.input :training_description %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :requested_to %>
+        <%= f.input :requested_by %>
+        <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

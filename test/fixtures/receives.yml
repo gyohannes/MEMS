@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  store: one
+  deliverer_name: MyString
+  recipient_name: MyString
+  witness_name: MyString
+  delivery_date: 2018-05-30
+  remark: MyText
+
+two:
+  store: two
+  deliverer_name: MyString
+  recipient_name: MyString
+  witness_name: MyString
+  delivery_date: 2018-05-30
+  remark: MyText

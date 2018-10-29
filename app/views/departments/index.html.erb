@@ -1,0 +1,33 @@
+<div class="header">
+<h2>
+  Departments
+</h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @departments.each do |department| %>
+      <tr>
+        <td><%= department.name %></td>
+        <td><%= department.description %></td>
+        <td>
+          <%= link_to 'Edit', edit_department_path(department) %>
+          <%= link_to 'Delete', department, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Department', new_department_path, class: 'btn btn-primary' %>
+</div>

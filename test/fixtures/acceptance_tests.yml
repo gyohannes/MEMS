@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  meet_standard: false
+  with_order_specification: false
+  installation_done: false
+  test_run: false
+  accepted: false
+  maintenance_personnel_trained: false
+  end_users_trained: false
+  with_full_accessery: false
+  with_manual: false
+  status: MyString
+  approved_by: MyString
+  acceptance_testing_date: 2018-06-26
+  contact_address: MyString
+  note: MyText
+
+two:
+  equipment: two
+  meet_standard: false
+  with_order_specification: false
+  installation_done: false
+  test_run: false
+  accepted: false
+  maintenance_personnel_trained: false
+  end_users_trained: false
+  with_full_accessery: false
+  with_manual: false
+  status: MyString
+  approved_by: MyString
+  acceptance_testing_date: 2018-06-26
+  contact_address: MyString
+  note: MyText

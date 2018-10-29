@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @installation_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @installation_request.facility %>
+</p>
+
+<p>
+  <strong>Equipment name:</strong>
+  <%= @installation_request.equipment_name %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @installation_request.model %>
+</p>
+
+<p>
+  <strong>Installation description:</strong>
+  <%= @installation_request.installation_description %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @installation_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @installation_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @installation_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Request to institution:</strong>
+  <%= @installation_request.request_to_institution %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @installation_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @installation_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_installation_request_path(@installation_request) %> |
+<%= link_to 'Back', installation_requests_path %>

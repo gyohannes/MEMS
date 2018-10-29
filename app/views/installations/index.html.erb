@@ -1,0 +1,50 @@
+<div class="header">
+  <h2>
+    Installations
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Department</th>
+      <th>Block number</th>
+      <th>Date of intallation</th>
+      <th>Warranty period</th>
+      <th>Preventive maintenance date</th>
+      <th>Installed by</th>
+      <th>Contact address</th>
+      <th>Installation cost</th>
+      <th>Note</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @installations.each do |installation| %>
+      <tr>
+        <td><%= installation.equipment %></td>
+        <td><%= installation.department %></td>
+        <td><%= installation.block_number %></td>
+        <td><%= installation.date_of_intallation %></td>
+        <td><%= installation.warranty_period %></td>
+        <td><%= installation.preventive_maintenance_date %></td>
+        <td><%= installation.installed_by %></td>
+        <td><%= installation.contact_address %></td>
+        <td><%= installation.installation_cost %></td>
+        <td><%= installation.note %></td>
+        <td>
+          <%= link_to 'Details', installation %> |
+          <%= link_to 'Edit', edit_installation_path(installation) %> |
+          <%= link_to 'Delete', installation, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Installation', new_installation_path %>
+</div>

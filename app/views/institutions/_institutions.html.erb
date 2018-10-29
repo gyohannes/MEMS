@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Type</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @institutions.each do |institution| %>
+      <tr>
+        <td><%= institution.name %></td>
+        <td><%= institution.category %></td>
+        <td><%= institution.institution_type %></td>
+        <td>
+          <%= link_to 'Edit', edit_institution_path(institution) %> |
+          <%= link_to 'Delete', institution, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<br/><br/>
+<%= link_to 'New Supplier/Local Representative', new_institution_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' unless @organization_structure.blank? %>

@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Calibration Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Organization structure</th>
+      <th>Facility</th>
+      <th>Equipment</th>
+      <th>Calibration description</th>
+      <th>Requested to</th>
+      <th>Request to org structure</th>
+      <th>Request to facility</th>
+      <th>Request to institution</th>
+      <th>Requested by</th>
+      <th>Request date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calibration_requests.each do |calibration_request| %>
+      <tr>
+        <td><%= calibration_request.organization_structure %></td>
+        <td><%= calibration_request.facility %></td>
+        <td><%= calibration_request.equipment %></td>
+        <td><%= calibration_request.calibration_description %></td>
+        <td><%= calibration_request.requested_to %></td>
+        <td><%= calibration_request.request_to_org_structure %></td>
+        <td><%= calibration_request.request_to_facility %></td>
+        <td><%= calibration_request.request_to_institution %></td>
+        <td><%= calibration_request.requested_by %></td>
+        <td><%= calibration_request.request_date %></td>
+        <td><%= link_to 'Show', calibration_request %></td>
+        <td><%= link_to 'Edit', edit_calibration_request_path(calibration_request) %></td>
+        <td><%= link_to 'Destroy', calibration_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Calibration Request', new_calibration_request_path %>

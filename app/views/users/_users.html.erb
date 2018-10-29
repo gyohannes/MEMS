@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Role</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.roles.map{ |role| role }.to_sentence %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New User', new_user_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' %>

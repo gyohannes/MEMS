@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @calibration_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @calibration_request.facility %>
+</p>
+
+<p>
+  <strong>Equipment:</strong>
+  <%= @calibration_request.equipment %>
+</p>
+
+<p>
+  <strong>Calibration description:</strong>
+  <%= @calibration_request.calibration_description %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @calibration_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @calibration_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @calibration_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Request to institution:</strong>
+  <%= @calibration_request.request_to_institution %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @calibration_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @calibration_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_calibration_request_path(@calibration_request) %> |
+<%= link_to 'Back', calibration_requests_path %>

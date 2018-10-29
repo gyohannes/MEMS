@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  department: one
+  block_number: MyString
+  date_of_intallation: 2018-06-12
+  warranty_period: MyString
+  preventive_maintenance_date: 2018-06-12
+  installed_by: MyString
+  contact_address: MyString
+  installation_cost: 1.5
+  note: MyText
+
+two:
+  equipment: two
+  department: two
+  block_number: MyString
+  date_of_intallation: 2018-06-12
+  warranty_period: MyString
+  preventive_maintenance_date: 2018-06-12
+  installed_by: MyString
+  contact_address: MyString
+  installation_cost: 1.5
+  note: MyText

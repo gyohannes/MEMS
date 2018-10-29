@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  code: MyString
+  organization_structure_type: one
+  parent_organization_structure_id: 1
+
+two:
+  name: MyString
+  code: MyString
+  organization_structure_type: two
+  parent_organization_structure_id: 1

@@ -1,0 +1,16 @@
+//= require AdminBSBMaterialDesign/jquery/jquery
+//= require rails-ujs
+//= require jquery-ui/accordion
+//= require jquery_nested_form
+//= require bootstrap-treeview
+//= require organization_structures
+//= require users
+//= require facilities
+//= require institutions
+//= require contacts
+//= require equipment
+//= require requests
+//= require highcharts
+//= require chartkick
+//= require AdminBSBMaterialDesign/index
+//= require global

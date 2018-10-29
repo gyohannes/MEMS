@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization_structure: one
+  facility: one
+  requested_to: MyString
+  requested_to_org_structure: 1
+  requested_to_org_facility: 1
+  requested_to_org_institution: 1
+  equipment_name: one
+  quantity: 1.5
+  requested_by: MyString
+  requested_date: 2018-09-04
+
+two:
+  organization_structure: two
+  facility: two
+  requested_to: MyString
+  requested_to_org_structure: 1
+  requested_to_org_facility: 1
+  requested_to_org_institution: 1
+  equipment_name: two
+  quantity: 1.5
+  requested_by: MyString
+  requested_date: 2018-09-04

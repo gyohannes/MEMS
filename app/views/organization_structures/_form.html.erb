@@ -1,0 +1,13 @@
+<%= simple_form_for(@organization_structure) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :code %>
+    <%= f.input :organization_structure_type_id, collection: OrganizationStructureType.all %>
+    <%= f.association :parent_organization_structure %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

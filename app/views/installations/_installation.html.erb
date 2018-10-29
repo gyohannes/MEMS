@@ -1,0 +1,53 @@
+<% unless @installation.blank? %>
+<p>
+  <strong>Equipment:</strong>
+  <%= @installation.equipment %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @installation.department %>
+</p>
+
+<p>
+  <strong>Block number:</strong>
+  <%= @installation.block_number %>
+</p>
+
+<p>
+  <strong>Date of intallation:</strong>
+  <%= @installation.date_of_intallation %>
+</p>
+
+<p>
+  <strong>Warranty period:</strong>
+  <%= @installation.warranty_period %>
+</p>
+
+<p>
+  <strong>Preventive maintenance date:</strong>
+  <%= @installation.preventive_maintenance_date %>
+</p>
+
+<p>
+  <strong>Installed by:</strong>
+  <%= @installation.installed_by %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @installation.contact_address %>
+</p>
+
+<p>
+  <strong>Installation cost:</strong>
+  <%= @installation.installation_cost %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @installation.note %>
+</p>
+<hr/>
+<%= link_to 'Edit', edit_installation_path(@installation) %>
+<% end %>

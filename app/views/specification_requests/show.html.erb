@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @specification_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @specification_request.facility %>
+</p>
+
+<p>
+  <strong>Equipment name:</strong>
+  <%= @specification_request.equipment_name %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @specification_request.quantity %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @specification_request.requested_by %>
+</p>
+
+<p>
+  <strong>Requested date:</strong>
+  <%= @specification_request.requested_date %>
+</p>
+
+<%= link_to 'Edit', edit_specification_request_path(@specification_request) %> |
+<%= link_to 'Back', specification_requests_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization_structure: one
+  facility: one
+  requested_by: 1
+  contact_phone: MyString
+  contact_email: MyString
+  request_to: MyString
+
+two:
+  organization_structure: two
+  facility: two
+  requested_by: 1
+  contact_phone: MyString
+  contact_email: MyString
+  request_to: MyString

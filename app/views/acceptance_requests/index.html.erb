@@ -1,0 +1,50 @@
+<div class="header">
+  <h2>
+    Acceptance Requests
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Organization structure</th>
+      <th>Facility</th>
+      <th>Equipment name</th>
+      <th>Model</th>
+      <th>Volts ampere</th>
+      <th>Power requirement</th>
+      <th>Description</th>
+      <th>Requested to</th>
+      <th>Requested by</th>
+      <th>Request date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @acceptance_requests.each do |acceptance_request| %>
+      <tr>
+        <td><%= acceptance_request.organization_structure %></td>
+        <td><%= acceptance_request.facility %></td>
+        <td><%= acceptance_request.equipment_name %></td>
+        <td><%= acceptance_request.model %></td>
+        <td><%= acceptance_request.volts_ampere %></td>
+        <td><%= acceptance_request.power_requirement %></td>
+        <td><%= acceptance_request.description %></td>
+        <td><%= acceptance_request.requested_to %></td>
+        <td><%= acceptance_request.requested_by %></td>
+        <td><%= acceptance_request.request_date %></td>
+        <td>
+          <%= link_to 'Details', acceptance_request %>
+          <%= link_to 'Edit', edit_acceptance_request_path(acceptance_request) %>
+          <%= link_to 'Delete', acceptance_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<%= link_to 'New Acceptance Request', new_acceptance_request_path %>
+</div>

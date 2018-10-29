@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  facility: one
+  equipment_name: one
+  model: MyString
+  serial_number: MyString
+  tag_number: MyString
+  volt_ampere: MyString
+  power_requirement: 1
+  manufacturer: MyString
+  country: MyString
+  manufactured_year: 2018-04-23
+  purchased_year: 2018-04-23
+  purchase_price: 1.5
+  supplier_id: 1
+  manual_attached: false
+  warranty_agreement_note: MyText
+  local_representative_id: 1
+  remark: MyText
+  status: MyString
+
+two:
+  facility: two
+  equipment_name: two
+  model: MyString
+  serial_number: MyString
+  tag_number: MyString
+  volt_ampere: MyString
+  power_requirement: 1
+  manufacturer: MyString
+  country: MyString
+  manufactured_year: 2018-04-23
+  purchased_year: 2018-04-23
+  purchase_price: 1.5
+  supplier_id: 1
+  manual_attached: false
+  warranty_agreement_note: MyText
+  local_representative_id: 1
+  remark: MyText
+  status: MyString

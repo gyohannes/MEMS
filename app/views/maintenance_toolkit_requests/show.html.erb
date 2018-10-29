@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @maintenance_toolkit_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @maintenance_toolkit_request.facility %>
+</p>
+
+<p>
+  <strong>Toolkit name:</strong>
+  <%= @maintenance_toolkit_request.toolkit_name %>
+</p>
+
+<p>
+  <strong>Toolkit description:</strong>
+  <%= @maintenance_toolkit_request.toolkit_description %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @maintenance_toolkit_request.quantity %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @maintenance_toolkit_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @maintenance_toolkit_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @maintenance_toolkit_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @maintenance_toolkit_request.requested_by %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @maintenance_toolkit_request.contact_address %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @maintenance_toolkit_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_maintenance_toolkit_request_path(@maintenance_toolkit_request) %> |
+<%= link_to 'Back', maintenance_toolkit_requests_path %>

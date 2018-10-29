@@ -1,0 +1,24 @@
+<%= simple_form_for(@installation,wrapper: :vertical_form) do |f| %>
+  <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-sm-6">
+    <%= f.association :equipment %>
+    <%= f.association :department %>
+    <%= f.input :block_number %>
+    <%= f.input :date_of_intallation, as: 'string', input_html: {class: 'datepicker'} %>
+    <%= f.input :warranty_period %>
+      </div>
+      <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+    <%= f.input :preventive_maintenance_date, label: ' Preventive Maintenance Date', as: 'string', label_html:{class: 'small_label'}, input_html: {class: 'datepicker'} %>
+    <%= f.input :installed_by %>
+    <%= f.input :contact_address %>
+    <%= f.input :installation_cost %>
+    <%= f.input :note %>
+  </div>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

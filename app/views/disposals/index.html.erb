@@ -1,0 +1,40 @@
+<div class="header">
+  <h2>
+    Disposals
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Problem</th>
+      <th>Action taken</th>
+      <th>List of disposing commitee</th>
+      <th>Contact address</th>
+      <th>Disposed date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @disposals.each do |disposal| %>
+      <tr>
+        <td><%= disposal.equipment %></td>
+        <td><%= disposal.problem %></td>
+        <td><%= disposal.action_taken %></td>
+        <td><%= disposal.list_of_disposing_commitee %></td>
+        <td><%= disposal.contact_address %></td>
+        <td><%= disposal.disposed_date %></td>
+        <td>
+          <%= link_to 'Details', disposal %>
+          <%= link_to 'Edit', edit_disposal_path(disposal) %>
+          <%= link_to 'Delete', disposal, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'New Disposal', new_disposal_path %>
+</div>

@@ -1,0 +1,40 @@
+<div class="header">
+  <h2>
+    Receives
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Store</th>
+      <th>Deliverer name</th>
+      <th>Recipient name</th>
+      <th>Witness name</th>
+      <th>Delivery date</th>
+      <th>Remark</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receives.each do |receife| %>
+      <tr>
+        <td><%= receife.store %></td>
+        <td><%= receife.deliverer_name %></td>
+        <td><%= receife.recipient_name %></td>
+        <td><%= receife.witness_name %></td>
+        <td><%= receife.delivery_date %></td>
+        <td><%= receife.remark %></td>
+        <td>
+          <%= link_to 'Details', receife %> |
+          <%= link_to 'Edit', edit_receife_path(receife) %> |
+          <%= link_to 'Delete', receife, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'New Receiving Form', new_receife_path %>
+</div>

@@ -1,0 +1,24 @@
+<%= simple_nested_form_for(@receife) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.association :store, label: false,prompt:'Please Select Store' %>
+      <%= f.input :deliverer_name, label: false, placeholder: 'Deliverer Name' %>
+      <%= f.input :recipient_name, label: false, placeholder: 'Recipient Name' %>
+    </div>
+
+    <div class="col-sm-6">
+      <%= f.input :witness_name, label: false, placeholder: 'Witness/s Name' %>
+      <%= f.input :delivery_date, as: 'string', input_html: {class: 'datepicker'}, label: false, placeholder: 'Delivery Date' %>
+      <%= f.input :remark, label: false, placeholder: 'Remark' %>
+    </div>
+
+  </div>
+    <h5>Equipment List</h5>
+    <%= render partial: 'equipment_fields', locals: {f: f} %>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

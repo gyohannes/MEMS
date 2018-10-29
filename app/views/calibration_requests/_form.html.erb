@@ -1,0 +1,22 @@
+
+<%= simple_form_for(@calibration_request) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :organization_structure %>
+    <%= f.association :facility %>
+    <%= f.association :equipment %>
+    <%= f.input :calibration_description %>
+    <%= f.input :requested_to %>
+    <%= f.input :request_to_org_structure %>
+    <%= f.input :request_to_facility %>
+    <%= f.input :request_to_institution %>
+    <%= f.input :requested_by %>
+    <%= f.input :request_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

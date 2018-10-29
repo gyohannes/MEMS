@@ -1,0 +1,44 @@
+<div class="header">
+  <h2>
+    Training Requests
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Organization structure</th>
+      <th>Facility</th>
+      <th>Trainee type</th>
+      <th>Training description</th>
+      <th>Requested to</th>
+      <th>Requested by</th>
+      <th>Request date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @training_requests.each do |training_request| %>
+      <tr>
+        <td><%= training_request.organization_structure %></td>
+        <td><%= training_request.facility %></td>
+        <td><%= training_request.trainee_type %></td>
+        <td><%= training_request.training_description %></td>
+        <td><%= training_request.requested_to %></td>
+        <td><%= training_request.requested_by %></td>
+        <td><%= training_request.request_date %></td>
+        <td>
+          <%= link_to 'Details', training_request %> |
+          <%= link_to 'Edit', edit_training_request_path(training_request) %> |
+          <%= link_to 'Delete', training_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<%= link_to 'New Training Request', new_training_request_path %>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  procurement_request: one
+  equipment_name: one
+  specification: MyText
+  quantity: 1
+  approved_quantity: 1
+
+two:
+  procurement_request: two
+  equipment_name: two
+  specification: MyText
+  quantity: 1
+  approved_quantity: 1

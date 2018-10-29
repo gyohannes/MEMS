@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-sm-6">
+    <p>
+      <label>Facility:</label>
+      <%= @equipment.facility %>
+    </p>
+
+    <p>
+      <label>Equipment name:</label>
+      <%= @equipment.equipment_name %>
+    </p>
+
+    <p>
+      <label>Model:</label>
+      <%= @equipment.model %>
+    </p>
+
+    <p>
+      <label>Serial number:</label>
+      <%= @equipment.serial_number %>
+    </p>
+
+    <p>
+      <label>Tag number:</label>
+      <%= @equipment.tag_number %>
+    </p>
+
+    <p>
+      <label>Volt/Ampere:</label>
+      <%= @equipment.volt_ampere %>
+    </p>
+
+    <p>
+      <label>Power requirement:</label>
+      <%= @equipment.power_requirement %>
+    </p>
+
+    <p>
+      <label>Manufacturer:</label>
+      <%= @equipment.manufacturer %>
+    </p>
+
+    <p>
+      <label>Country of origin:</label>
+      <%= @equipment.country %>
+    </p>
+
+  </div>
+
+  <div class="col-sm-6">
+    <p>
+      <label>Manufactured year:</label>
+      <%= @equipment.manufactured_year %>
+    </p>
+
+    <p>
+      <label>Purchased year:</label>
+      <%= @equipment.purchased_year %>
+    </p>
+
+    <p>
+      <label>Purchase price:</label>
+      <%= @equipment.purchase_price %>
+    </p>
+
+    <p>
+      <label>Supplier:</label>
+      <%= @equipment.supplier %>
+    </p>
+
+    <p>
+      <label>Manual attached:</label>
+      <%= @equipment.manual_attached %>
+    </p>
+
+    <p>
+      <label>Warranty agreement note:</label>
+      <%= @equipment.warranty_agreement_note %>
+    </p>
+
+    <p>
+      <label>Local representative:</label>
+      <%= @equipment.local_representative %>
+    </p>
+
+    <p>
+      <label>Remark:</label>
+      <%= @equipment.remark %>
+    </p>
+
+    <p>
+      <label>Status:</label>
+      <%= @equipment.status %>
+    </p>
+  </div>
+</div>
+<hr/>
+<%= link_to 'Edit', edit_equipment_path(@equipment) %>

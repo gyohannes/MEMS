@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  problem: MyText
+  action_taken: MyText
+  list_of_disposing_commitee: MyText
+  contact_address: MyText
+  disposed_date: 2018-06-29
+
+two:
+  equipment: two
+  problem: MyText
+  action_taken: MyText
+  list_of_disposing_commitee: MyText
+  contact_address: MyText
+  disposed_date: 2018-06-29

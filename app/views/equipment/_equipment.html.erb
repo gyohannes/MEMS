@@ -1,0 +1,27 @@
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+    <thead>
+    <tr>
+      <th>Facility</th>
+      <th>Equipment name</th>
+      <th>Model</th>
+      <th>Power requirement</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @equipment.each do |equipment| %>
+        <tr>
+          <td><%= equipment.facility %></td>
+          <td><%= equipment.equipment_name %></td>
+          <td><%= equipment.model %></td>
+          <td><%= equipment.power_requirement %></td>
+          <td><%= equipment.status %></td>
+          <td><%= link_to 'Details', equipment %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <hr/>
+  <%= link_to 'New Equipment', new_equipment_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' unless @organization_structure.blank? %>

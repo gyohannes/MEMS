@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Type</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @organization_structures.each do |organization_structure| %>
+      <tr>
+        <td><%= organization_structure.name %></td>
+        <td><%= organization_structure.code %></td>
+        <td><%= organization_structure.organization_structure_type %></td>
+        <td>
+          <%= link_to 'Edit', edit_organization_structure_path(organization_structure) %> |
+          <%= link_to 'Delete', organization_structure, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Organization Structure', new_organization_structure_path(parent: @parent.try(:id)),class: 'btn btn-primary' unless @parent.blank? %>

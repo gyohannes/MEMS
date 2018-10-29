@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization_structure: one
+  facility: one
+  store_name: MyString
+  block_number: MyString
+  room_number: MyString
+
+two:
+  organization_structure: two
+  facility: two
+  store_name: MyString
+  block_number: MyString
+  room_number: MyString

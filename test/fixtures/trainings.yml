@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contact: one
+  equipment_name: one
+  model: MyString
+  training_type: MyString
+  trainer_name: MyString
+  training_sponsor: MyString
+  training_date: 2018-07-05
+
+two:
+  contact: two
+  equipment_name: two
+  model: MyString
+  training_type: MyString
+  trainer_name: MyString
+  training_sponsor: MyString
+  training_date: 2018-07-05

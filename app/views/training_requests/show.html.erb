@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @training_request.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @training_request.facility %>
+</p>
+
+<p>
+  <strong>Trainee type:</strong>
+  <%= @training_request.trainee_type %>
+</p>
+
+<p>
+  <strong>Training description:</strong>
+  <%= @training_request.training_description %>
+</p>
+
+<p>
+  <strong>Requested to:</strong>
+  <%= @training_request.requested_to %>
+</p>
+
+<p>
+  <strong>Request to org structure:</strong>
+  <%= @training_request.request_to_org_structure %>
+</p>
+
+<p>
+  <strong>Request to facility:</strong>
+  <%= @training_request.request_to_facility %>
+</p>
+
+<p>
+  <strong>Request to institution:</strong>
+  <%= @training_request.request_to_institution %>
+</p>
+
+<p>
+  <strong>Requested by:</strong>
+  <%= @training_request.requested_by %>
+</p>
+
+<p>
+  <strong>Request date:</strong>
+  <%= @training_request.request_date %>
+</p>
+
+<%= link_to 'Edit', edit_training_request_path(@training_request) %> |
+<%= link_to 'Back', training_requests_path %>

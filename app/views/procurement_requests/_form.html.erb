@@ -1,0 +1,22 @@
+<%= simple_nested_form_for(@procurement_request) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.association :organization_structure, collection: @organization_structures, prompt: false %><br/><br/>
+      <%= f.association :facility, collection: @facilities, prompt: false %><br/>
+      <%= f.input :request_to, collection: ['FMOH', 'RHB', 'NGO', 'Supplier'] %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %><br/><br/>
+      <%= f.input :contact_phone %><br/><br/><br/>
+      <%= f.input :contact_email %>
+    </div>
+  </div>
+    <hr/>
+    <%= render partial: 'procurement_request_equipment_fields', locals: {f: f} %>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+    <thead>
+    <tr>
+      <th>Facility</th>
+      <th>Name of contact</th>
+      <th>Profession</th>
+      <th>Title</th>
+      <th>Work place</th>
+      <th>City</th>
+      <th>Phone number</th>
+      <th>Country</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @contacts.each do |contact| %>
+        <tr>
+          <td><%= contact.facility %></td>
+          <td><%= contact.name_of_contact %></td>
+          <td><%= contact.profession %></td>
+          <td><%= contact.title %></td>
+          <td><%= contact.work_place %></td>
+          <td><%= contact.city %></td>
+          <td><%= contact.phone_number %></td>
+          <td><%= contact.country %></td>
+          <td><%= contact.email %></td>
+          <td>
+            <%= link_to 'Details', contact %>
+            <%= link_to 'Edit', edit_contact_path(contact) %>
+            <%= link_to 'Delete', contact, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <hr/>
+  <%= link_to 'New Contact', new_contact_path, class: 'btn btn-primary' %>
+</div>

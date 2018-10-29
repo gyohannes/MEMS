@@ -1,0 +1,33 @@
+<% unless @disposal.blank? %>
+<p>
+  <strong>Equipment:</strong>
+  <%= @disposal.equipment %>
+</p>
+
+<p>
+  <strong>Problem:</strong>
+  <%= @disposal.problem %>
+</p>
+
+<p>
+  <strong>Action taken:</strong>
+  <%= @disposal.action_taken %>
+</p>
+
+<p>
+  <strong>List of disposing commitee:</strong>
+  <%= @disposal.list_of_disposing_commitee %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @disposal.contact_address %>
+</p>
+
+<p>
+  <strong>Disposed date:</strong>
+  <%= @disposal.disposed_date %>
+</p>
+<hr/>
+<%= link_to 'Edit', edit_disposal_path(@disposal) %>
+<% end %>

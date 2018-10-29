@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receive: one
+  equipment_name: one
+  model: MyString
+  description: MyText
+  quantity: 1
+  unit_cost: 1.5
+
+two:
+  receive: two
+  equipment_name: two
+  model: MyString
+  description: MyText
+  quantity: 1
+  unit_cost: 1.5

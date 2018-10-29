@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @organization_structure.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @organization_structure.code %>
+</p>
+
+<p>
+  <strong>Organization structure type:</strong>
+  <%= @organization_structure.organization_structure_type %>
+</p>
+
+<p>
+  <strong>Parent organization structure:</strong>
+  <%= @organization_structure.parent_organization_structure_id %>
+</p>
+
+<%= link_to 'Edit', edit_organization_structure_path(@organization_structure) %> |
+<%= link_to 'Back', organization_structures_path %>
