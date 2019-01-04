@@ -1,10 +1,8 @@
 $(function () {
     $("select[name$='[requested_to]']").change(function(){
         var request_to = $(this).val();
-        if (request_to == 'org_unit') {
-            $('#request_to_org_structure').show()
-            $("#request_to_facility").hide()
-            $('#request_to_institution').hide()
+        if (request_to == 'SUPPLIER' || request_to == 'REPRESENTATIVE' ) {
+            $('#request_to_institution').show()
         } else if (request_to == 'facility') {
             $('#request_to_org_structure').hide()
             $('#request_to_facility').show()

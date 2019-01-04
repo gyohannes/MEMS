@@ -1,9 +1,9 @@
 class CreateFacilities < ActiveRecord::Migration[5.1]
   def change
-    create_table :facilities do |t|
-      t.references :organization_structure, foreign_key: true
+    create_table :facilities, id: :uuid do |t|
+      t.references :organization_structure, type: :uuid, foreign_key: true
       t.string :name
-      t.references :facility_type, foreign_key: true
+      t.references :facility_type, type: :uuid, foreign_key: true
       t.string :category
       t.string :url
       t.integer :latitude

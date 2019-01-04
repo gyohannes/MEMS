@@ -3,18 +3,30 @@ class User < ApplicationRecord
   belongs_to :role, optional: true
   belongs_to :institution, optional: true
   belongs_to :facility, optional: true
-  has_and_belongs_to_many :roles
+  belongs_to :role
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def outgoing_procurement_requests
+    !facility.blank? ? facility.procurement_requests : organization_structure.procurement_requests
+  end
 
   def super_admin?
     organization_structure == OrganizationStructure.top_organization_structure
   end
 
   def admin?
-    roles.pluck(:name).include?('Admin') rescue nil
+    role.name == 'Admin' rescue nil
+  end
+
+  def biomedical_head?
+    role.name == 'biomedical head' rescue nil
+  end
+
+  def biomedical_engineer?
+    role.name == 'biomedical engineer' rescue nil
   end
 
   def parent_org_unit

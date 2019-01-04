@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <%= csrf_meta_tags %>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -79,6 +80,7 @@
       <ul class="list">
         <li class="header">MAIN NAVIGATION</li>
         <%= render partial: 'menus/admin' %>
+        <%= render partial: 'menus/biomedical_engineer' %>
       </ul>
     </div>
     <!-- #Menu -->

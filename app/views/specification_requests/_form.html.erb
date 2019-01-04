@@ -1,5 +1,4 @@
-
-<%= simple_form_for(@specification_request) do |f| %>
+<%= simple_nested_form_for(@specification_request) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -8,18 +7,9 @@
       <div class="col-sm-6 left_form">
         <%= f.association :organization_structure, collection: [current_user.organization_structure], prompt: false %>
         <%= f.association :facility, collection: [current_user.facility], prompt: false %>
-        <%= f.input :requested_to, collection: [['Organization Unit','org_unit'], ['Facility','facility'], ['Supplier/Local Representative','institution']] %>
-        <div id="request_to_org_structure">
-          <%= f.input :requested_to_org_structure, collection: OrganizationStructure.all %>
-          <div id="request_org_tree"></div>
-        </div>
-        <div id="request_to_facility">
-          <%= f.input :requested_to_facility, collection: Facility.all %>
-          <div id="request_facility_tree"></div>
-        </div>
-        <div id="request_to_institution">
-          <%= f.input :requested_to_institution, collection: Institution.all %>
-          <div id="request_institution_tree"></div>
+        <%= f.input :request_to, collection: Constants::REQUEST_TO %>
+        <div id="specification_request_to">
+          <%= render partial: 'request_to' %>
         </div>
       </div>
       <div class="col-sm-6">

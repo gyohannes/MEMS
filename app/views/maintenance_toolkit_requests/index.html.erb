@@ -7,17 +7,12 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
-      <th>Toolkit name</th>
-      <th>Toolkit description</th>
-      <th>Quantity</th>
-      <th>Requested to</th>
-      <th>Request to org structure</th>
-      <th>Request to facility</th>
-      <th>Requested by</th>
-      <th>Contact address</th>
+      <th>Request from</th>
       <th>Request date</th>
+      <th>Toolkit name</th>
+      <th>Quantity</th>
+      <th>Request to</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -25,21 +20,17 @@
   <tbody>
     <% @maintenance_toolkit_requests.each do |maintenance_toolkit_request| %>
       <tr>
-        <td><%= maintenance_toolkit_request.organization_structure %></td>
-        <td><%= maintenance_toolkit_request.facility %></td>
-        <td><%= maintenance_toolkit_request.toolkit_name %></td>
-        <td><%= maintenance_toolkit_request.toolkit_description %></td>
-        <td><%= maintenance_toolkit_request.quantity %></td>
-        <td><%= maintenance_toolkit_request.requested_to %></td>
-        <td><%= maintenance_toolkit_request.request_to_org_structure %></td>
-        <td><%= maintenance_toolkit_request.request_to_facility %></td>
-        <td><%= maintenance_toolkit_request.requested_by %></td>
-        <td><%= maintenance_toolkit_request.contact_address %></td>
+        <td><%= maintenance_toolkit_request.request_from %></td>
         <td><%= maintenance_toolkit_request.request_date %></td>
+        <td><%= maintenance_toolkit_request.toolkit_name %></td>
+        <td><%= maintenance_toolkit_request.quantity %></td>
+        <td><%= maintenance_toolkit_request.request_to %></td>
+        <td><%= maintenance_toolkit_request.status %></td>
+
         <td>
-          <%= link_to 'Details', maintenance_toolkit_request %> |
-          <%= link_to 'Edit', edit_maintenance_toolkit_request_path(maintenance_toolkit_request) %> |
-          <%= link_to 'Delete', maintenance_toolkit_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', maintenance_toolkit_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_maintenance_toolkit_request_path(maintenance_toolkit_request), class: 'btn btn-primary' if can? :edit, maintenance_toolkit_request %>
+          <%= link_to 'Delete', maintenance_toolkit_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' if can? :destroy, maintenance_toolkit_request %>
         </td>
       </tr>
     <% end %>
@@ -48,5 +39,5 @@
 
 <hr/>
 
-<%= link_to 'New Maintenance Toolkit Request', new_maintenance_toolkit_request_path %>
+<%= link_to 'New Maintenance Toolkit Request', new_maintenance_toolkit_request_path, class: 'btn btn-primary' if can? :create, MaintenanceToolkitRequest %>
 </div>

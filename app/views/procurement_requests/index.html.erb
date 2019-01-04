@@ -7,12 +7,10 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
-      <th>Requested by</th>
-      <th>Contact phone</th>
-      <th>Contact email</th>
+      <th>Request From</th>
+      <th>Requested date</th>
       <th>Request to</th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -20,20 +18,19 @@
   <tbody>
     <% @procurement_requests.each do |procurement_request| %>
       <tr>
-        <td><%= procurement_request.organization_structure %></td>
-        <td><%= procurement_request.facility %></td>
-        <td><%= procurement_request.requested_by %></td>
-        <td><%= procurement_request.contact_phone %></td>
-        <td><%= procurement_request.contact_email %></td>
+        <td><%= procurement_request.request_from %></td>
+        <td><%= procurement_request.request_date %></td>
         <td><%= procurement_request.request_to %></td>
+        <td><%= procurement_request.status %></td>
         <td>
-          <%= link_to 'Details', procurement_request %>
-          <%= link_to 'Edit', edit_procurement_request_path(procurement_request) %>
+          <%= link_to 'Details', procurement_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_procurement_request_path(procurement_request), class: 'btn btn-primary' if can? :edit, procurement_request %>
+          <%= link_to 'Delete', procurement_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, procurement_request %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <hr/>
-<%= link_to 'New Procurement Request', new_procurement_request_path %>
+<%= link_to 'New Procurement Request', new_procurement_request_path, class: 'btn btn-primary' if can? :create, ProcurementRequest %>
 </div>

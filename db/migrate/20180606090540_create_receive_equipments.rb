@@ -1,7 +1,7 @@
 class CreateReceiveEquipments < ActiveRecord::Migration[5.1]
   def change
-    create_table :receive_equipments do |t|
-      t.references :receive, foreign_key: true
+    create_table :receive_equipments, id: :uuid do |t|
+      t.references :receive, type: :uuid, foreign_key: true
       t.string :equipment_name
       t.string :model
       t.text :description

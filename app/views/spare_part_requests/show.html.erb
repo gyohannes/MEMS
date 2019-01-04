@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Spare Part Request</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
-  <%= @spare_part_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @spare_part_request.facility %>
+  <strong>Request from:</strong>
+  <%= @spare_part_request.request_from %>
 </p>
 
 <p>
@@ -36,25 +33,16 @@
 </p>
 
 <p>
-  <strong>Requested to:</strong>
-  <%= @spare_part_request.requested_to %>
+  <strong>Request to:</strong>
+  <%= @spare_part_request.request_to %>
 </p>
 
-<p>
-  <strong>Request to org structure:</strong>
-  <%= @spare_part_request.request_to_org_structure %>
-</p>
-
-<p>
-  <strong>Request to facility:</strong>
-  <%= @spare_part_request.request_to_facility %>
-</p>
-
-<p>
-  <strong>Request to institution:</strong>
-  <%= @spare_part_request.request_to_institution %>
-</p>
-
+  <% if @spare_part_request.institution_id? %>
+      <p>
+        <label><%= @spare_part_request.request_to %>:</label>
+        <%= @spare_part_request.institution %>
+      </p>
+  <% end %>
 <p>
   <strong>Requested by:</strong>
   <%= @spare_part_request.requested_by %>
@@ -65,5 +53,19 @@
   <%= @spare_part_request.request_date %>
 </p>
 
-<%= link_to 'Edit', edit_spare_part_request_path(@spare_part_request) %> |
+  <p>
+    <strong>Status:</strong>
+    <%= @spare_part_request.status %>
+  </p>
+<hr/>
+  <%= simple_nested_form_for(@spare_part_request, url: decision_spare_part_request_path) do |f| %>
+      <% if can? :decision, @spare_part_request and @spare_part_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @spare_part_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @spare_part_request.status == Constants::REJECTED %>
+      <% end %>
+  <% end %>
+
+
+<%= link_to 'Edit', edit_spare_part_request_path(@spare_part_request), class: 'btn btn-primary' if can? :edit, @spare_part_request %>
 <%= link_to 'Back', spare_part_requests_path %>
+</div>

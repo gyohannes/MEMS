@@ -17,17 +17,32 @@ class MaintenanceToolkitRequestsController < ApplicationController
     @maintenance_toolkit_request = MaintenanceToolkitRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
+  def decision
+    @maintenance_toolkit_request.update(procurement_request_params)
+    redirect_to @maintenance_toolkit_request, notice: "Maintenance Toolkit request was successfully #{params[:status]}."
+  end
+
   # GET /maintenance_toolkit_requests/1/edit
   def edit
+    @request_to_type = @maintenance_toolkit_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /maintenance_toolkit_requests
   # POST /maintenance_toolkit_requests.json
   def create
     @maintenance_toolkit_request = MaintenanceToolkitRequest.new(maintenance_toolkit_request_params)
-
+    @request_to_type = @maintenance_toolkit_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @maintenance_toolkit_request.save
+        @maintenance_toolkit_request.update(status: Constants::PENDING)
         format.html { redirect_to @maintenance_toolkit_request, notice: 'Maintenance toolkit request was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance_toolkit_request }
       else
@@ -40,6 +55,8 @@ class MaintenanceToolkitRequestsController < ApplicationController
   # PATCH/PUT /maintenance_toolkit_requests/1
   # PATCH/PUT /maintenance_toolkit_requests/1.json
   def update
+    @request_to_type = @maintenance_toolkit_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @maintenance_toolkit_request.update(maintenance_toolkit_request_params)
         format.html { redirect_to @maintenance_toolkit_request, notice: 'Maintenance toolkit request was successfully updated.' }
@@ -69,6 +86,6 @@ class MaintenanceToolkitRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_toolkit_request_params
-      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity, :requested_to, :request_to_org_structure, :request_to_facility, :requested_by, :contact_address, :request_date)
+      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity, :request_to, :institution_id, :requested_by, :contact_address, :request_date)
     end
 end

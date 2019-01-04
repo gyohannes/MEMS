@@ -17,17 +17,27 @@ class BudgetRequestsController < ApplicationController
     @budget_request = BudgetRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
   # GET /budget_requests/1/edit
   def edit
+    @request_to_type = @budget_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /budget_requests
   # POST /budget_requests.json
   def create
     @budget_request = BudgetRequest.new(budget_request_params)
-
+    @request_to_type = @budget_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @budget_request.save
+        @budget_request.update(status: Constants::PENDING)
         format.html { redirect_to @budget_request, notice: 'Budget request was successfully created.' }
         format.json { render :show, status: :created, location: @budget_request }
       else
@@ -40,6 +50,8 @@ class BudgetRequestsController < ApplicationController
   # PATCH/PUT /budget_requests/1
   # PATCH/PUT /budget_requests/1.json
   def update
+    @request_to_type = @budget_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @budget_request.update(budget_request_params)
         format.html { redirect_to @budget_request, notice: 'Budget request was successfully updated.' }
@@ -69,6 +81,6 @@ class BudgetRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_request_params
-      params.require(:budget_request).permit(:organization_structure_id, :facility_id, :budget_name, :budget_description, :amount, :requested_to, :request_to_org_structure, :request_to_facility, :contact_address, :requested_by, :request_date)
+      params.require(:budget_request).permit(:organization_structure_id, :facility_id, :budget_name, :budget_description, :amount, :request_to, :contact_address, :requested_by, :request_date)
     end
 end

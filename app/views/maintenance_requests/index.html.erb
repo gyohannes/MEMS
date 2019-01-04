@@ -7,17 +7,12 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
+      <th>Request from</th>
+      <th>Request date</th>
       <th>Equipment</th>
       <th>Maintenance type</th>
-      <th>Maintenance description</th>
-      <th>Requested to</th>
-      <th>Request to org structure</th>
-      <th>Request to facility</th>
-      <th>Request to institution</th>
-      <th>Requested by</th>
-      <th>Request date</th>
+      <th>Request to</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -25,21 +20,16 @@
   <tbody>
     <% @maintenance_requests.each do |maintenance_request| %>
       <tr>
-        <td><%= maintenance_request.organization_structure %></td>
-        <td><%= maintenance_request.facility %></td>
+        <td><%= maintenance_request.request_from %></td>
+        <td><%= maintenance_request.request_date %></td>
         <td><%= maintenance_request.equipment %></td>
         <td><%= maintenance_request.maintenance_type %></td>
-        <td><%= maintenance_request.maintenance_description %></td>
-        <td><%= maintenance_request.requested_to %></td>
-        <td><%= maintenance_request.request_to_org_structure %></td>
-        <td><%= maintenance_request.request_to_facility %></td>
-        <td><%= maintenance_request.request_to_institution %></td>
-        <td><%= maintenance_request.requested_by %></td>
-        <td><%= maintenance_request.request_date %></td>
+        <td><%= maintenance_request.request_to %></td>
+        <td><%= maintenance_request.status %></td>
         <td>
-          <%= link_to 'Details', maintenance_request %> |
-          <%= link_to 'Edit', edit_maintenance_request_path(maintenance_request) %> |
-          <%= link_to 'Delete', maintenance_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', maintenance_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_maintenance_request_path(maintenance_request), class: 'btn btn-primary' if can? :edit, maintenance_request %>
+          <%= link_to 'Delete', maintenance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, maintenance_request %>
         </td>
       </tr>
     <% end %>
@@ -48,5 +38,5 @@
 
 <hr/>
 
-<%= link_to 'New Maintenance Request', new_maintenance_request_path %>
+<%= link_to 'New Maintenance Request', new_maintenance_request_path, class: 'btn btn-primary' if can? :create, MaintenanceRequest %>
 </div>

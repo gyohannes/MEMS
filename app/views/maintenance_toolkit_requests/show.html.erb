@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Maintenance Toolkit Request</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
-  <%= @maintenance_toolkit_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @maintenance_toolkit_request.facility %>
+  <strong>Request from:</strong>
+  <%= @maintenance_toolkit_request.request_from %>
 </p>
 
 <p>
@@ -26,18 +23,8 @@
 </p>
 
 <p>
-  <strong>Requested to:</strong>
-  <%= @maintenance_toolkit_request.requested_to %>
-</p>
-
-<p>
-  <strong>Request to org structure:</strong>
-  <%= @maintenance_toolkit_request.request_to_org_structure %>
-</p>
-
-<p>
-  <strong>Request to facility:</strong>
-  <%= @maintenance_toolkit_request.request_to_facility %>
+  <strong>Request to:</strong>
+  <%= @maintenance_toolkit_request.request_to %>
 </p>
 
 <p>
@@ -55,5 +42,18 @@
   <%= @maintenance_toolkit_request.request_date %>
 </p>
 
-<%= link_to 'Edit', edit_maintenance_toolkit_request_path(@maintenance_toolkit_request) %> |
+  <p>
+    <strong>Status:</strong>
+    <%= @maintenance_toolkit_request.status %>
+  </p>
+
+  <hr/>
+  <%= simple_nested_form_for(@maintenance_toolkit_request, url: decision_maintenance_toolkit_request_path) do |f| %>
+      <% if can? :decision, @maintenance_toolkit_request and @maintenance_toolkit_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @maintenance_toolkit_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @maintenance_toolkit_request.status == Constants::REJECTED %>
+      <% end %>
+  <% end %>
+<%= link_to 'Edit', edit_maintenance_toolkit_request_path(@maintenance_toolkit_request), class: 'btn btn-primary' if can? :edit, @maintenance_toolkit_request %>
 <%= link_to 'Back', maintenance_toolkit_requests_path %>
+</div>

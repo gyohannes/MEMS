@@ -1,14 +1,18 @@
 <table id="procurement_request_equipments" width="100%" %>
+  <tr>
+    <th>Equipment Name</th>
+    <th>Specification</th>
+    <th>Quantity</th>
+  </tr>
   <%= f.simple_fields_for :procurement_request_equipments, :wrapper => false do |equipment_form| %>
       <tr class="fields">
-        <td><%= equipment_form.input :equipment_name, placeholder: 'Equipment Name', label: false %></td>
-        <td><%= equipment_form.input :specification, placeholder: 'Specification', label: false %></td>
-        <td><%= equipment_form.input :quantity, placeholder: 'Quantity', label: false %></td>
-        <td><%= equipment_form.link_to_remove do %>
-              <i class="material-icons">delete</i>
-          <% end %>
-        </td>
+        <td><%= equipment_form.input :equipment_name, label: false %></td>
+        <td><%= equipment_form.input :specification, label: false %></td>
+        <td><%= equipment_form.input :quantity, label: false %></td>
+        <td style="vertical-align: top"><%= equipment_form.link_to_remove 'Remove' %></td>
       </tr>
   <% end %>
 </table>
-<p><%= f.link_to_add "Add Equipment", :procurement_request_equipments, :data => { :target => "#procurement_request_equipments" } %></p>
+<hr/>
+<p><%= f.link_to_add "Add Equipment", :procurement_request_equipments, :data => { :target => "#procurement_request_equipments" }, class: 'btn btn-primary' %></p>
+<br/>

@@ -7,10 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 role = Role.create(name: 'Admin')
 
-top_org_type = OrganizationStructureType.create(name: 'Top Org Type')
-
-top_org_unit = OrganizationStructure.create(name: 'Top Org Unit', code: 'TOU', organization_structure_type_id: top_org_type.id)
+top_org_unit = OrganizationStructure.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
+                                            organization_structure_type: Constants::FMOH)
 
 admin_user = User.new(organization_structure_id: top_org_unit.id,email: 'admin@mems.com', password: 'admin123')
-admin_user.roles = [role]
+admin_user.role = role
 admin_user.save

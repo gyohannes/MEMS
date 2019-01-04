@@ -9,9 +9,9 @@
     <%= f.input :father_name %>
     <%= f.input :grand_father_name %>
     <%= f.association :organization_structure, collection: [@user.organization_structure] %>
-    <%= f.association :facility, collection: [@user.facility] %>
+    <%= f.association :facility, collection: [@user.facility] || @user.organization_structure.facilities %>
     <%= f.association :institution %>
-    <%= f.association :roles %>
+    <%= f.association :role %>
   </div>
 
   <div class="form-actions">

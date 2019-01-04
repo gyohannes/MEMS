@@ -12,28 +12,32 @@
 
 ActiveRecord::Schema.define(version: 20180905142242) do
 
-  create_table "acceptance_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "acceptance_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "equipment_name"
     t.string "model"
     t.integer "volts_ampere"
     t.integer "power_requirement"
     t.text "description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_acceptance_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_acceptance_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_acceptance_requests_on_organization_structure_id"
   end
 
-  create_table "acceptance_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "equipment_id"
+  create_table "acceptance_tests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
     t.boolean "meet_standard"
     t.boolean "with_order_specification"
     t.boolean "installation_done"
@@ -53,45 +57,44 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["equipment_id"], name: "index_acceptance_tests_on_equipment_id"
   end
 
-  create_table "budget_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "budget_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "budget_name"
     t.text "budget_description"
-    t.float "amount", limit: 24
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
+    t.float "amount"
+    t.string "request_to"
     t.text "contact_address"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_budget_requests_on_facility_id"
     t.index ["organization_structure_id"], name: "index_budget_requests_on_organization_structure_id"
   end
 
-  create_table "calibration_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.bigint "equipment_id"
+  create_table "calibration_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "equipment_id"
     t.text "calibration_description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_calibration_requests_on_equipment_id"
     t.index ["facility_id"], name: "index_calibration_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_calibration_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_calibration_requests_on_organization_structure_id"
   end
 
-  create_table "contacts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "name_of_contact"
     t.string "profession"
     t.string "title"
@@ -106,24 +109,23 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_contacts_on_organization_structure_id"
   end
 
-  create_table "departments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "disposal_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.bigint "equipment_id"
+  create_table "disposal_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "equipment_id"
     t.text "disposal_description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
+    t.string "request_to"
     t.text "contact_address"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_disposal_requests_on_equipment_id"
@@ -131,8 +133,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_disposal_requests_on_organization_structure_id"
   end
 
-  create_table "disposals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "equipment_id"
+  create_table "disposals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
     t.text "problem"
     t.text "action_taken"
     t.text "list_of_disposing_commitee"
@@ -143,10 +145,10 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["equipment_id"], name: "index_disposals_on_equipment_id"
   end
 
-  create_table "equipment", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "facility_id"
+  create_table "equipment", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "facility_id"
     t.string "equipment_name"
-    t.bigint "equipment_category_id"
+    t.uuid "equipment_category_id"
     t.string "model"
     t.string "serial_number"
     t.string "tag_number"
@@ -156,7 +158,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "country"
     t.date "manufactured_year"
     t.date "purchased_year"
-    t.float "purchase_price", limit: 24
+    t.float "purchase_price"
     t.integer "supplier_id"
     t.boolean "manual_attached"
     t.text "warranty_agreement_note"
@@ -169,24 +171,24 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_equipment_on_facility_id"
   end
 
-  create_table "equipment_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "equipment_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "equipment_names", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "equipment_category_id"
+  create_table "equipment_names", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_category_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_category_id"], name: "index_equipment_names_on_equipment_category_id"
   end
 
-  create_table "facilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
+  create_table "facilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
     t.string "name"
-    t.bigint "facility_type_id"
+    t.uuid "facility_type_id"
     t.string "category"
     t.string "url"
     t.integer "latitude"
@@ -199,41 +201,41 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_facilities_on_organization_structure_id"
   end
 
-  create_table "facility_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "facility_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "installation_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "installation_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "equipment_name"
     t.string "model"
     t.text "installation_description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_installation_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_installation_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_installation_requests_on_organization_structure_id"
   end
 
-  create_table "installations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "equipment_id"
-    t.bigint "department_id"
+  create_table "installations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
+    t.uuid "department_id"
     t.string "block_number"
     t.date "date_of_intallation"
     t.string "warranty_period"
     t.date "preventive_maintenance_date"
     t.string "installed_by"
     t.string "contact_address"
-    t.float "installation_cost", limit: 24
+    t.float "installation_cost"
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -241,8 +243,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["equipment_id"], name: "index_installations_on_equipment_id"
   end
 
-  create_table "institutions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
+  create_table "institutions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
     t.string "name"
     t.string "category"
     t.string "institution_type"
@@ -251,52 +253,51 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_institutions_on_organization_structure_id"
   end
 
-  create_table "maintenance_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.bigint "equipment_id"
+  create_table "maintenance_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "equipment_id"
     t.string "maintenance_type"
     t.text "maintenance_description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_maintenance_requests_on_equipment_id"
     t.index ["facility_id"], name: "index_maintenance_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_maintenance_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_maintenance_requests_on_organization_structure_id"
   end
 
-  create_table "maintenance_toolkit_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "maintenance_toolkit_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "toolkit_name"
     t.text "toolkit_description"
-    t.float "quantity", limit: 24
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
+    t.float "quantity"
+    t.string "request_to"
     t.string "requested_by"
     t.text "contact_address"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_maintenance_toolkit_requests_on_facility_id"
     t.index ["organization_structure_id"], name: "index_maintenance_toolkit_requests_on_organization_structure_id"
   end
 
-  create_table "maintenances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "equipment_id"
+  create_table "maintenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
     t.string "maintenance_type"
     t.text "problem"
     t.text "action_taken"
     t.text "spare_parts_used"
     t.date "start_date"
     t.date "end_date"
-    t.float "maintenance_cost", limit: 24
+    t.float "maintenance_cost"
     t.string "maintained_by"
     t.string "contact_address"
     t.date "preventive_maintenance_date"
@@ -306,25 +307,24 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["equipment_id"], name: "index_maintenances_on_equipment_id"
   end
 
-  create_table "organization_structure_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "organization_structure_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "organization_structures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "organization_structures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "code"
-    t.bigint "organization_structure_type_id"
+    t.string "organization_structure_type"
     t.integer "parent_organization_structure_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organization_structure_type_id"], name: "index_organization_structures_on_organization_structure_type_id"
   end
 
-  create_table "procurement_request_equipments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "procurement_request_id"
+  create_table "procurement_request_equipments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "procurement_request_id"
     t.string "equipment_name"
     t.text "specification"
     t.integer "quantity"
@@ -334,34 +334,38 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["procurement_request_id"], name: "index_procurement_request_equipments_on_procurement_request_id"
   end
 
-  create_table "procurement_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.bigint "user_id"
+  create_table "procurement_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "contact_phone"
     t.string "contact_email"
     t.string "request_to"
+    t.uuid "institution_id"
+    t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_procurement_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_procurement_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_procurement_requests_on_organization_structure_id"
     t.index ["user_id"], name: "index_procurement_requests_on_user_id"
   end
 
-  create_table "receive_equipments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "receive_id"
+  create_table "receive_equipments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "receive_id"
     t.string "equipment_name"
     t.string "model"
     t.text "description"
     t.integer "quantity"
-    t.float "unit_cost", limit: 24
+    t.float "unit_cost"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["receive_id"], name: "index_receive_equipments_on_receive_id"
   end
 
-  create_table "receives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "store_id"
+  create_table "receives", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "store_id"
     t.string "deliverer_name"
     t.string "recipient_name"
     t.string "witness_name"
@@ -372,60 +376,53 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["store_id"], name: "index_receives_on_store_id"
   end
 
-  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
-    t.bigint "role_id"
-    t.index ["role_id"], name: "index_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_roles_users_on_user_id"
-  end
-
-  create_table "spare_part_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "spare_part_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "spare_part_name"
     t.string "model"
     t.integer "volts_ampere"
     t.integer "power_requirement"
     t.integer "quantity"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_spare_part_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_spare_part_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_spare_part_requests_on_organization_structure_id"
   end
 
-  create_table "specification_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.string "requested_to"
-    t.integer "requested_to_org_structure"
-    t.integer "requested_to_facility"
-    t.integer "requested_to_institution"
+  create_table "specification_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "equipment_name"
-    t.float "quantity", limit: 24
+    t.float "quantity"
     t.string "requested_by"
     t.date "requested_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_specification_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_specification_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_specification_requests_on_organization_structure_id"
   end
 
-  create_table "stores", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "store_name"
     t.string "block_number"
     t.string "room_number"
@@ -435,25 +432,25 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_stores_on_organization_structure_id"
   end
 
-  create_table "training_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
+  create_table "training_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "trainee_type"
     t.text "training_description"
-    t.string "requested_to"
-    t.integer "request_to_org_structure"
-    t.integer "request_to_facility"
-    t.integer "request_to_institution"
+    t.string "request_to"
+    t.uuid "institution_id"
     t.string "requested_by"
     t.date "request_date"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_training_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_training_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_training_requests_on_organization_structure_id"
   end
 
-  create_table "trainings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "contact_id"
+  create_table "trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "contact_id"
     t.string "equipment_name"
     t.string "model"
     t.string "training_type"
@@ -465,15 +462,16 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["contact_id"], name: "index_trainings_on_contact_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "father_name"
     t.string "grand_father_name"
-    t.bigint "organization_structure_id"
-    t.bigint "facility_id"
-    t.bigint "institution_id"
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "institution_id"
+    t.uuid "role_id"
     t.string "user_type"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -490,15 +488,18 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["institution_id"], name: "index_users_on_institution_id"
     t.index ["organization_structure_id"], name: "index_users_on_organization_structure_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "acceptance_requests", "facilities"
+  add_foreign_key "acceptance_requests", "institutions"
   add_foreign_key "acceptance_requests", "organization_structures"
   add_foreign_key "acceptance_tests", "equipment"
   add_foreign_key "budget_requests", "facilities"
   add_foreign_key "budget_requests", "organization_structures"
   add_foreign_key "calibration_requests", "equipment"
   add_foreign_key "calibration_requests", "facilities"
+  add_foreign_key "calibration_requests", "institutions"
   add_foreign_key "calibration_requests", "organization_structures"
   add_foreign_key "contacts", "facilities"
   add_foreign_key "contacts", "organization_structures"
@@ -512,33 +513,39 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "facilities", "facility_types"
   add_foreign_key "facilities", "organization_structures"
   add_foreign_key "installation_requests", "facilities"
+  add_foreign_key "installation_requests", "institutions"
   add_foreign_key "installation_requests", "organization_structures"
   add_foreign_key "installations", "departments"
   add_foreign_key "installations", "equipment"
   add_foreign_key "institutions", "organization_structures"
   add_foreign_key "maintenance_requests", "equipment"
   add_foreign_key "maintenance_requests", "facilities"
+  add_foreign_key "maintenance_requests", "institutions"
   add_foreign_key "maintenance_requests", "organization_structures"
   add_foreign_key "maintenance_toolkit_requests", "facilities"
   add_foreign_key "maintenance_toolkit_requests", "organization_structures"
   add_foreign_key "maintenances", "equipment"
-  add_foreign_key "organization_structures", "organization_structure_types"
   add_foreign_key "procurement_request_equipments", "procurement_requests"
   add_foreign_key "procurement_requests", "facilities"
+  add_foreign_key "procurement_requests", "institutions"
   add_foreign_key "procurement_requests", "organization_structures"
   add_foreign_key "procurement_requests", "users"
   add_foreign_key "receive_equipments", "receives", column: "receive_id"
   add_foreign_key "receives", "stores"
   add_foreign_key "spare_part_requests", "facilities"
+  add_foreign_key "spare_part_requests", "institutions"
   add_foreign_key "spare_part_requests", "organization_structures"
   add_foreign_key "specification_requests", "facilities"
+  add_foreign_key "specification_requests", "institutions"
   add_foreign_key "specification_requests", "organization_structures"
   add_foreign_key "stores", "facilities"
   add_foreign_key "stores", "organization_structures"
   add_foreign_key "training_requests", "facilities"
+  add_foreign_key "training_requests", "institutions"
   add_foreign_key "training_requests", "organization_structures"
   add_foreign_key "trainings", "contacts"
   add_foreign_key "users", "facilities"
   add_foreign_key "users", "institutions"
   add_foreign_key "users", "organization_structures"
+  add_foreign_key "users", "roles"
 end

@@ -31,18 +31,23 @@
 </p>
 
 <p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+
+<p>
   <strong>Organization structure:</strong>
-  <%= @user.organization_structure_id %>
+  <%= @user.organization_structure %>
 </p>
 
 <p>
   <strong>Facility:</strong>
-  <%= @user.facility_id %>
+  <%= @user.facility %>
 </p>
 
 <p>
   <strong>Institution:</strong>
-  <%= @user.institution_id %>
+  <%= @user.institution %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

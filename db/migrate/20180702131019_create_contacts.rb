@@ -1,8 +1,8 @@
 class CreateContacts < ActiveRecord::Migration[5.1]
   def change
-    create_table :contacts do |t|
-      t.references :organization_structure, foreign_key: true
-      t.references :facility, foreign_key: true
+    create_table :contacts, id: :uuid do |t|
+      t.references :organization_structure, type: :uuid, foreign_key: true
+      t.references :facility, type: :uuid, foreign_key: true
       t.string :name_of_contact
       t.string :profession
       t.string :title

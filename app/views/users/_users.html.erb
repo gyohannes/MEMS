@@ -11,7 +11,7 @@
   <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
-        <td><%= user.roles.map{ |role| role }.to_sentence %></td>
+        <td><%= user.role %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
       </tr>
   <% end %>

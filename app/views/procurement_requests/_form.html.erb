@@ -3,14 +3,18 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :organization_structure, collection: @organization_structures, prompt: false %><br/><br/>
-      <%= f.association :facility, collection: @facilities, prompt: false %><br/>
-      <%= f.input :request_to, collection: ['FMOH', 'RHB', 'NGO', 'Supplier'] %>
+      <%= f.association :organization_structure, collection: @organization_structures, prompt: false %>
+      <%= f.association :facility, collection: @facilities, prompt: false %>
+      <%= f.input :request_to, collection: Constants::REQUEST_TO %>
+      <div id="procurement_request_to">
+        <%= render partial: 'request_to' %>
+      </div>
     </div>
     <div class="col-sm-6">
-      <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %><br/><br/>
-      <%= f.input :contact_phone %><br/><br/><br/>
+      <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
+      <%= f.input :contact_phone %>
       <%= f.input :contact_email %>
+      <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
     </div>
   </div>
     <hr/>

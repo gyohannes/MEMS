@@ -7,17 +7,12 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
-      <th>Budget name</th>
-      <th>Budget description</th>
-      <th>Amount</th>
-      <th>Requested to</th>
-      <th>Request to org structure</th>
-      <th>Request to facility</th>
-      <th>Contact address</th>
-      <th>Requested by</th>
+      <th>Request from</th>
       <th>Request date</th>
+      <th>Budget name</th>
+      <th>Amount</th>
+      <th>Request to</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -25,21 +20,16 @@
   <tbody>
     <% @budget_requests.each do |budget_request| %>
       <tr>
-        <td><%= budget_request.organization_structure %></td>
-        <td><%= budget_request.facility %></td>
-        <td><%= budget_request.budget_name %></td>
-        <td><%= budget_request.budget_description %></td>
-        <td><%= budget_request.amount %></td>
-        <td><%= budget_request.requested_to %></td>
-        <td><%= budget_request.request_to_org_structure %></td>
-        <td><%= budget_request.request_to_facility %></td>
-        <td><%= budget_request.contact_address %></td>
-        <td><%= budget_request.requested_by %></td>
+        <td><%= budget_request.request_from %></td>
         <td><%= budget_request.request_date %></td>
+        <td><%= budget_request.budget_name %></td>
+        <td><%= budget_request.amount %></td>
+        <td><%= budget_request.request_to %></td>
+        <td><%= budget_request.status %></td>
         <td>
-          <%= link_to 'Details', budget_request %> |
-          <%= link_to 'Edit', edit_budget_request_path(budget_request) %> |
-          <%= link_to 'Delete', budget_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', budget_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_budget_request_path(budget_request), class: 'btn btn-primary' if can? :edit, budget_request %>
+          <%= link_to 'Delete', budget_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, budget_request %>
         </td>
       </tr>
     <% end %>
@@ -48,5 +38,5 @@
 
 <hr/>
 
-<%= link_to 'New Budget Request', new_budget_request_path %>
+<%= link_to 'New Budget Request', new_budget_request_path, class: 'btn btn-primary' if can? :create, BudgetRequest %>
 </div>

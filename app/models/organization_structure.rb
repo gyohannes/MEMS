@@ -1,5 +1,4 @@
 class OrganizationStructure < ApplicationRecord
-  belongs_to :organization_structure_type
   belongs_to :parent_organization_structure, optional: true, :class_name => 'OrganizationStructure', :foreign_key => "parent_organization_structure_id"
   has_many :sub_organization_structures, :class_name => 'OrganizationStructure', :foreign_key => "parent_organization_structure_id"
   has_many :users
@@ -7,6 +6,17 @@ class OrganizationStructure < ApplicationRecord
   has_many :institutions
   has_many :contacts
   has_many :equipment, through: :facilities
+  has_many :procurement_requests
+  has_many :specification_requests
+  has_many :spare_part_requests
+  has_many :acceptance_requests
+  has_many :training_requests
+  has_many :installation_requests
+  has_many :maintenance_requests
+  has_many :calibration_requests
+  has_many :disposal_requests
+  has_many :budget_requests
+  has_many :maintenance_toolkit_requests
 
   def top_organization_unit_exists?
     !OrganizationStructure.top_organization_unit.blank?
@@ -28,7 +38,7 @@ class OrganizationStructure < ApplicationRecord
 
   def org_children
     {
-        text: name << " <i>[#{organization_structure_type}]</i> ",
+        text: name,
         type: 'org unit',
         id: id,
         nodes: sub_organization_structures.blank? ? nil

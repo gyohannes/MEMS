@@ -7,16 +7,12 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
+      <th>Request from</th>
+      <th>Request date</th>
       <th>Equipment</th>
       <th>Disposal description</th>
       <th>Requested to</th>
-      <th>Request to org structure</th>
-      <th>Request to facility</th>
-      <th>Contact address</th>
-      <th>Requested by</th>
-      <th>Request date</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -24,20 +20,16 @@
   <tbody>
     <% @disposal_requests.each do |disposal_request| %>
       <tr>
-        <td><%= disposal_request.organization_structure %></td>
-        <td><%= disposal_request.facility %></td>
+        <td><%= disposal_request.request_from %></td>
+        <td><%= disposal_request.request_date %></td>
         <td><%= disposal_request.equipment %></td>
         <td><%= disposal_request.disposal_description %></td>
-        <td><%= disposal_request.requested_to %></td>
-        <td><%= disposal_request.request_to_org_structure %></td>
-        <td><%= disposal_request.request_to_facility %></td>
-        <td><%= disposal_request.contact_address %></td>
-        <td><%= disposal_request.requested_by %></td>
-        <td><%= disposal_request.request_date %></td>
+        <td><%= disposal_request.request_to %></td>
+        <td><%= disposal_request.status %></td>
         <td>
-          <%= link_to 'Details', disposal_request %> |
-          <%= link_to 'Edit', edit_disposal_request_path(disposal_request) %> |
-          <%= link_to 'Delete', disposal_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', disposal_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_disposal_request_path(disposal_request), class: 'btn btn-primary' if can? :edit, disposal_request %>
+          <%= link_to 'Delete', disposal_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, disposal_request %>
         </td>
       </tr>
     <% end %>
@@ -46,5 +38,5 @@
 
 <hr/>
 
-<%= link_to 'New Disposal Request', new_disposal_request_path %>
+<%= link_to 'New Disposal Request', new_disposal_request_path, class: 'btn btn-primary' if can? :create, DisposalRequest %>
 </div>

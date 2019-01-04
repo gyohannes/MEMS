@@ -1,8 +1,8 @@
 class CreateStores < ActiveRecord::Migration[5.1]
   def change
-    create_table :stores do |t|
-      t.references :organization_structure, foreign_key: true
-      t.references :facility, foreign_key: true
+    create_table :stores, id: :uuid do |t|
+      t.references :organization_structure, type: :uuid, foreign_key: true
+      t.references :facility, type: :uuid, foreign_key: true
       t.string :store_name
       t.string :block_number
       t.string :room_number

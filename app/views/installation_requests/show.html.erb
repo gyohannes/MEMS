@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Installation Request</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
-  <%= @installation_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @installation_request.facility %>
+  <strong>Request from:</strong>
+  <%= @installation_request.request_from %>
 </p>
 
 <p>
@@ -26,24 +23,16 @@
 </p>
 
 <p>
-  <strong>Requested to:</strong>
-  <%= @installation_request.requested_to %>
+  <strong>Request to:</strong>
+  <%= @installation_request.request_to %>
 </p>
 
-<p>
-  <strong>Request to org structure:</strong>
-  <%= @installation_request.request_to_org_structure %>
-</p>
-
-<p>
-  <strong>Request to facility:</strong>
-  <%= @installation_request.request_to_facility %>
-</p>
-
-<p>
-  <strong>Request to institution:</strong>
-  <%= @installation_request.request_to_institution %>
-</p>
+  <% if @installation_request.institution_id? %>
+      <p>
+        <label><%= @installation_request.request_to %>:</label>
+        <%= @installation_request.institution %>
+      </p>
+  <% end %>
 
 <p>
   <strong>Requested by:</strong>
@@ -55,5 +44,18 @@
   <%= @installation_request.request_date %>
 </p>
 
-<%= link_to 'Edit', edit_installation_request_path(@installation_request) %> |
+  <p>
+    <strong>Status:</strong>
+    <%= @installation_request.status %>
+  </p>
+
+  <hr/>
+  <%= simple_nested_form_for(@installation_request, url: decision_installation_request_path) do |f| %>
+      <% if can? :decision, @installation_request and @installation_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @installation_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @installation_request.status == Constants::REJECTED %>
+      <% end %>
+  <% end %>
+<%= link_to 'Edit', edit_installation_request_path(@installation_request), class: 'btn btn-primary' %>
 <%= link_to 'Back', installation_requests_path %>
+</div>

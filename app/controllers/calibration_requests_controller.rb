@@ -17,17 +17,33 @@ class CalibrationRequestsController < ApplicationController
     @calibration_request = CalibrationRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
+  def decision
+    @calibration_request.update(procurement_request_params)
+    redirect_to @calibration_request, notice: "Calibration request was successfully #{params[:status]}."
+  end
+
+
   # GET /calibration_requests/1/edit
   def edit
+    @request_to_type = @calibration_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /calibration_requests
   # POST /calibration_requests.json
   def create
     @calibration_request = CalibrationRequest.new(calibration_request_params)
-
+    @request_to_type = @calibration_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @calibration_request.save
+        @calibration_request.update(status: Constants::PENDING)
         format.html { redirect_to @calibration_request, notice: 'Calibration request was successfully created.' }
         format.json { render :show, status: :created, location: @calibration_request }
       else
@@ -40,6 +56,8 @@ class CalibrationRequestsController < ApplicationController
   # PATCH/PUT /calibration_requests/1
   # PATCH/PUT /calibration_requests/1.json
   def update
+    @request_to_type = @calibration_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @calibration_request.update(calibration_request_params)
         format.html { redirect_to @calibration_request, notice: 'Calibration request was successfully updated.' }
@@ -69,6 +87,6 @@ class CalibrationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calibration_request_params
-      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description, :requested_to, :request_to_org_structure, :request_to_facility, :request_to_institution, :requested_by, :request_date)
+      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description, :request_to, :institution_id, :requested_by, :request_date)
     end
 end

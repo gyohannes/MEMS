@@ -1,7 +1,7 @@
 class CreateTrainings < ActiveRecord::Migration[5.1]
   def change
-    create_table :trainings do |t|
-      t.references :contact, foreign_key: true
+    create_table :trainings, id: :uuid do |t|
+      t.references :contact, type: :uuid, foreign_key: true
       t.string :equipment_name
       t.string :model
       t.string :training_type

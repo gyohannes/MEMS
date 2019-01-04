@@ -7,13 +7,11 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
-      <th>Trainee type</th>
-      <th>Training description</th>
-      <th>Requested to</th>
-      <th>Requested by</th>
+      <th>Request from</th>
       <th>Request date</th>
+      <th>Trainee type</th>
+      <th>Request to</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -21,17 +19,15 @@
   <tbody>
     <% @training_requests.each do |training_request| %>
       <tr>
-        <td><%= training_request.organization_structure %></td>
-        <td><%= training_request.facility %></td>
+        <td><%= training_request.request_from %></td>
+        <td><%= training_request.request_date %></td>
         <td><%= training_request.trainee_type %></td>
-        <td><%= training_request.training_description %></td>
-        <td><%= training_request.requested_to %></td>
-        <td><%= training_request.requested_by %></td>
+        <td><%= training_request.request_to %></td>
         <td><%= training_request.request_date %></td>
         <td>
-          <%= link_to 'Details', training_request %> |
-          <%= link_to 'Edit', edit_training_request_path(training_request) %> |
-          <%= link_to 'Delete', training_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', training_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_training_request_path(training_request), class: 'btn btn-primary' if can? :edit, training_request %>
+          <%= link_to 'Delete', training_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, training_request %>
         </td>
       </tr>
     <% end %>
@@ -40,5 +36,5 @@
 
 <hr/>
 
-<%= link_to 'New Training Request', new_training_request_path %>
+<%= link_to 'New Training Request', new_training_request_path, class: 'btn btn-primary' if can? :create, TrainingRequest %>
 </div>

@@ -6,18 +6,21 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col-sm-6 left_form">
-        <%= f.association :organization_structure %>
-        <%= f.association :facility %>
+        <%= f.association :organization_structure, collection: [current_user.organization_structure], prompt: false %>
+        <%= f.association :facility, collection: [current_user.facility], prompt: false %>
+        <%= f.input :request_to, collection: Constants::REQUEST_TO %>
+        <div id="acceptance_request_to">
+          <%= render partial: 'request_to' %>
+        </div>
+        <%= f.input :requested_by %>
+        <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
+      </div>
+      <div class="col-sm-6">
         <%= f.input :equipment_name %>
         <%= f.input :model %>
         <%= f.input :volts_ampere %>
         <%= f.input :power_requirement %>
-      </div>
-      <div class="col-sm-6">
         <%= f.input :description %>
-        <%= f.input :requested_to %>
-        <%= f.input :requested_by %>
-        <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
       </div>
     </div>
   </div>

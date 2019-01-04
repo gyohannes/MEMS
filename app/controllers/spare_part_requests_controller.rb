@@ -17,17 +17,32 @@ class SparePartRequestsController < ApplicationController
     @spare_part_request = SparePartRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
+  def decision
+    @spare_part_request.update(procurement_request_params)
+    redirect_to @spare_part_request, notice: "Spare Part request was successfully #{params[:status]}."
+  end
+
   # GET /spare_part_requests/1/edit
   def edit
+    @request_to_type = @spare_part_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /spare_part_requests
   # POST /spare_part_requests.json
   def create
     @spare_part_request = SparePartRequest.new(spare_part_request_params)
-
+    @request_to_type = @spare_part_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @spare_part_request.save
+        @spare_part_request.update(status: Constants::PENDING)
         format.html { redirect_to @spare_part_request, notice: 'Spare part request was successfully created.' }
         format.json { render :show, status: :created, location: @spare_part_request }
       else
@@ -40,8 +55,11 @@ class SparePartRequestsController < ApplicationController
   # PATCH/PUT /spare_part_requests/1
   # PATCH/PUT /spare_part_requests/1.json
   def update
+    @request_to_type = @spare_part_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @spare_part_request.update(spare_part_request_params)
+        @spare_part_request.update(status: Constants::PENDING)
         format.html { redirect_to @spare_part_request, notice: 'Spare part request was successfully updated.' }
         format.json { render :show, status: :ok, location: @spare_part_request }
       else
@@ -69,6 +87,6 @@ class SparePartRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def spare_part_request_params
-      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere, :power_requirement, :quantity, :requested_to, :request_to_org_structure, :request_to_facility, :request_to_institution, :requested_by, :request_date)
+      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere, :power_requirement, :quantity, :request_to, :institution_id, :requested_by, :request_date)
     end
 end

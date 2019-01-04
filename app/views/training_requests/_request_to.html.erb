@@ -1,0 +1,6 @@
+<% if @request_to_type == Constants::SUPPLIER || @request_to_type == Constants::REPRESENTATIVE %>
+  <%= simple_fields_for(:training_request, @training_request) do |f| %>
+      <%= f.input :institution_id, label: "#{@request_to_type}", collection: @institutions %>
+  <% end %>
+<% end %>
+

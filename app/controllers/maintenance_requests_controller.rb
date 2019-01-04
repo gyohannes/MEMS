@@ -17,17 +17,33 @@ class MaintenanceRequestsController < ApplicationController
     @maintenance_request = MaintenanceRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
+  def decision
+    @maintenance_request.update(procurement_request_params)
+    redirect_to @maintenance_request, notice: "Maintenance request was successfully #{params[:status]}."
+  end
+
+
   # GET /maintenance_requests/1/edit
   def edit
+    @request_to_type = @maintenance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /maintenance_requests
   # POST /maintenance_requests.json
   def create
     @maintenance_request = MaintenanceRequest.new(maintenance_request_params)
-
+    @request_to_type = @maintenance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @maintenance_request.save
+        @maintenance_request.update(status: Constants::PENDING)
         format.html { redirect_to @maintenance_request, notice: 'Maintenance request was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance_request }
       else
@@ -40,6 +56,8 @@ class MaintenanceRequestsController < ApplicationController
   # PATCH/PUT /maintenance_requests/1
   # PATCH/PUT /maintenance_requests/1.json
   def update
+    @request_to_type = @maintenance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @maintenance_request.update(maintenance_request_params)
         format.html { redirect_to @maintenance_request, notice: 'Maintenance request was successfully updated.' }
@@ -69,6 +87,6 @@ class MaintenanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_request_params
-      params.require(:maintenance_request).permit(:organization_structure_id, :facility_id, :equipment_id, :maintenance_type, :maintenance_description, :requested_to, :request_to_org_structure, :request_to_facility, :request_to_institution, :requested_by, :request_date)
+      params.require(:maintenance_request).permit(:organization_structure_id, :facility_id, :equipment_id, :maintenance_type, :maintenance_description, :request_to, :institution_id, :requested_by, :request_date)
     end
 end

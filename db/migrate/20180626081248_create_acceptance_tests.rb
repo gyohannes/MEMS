@@ -1,7 +1,7 @@
 class CreateAcceptanceTests < ActiveRecord::Migration[5.1]
   def change
-    create_table :acceptance_tests do |t|
-      t.references :equipment, foreign_key: true
+    create_table :acceptance_tests, id: :uuid do |t|
+      t.references :equipment, type: :uuid, foreign_key: true
       t.boolean :meet_standard
       t.boolean :with_order_specification
       t.boolean :installation_done

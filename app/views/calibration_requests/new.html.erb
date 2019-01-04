@@ -1,5 +1,1 @@
-<h1>New Calibration Request</h1>
-
-<%= render 'form', calibration_request: @calibration_request %>
-
-<%= link_to 'Back', calibration_requests_path %>
+<%= render partial: 'form', layout: 'layouts/form_layout', locals: { title: "New Calibration Request" } %>

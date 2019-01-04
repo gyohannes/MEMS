@@ -87,6 +87,6 @@ class OrganizationStructuresController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_structure_params
-      params.require(:organization_structure).permit(:name, :code, :organization_structure_type_id, :parent_organization_structure_id)
+      params.require(:organization_structure).permit(:name, :code, :organization_structure_type, :parent_organization_structure_id)
     end
 end

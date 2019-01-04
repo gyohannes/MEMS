@@ -1,14 +1,84 @@
 Rails.application.routes.draw do
-  resources :maintenance_toolkit_requests
-  resources :budget_requests
-  resources :disposal_requests
-  resources :calibration_requests
-  resources :maintenance_requests
-  resources :installation_requests
-  resources :training_requests
-  resources :acceptance_requests
-  resources :spare_part_requests
-  resources :specification_requests
+  resources :maintenance_toolkit_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :budget_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :disposal_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :calibration_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :maintenance_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :installation_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :training_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :acceptance_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :spare_part_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
+  resources :specification_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
   resources :trainings
   resources :contacts do
     collection do
@@ -21,7 +91,14 @@ Rails.application.routes.draw do
   resources :installations
   resources :receives
   resources :stores
-  resources :procurement_requests
+  resources :procurement_requests do
+    member do
+      patch 'decision'
+    end
+    collection do
+      get 'load_request_to'
+    end
+  end
   resources :equipment do
     collection do
       get 'load_equipment'

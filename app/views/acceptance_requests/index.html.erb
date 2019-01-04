@@ -7,16 +7,12 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
+      <th>Request from</th>
+      <th>Request date</th>
       <th>Equipment name</th>
       <th>Model</th>
-      <th>Volts ampere</th>
-      <th>Power requirement</th>
-      <th>Description</th>
-      <th>Requested to</th>
-      <th>Requested by</th>
-      <th>Request date</th>
+      <th>Request to</th>
+      <th>Status</th>
       <th></th>
     </tr>
   </thead>
@@ -24,20 +20,16 @@
   <tbody>
     <% @acceptance_requests.each do |acceptance_request| %>
       <tr>
-        <td><%= acceptance_request.organization_structure %></td>
-        <td><%= acceptance_request.facility %></td>
+        <td><%= acceptance_request.request_from %></td>
+        <td><%= acceptance_request.request_date %></td>
         <td><%= acceptance_request.equipment_name %></td>
         <td><%= acceptance_request.model %></td>
-        <td><%= acceptance_request.volts_ampere %></td>
-        <td><%= acceptance_request.power_requirement %></td>
-        <td><%= acceptance_request.description %></td>
-        <td><%= acceptance_request.requested_to %></td>
-        <td><%= acceptance_request.requested_by %></td>
-        <td><%= acceptance_request.request_date %></td>
+        <td><%= acceptance_request.request_to %></td>
+        <td><%= acceptance_request.status %></td>
         <td>
-          <%= link_to 'Details', acceptance_request %>
-          <%= link_to 'Edit', edit_acceptance_request_path(acceptance_request) %>
-          <%= link_to 'Delete', acceptance_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', acceptance_request, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_acceptance_request_path(acceptance_request), class: 'btn btn-primary' if can? :edit, acceptance_request %>
+          <%= link_to 'Delete', acceptance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, acceptance_request %>
         </td>
       </tr>
     <% end %>
@@ -46,5 +38,5 @@
 
 <hr/>
 
-<%= link_to 'New Acceptance Request', new_acceptance_request_path %>
+<%= link_to 'New Acceptance Request', new_acceptance_request_path, class: 'btn btn-primary' if can? :create, AcceptanceRequest %>
 </div>

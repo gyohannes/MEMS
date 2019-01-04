@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Disposal Requests</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
-  <%= @disposal_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @disposal_request.facility %>
+  <strong>Request from:</strong>
+  <%= @disposal_request.request_from %>
 </p>
 
 <p>
@@ -21,18 +18,8 @@
 </p>
 
 <p>
-  <strong>Requested to:</strong>
-  <%= @disposal_request.requested_to %>
-</p>
-
-<p>
-  <strong>Request to org structure:</strong>
-  <%= @disposal_request.request_to_org_structure %>
-</p>
-
-<p>
-  <strong>Request to facility:</strong>
-  <%= @disposal_request.request_to_facility %>
+  <strong>Request to:</strong>
+  <%= @disposal_request.request_to %>
 </p>
 
 <p>
@@ -50,5 +37,18 @@
   <%= @disposal_request.request_date %>
 </p>
 
-<%= link_to 'Edit', edit_disposal_request_path(@disposal_request) %> |
+  <p>
+    <strong>Status:</strong>
+    <%= @disposal_request.status %>
+  </p>
+
+  <hr/>
+  <%= simple_nested_form_for(@disposal_request, url: decision_disposal_request_path) do |f| %>
+      <% if can? :decision, @disposal_request and @disposal_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @disposal_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @disposal_request.status == Constants::REJECTED %>
+      <% end %>
+  <% end %>
+<%= link_to 'Edit', edit_disposal_request_path(@disposal_request), class: 'btn btn-primary' %>
 <%= link_to 'Back', disposal_requests_path %>
+</div>

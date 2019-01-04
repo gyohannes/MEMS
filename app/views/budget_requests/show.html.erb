@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Budget Request</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
+  <strong>Request from:</strong>
   <%= @budget_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @budget_request.facility %>
 </p>
 
 <p>
@@ -26,18 +23,8 @@
 </p>
 
 <p>
-  <strong>Requested to:</strong>
-  <%= @budget_request.requested_to %>
-</p>
-
-<p>
-  <strong>Request to org structure:</strong>
-  <%= @budget_request.request_to_org_structure %>
-</p>
-
-<p>
-  <strong>Request to facility:</strong>
-  <%= @budget_request.request_to_facility %>
+  <strong>Request to:</strong>
+  <%= @budget_request.request_to %>
 </p>
 
 <p>
@@ -55,5 +42,18 @@
   <%= @budget_request.request_date %>
 </p>
 
-<%= link_to 'Edit', edit_budget_request_path(@budget_request) %> |
+  <p>
+    <strong>Status:</strong>
+    <%= @budget_request.status %>
+  </p>
+
+  <hr/>
+  <%= simple_nested_form_for(@budget_request, url: decision_budget_request_path) do |f| %>
+      <% if can? :decision, @budget_request and @budget_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @budget_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @budget_request.status == Constants::REJECTED %>
+      <% end %>
+  <% end %>
+<%= link_to 'Edit', edit_budget_request_path(@budget_request), class: 'btn btn-primary' %>
 <%= link_to 'Back', budget_requests_path %>
+</div>

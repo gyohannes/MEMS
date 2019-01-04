@@ -17,17 +17,33 @@ class AcceptanceRequestsController < ApplicationController
     @acceptance_request = AcceptanceRequest.new
   end
 
+  def load_request_to
+    @request_to_type = params[:request_to]
+    @institutions = Institution.where('category = ?', @request_to_type)
+    render partial: 'request_to'
+  end
+
+  def decision
+    @acceptance_request.update(procurement_request_params)
+    redirect_to @acceptance_requests, notice: "Acceptance request was successfully #{params[:status]}."
+  end
+
+
   # GET /acceptance_requests/1/edit
   def edit
+    @request_to_type = @acceptance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /acceptance_requests
   # POST /acceptance_requests.json
   def create
     @acceptance_request = AcceptanceRequest.new(acceptance_request_params)
-
+    @request_to_type = @acceptance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @acceptance_request.save
+        @acceptance_request.update(status: Constants::PENDING)
         format.html { redirect_to @acceptance_request, notice: 'Acceptance request was successfully created.' }
         format.json { render :show, status: :created, location: @acceptance_request }
       else
@@ -40,6 +56,8 @@ class AcceptanceRequestsController < ApplicationController
   # PATCH/PUT /acceptance_requests/1
   # PATCH/PUT /acceptance_requests/1.json
   def update
+    @request_to_type = @acceptance_request.request_to
+    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @acceptance_request.update(acceptance_request_params)
         format.html { redirect_to @acceptance_request, notice: 'Acceptance request was successfully updated.' }
@@ -69,6 +87,6 @@ class AcceptanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def acceptance_request_params
-      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere, :power_requirement, :description, :requested_to, :request_to_org_structure, :request_to_facility, :request_to_institution, :requested_by, :request_date)
+      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere, :power_requirement, :description, :request_to, :institution_id, :requested_by, :request_date)
     end
 end

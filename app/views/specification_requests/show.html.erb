@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Specification Request</h2>
+</div>
+<div class="body">
 <p>
-  <strong>Organization structure:</strong>
-  <%= @specification_request.organization_structure %>
-</p>
-
-<p>
-  <strong>Facility:</strong>
-  <%= @specification_request.facility %>
+  <strong>Request From:</strong>
+  <%= @specification_request.request_from %>
 </p>
 
 <p>
@@ -20,6 +17,17 @@
   <%= @specification_request.quantity %>
 </p>
 
+  <p>
+    <strong>Request to:</strong>
+    <%= @specification_request.request_to %>
+  </p>
+
+  <% if @specification_request.institution_id? %>
+      <p>
+        <label><%= @specification_request.request_to %>:</label>
+        <%= @specification_request.institution %>
+      </p>
+  <% end %>
 <p>
   <strong>Requested by:</strong>
   <%= @specification_request.requested_by %>
@@ -29,6 +37,16 @@
   <strong>Requested date:</strong>
   <%= @specification_request.requested_date %>
 </p>
+<hr/>
+<center>
+  <%= simple_nested_form_for(@specification_request, url: decision_specification_request_path) do |f| %>
+    <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING %>
+      <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @specification_request.status == Constants::APPROVED %>
+      &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @specification_request.status == Constants::REJECTED %>
+    <% end %>
+  <% end %>
+</center>
 
-<%= link_to 'Edit', edit_specification_request_path(@specification_request) %> |
+<%= link_to 'Edit', edit_specification_request_path(@specification_request),class: 'btn btn-primary' if can? :edit, @specification_request %>
 <%= link_to 'Back', specification_requests_path %>
+</div>

@@ -4,51 +4,78 @@
   </h2>
 </div>
 <div class="body">
-  <p>
-    <label>Organization structure:</label>
-    <%= @procurement_request.organization_structure %>
-  </p>
+  <%= simple_nested_form_for(@procurement_request, url: decision_procurement_request_path) do |f| %>
+      <p>
+        <label>Request From:</label>
+        <%= @procurement_request.request_from %>
+      </p>
 
-  <p>
-    <label>Facility:</label>
-    <%= @procurement_request.facility %>
-  </p>
+      <p>
+        <label>Request Date:</label>
+        <%= @procurement_request.request_date %>
+      </p>
 
-  <p>
-    <label>User:</label>
-    <%= @procurement_request.user %>
-  </p>
+    <p>
+      <label>Requested by:</label>
+      <%= @procurement_request.user %>
+    </p>
 
-  <p>
-    <label>Contact phone:</label>
-    <%= @procurement_request.contact_phone %>
-  </p>
+    <p>
+      <label>Contact phone:</label>
+      <%= @procurement_request.contact_phone %>
+    </p>
 
-  <p>
-    <label>Contact email:</label>
-    <%= @procurement_request.contact_email %>
-  </p>
+    <p>
+      <label>Contact email:</label>
+      <%= @procurement_request.contact_email %>
+    </p>
 
-  <p>
-    <label>Request to:</label>
-    <%= @procurement_request.request_to %>
-  </p>
-  <label>Equipments</label>
+    <p>
+      <label>Request to:</label>
+      <%= @procurement_request.request_to %>
+    </p>
+    <% if @procurement_request.institution_id? %>
+      <p>
+        <label><%= @procurement_request.request_to %>:</label>
+        <%= @procurement_request.institution %>
+      </p>
+    <% end %>
+    <p>
+      <label>Status:</label>
+      <%= @procurement_request.status %>
+    </p>
+
+  <caption>Equipments</caption>
   <table class="table">
     <tr>
       <th>Equipment</th>
       <th>Specification</th>
-      <th>Quanitity</th>
+      <th>Requested Quanitity</th>
+      <th>Approved Quanitity</th>
     </tr>
-    <% @procurement_request.procurement_request_equipments.each do |eq| %>
+    <%= f.simple_fields_for :procurement_request_equipments do |eq| %>
       <tr>
-        <td><%= eq.equipment_name %></td>
-        <td><%= eq.specification %></td>
-        <td><%= eq.quantity %></td>
+        <td><%= eq.object.equipment_name %></td>
+        <td><%= eq.object.specification %></td>
+        <td><%= eq.object.quantity %></td>
+        <td>
+          <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
+            <%= eq.input :approved_quantity, label: false, input_html: {value: eq.object.approved_quantity || eq.object.quantity} %>
+          <% else %>
+            <%= eq.object.approved_quantity %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>
+      <center>
+        <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
+          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @procurement_request.status == Constants::APPROVED %>
+          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @procurement_request.status == Constants::REJECTED %>
+        <% end %>
+      </center>
+  <% end %>
 <hr/>
-        <%= link_to 'Edit', edit_procurement_request_path(@procurement_request) %> |
-        <%= link_to 'Back', procurement_requests_path %>
+    <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request %> &nbsp;&nbsp;&nbsp;
+  <%= link_to 'Back', procurement_requests_path %>
 </div>
