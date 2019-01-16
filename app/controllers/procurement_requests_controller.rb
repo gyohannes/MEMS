@@ -11,7 +11,15 @@ class ProcurementRequestsController < ApplicationController
   # GET /procurement_requests
   # GET /procurement_requests.json
   def index
-    @procurement_requests = ProcurementRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @procurement_requests = current_user.procurement_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @procurement_requests = current_user.incoming_procurement_requests
+    elsif !current_user.institution.blank?
+      @procurement_requests = current_user.incoming_procurement_requests
+    else
+      @procurement_requests = []
+    end
   end
 
   def decision

@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   create_table "acceptance_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "equipment_name"
     t.string "model"
     t.integer "volts_ampere"
@@ -26,7 +27,6 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.text "description"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_acceptance_requests_on_facility_id"
     t.index ["institution_id"], name: "index_acceptance_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_acceptance_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_acceptance_requests_on_user_id"
   end
 
   create_table "acceptance_tests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -60,28 +61,29 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   create_table "budget_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "budget_name"
     t.text "budget_description"
     t.float "amount"
     t.string "request_to"
     t.text "contact_address"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_budget_requests_on_facility_id"
     t.index ["organization_structure_id"], name: "index_budget_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_budget_requests_on_user_id"
   end
 
   create_table "calibration_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
     t.uuid "equipment_id"
+    t.uuid "user_id"
     t.text "calibration_description"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -90,6 +92,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_calibration_requests_on_facility_id"
     t.index ["institution_id"], name: "index_calibration_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_calibration_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_calibration_requests_on_user_id"
   end
 
   create_table "contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -120,10 +123,10 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
     t.uuid "equipment_id"
+    t.uuid "user_id"
     t.text "disposal_description"
     t.string "request_to"
     t.text "contact_address"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -131,6 +134,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["equipment_id"], name: "index_disposal_requests_on_equipment_id"
     t.index ["facility_id"], name: "index_disposal_requests_on_facility_id"
     t.index ["organization_structure_id"], name: "index_disposal_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_disposal_requests_on_user_id"
   end
 
   create_table "disposals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -211,12 +215,12 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   create_table "installation_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "equipment_name"
     t.string "model"
     t.text "installation_description"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -224,6 +228,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_installation_requests_on_facility_id"
     t.index ["institution_id"], name: "index_installation_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_installation_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_installation_requests_on_user_id"
   end
 
   create_table "installations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -257,11 +262,11 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
     t.uuid "equipment_id"
+    t.uuid "user_id"
     t.string "maintenance_type"
     t.text "maintenance_description"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -270,16 +275,17 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_maintenance_requests_on_facility_id"
     t.index ["institution_id"], name: "index_maintenance_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_maintenance_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_maintenance_requests_on_user_id"
   end
 
   create_table "maintenance_toolkit_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "toolkit_name"
     t.text "toolkit_description"
     t.float "quantity"
     t.string "request_to"
-    t.string "requested_by"
     t.text "contact_address"
     t.date "request_date"
     t.string "status"
@@ -287,6 +293,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_maintenance_toolkit_requests_on_facility_id"
     t.index ["organization_structure_id"], name: "index_maintenance_toolkit_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_maintenance_toolkit_requests_on_user_id"
   end
 
   create_table "maintenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -386,6 +393,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   create_table "spare_part_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "spare_part_name"
     t.string "model"
     t.integer "volts_ampere"
@@ -393,7 +401,6 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.integer "quantity"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -401,16 +408,17 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_spare_part_requests_on_facility_id"
     t.index ["institution_id"], name: "index_spare_part_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_spare_part_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_spare_part_requests_on_user_id"
   end
 
   create_table "specification_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "request_to"
     t.uuid "institution_id"
     t.string "equipment_name"
     t.float "quantity"
-    t.string "requested_by"
     t.date "requested_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -418,6 +426,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_specification_requests_on_facility_id"
     t.index ["institution_id"], name: "index_specification_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_specification_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_specification_requests_on_user_id"
   end
 
   create_table "stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -435,11 +444,11 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   create_table "training_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "user_id"
     t.string "trainee_type"
     t.text "training_description"
     t.string "request_to"
     t.uuid "institution_id"
-    t.string "requested_by"
     t.date "request_date"
     t.string "status"
     t.datetime "created_at", null: false
@@ -447,6 +456,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["facility_id"], name: "index_training_requests_on_facility_id"
     t.index ["institution_id"], name: "index_training_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_training_requests_on_organization_structure_id"
+    t.index ["user_id"], name: "index_training_requests_on_user_id"
   end
 
   create_table "trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -471,7 +481,9 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
     t.uuid "institution_id"
-    t.uuid "role_id"
+    t.uuid "department_id"
+    t.uuid "store_id"
+    t.string "role"
     t.string "user_type"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -483,29 +495,34 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["facility_id"], name: "index_users_on_facility_id"
     t.index ["institution_id"], name: "index_users_on_institution_id"
     t.index ["organization_structure_id"], name: "index_users_on_organization_structure_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["role_id"], name: "index_users_on_role_id"
+    t.index ["store_id"], name: "index_users_on_store_id"
   end
 
   add_foreign_key "acceptance_requests", "facilities"
   add_foreign_key "acceptance_requests", "institutions"
   add_foreign_key "acceptance_requests", "organization_structures"
+  add_foreign_key "acceptance_requests", "users"
   add_foreign_key "acceptance_tests", "equipment"
   add_foreign_key "budget_requests", "facilities"
   add_foreign_key "budget_requests", "organization_structures"
+  add_foreign_key "budget_requests", "users"
   add_foreign_key "calibration_requests", "equipment"
   add_foreign_key "calibration_requests", "facilities"
   add_foreign_key "calibration_requests", "institutions"
   add_foreign_key "calibration_requests", "organization_structures"
+  add_foreign_key "calibration_requests", "users"
   add_foreign_key "contacts", "facilities"
   add_foreign_key "contacts", "organization_structures"
   add_foreign_key "disposal_requests", "equipment"
   add_foreign_key "disposal_requests", "facilities"
   add_foreign_key "disposal_requests", "organization_structures"
+  add_foreign_key "disposal_requests", "users"
   add_foreign_key "disposals", "equipment"
   add_foreign_key "equipment", "equipment_categories"
   add_foreign_key "equipment", "facilities"
@@ -515,6 +532,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "installation_requests", "facilities"
   add_foreign_key "installation_requests", "institutions"
   add_foreign_key "installation_requests", "organization_structures"
+  add_foreign_key "installation_requests", "users"
   add_foreign_key "installations", "departments"
   add_foreign_key "installations", "equipment"
   add_foreign_key "institutions", "organization_structures"
@@ -522,8 +540,10 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "maintenance_requests", "facilities"
   add_foreign_key "maintenance_requests", "institutions"
   add_foreign_key "maintenance_requests", "organization_structures"
+  add_foreign_key "maintenance_requests", "users"
   add_foreign_key "maintenance_toolkit_requests", "facilities"
   add_foreign_key "maintenance_toolkit_requests", "organization_structures"
+  add_foreign_key "maintenance_toolkit_requests", "users"
   add_foreign_key "maintenances", "equipment"
   add_foreign_key "procurement_request_equipments", "procurement_requests"
   add_foreign_key "procurement_requests", "facilities"
@@ -535,17 +555,21 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "spare_part_requests", "facilities"
   add_foreign_key "spare_part_requests", "institutions"
   add_foreign_key "spare_part_requests", "organization_structures"
+  add_foreign_key "spare_part_requests", "users"
   add_foreign_key "specification_requests", "facilities"
   add_foreign_key "specification_requests", "institutions"
   add_foreign_key "specification_requests", "organization_structures"
+  add_foreign_key "specification_requests", "users"
   add_foreign_key "stores", "facilities"
   add_foreign_key "stores", "organization_structures"
   add_foreign_key "training_requests", "facilities"
   add_foreign_key "training_requests", "institutions"
   add_foreign_key "training_requests", "organization_structures"
+  add_foreign_key "training_requests", "users"
   add_foreign_key "trainings", "contacts"
+  add_foreign_key "users", "departments"
   add_foreign_key "users", "facilities"
   add_foreign_key "users", "institutions"
   add_foreign_key "users", "organization_structures"
-  add_foreign_key "users", "roles"
+  add_foreign_key "users", "stores"
 end

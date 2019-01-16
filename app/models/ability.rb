@@ -5,13 +5,13 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
        user ||= User.new # guest user (not logged in)
-       if user.biomedical_engineer?
+       if user.is_role(Constants::BIOMEDICAL_ENGINEER) or user.is_role(Constants::DEPARTMENT)
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
                                                                       SparePartRequest, AcceptanceRequest,
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-       elsif user.biomedical_head?
+       elsif user.is_role(Constants::BIOMEDICAL_HEAD)
          can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]

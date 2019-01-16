@@ -11,4 +11,7 @@ class Constants
   ORGANIZATION_TYPES = [FMOH='Federal Ministry of Health', RHB='Regional Health Bureau',
                         ZHB = 'Zonal Health Bureau', WHB = 'Woreda Health Bureau']
 
+  ROLES = [STORE = 'Store', DEPARTMENT = 'Department', BIOMEDICAL_ENGINEER = 'Biomedical Engineer', BIOMEDICAL_HEAD = 'Biomedical Head',
+           SUPPLIER = 'Supplier', LOCAL_REPRESENTATIVE = 'Local Representative']
+
 end

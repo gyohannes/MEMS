@@ -1,26 +1,19 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Acceptance Tests</h1>
-
-<table>
+<div class="header">
+  <h2>
+    Acceptance Tests
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
       <th>Equipment</th>
-      <th>Meet standard</th>
-      <th>With order specification</th>
-      <th>Installation done</th>
-      <th>Test run</th>
-      <th>Accepted</th>
-      <th>Maintenance personnel trained</th>
-      <th>End users trained</th>
-      <th>With full accessery</th>
-      <th>With manual</th>
       <th>Status</th>
       <th>Approved by</th>
       <th>Acceptance testing date</th>
       <th>Contact address</th>
       <th>Note</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -28,28 +21,20 @@
     <% @acceptance_tests.each do |acceptance_test| %>
       <tr>
         <td><%= acceptance_test.equipment %></td>
-        <td><%= acceptance_test.meet_standard %></td>
-        <td><%= acceptance_test.with_order_specification %></td>
-        <td><%= acceptance_test.installation_done %></td>
-        <td><%= acceptance_test.test_run %></td>
-        <td><%= acceptance_test.accepted %></td>
-        <td><%= acceptance_test.maintenance_personnel_trained %></td>
-        <td><%= acceptance_test.end_users_trained %></td>
-        <td><%= acceptance_test.with_full_accessery %></td>
-        <td><%= acceptance_test.with_manual %></td>
         <td><%= acceptance_test.status %></td>
         <td><%= acceptance_test.approved_by %></td>
         <td><%= acceptance_test.acceptance_testing_date %></td>
         <td><%= acceptance_test.contact_address %></td>
         <td><%= acceptance_test.note %></td>
-        <td><%= link_to 'Show', acceptance_test %></td>
-        <td><%= link_to 'Edit', edit_acceptance_test_path(acceptance_test) %></td>
-        <td><%= link_to 'Destroy', acceptance_test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'Details', acceptance_test %> |
+          <%= link_to 'Edit', edit_acceptance_test_path(acceptance_test) %> |
+          <%= link_to 'Delete', acceptance_test, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Acceptance Test', new_acceptance_test_path %>
+  <hr/>
+<%= link_to 'New Acceptance Test', new_acceptance_test_path, class: 'btn btn-primary' %>
+</div>

@@ -15,7 +15,7 @@
       <div class="col-sm-6">
         <%= f.input :equipment_name %>
         <%= f.input :quantity %>
-        <%= f.input :requested_by %>
+        <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
         <%= f.input :requested_date, as: :string, input_html: {class: 'datepicker'} %>
       </div>
     </div>

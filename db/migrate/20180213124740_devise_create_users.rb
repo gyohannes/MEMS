@@ -10,7 +10,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.references :organization_structure, type: :uuid, foreign_key: true
       t.references :facility, type: :uuid, foreign_key: true
       t.references :institution, type: :uuid, foreign_key: true
-      t.references :role, type: :uuid, foreign_key: true
+      t.references :department, type: :uuid, foreign_key: true
+      t.references :store, type: :uuid, foreign_key: true
+      t.string :role
       t.string :user_type
       ## Recoverable
       t.string   :reset_password_token

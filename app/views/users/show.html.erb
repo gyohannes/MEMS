@@ -1,5 +1,7 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>User Details</h2>
+</div>
+<div class="body">
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
@@ -49,6 +51,7 @@
   <strong>Institution:</strong>
   <%= @user.institution %>
 </p>
-
+<hr/>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+</div>

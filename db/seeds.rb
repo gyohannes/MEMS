@@ -5,11 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-role = Role.create(name: 'Admin')
 
 top_org_unit = OrganizationStructure.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
                                             organization_structure_type: Constants::FMOH)
 
-admin_user = User.new(organization_structure_id: top_org_unit.id,email: 'admin@mems.com', password: 'admin123')
-admin_user.role = role
-admin_user.save
+admin_user = User.create(organization_structure_id: top_org_unit.id,email: 'admin@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)

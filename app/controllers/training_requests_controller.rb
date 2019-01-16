@@ -4,7 +4,15 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests
   # GET /training_requests.json
   def index
-    @training_requests = TrainingRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @training_requests = current_user.training_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @training_requests = current_user.incoming_training_requests
+    elsif !current_user.institution.blank?
+      @training_requests = current_user.incoming_training_requests
+    else
+      @training_requests = []
+    end
   end
 
   # GET /training_requests/1

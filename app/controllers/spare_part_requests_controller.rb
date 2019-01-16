@@ -4,7 +4,15 @@ class SparePartRequestsController < ApplicationController
   # GET /spare_part_requests
   # GET /spare_part_requests.json
   def index
-    @spare_part_requests = SparePartRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @spare_part_requests = current_user.spare_part_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @spare_part_requests = current_user.incoming_spare_part_requests
+    elsif !current_user.institution.blank?
+      @spare_part_requests = current_user.incoming_spare_part_requests
+    else
+      @spare_part_requests = []
+    end
   end
 
   # GET /spare_part_requests/1

@@ -1,22 +1,26 @@
 <%= simple_form_for(@acceptance_test) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.association :equipment %>
-    <%= f.input :meet_standard, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'}, input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :with_order_specification, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :installation_done, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :test_run, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :accepted, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :maintenance_personnel_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :end_users_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :with_full_accessery, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :with_manual, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
-    <%= f.input :status, collection: Equipment::FUNCTIONAL_STATUSES %>
-    <%= f.input :approved_by %>
-    <%= f.input :acceptance_testing_date, as: :string, input_html: {class: 'datepicker'} %>
-    <%= f.input :contact_address %>
-    <%= f.input :note %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.association :equipment %>
+      <%= f.input :meet_standard, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'}, input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :with_order_specification, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :installation_done, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :test_run, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :accepted, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :maintenance_personnel_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :end_users_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+    </div>
+    <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+      <%= f.input :with_full_accessery, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :with_manual, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
+      <%= f.input :status, collection: Equipment::FUNCTIONAL_STATUSES %>
+      <%= f.input :approved_by %>
+      <%= f.input :acceptance_testing_date, as: :string, input_html: {class: 'datepicker'} %>
+      <%= f.input :contact_address %>
+      <%= f.input :note %>
+    </div>
   </div>
 
   <div class="form-actions">

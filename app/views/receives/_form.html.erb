@@ -3,15 +3,15 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :store, label: false,prompt:'Please Select Store' %>
-      <%= f.input :deliverer_name, label: false, placeholder: 'Deliverer Name' %>
-      <%= f.input :recipient_name, label: false, placeholder: 'Recipient Name' %>
+      <%= f.association :store, collection: @stores %>
+      <%= f.input :deliverer_name, label: 'Deliverer Name' %>
+      <%= f.input :recipient_name, label: 'Recipient Name' %>
     </div>
 
     <div class="col-sm-6">
-      <%= f.input :witness_name, label: false, placeholder: 'Witness/s Name' %>
-      <%= f.input :delivery_date, as: 'string', input_html: {class: 'datepicker'}, label: false, placeholder: 'Delivery Date' %>
-      <%= f.input :remark, label: false, placeholder: 'Remark' %>
+      <%= f.input :witness_name, label: 'Witness/s Name' %>
+      <%= f.input :delivery_date, as: 'string', input_html: {class: 'datepicker'}, label: 'Delivery Date' %>
+      <%= f.input :remark %>
     </div>
 
   </div>
@@ -19,6 +19,6 @@
     <%= render partial: 'equipment_fields', locals: {f: f} %>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, 'Save Receiving Form' %>
   </div>
 <% end %>

@@ -2,6 +2,8 @@ class OrganizationStructure < ApplicationRecord
   belongs_to :parent_organization_structure, optional: true, :class_name => 'OrganizationStructure', :foreign_key => "parent_organization_structure_id"
   has_many :sub_organization_structures, :class_name => 'OrganizationStructure', :foreign_key => "parent_organization_structure_id"
   has_many :users
+  has_many :stores
+  has_many :receives, through: :stores
   has_many :facilities
   has_many :institutions
   has_many :contacts
@@ -76,7 +78,7 @@ class OrganizationStructure < ApplicationRecord
   end
 
   def sub_facilities
-    facilities + sub_organization_structures.collect{|x| x.sub_facilities}.flatten
+    facilities
   end
 
   def sub_institutions
@@ -84,7 +86,7 @@ class OrganizationStructure < ApplicationRecord
   end
 
   def sub_users
-    users + sub_organization_structures.collect{|x| x.sub_users}.flatten
+    (users + sub_organization_structures.collect{|x| x.sub_users} + facilities.collect{|x| x.users}).flatten
   end
 
   def sub_contacts

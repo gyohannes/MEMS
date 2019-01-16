@@ -7,7 +7,15 @@ class SpecificationRequestsController < ApplicationController
   # GET /specification_requests
   # GET /specification_requests.json
   def index
-    @specification_requests = SpecificationRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @specification_requests = current_user.specification_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @specification_requests = current_user.incoming_specification_requests
+    elsif !current_user.institution.blank?
+      @specification_requests = current_user.incoming_specification_requests
+    else
+      @specification_requests = []
+    end
   end
 
   # GET /specification_requests/1

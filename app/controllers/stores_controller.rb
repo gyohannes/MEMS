@@ -9,7 +9,7 @@ class StoresController < ApplicationController
   # GET /stores
   # GET /stores.json
   def index
-    @stores = Store.all
+    @stores = current_user.facility.try(:stores)
   end
 
   # GET /stores/1

@@ -3,14 +3,14 @@
       Users
     </h2>
   </div>
-
   <div class="body table-responsive row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div id="user_tree"></div>
-      <h4><%= @institution %></h4>
+      <h4><%= current_user.institution %></h4>
+      <h4><%= current_user.facility %></h4>
     </div>
 
-    <div class="col-sm-8">
+    <div class="col-sm-9">
       <div id="users">
         <%= render partial: 'users' %>
       </div>

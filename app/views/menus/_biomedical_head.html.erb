@@ -1,0 +1,193 @@
+<% if user_signed_in? and current_user.is_role(Constants::BIOMEDICAL_HEAD) %>
+  <li>
+    <%= link_to root_path do %>
+      <i class="material-icons">dashboard</i>
+      <span>Dashboard</span>
+    <% end %>
+  </li>
+
+    <a href="javascript:void(0);" class="menu-toggle">
+      <i class="material-icons">settings</i>
+      <span style="vertical-align: super">System Settings</span>
+    </a>
+    <ul class="ml-menu">
+      <li>
+        <%= link_to users_path do %>
+            <i class="material-icons">people</i>
+            <span>Users</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to departments_path do %>
+            <i class="material-icons">category</i>
+            <span>Departments</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to stores_path do %>
+            <i class="material-icons">store</i>
+            <span>Stores</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to contacts_path do %>
+            <i class="material-icons">people</i>
+            <span>Contacts</span>
+        <% end %>
+      </li>
+
+      <% if current_user.organization_structure %>
+          <li>
+            <%= link_to facility_types_path do %>
+                <i class="material-icons">category</i>
+                <span>Facility Types</span>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+
+    <li>
+      <%= link_to receives_path do %>
+        <i class="material-icons">add_shopping_cart</i>
+        <span>Equipment Procurement</span>
+      <% end %>
+    </li>
+
+    <a href="javascript:void(0);" class="menu-toggle">
+      <i class="material-icons">devices</i>
+      <span style="vertical-align: super">Equipment Management</span>
+    </a>
+    <ul class="ml-menu">
+      <li>
+        <%= link_to equipment_categories_path do %>
+            <i class="material-icons">category</i>
+            <span>Equipment Category</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to equipment_index_path do %>
+          <i class="material-icons">devices</i>
+          <span>Equipment Management</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to installations_path do %>
+            <i class="material-icons">add_to_queue</i>
+            <span>Installations</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to acceptance_tests_path do %>
+            <i class="material-icons">check</i>
+            <span>Acceptance Tests</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to maintenances_path do %>
+            <i class="material-icons">build</i>
+            <span>Maintenances</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to trainings_path do %>
+            <i class="material-icons">library_books</i>
+            <span>Trainings</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to trainings_path do %>
+            <i class="material-icons">delete_sweep</i>
+            <span>Disposals</span>
+        <% end %>
+      </li>
+    </ul>
+  <a href="javascript:void(0);" class="menu-toggle">
+    <i class="material-icons">list</i> <span style="vertical-align: super">
+      Requests</span>
+  </a>
+
+  <ul class="ml-menu">
+    <li>
+      <%= link_to procurement_requests_path do %>
+        <i class="material-icons">shopping_cart</i>
+        <span>Procurement Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to specification_requests_path do %>
+        <i class="material-icons">help_outline</i>
+        <span>Specification Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to spare_part_requests_path do %>
+        <i class="material-icons">devices</i>
+        <span>Spare Part Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to acceptance_requests_path do %>
+        <i class="material-icons">check</i>
+        <span>Acceptance Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to training_requests_path do %>
+        <i class="material-icons">library_books</i>
+        <span>Training Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to installation_requests_path do %>
+        <i class="material-icons">add_to_queue</i>
+        <span>Installation Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to maintenance_requests_path do %>
+        <i class="material-icons">build</i>
+        <span>Maintenance Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to calibration_requests_path do %>
+        <i class="material-icons">tune</i>
+        <span>Calibration Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to disposal_requests_path do %>
+        <i class="material-icons">delete_sweep</i>
+        <span>Disposal Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to budget_requests_path do %>
+        <i class="material-icons">attach_money</i>
+        <span>Budget Requests</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to maintenance_toolkit_requests_path do %>
+        <i class="material-icons">build</i>
+        <span>Maintenance Toolkit Requests</span>
+      <% end %>
+    </li>
+
+  </ul>
+
+<% end %>

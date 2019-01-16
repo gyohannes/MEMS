@@ -12,7 +12,7 @@
         <div id="acceptance_request_to">
           <%= render partial: 'request_to' %>
         </div>
-        <%= f.input :requested_by %>
+        <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
         <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
       </div>
       <div class="col-sm-6">

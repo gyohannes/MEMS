@@ -1,16 +1,20 @@
 <%= simple_form_for(@facility) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="row">
+    <div class="col-sm-6">
     <%= f.input :organization_structure_id, collection: [@organization_structure] %>
     <%= f.input :name %>
     <%= f.association :facility_type %>
-    <%= f.input :category, collection: ['Public', 'Private', 'NGO'] %>
-    <%= f.input :url %>
+    <%= f.input :category, as: :radio_buttons, collection: ['Public', 'Private', 'NGO'] %>
+    </div>
+    <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+    <%= f.input :url, label: 'URL' %>
     <%= f.input :latitude %>
     <%= f.input :longitude %>
     <%= f.input :population %>
     <%= f.input :note %>
+    </div>
   </div>
 
   <div class="form-actions">

@@ -10,7 +10,7 @@
         <%= f.association :facility, collection: [current_user.facility], prompt: false %>
         <%= f.input :request_to, collection: Constants::REQUEST %>
         <%= f.input :contact_address %>
-        <%= f.input :requested_by %>
+        <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
         <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
       </div>
       <div class="col-sm-6">

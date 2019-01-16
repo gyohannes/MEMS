@@ -40,7 +40,7 @@
       <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
       <a href="javascript:void(0);" class="bars"></a>
       <%= link_to root_path do %>
-          <span class="navbar-brand">Medical Equipment Management System</span>
+          <span class="navbar-brand">Medical Equipment Management System (MEMS)</span>
       <% end %>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -48,6 +48,7 @@
         <li class="dropdown">
           <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
             <span style="vertical-align: super"><%= current_user.email rescue nil %></span> <i class="material-icons">account_circle</i>
+            <h5><%= current_user.role %></h5>
           </a>
           <ul class="dropdown-menu">
             <li>
@@ -79,8 +80,10 @@
     <div class="menu">
       <ul class="list">
         <li class="header">MAIN NAVIGATION</li>
-        <%= render partial: 'menus/admin' %>
         <%= render partial: 'menus/biomedical_engineer' %>
+        <%= render partial: 'menus/biomedical_head' %>
+        <%= render partial: 'menus/department' %>
+        <%= render partial: 'menus/store' %>
       </ul>
     </div>
     <!-- #Menu -->

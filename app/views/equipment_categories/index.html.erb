@@ -17,17 +17,13 @@
       <tr>
         <td><%= equipment_category.name %></td>
         <td>
-          <%= link_to edit_equipment_category_path(equipment_category) do %>
-              <i class="material-icons">edit</i>
-          <% end %>
-          <%= link_to equipment_category, method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="material-icons">delete</i>
-          <% end %>
+          <%= link_to 'Edit', edit_equipment_category_path(equipment_category) %> |
+          <%= link_to 'Delete', equipment_category, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <hr/>
-<%= link_to 'New Equipment Category', new_equipment_category_path %>
+<%= link_to 'New Equipment Category', new_equipment_category_path, class: 'btn btn-primary' %>
 </div>

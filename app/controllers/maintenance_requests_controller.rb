@@ -4,7 +4,15 @@ class MaintenanceRequestsController < ApplicationController
   # GET /maintenance_requests
   # GET /maintenance_requests.json
   def index
-    @maintenance_requests = MaintenanceRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @maintenance_requests = current_user.maintenance_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @maintenance_requests = current_user.incoming_maintenance_requests
+    elsif !current_user.institution.blank?
+      @maintenance_requests = current_user.incoming_maintenance_requests
+    else
+      @maintenance_requests = []
+    end
   end
 
   # GET /maintenance_requests/1

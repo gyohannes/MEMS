@@ -1,4 +1,4 @@
-<% if user_signed_in? and current_user.biomedical_head? %>
+<% if user_signed_in? and current_user.is_role(Constants::ADMIN) %>
     <li>
       <%= link_to root_path do %>
           <i class="material-icons">dashboard</i>
@@ -10,12 +10,6 @@
         <span style="vertical-align: super">System Settings</span>
     </a>
     <ul class="ml-menu">
-      <li>
-        <%= link_to roles_path do %>
-            <i class="material-icons">people</i>
-            <span>Roles</span>
-        <% end %>
-      </li>
       <li>
         <%= link_to users_path do %>
             <i class="material-icons">people</i>
@@ -31,62 +25,6 @@
       </li>
 
       <li>
-        <%= link_to contacts_path do %>
-            <i class="material-icons">people</i>
-            <span>Contacts</span>
-        <% end %>
-      </li>
-
-    </ul>
-
-  <a href="javascript:void(0);" class="menu-toggle">
-    <i class="material-icons">local_hospital</i>
-    <span style="vertical-align: super">Facility Management</span>
-  </a>
-  <ul class="ml-menu">
-    <li>
-      <%= link_to organization_structure_types_path do %>
-          <i class="material-icons">category</i>
-          <span>Organization Structure Types</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to organization_structures_path do %>
-          <i class="material-icons">people</i>
-          <span>Organization Structures</span>
-      <% end %>
-    </li>
-    <li>
-      <%= link_to facility_types_path do %>
-          <i class="material-icons">category</i>
-          <span>Facility Types</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to facilities_path do %>
-          <i class="material-icons">home</i>
-          <span>Facilities</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to institutions_path do %>
-          <i class="material-icons">school</i>
-          <span>Suppliers/Local Representatives</span>
-      <% end %>
-    </li>
-
-  </ul>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">store</i>
-      <span style="vertical-align: super">Logistics</span>
-    </a>
-    <ul class="ml-menu">
-
-      <li>
         <%= link_to stores_path do %>
             <i class="material-icons">store</i>
             <span>Stores</span>
@@ -94,124 +32,57 @@
       </li>
 
       <li>
-        <%= link_to receives_path do %>
-            <i class="material-icons">add_shopping_cart</i>
-            <span>Equipment Receivals</span>
+        <%= link_to contacts_path do %>
+            <i class="material-icons">people</i>
+            <span>Contacts</span>
         <% end %>
       </li>
+
+      <% if current_user.organization_structure %>
+      <li>
+        <%= link_to facility_types_path do %>
+            <i class="material-icons">category</i>
+            <span>Facility Types</span>
+        <% end %>
+      </li>
+    <% end %>
     </ul>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">devices</i> <span style="vertical-align: super">
-      Equipment Management</span>
-    </a>
-    <ul class="ml-menu">
-
+    <% if current_user.organization_structure %>
       <li>
-        <%= link_to equipment_categories_path do %>
-            <i class="material-icons">category</i>
-            <span>Equipment Category</span>
+        <%= link_to organization_structures_path do %>
+            <i class="material-icons">people</i>
+            <span>Organization Structures</span>
         <% end %>
       </li>
-
-      <li>
-        <%= link_to equipment_index_path do %>
-            <i class="material-icons">list</i>
-            <span>Equipment</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to trainings_path do %>
-            <i class="material-icons">list</i>
-            <span>Trainings</span>
-        <% end %>
-      </li>
-
-    </ul>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">list</i> <span style="vertical-align: super">
-      Requests</span>
-    </a>
-    <ul class="ml-menu">
-      <li>
-        <%= link_to procurement_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Procurement Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to specification_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Specification Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to spare_part_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Spare Part Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to acceptance_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Acceptance Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-      <%= link_to training_requests_path do %>
-          <i class="material-icons">category</i>
-          <span>Training Requests</span>
+    <% end %>
+    <% if current_user.organization_structure %>
+    <li>
+      <%= link_to facilities_path do %>
+          <i class="material-icons">home</i>
+          <span>Facilities</span>
       <% end %>
-      </li>
-
-      <li>
-      <%= link_to installation_requests_path do %>
-          <i class="material-icons">category</i>
-          <span>Installation Requests</span>
+    </li>
+    <% elsif current_user.facility %>
+        <li>
+          <%= link_to current_user.facility do %>
+              <i class="material-icons">home</i>
+              <span>Facility Information</span>
+          <% end %>
+        </li>
+    <% end %>
+    <% if current_user.organization_structure %>
+    <li>
+      <%= link_to institutions_path do %>
+          <i class="material-icons">school</i>
+          <span>Suppliers/Local Representatives</span>
       <% end %>
-      </li>
-
-      <li>
-        <%= link_to maintenance_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Maintenance Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-      <%= link_to calibration_requests_path do %>
-          <i class="material-icons">category</i>
-          <span>Calibration Requests</span>
-      <% end %>
-      </li>
-
-      <li>
-      <%= link_to disposal_requests_path do %>
-          <i class="material-icons">category</i>
-          <span>Disposal Requests</span>
-      <% end %>
-      </li>
-
-      <li>
-        <%= link_to budget_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Budget Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to maintenance_toolkit_requests_path do %>
-            <i class="material-icons">category</i>
-            <span>Maintenance Toolkit Requests</span>
-        <% end %>
-      </li>
-
-    </ul>
-
+    </li>
+    <% elsif current_user.institution %>
+        <li>
+          <%= link_to current_user.institution do %>
+              <i class="material-icons">school</i>
+              <span>Suppliers/Local Representatives Information</span>
+          <% end %>
+        </li>
+    <% end %>
 <% end %>

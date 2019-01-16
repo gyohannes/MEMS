@@ -17,6 +17,15 @@ form label{
 .left_form{
     border-right: 1px solid silver;
 }
+.form-group .form-control{
+    width: inherit;
+}
+
+.form-actions{
+    border-top: 1px solid rgba(204, 204, 204, 0.35);
+    padding-top: 20px;
+}
+
 form > label{
     font-size: 12px;
 }

@@ -1,10 +1,16 @@
 class ReceivesController < ApplicationController
   before_action :set_receife, only: [:show, :edit, :update, :destroy]
+  before_action :load, only: [:new, :create, :edit, :update]
 
+  def load
+    @stores = current_user.facility ? current_user.facility.stores :
+                  (current_user.organization_structure ? current_user.organization_structure.stores : [])
+  end
   # GET /receives
   # GET /receives.json
   def index
-    @receives = Receive.all
+    @receives = Receive.joins(:store).where('stores.organization_structure_id = ? or stores.facility_id = ?',
+                                            current_user.organization_structure_id, current_user.facility_id)
   end
 
   # GET /receives/1

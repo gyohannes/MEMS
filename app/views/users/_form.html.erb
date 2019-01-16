@@ -1,17 +1,23 @@
 <%= simple_form_for(@user) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="row">
+    <div class="col-sm-6">
     <%= f.input :email %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
     <%= f.input :first_name %>
     <%= f.input :father_name %>
     <%= f.input :grand_father_name %>
-    <%= f.association :organization_structure, collection: [@user.organization_structure] %>
-    <%= f.association :facility, collection: [@user.facility] || @user.organization_structure.facilities %>
-    <%= f.association :institution %>
-    <%= f.association :role %>
+    </div>
+    <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+      <%= f.association :organization_structure, collection: [@user.organization_structure] if current_user.organization_structure %>
+      <%= f.association :facility, collection: @facilities %>
+      <%= f.association :department if current_user.facility %>
+      <%= f.association :store if current_user.facility %>
+      <%= f.association :institution, label: 'Supplier/Local Representative', collection: @institutions %>
+      <%= f.input :role, collection: Constants::ROLES, as: :radio_buttons, item_wrapper_tag: 'span' %>
+    </div>
   </div>
 
   <div class="form-actions">

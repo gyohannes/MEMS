@@ -1,62 +1,11 @@
-<% if user_signed_in? and current_user.is_role(Constants::BIOMEDICAL_ENGINEER) %>
-    <li>
-      <%= link_to root_path do %>
-          <i class="material-icons">dashboard</i>
-          <span>Dashboard</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to receives_path do %>
-          <i class="material-icons">add_shopping_cart</i>
-          <span>Equipment Procurement</span>
-      <% end %>
-    </li>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">devices</i>
-      <span style="vertical-align: super">Equipment Management</span>
-    </a>
-    <ul class="ml-menu">
-
+<% if user_signed_in? and current_user.is_role(Constants::DEPARTMENT) %>
       <li>
         <%= link_to equipment_index_path do %>
             <i class="material-icons">devices</i>
             <span>Equipment Management</span>
         <% end %>
       </li>
-      <li>
-        <%= link_to installations_path do %>
-            <i class="material-icons">add_to_queue</i>
-            <span>Installations</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to acceptance_tests_path do %>
-            <i class="material-icons">check</i>
-            <span>Acceptance Tests</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to maintenances_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenances</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to trainings_path do %>
-            <i class="material-icons">library_books</i>
-            <span>Trainings</span>
-        <% end %>
-      </li>
 
-      <li>
-        <%= link_to trainings_path do %>
-            <i class="material-icons">delete_sweep</i>
-            <span>Disposals</span>
-        <% end %>
-      </li>
-    </ul>
     <a href="javascript:void(0);" class="menu-toggle">
       <i class="material-icons">list</i> <span style="vertical-align: super">
       Requests</span>

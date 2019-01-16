@@ -4,7 +4,15 @@ class CalibrationRequestsController < ApplicationController
   # GET /calibration_requests
   # GET /calibration_requests.json
   def index
-    @calibration_requests = CalibrationRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @calibration_requests = current_user.calibration_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @calibration_requests = current_user.incoming_calibration_requests
+    elsif !current_user.institution.blank?
+      @calibration_requests = current_user.incoming_calibration_requests
+    else
+      @calibration_requests = []
+    end
   end
 
   # GET /calibration_requests/1

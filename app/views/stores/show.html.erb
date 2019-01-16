@@ -1,5 +1,7 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Store Details</h2>
+</div>
+<div class="body">
 <p>
   <strong>Organization structure:</strong>
   <%= @store.organization_structure %>
@@ -24,6 +26,7 @@
   <strong>Room number:</strong>
   <%= @store.room_number %>
 </p>
-
-<%= link_to 'Edit', edit_store_path(@store) %> |
+<hr/>
+<%= link_to 'Edit', edit_store_path(@store), class: 'btn btn-primary' %>
 <%= link_to 'Back', stores_path %>
+</div>

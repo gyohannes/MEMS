@@ -4,7 +4,15 @@ class InstallationRequestsController < ApplicationController
   # GET /installation_requests
   # GET /installation_requests.json
   def index
-    @installation_requests = InstallationRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @installation_requests = current_user.installation_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @installation_requests = current_user.incoming_installation_requests
+    elsif !current_user.institution.blank?
+      @installation_requests = current_user.incoming_installation_requests
+    else
+      @installation_requests = []
+    end
   end
 
   # GET /installation_requests/1

@@ -16,11 +16,11 @@
         <td><%= eq_form.input :unit_cost, label: false %></td>
         <td>
           <%= eq_form.link_to_remove do%>
-              <i class="material-icons">delete</i>
+              <i class="material-icons">delete</i> Remove
           <% end %>
         </td>
       </tr>
 <% end %>
 </table>
-<hr/>
-<p><%= f.link_to_add "Add Equipment", :receive_equipments,"data-target" => "#equipments"  %></p>
+<p><%= f.link_to_add "Add Equipment", :receive_equipments,"data-target" => "#equipments", class: 'btn btn-primary'  %></p>
+<br/>

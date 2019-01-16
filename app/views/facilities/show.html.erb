@@ -1,3 +1,7 @@
+<div class="header">
+  <h2>Facility Details</h2>
+</div>
+<div class="body">
 <p>
   <strong>Organization structure:</strong>
   <%= @facility.organization_structure %>
@@ -19,7 +23,7 @@
 </p>
 
 <p>
-  <strong>Url:</strong>
+  <strong>URL:</strong>
   <%= @facility.url %>
 </p>
 
@@ -37,6 +41,8 @@
   <strong>Longitude:</strong>
   <%= @facility.longitude %>
 </p>
+<hr/>
+<%= link_to 'Edit', edit_facility_path(@facility), class: 'btn btn-primary' %>
 
-<%= link_to 'Edit', edit_facility_path(@facility) %> |
-<%= link_to 'Back', facilities_path %>
+<%= link_to 'Back', facilities_path if current_user.organization_structure %>
+</div>

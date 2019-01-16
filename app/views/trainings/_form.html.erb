@@ -7,7 +7,7 @@
     <%= f.association :contact %>
     <%= f.input :equipment_name %>
     <%= f.input :model %>
-    <%= f.input :training_type, collection: ['End User', 'Maintenance'] %>
+    <%= f.input :training_type, as: :radio_buttons, collection: ['End User Training', 'Maintenance Personnel Training'] %>
     <%= f.input :trainer_name %>
     <%= f.input :training_sponsor %>
     <%= f.input :training_date, as: :string, input_html: {class: 'datepicker'} %>

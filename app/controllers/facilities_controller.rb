@@ -4,9 +4,8 @@ class FacilitiesController < BaseController
   # GET /facilities
   # GET /facilities.json
   def index
-    parent_org_unit = current_user.super_admin? ? OrganizationStructure.top_organization_structure :
-                          current_user.organization_structure
-    @facilities = parent_org_unit.try(:sub_facilities)
+    org_unit = current_user.organization_structure
+    @facilities = org_unit.try(:sub_facilities) || []
   end
 
   def load_facilities

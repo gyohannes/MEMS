@@ -51,8 +51,15 @@ class EquipmentController < ApplicationController
   # GET /equipment
   # GET /equipment.json
   def index
-    parent_org_unit = current_user.parent_org_unit
-    @equipment = parent_org_unit.try(:sub_equipment) || []
+    @equipment = []
+    if current_user.organization_structure
+      @equipment = current_user.organization_structure.try(:sub_equipment)
+    elsif current_user.facility and current_user.department
+      @equipment = current_user.department.department_equipment(current_user.facility_id)
+    elsif current_user.facility
+      @equipment = current_user.facility.equipment
+    end
+    return @equipment
   end
 
   def load_equipment

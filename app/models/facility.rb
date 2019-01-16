@@ -3,7 +3,9 @@ class Facility < ApplicationRecord
   belongs_to :facility_type
   has_many :equipment
   has_many :contacts
-
+  has_many :users
+  has_many :stores
+  has_many :receives, through: :stores
   has_many :procurement_requests
   has_many :specification_requests
   has_many :spare_part_requests
@@ -16,7 +18,7 @@ class Facility < ApplicationRecord
   has_many :budget_requests
   has_many :maintenance_toolkit_requests
 
-  validates :population, numericality: {greater_than: 0}
+  validates :population, numericality: {greater_than: 0}, allow_blank: true
 
   def to_s
     name

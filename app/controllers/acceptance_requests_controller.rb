@@ -4,7 +4,15 @@ class AcceptanceRequestsController < ApplicationController
   # GET /acceptance_requests
   # GET /acceptance_requests.json
   def index
-    @acceptance_requests = AcceptanceRequest.all
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+      @acceptance_requests = current_user.acceptance_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
+      @acceptance_requests = current_user.incoming_acceptance_requests
+    elsif !current_user.institution.blank?
+      @acceptance_requests = current_user.incoming_acceptance_requests
+    else
+      @acceptance_requests = []
+    end
   end
 
   # GET /acceptance_requests/1
