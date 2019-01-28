@@ -1,0 +1,36 @@
+/*
+ *= require AdminBSBMaterialDesign/index
+ *= require bootstrap-treeview
+ *= require fullcalendar
+ *= require new_style
+ *= require jquery-ui/jquery-ui
+ */
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: font-url('2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: font-url('assets/glyphicons-halflings-regular.woff') format('woff'),
+  font-url('glyphicons-halflings-regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
