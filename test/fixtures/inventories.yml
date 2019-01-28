@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  status: MyString
+  description_of_problem: MyText
+  trained_end_users: false
+  trained_maintenance_personnel: false
+  suggestion: MyText
+  risk_level: MyString
+  inventory_date: 2019-01-25
+  inventory_done_by: MyString
+  contact_address: MyText
+  note: MyText
+
+two:
+  equipment: two
+  status: MyString
+  description_of_problem: MyText
+  trained_end_users: false
+  trained_maintenance_personnel: false
+  suggestion: MyText
+  risk_level: MyString
+  inventory_date: 2019-01-25
+  inventory_done_by: MyString
+  contact_address: MyText
+  note: MyText

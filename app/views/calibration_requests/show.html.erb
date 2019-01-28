@@ -32,7 +32,7 @@
 
   <p>
   <strong>Requested by:</strong>
-  <%= @calibration_request.requested_by %>
+  <%= @calibration_request.user %>
 </p>
 
 <p>
@@ -44,15 +44,21 @@
   <strong>Status:</strong>
   <%= @calibration_request.status %>
   </p>
-
+  <%= simple_form_for(@calibration_request, url: decision_calibration_request_path) do |f| %>
+  <% if can? :decision, @calibration_request and @calibration_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @calibration_request.comment %></p>
+      <p><label>Decided by:</label> <%= @calibration_request.decided_user %></p>
+  <% end %>
 <hr/>
-<%= simple_nested_form_for(@calibration_request, url: decision_calibration_request_path) do |f| %>
     <% if can? :decision, @calibration_request and @calibration_request.status == Constants::PENDING %>
         <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @calibration_request.status == Constants::APPROVED %>
         &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @calibration_request.status == Constants::REJECTED %>
     <% end %>
 <% end %>
-
-<%= link_to 'Edit', edit_calibration_request_path(@calibration_request), class: 'btn btn-primary' if can? :edit, @calibration_request %>
+<br/>
+<%= link_to 'Edit', edit_calibration_request_path(@calibration_request), class: 'btn btn-primary' if can? :edit, @calibration_request and @calibration_request.status == Constants::PENDING  %>
 <%= link_to 'Back', calibration_requests_path %>
 </div>

@@ -1,6 +1,6 @@
 //= require AdminBSBMaterialDesign/jquery/jquery
 //= require rails-ujs
-//= require jquery-ui/accordion
+//= require jquery-ui/jquery-ui
 //= require jquery_nested_form
 //= require bootstrap-treeview
 //= require organization_structures
@@ -22,5 +22,5 @@
 //= require budget_requests
 //= require highcharts
 //= require chartkick
-//= require AdminBSBMaterialDesign/index
 //= require global
+//= require AdminBSBMaterialDesign/index

@@ -28,7 +28,7 @@
         <td><%= maintenance_request.status %></td>
         <td>
           <%= link_to 'Details', maintenance_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_maintenance_request_path(maintenance_request), class: 'btn btn-primary' if can? :edit, maintenance_request %>
+          <%= link_to 'Edit', edit_maintenance_request_path(maintenance_request), class: 'btn btn-primary' if can? :edit, maintenance_request and maintenance_request.status == Constants::PENDING %>
           <%= link_to 'Delete', maintenance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, maintenance_request %>
         </td>
       </tr>

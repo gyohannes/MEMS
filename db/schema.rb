@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905142242) do
+ActiveRecord::Schema.define(version: 20190124210703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,6 +70,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.text "contact_address"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -85,6 +89,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -128,6 +134,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.text "contact_address"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -161,14 +169,19 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "manufacturer"
     t.string "country"
     t.date "manufactured_year"
+    t.integer "life_span"
     t.date "purchased_year"
+    t.float "use_of_years"
     t.float "purchase_price"
+    t.date "date_of_installation"
     t.integer "supplier_id"
     t.boolean "manual_attached"
     t.text "warranty_agreement_note"
     t.integer "local_representative_id"
     t.text "remark"
     t.string "status"
+    t.boolean "trained_end_users"
+    t.boolean "trained_maintenance_personnel"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_category_id"], name: "index_equipment_on_equipment_category_id"
@@ -222,6 +235,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -235,7 +250,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.uuid "equipment_id"
     t.uuid "department_id"
     t.string "block_number"
-    t.date "date_of_intallation"
+    t.date "date_of_installation"
     t.string "warranty_period"
     t.date "preventive_maintenance_date"
     t.string "installed_by"
@@ -258,6 +273,23 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["organization_structure_id"], name: "index_institutions_on_organization_structure_id"
   end
 
+  create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
+    t.string "status"
+    t.text "description_of_problem"
+    t.boolean "trained_end_users"
+    t.boolean "trained_maintenance_personnel"
+    t.text "suggestion"
+    t.string "risk_level"
+    t.date "inventory_date"
+    t.string "inventory_done_by"
+    t.text "contact_address"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_id"], name: "index_inventories_on_equipment_id"
+  end
+
   create_table "maintenance_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
@@ -268,6 +300,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -288,6 +322,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.text "contact_address"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -325,7 +361,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "name"
     t.string "code"
     t.string "organization_structure_type"
-    t.integer "parent_organization_structure_id"
+    t.string "parent_organization_structure_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -350,6 +386,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -373,11 +411,19 @@ ActiveRecord::Schema.define(version: 20180905142242) do
 
   create_table "receives", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "store_id"
+    t.string "been_number"
+    t.string "equipment_name"
+    t.string "model"
     t.string "deliverer_name"
     t.string "recipient_name"
+    t.text "recipient_contact_address"
+    t.boolean "with_full_checklist"
     t.string "witness_name"
+    t.string "witness_contact_address"
+    t.integer "quantity"
+    t.float "unit_cost"
     t.date "delivery_date"
-    t.text "remark"
+    t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["store_id"], name: "index_receives_on_store_id"
@@ -402,6 +448,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -420,6 +468,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "equipment_name"
     t.float "quantity"
     t.date "requested_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -427,6 +477,36 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.index ["institution_id"], name: "index_specification_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_specification_requests_on_organization_structure_id"
     t.index ["user_id"], name: "index_specification_requests_on_user_id"
+  end
+
+  create_table "specifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.string "equipment_name"
+    t.string "model"
+    t.text "description"
+    t.string "approximate_cost"
+    t.string "specification_by"
+    t.string "contact_address"
+    t.date "specification_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "attachment_file_name"
+    t.string "attachment_content_type"
+    t.integer "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.index ["facility_id"], name: "index_specifications_on_facility_id"
+    t.index ["organization_structure_id"], name: "index_specifications_on_organization_structure_id"
+  end
+
+  create_table "store_registrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "store_id"
+    t.string "been_number"
+    t.uuid "equipment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_id"], name: "index_store_registrations_on_equipment_id"
+    t.index ["store_id"], name: "index_store_registrations_on_store_id"
   end
 
   create_table "stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -450,6 +530,8 @@ ActiveRecord::Schema.define(version: 20180905142242) do
     t.string "request_to"
     t.uuid "institution_id"
     t.date "request_date"
+    t.text "comment"
+    t.string "decision_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -536,6 +618,7 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "installations", "departments"
   add_foreign_key "installations", "equipment"
   add_foreign_key "institutions", "organization_structures"
+  add_foreign_key "inventories", "equipment"
   add_foreign_key "maintenance_requests", "equipment"
   add_foreign_key "maintenance_requests", "facilities"
   add_foreign_key "maintenance_requests", "institutions"
@@ -560,6 +643,10 @@ ActiveRecord::Schema.define(version: 20180905142242) do
   add_foreign_key "specification_requests", "institutions"
   add_foreign_key "specification_requests", "organization_structures"
   add_foreign_key "specification_requests", "users"
+  add_foreign_key "specifications", "facilities"
+  add_foreign_key "specifications", "organization_structures"
+  add_foreign_key "store_registrations", "equipment"
+  add_foreign_key "store_registrations", "stores"
   add_foreign_key "stores", "facilities"
   add_foreign_key "stores", "organization_structures"
   add_foreign_key "training_requests", "facilities"

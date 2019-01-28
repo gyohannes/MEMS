@@ -1,12 +1,10 @@
 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
   <tr>
-    <th>Contact</th>
+    <th>Trainee Name</th>
     <th>Equipment name</th>
     <th>Model</th>
     <th>Training type</th>
-    <th>Trainer name</th>
-    <th>Training sponsor</th>
     <th>Training date</th>
     <th></th>
   </tr>
@@ -19,13 +17,10 @@
         <td><%= training.equipment_name %></td>
         <td><%= training.model %></td>
         <td><%= training.training_type %></td>
-        <td><%= training.trainer_name %></td>
-        <td><%= training.training_sponsor %></td>
         <td><%= training.training_date %></td>
         <td>
-          <%= link_to 'Details', training %> |
-          <%= link_to 'Edit', edit_training_path(training) %> |
-          <%= link_to 'Dlete', training, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', training, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_training_path(training), class: 'btn btn-primary' %>
         </td>
       </tr>
   <% end %>

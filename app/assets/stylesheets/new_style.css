@@ -1,3 +1,9 @@
+
+.form-check{
+    margin-right: 10px;
+    float: left;
+    width: 33%;
+}
 .nav-tabs li a{
     border: 1px solid red;
 }
@@ -15,7 +21,7 @@ form label{
 }
 
 .left_form{
-    border-right: 1px solid silver;
+    border-left: 1px solid skyblue;
 }
 .form-group .form-control{
     width: inherit;

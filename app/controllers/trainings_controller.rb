@@ -4,7 +4,7 @@ class TrainingsController < ApplicationController
   # GET /trainings
   # GET /trainings.json
   def index
-    @trainings = Training.all
+    @trainings = Training.where('contact_id in (?)', current_user.load_contacts.pluck(:id))
   end
 
   # GET /trainings/1
@@ -15,6 +15,7 @@ class TrainingsController < ApplicationController
   # GET /trainings/new
   def new
     @training = Training.new
+    @training.build_contact
     equipment = Equipment.find_by_id(params[:equipment])
     @training.equipment_name = equipment.equipment_name rescue nil
     @training.model = equipment.model rescue nil
@@ -28,7 +29,12 @@ class TrainingsController < ApplicationController
   # POST /trainings.json
   def create
     @training = Training.new(training_params)
-
+    contact = Contact.find_by(name_of_contact: @training.contact.name_of_contact,
+                                  phone_number: @training.contact.phone_number)
+    unless contact.blank?
+      params[:training].delete(:contact_attributes)
+      @training.contact = contact
+    end
     respond_to do |format|
       if @training.save
         format.html { redirect_to @training, notice: 'Training was successfully created.' }
@@ -43,6 +49,12 @@ class TrainingsController < ApplicationController
   # PATCH/PUT /trainings/1
   # PATCH/PUT /trainings/1.json
   def update
+    contact = Contact.find_by(name_of_contact: @training.contact.name_of_contact,
+                              phone_number: @training.contact.phone_number)
+    unless contact.blank?
+      params[:training].delete(:contact_attributes)
+      @training.contact = contact
+    end
     respond_to do |format|
       if @training.update(training_params)
         format.html { redirect_to @training, notice: 'Training was successfully updated.' }
@@ -72,6 +84,7 @@ class TrainingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_params
-      params.require(:training).permit(:contact_id, :equipment_name, :model, :training_type, :trainer_name, :training_sponsor, :training_date)
+      params.require(:training).permit(:contact_id, :equipment_name, :model, :training_type, :trainer_name, :training_sponsor, :training_date,
+      contact_attributes: [:id, :facility_id, :organization_structure_id, :name_of_contact, :profession, :title, :work_place, :city, :phone_number, :country, :email, :_destroy])
     end
 end

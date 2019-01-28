@@ -1,38 +1,26 @@
 <br/>
 <u><h3 style="text-align: center">RECEIPT FOR MEDICAL EQUIPMENT RECEIVED</h3></u>
-
+<br/>
 <div>
   <p>
-    <u><%= @receife.recipient_name %></u> Received the following
-    <u><%= @receife.delivery_date.strftime('%B %d, %Y') %></u> from <u><%= @receife.deliverer_name %></u>
+    I <u><%= @receife.recipient_name %></u> received the following medical equipment
+    on <u><%= @receife.delivery_date.strftime('%B %d, %Y') %></u> from <u><%= @receife.deliverer_name %></u>
   </p>
-
-
-
+<br/><br/>
 <table border="1" style="width: 100%; border-collapse: collapse">
   <tr>
     <th>Equipment</th>
     <th>Model</th>
-    <th>Description</th>
     <th>Quantity</th>
-    <th>Unit Price</th>
-    <th>Total</th>
+    <th>Unit Cost (Birr)</th>
+    <th>Total Cost (Birr)</th>
   </tr>
-  <% total= 0 %>
-  <% @receife.receive_equipments.each do |ri| %>
     <tr>
-      <td><%= ri.equipment_name %></td>
-      <td><%= ri.model %></td>
-      <td><%= ri.description %></td>
-      <td><%= q=ri.quantity %></td>
-      <td><%= p=ri.unit_cost %></td>
+      <td><%= @receife.equipment_name %></td>
+      <td><%= @receife.model %></td>
+      <td><%= q=@receife.quantity %></td>
+      <td><%= p=@receife.unit_cost %></td>
       <td><%= t = (q || 0) * (p || 0)  %></td>
-    </tr>
-    <% total += t %>
-    <% end %>
-    <tr>
-      <th colspan="5"><%=t :total %></th>
-      <td><%= total %></td>
     </tr>
 </table>
 </div>

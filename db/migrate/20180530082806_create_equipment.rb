@@ -12,14 +12,19 @@ class CreateEquipment < ActiveRecord::Migration[5.1]
       t.string :manufacturer
       t.string :country
       t.date :manufactured_year
+      t.integer :life_span
       t.date :purchased_year
+      t.float :use_of_years
       t.float :purchase_price
+      t.date :date_of_installation
       t.integer :supplier_id
       t.boolean :manual_attached
       t.text :warranty_agreement_note
       t.integer :local_representative_id
       t.text :remark
       t.string :status
+      t.boolean :trained_end_users
+      t.boolean :trained_maintenance_personnel
 
       t.timestamps
     end

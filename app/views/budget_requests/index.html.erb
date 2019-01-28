@@ -28,7 +28,7 @@
         <td><%= budget_request.status %></td>
         <td>
           <%= link_to 'Details', budget_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_budget_request_path(budget_request), class: 'btn btn-primary' if can? :edit, budget_request %>
+          <%= link_to 'Edit', edit_budget_request_path(budget_request), class: 'btn btn-primary' if can? :edit, budget_request and budget_request.status == Constants::PENDING %>
           <%= link_to 'Delete', budget_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, budget_request %>
         </td>
       </tr>

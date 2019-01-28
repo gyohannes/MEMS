@@ -1,5 +1,5 @@
 class InstallationRequestsController < ApplicationController
-  before_action :set_installation_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_installation_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /installation_requests
   # GET /installation_requests.json
@@ -32,7 +32,8 @@ class InstallationRequestsController < ApplicationController
   end
 
   def decision
-    @installation_request.update(procurement_request_params)
+    @installation_request.update(installation_request_params)
+    @installation_request.update(status: params[:status])
     redirect_to @installation_request, notice: "Installation request was successfully #{params[:status]}."
   end
 
@@ -95,6 +96,6 @@ class InstallationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def installation_request_params
-      params.require(:installation_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :installation_description, :request_to, :institution_id, :requested_by, :request_date)
+      params.require(:installation_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :installation_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
     end
 end

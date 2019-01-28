@@ -1,0 +1,40 @@
+<div class="header">
+  <h2>
+    Equipment Specifications
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Equipment name</th>
+      <th>Model</th>
+      <th>Attachment</th>
+      <th>Approximate cost</th>
+      <th>Specification date</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @specifications.each do |specification| %>
+      <tr>
+        <td><%= specification.equipment_name %></td>
+        <td><%= specification.model %></td>
+        <td><%= link_to 'Download', specification.attachment.url if specification.attachment %></td>
+        <td><%= specification.approximate_cost %></td>
+        <td><%= specification.specification_date %></td>
+        <td>
+          <%= link_to 'Details', specification, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_specification_path(specification),class: 'btn btn-primary' %>
+          <%= link_to 'Delete', specification, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Specification', new_specification_path, class: 'btn btn-primary' %>
+</div>

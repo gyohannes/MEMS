@@ -216,12 +216,24 @@ class User < ApplicationRecord
 
   def load_equipment
     equipment = []
-    if !organization_structure.blank?
+    if organization_structure
       equipment = organization_structure.sub_equipment
-    elsif !facility.blank?
+    elsif facility and department
+      equipment = department.department_equipment(facility_id)
+    elsif facility
       equipment = facility.equipment
     end
     return equipment
+  end
+
+  def load_contacts
+    contacts = []
+    if organization_structure
+      contacts = organization_structure.sub_contacts
+    elsif facility
+      contacts = facility.contacts
+    end
+    return contacts
   end
 
   def self.load_users(user,type)

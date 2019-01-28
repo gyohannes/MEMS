@@ -34,7 +34,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @budget_request.requested_by %>
+  <%= @budget_request.user %>
 </p>
 
 <p>
@@ -46,14 +46,21 @@
     <strong>Status:</strong>
     <%= @budget_request.status %>
   </p>
-
+  <%= simple_form_for(@budget_request, url: decision_budget_request_path) do |f| %>
+  <% if can? :decision, @budget_request and @budget_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @budget_request.comment %></p>
+      <p><label>Decided by:</label> <%= @budget_request.decided_user %></p>
+  <% end %>
   <hr/>
-  <%= simple_nested_form_for(@budget_request, url: decision_budget_request_path) do |f| %>
       <% if can? :decision, @budget_request and @budget_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @budget_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @budget_request.status == Constants::REJECTED %>
       <% end %>
   <% end %>
-<%= link_to 'Edit', edit_budget_request_path(@budget_request), class: 'btn btn-primary' %>
+  <br/>
+<%= link_to 'Edit', edit_budget_request_path(@budget_request), class: 'btn btn-primary' if can? :edit, @budget_request and @budget_request.status == Constants::PENDING  %>
 <%= link_to 'Back', budget_requests_path %>
 </div>

@@ -1,5 +1,5 @@
 class SpecificationRequestsController < ApplicationController
-  before_action :set_specification_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_specification_request, only: [:show, :edit, :update, :destroy, :decision]
 
 
   def load
@@ -35,7 +35,8 @@ class SpecificationRequestsController < ApplicationController
   end
 
   def decision
-    @specification_request.update(procurement_request_params)
+    @specification_request.update(specification_request_params)
+    @specification_request.update(status: params[:status])
     redirect_to @specification_request, notice: "Specification request was successfully #{params[:status]}."
   end
 
@@ -97,6 +98,6 @@ class SpecificationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def specification_request_params
-      params.require(:specification_request).permit(:organization_structure_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity, :requested_by, :requested_date)
+      params.require(:specification_request).permit(:organization_structure_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity, :user_id, :requested_date, :comment, :decision_by)
     end
 end

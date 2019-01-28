@@ -1,7 +1,5 @@
 $(function () {
-    $('#calendar').fullCalendar({
-        events: 'equipment/load_calendar'
-    });
+
     skinChanger();
     activateNotificationAndTasksScroll();
 

@@ -1,5 +1,5 @@
 class SparePartRequestsController < ApplicationController
-  before_action :set_spare_part_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_spare_part_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /spare_part_requests
   # GET /spare_part_requests.json
@@ -32,7 +32,8 @@ class SparePartRequestsController < ApplicationController
   end
 
   def decision
-    @spare_part_request.update(procurement_request_params)
+    @spare_part_request.update(spare_part_request_params)
+    @spare_part_request.update(status: params[:status])
     redirect_to @spare_part_request, notice: "Spare Part request was successfully #{params[:status]}."
   end
 
@@ -95,6 +96,6 @@ class SparePartRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def spare_part_request_params
-      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere, :power_requirement, :quantity, :request_to, :institution_id, :requested_by, :request_date)
+      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere, :power_requirement, :quantity, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
     end
 end

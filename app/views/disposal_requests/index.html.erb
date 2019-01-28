@@ -28,7 +28,7 @@
         <td><%= disposal_request.status %></td>
         <td>
           <%= link_to 'Details', disposal_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_disposal_request_path(disposal_request), class: 'btn btn-primary' if can? :edit, disposal_request %>
+          <%= link_to 'Edit', edit_disposal_request_path(disposal_request), class: 'btn btn-primary' if can? :edit, disposal_request and disposal_request.status == Constants::PENDING %>
           <%= link_to 'Delete', disposal_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, disposal_request %>
         </td>
       </tr>

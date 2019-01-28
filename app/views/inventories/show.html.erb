@@ -1,0 +1,92 @@
+<div class="header">
+  <h2>Inventory Details</h2>
+</div>
+<div class="body">
+  <div class="row">
+    <div class="col-sm-3">
+      <p>
+        <strong>Equipment Name:</strong>
+        <%= @inventory.equipment.equipment_name %>
+      </p>
+
+      <p>
+        <strong>Model:</strong>
+        <%= @inventory.equipment.model %>
+      </p>
+
+      <p>
+        <strong>Serial Number:</strong>
+        <%= @inventory.equipment.serial_number %>
+      </p>
+      <p>
+        <strong>Tag Number:</strong>
+        <%= @inventory.equipment.tag_number %>
+      </p>
+
+      <p>
+        <strong>Date of Installation:</strong>
+        <%= @inventory.equipment.date_of_installation %>
+      </p>
+
+      <p>
+        <strong>Use of Years:</strong>
+        <%= @inventory.equipment.use_of_years %>
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        <%= @inventory.status %>
+      </p>
+
+      <p>
+        <strong>Description of problem:</strong>
+        <%= @inventory.description_of_problem %>
+      </p>
+
+    </div>
+    <div class="col-sm-3 left_form">
+      <p>
+        <strong>Trained end users:</strong>
+        <%= @inventory.trained_end_users %>
+      </p>
+
+      <p>
+        <strong>Trained maintenance personnel:</strong>
+        <%= @inventory.trained_maintenance_personnel %>
+      </p>
+
+      <p>
+        <strong>Suggestion:</strong>
+        <%= @inventory.suggestion %>
+      </p>
+
+      <p>
+        <strong>Risk level:</strong>
+        <%= @inventory.risk_level %>
+      </p>
+
+      <p>
+        <strong>Inventory date:</strong>
+        <%= @inventory.inventory_date %>
+      </p>
+
+      <p>
+        <strong>Inventory done by:</strong>
+        <%= @inventory.inventory_done_by %>
+      </p>
+
+      <p>
+        <strong>Contact address:</strong>
+        <%= @inventory.contact_address %>
+      </p>
+
+      <p>
+        <strong>Note:</strong>
+        <%= @inventory.note %>
+      </p>
+    </div>
+  </div>
+<hr/>
+<%= link_to 'Edit', edit_inventory_path(@inventory), class: 'btn btn-primary' %>
+<%= link_to 'Back', inventories_path %>
+</div>

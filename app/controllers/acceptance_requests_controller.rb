@@ -1,5 +1,5 @@
 class AcceptanceRequestsController < ApplicationController
-  before_action :set_acceptance_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_acceptance_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /acceptance_requests
   # GET /acceptance_requests.json
@@ -32,8 +32,9 @@ class AcceptanceRequestsController < ApplicationController
   end
 
   def decision
-    @acceptance_request.update(procurement_request_params)
-    redirect_to @acceptance_requests, notice: "Acceptance request was successfully #{params[:status]}."
+    @acceptance_request.update(acceptance_request_params)
+    @acceptance_request.update(status: params[:status])
+    redirect_to @acceptance_request, notice: "Acceptance request was successfully #{params[:status]}."
   end
 
 
@@ -95,6 +96,6 @@ class AcceptanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def acceptance_request_params
-      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere, :power_requirement, :description, :request_to, :institution_id, :requested_by, :request_date)
+      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere, :power_requirement, :description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
     end
 end

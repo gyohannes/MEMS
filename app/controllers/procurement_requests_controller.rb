@@ -48,6 +48,7 @@ class ProcurementRequestsController < ApplicationController
     @procurement_request = ProcurementRequest.new
     @procurement_request.organization_structure_id = current_user.organization_structure
     @procurement_request.facility = current_user.facility
+    @procurement_request.procurement_request_equipments.build
   end
 
   def load_request_to
@@ -115,7 +116,7 @@ class ProcurementRequestsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def procurement_request_params
       params.require(:procurement_request).permit(:organization_structure_id, :facility_id, :user_id, :contact_phone, :contact_email,
-                                                  :request_date, :request_to, :institution_id,
+                                                  :request_date, :request_to, :institution_id, :comment, :decision_by,
       procurement_request_equipments_attributes: [:id, :equipment_name, :specification, :quantity, :approved_quantity, :_destroy])
     end
 end

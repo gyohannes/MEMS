@@ -28,7 +28,7 @@
         <td><%= specification_request.status %></td>
         <td>
           <%= link_to 'Details', specification_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_specification_request_path(specification_request), class: 'btn btn-primary' if can? :edit, specification_request %>
+          <%= link_to 'Edit', edit_specification_request_path(specification_request), class: 'btn btn-primary' if can? :edit, specification_request and specification_request.status == Constants::PENDING %>
           <%= link_to 'Delete', specification_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, specification_request %>
         </td>
       </tr>

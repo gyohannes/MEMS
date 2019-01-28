@@ -4,19 +4,25 @@
   <div class="row">
     <div class="col-sm-6">
       <%= f.association :store, collection: @stores %>
-      <%= f.input :deliverer_name, label: 'Deliverer Name' %>
-      <%= f.input :recipient_name, label: 'Recipient Name' %>
+      <%= f.input :been_number %>
+      <%= f.input :equipment_name %>
+      <%= f.input :model %>
+      <%= f.input :with_full_checklist, as: :boolean, label: '' %>
+      <%= f.input :quantity %>
+      <%= f.input :unit_cost, label: 'Unit Cost (Birr)' %>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-6 left_form">
+      <%= f.input :deliverer_name, label: 'Deliverer Name' %>
+      <%= f.input :recipient_name, label: 'Recipient Name' %>
+      <%= f.input :recipient_contact_address, label: 'Recipient Contact Address' %>
       <%= f.input :witness_name, label: 'Witness/s Name' %>
+      <%= f.input :witness_contact_address, label: 'Witness/s Contact Address' %>
       <%= f.input :delivery_date, as: 'string', input_html: {class: 'datepicker'}, label: 'Delivery Date' %>
-      <%= f.input :remark %>
+      <%= f.input :note %>
     </div>
 
   </div>
-    <h5>Equipment List</h5>
-    <%= render partial: 'equipment_fields', locals: {f: f} %>
 
   <div class="form-actions">
     <%= f.button :submit, 'Save Receiving Form' %>

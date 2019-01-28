@@ -12,11 +12,9 @@ $(function () {
                         success: function (response) {
                             $('#contacts').html(response)
                             $('.js-exportable').DataTable({
-                                dom: 'lrBfrtip',
                                 responsive: true,
-                                buttons: [
-                                    'copy', 'csv', 'excel', 'pdf', 'print'
-                                ]
+                                dom: '<"html5buttons"B>lTfgtip',
+                                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
                             });
                         }
                     })

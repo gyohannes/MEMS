@@ -28,7 +28,7 @@
         <td><%= acceptance_request.status %></td>
         <td>
           <%= link_to 'Details', acceptance_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_acceptance_request_path(acceptance_request), class: 'btn btn-primary' if can? :edit, acceptance_request %>
+          <%= link_to 'Edit', edit_acceptance_request_path(acceptance_request), class: 'btn btn-primary' if can? :edit, acceptance_request and acceptance_request.status == Constants::PENDING %>
           <%= link_to 'Delete', acceptance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, acceptance_request %>
         </td>
       </tr>

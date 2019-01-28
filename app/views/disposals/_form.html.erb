@@ -4,7 +4,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :equipment %>
+    <%= f.association :equipment, collection: @equipments %>
     <%= f.input :problem %>
     <%= f.input :action_taken %>
     <%= f.input :list_of_disposing_commitee %>

@@ -30,16 +30,27 @@
   <% end %>
 <p>
   <strong>Requested by:</strong>
-  <%= @specification_request.requested_by %>
+  <%= @specification_request.user %>
 </p>
 
 <p>
   <strong>Requested date:</strong>
   <%= @specification_request.requested_date %>
 </p>
+  <p>
+    <label>Status:</label>
+    <%= @specification_request.status %>
+  </p>
+  <%= simple_form_for(@specification_request, url: decision_specification_request_path) do |f| %>
+  <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @specification_request.comment %></p>
+      <p><label>Decided by:</label> <%= @specification_request.decided_user %></p>
+  <% end %>
 <hr/>
 <center>
-  <%= simple_nested_form_for(@specification_request, url: decision_specification_request_path) do |f| %>
     <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING %>
       <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @specification_request.status == Constants::APPROVED %>
       &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @specification_request.status == Constants::REJECTED %>
@@ -47,6 +58,6 @@
   <% end %>
 </center>
 
-<%= link_to 'Edit', edit_specification_request_path(@specification_request),class: 'btn btn-primary' if can? :edit, @specification_request %>
+<%= link_to 'Edit', edit_specification_request_path(@specification_request),class: 'btn btn-primary' if can? :edit, @specification_request and @specification_request.status == Constants::PENDING  %>
 <%= link_to 'Back', specification_requests_path %>
 </div>

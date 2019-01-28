@@ -28,7 +28,7 @@
         <td><%= installation_request.status %></td>
         <td>
           <%= link_to 'Details', installation_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_installation_request_path(installation_request), class: 'btn btn-primary' if can? :edit, installation_request %>
+          <%= link_to 'Edit', edit_installation_request_path(installation_request), class: 'btn btn-primary' if can? :edit, installation_request and installation_request.status == Constants::PENDING %>
           <%= link_to 'Delete', installation_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, installation_request %>
         </td>
       </tr>

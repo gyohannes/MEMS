@@ -1,0 +1,26 @@
+
+<%= simple_form_for(@specification) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="col-sm-6">
+    <%= f.association :organization_structure, collection: [current_user.organization_structure] %>
+    <%= f.association :facility, collection: [current_user.facility] %>
+    <%= f.input :equipment_name %>
+    <%= f.input :model %>
+    <%= f.input :description %>
+    </div>
+    <div class="col-sm-6 left_form">
+    <%= f.input :attachment, as: :file, hint: 'attach pdf file' %>
+    <%= f.input :approximate_cost %>
+    <%= f.input :specification_by %>
+    <%= f.input :contact_address %>
+    <%= f.input :specification_date, as: :string, input_html: {class: 'datepicker'} %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

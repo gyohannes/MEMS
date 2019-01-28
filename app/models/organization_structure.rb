@@ -3,7 +3,8 @@ class OrganizationStructure < ApplicationRecord
   has_many :sub_organization_structures, :class_name => 'OrganizationStructure', :foreign_key => "parent_organization_structure_id"
   has_many :users
   has_many :stores
-  has_many :receives, through: :stores
+  has_many :store_registrations, through: :stores
+  has_many :receive, through: :stores
   has_many :facilities
   has_many :institutions
   has_many :contacts
@@ -78,7 +79,7 @@ class OrganizationStructure < ApplicationRecord
   end
 
   def sub_facilities
-    facilities
+    facilities + sub_units.collect{|x| x.sub_facilities}.flatten
   end
 
   def sub_institutions
@@ -95,6 +96,18 @@ class OrganizationStructure < ApplicationRecord
 
   def sub_equipment
     Equipment.joins(:facility).where('organization_structure_id in (?)', (sub_units.pluck(:id) << id))
+  end
+
+  def sub_receive
+    (receive + sub_organization_structures.collect{|x| x.sub_receive} + facilities.collect{|x| x.receive}).flatten
+  end
+
+  def sub_store_registrations
+    (store_registrations + sub_organization_structures.collect{|x| x.sub_store_registrations} + facilities.collect{|x| x.store_registrations}).flatten
+  end
+
+  def sub_inventories
+    sub_facilities.collect{ |x| x.inventories }.flatten
   end
 
   def to_s

@@ -1,10 +1,31 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Training Details</h2>
+</div>
+<div class="panel-heading">
 <p>
-  <strong>Contact:</strong>
-  <%= @training.contact %>
+  <strong>Full Name:</strong>
+  <%= @training.contact.name_of_contact %>
 </p>
 
+  <p>
+    <strong>Profession</strong>
+    <%= @training.contact.profession %>
+  </p>
+
+  <p>
+    <strong>Job Title:</strong>
+    <%= @training.contact.title %>
+  </p>
+
+  <p>
+    <strong>Phone Number:</strong>
+    <%= @training.contact.phone_number %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= @training.contact.email %>
+  </p>
 <p>
   <strong>Equipment name:</strong>
   <%= @training.equipment_name %>
@@ -34,6 +55,7 @@
   <strong>Training date:</strong>
   <%= @training.training_date %>
 </p>
-
+<hr/>
 <%= link_to 'Edit', edit_training_path(@training) %> |
 <%= link_to 'Back', trainings_path %>
+</div>

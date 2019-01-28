@@ -1,5 +1,5 @@
 class BudgetRequestsController < ApplicationController
-  before_action :set_budget_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_budget_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /budget_requests
   # GET /budget_requests.json
@@ -27,6 +27,12 @@ class BudgetRequestsController < ApplicationController
     @request_to_type = params[:request_to]
     @institutions = Institution.where('category = ?', @request_to_type)
     render partial: 'request_to'
+  end
+
+  def decision
+    @budget_request.update(budget_request_params)
+    @budget_request.update(status: params[:status])
+    redirect_to @budget_request, notice: "Budget request was successfully #{params[:status]}."
   end
 
   # GET /budget_requests/1/edit
@@ -87,6 +93,6 @@ class BudgetRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_request_params
-      params.require(:budget_request).permit(:organization_structure_id, :facility_id, :budget_name, :budget_description, :amount, :request_to, :contact_address, :requested_by, :request_date)
+      params.require(:budget_request).permit(:organization_structure_id, :facility_id, :budget_name, :budget_description, :amount, :request_to, :contact_address, :user_id, :request_date, :comment, :decision_by)
     end
 end

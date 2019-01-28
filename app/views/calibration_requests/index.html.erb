@@ -28,7 +28,7 @@
         <td><%= calibration_request.status %></td>
         <td>
           <%= link_to 'Details', calibration_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_calibration_request_path(calibration_request), class: 'btn btn-primary' if can? :edit, calibration_request %>
+          <%= link_to 'Edit', edit_calibration_request_path(calibration_request), class: 'btn btn-primary' if can? :edit, calibration_request and calibration_request.status == Constants::PENDING %>
           <%= link_to 'Delete', calibration_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, calibration_request %>
         </td>
       </tr>

@@ -1,6 +1,10 @@
 class CalibrationRequestsController < ApplicationController
-  before_action :set_calibration_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_calibration_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update]
 
+  def load
+    @equipments = current_user.load_equipment
+  end
   # GET /calibration_requests
   # GET /calibration_requests.json
   def index
@@ -32,7 +36,8 @@ class CalibrationRequestsController < ApplicationController
   end
 
   def decision
-    @calibration_request.update(procurement_request_params)
+    @calibration_request.update(calibration_request_params)
+    @calibration_request.update(status: params[:status])
     redirect_to @calibration_request, notice: "Calibration request was successfully #{params[:status]}."
   end
 
@@ -95,6 +100,6 @@ class CalibrationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calibration_request_params
-      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description, :request_to, :institution_id, :requested_by, :request_date)
+      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
     end
 end

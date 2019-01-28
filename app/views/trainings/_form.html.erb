@@ -1,16 +1,31 @@
 
-<%= simple_form_for(@training) do |f| %>
+<%= simple_nested_form_for(@training) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.association :contact %>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.simple_fields_for :contact  do |cf| %>
+          <%= cf.input :organization_structure_id, as: :hidden, input_html: {value: current_user.organization_structure_id}  %>
+          <%= cf.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id}  %>
+          <%= cf.input :name_of_contact, label: 'Full Name'  %>
+          <%= cf.input :profession  %>
+          <%= cf.input :title, label: 'Job Title'  %>
+          <%= cf.input :work_place  %>
+          <%= cf.input :city  %>
+          <%= cf.input :phone_number  %>
+          <%= cf.input :email  %>
+          <%= cf.input :country, priority: ["Ethiopia"] %>
+      <% end %>
+    </div>
+    <div class="col-sm-6 left_form">
     <%= f.input :equipment_name %>
     <%= f.input :model %>
-    <%= f.input :training_type, as: :radio_buttons, collection: ['End User Training', 'Maintenance Personnel Training'] %>
+    <%= f.input :training_type, as: :radio_buttons, collection: Constants::TRAINING_TYPES %>
     <%= f.input :trainer_name %>
     <%= f.input :training_sponsor %>
     <%= f.input :training_date, as: :string, input_html: {class: 'datepicker'} %>
+    </div>
   </div>
 
   <div class="form-actions">

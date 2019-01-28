@@ -1,7 +1,6 @@
 <table id="equipments" class="table table-responsive">
   <tr>
     <th>Equipment Name</th>
-    <th>Description</th>
     <th>Model</th>
     <th>Quantity</th>
     <th>Unit Cost</th>
@@ -10,7 +9,6 @@
 <%= f.simple_fields_for :receive_equipments, :wrapper=>false do |eq_form| %>
       <tr class="fields">
         <td><%= eq_form.input :equipment_name, label: false %></td>
-        <td><%= eq_form.input :description, label: false %></td>
         <td><%= eq_form.input :model, label: false %></td>
         <td><%= eq_form.input :quantity, label: false %></td>
         <td><%= eq_form.input :unit_cost, label: false %></td>

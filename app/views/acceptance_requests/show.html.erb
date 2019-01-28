@@ -46,7 +46,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @acceptance_request.requested_by %>
+  <%= @acceptance_request.user %>
 </p>
 
 <p>
@@ -58,15 +58,21 @@
     <strong>Status:</strong>
     <%= @acceptance_request.status %>
   </p>
-
+  <%= simple_form_for(@acceptance_request, url: decision_acceptance_request_path) do |f| %>
+  <% if can? :decision, @acceptance_request and @acceptance_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @acceptance_request.comment %></p>
+      <p><label>Decided by:</label> <%= @acceptance_request.decided_user %></p>
+  <% end %>
 
   <hr/>
-  <%= simple_nested_form_for(@acceptance_request, url: decision_acceptance_request_path) do |f| %>
       <% if can? :decision, @acceptance_request and @acceptance_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @acceptance_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @acceptance_request.status == Constants::REJECTED %>
       <% end %>
   <% end %>
-<%= link_to 'Edit', edit_acceptance_request_path(@acceptance_request) %> |
+<%= link_to 'Edit', edit_acceptance_request_path(@acceptance_request), class: 'btn btn-primary' if can? :edit, @acceptance_request and @acceptance_request.status == Constants::PENDING %>
 <%= link_to 'Back', acceptance_requests_path %>
 </div>

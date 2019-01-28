@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :inventories
+  resources :specifications
+  resources :store_registrations
   resources :maintenance_toolkit_requests do
     member do
       patch 'decision'
@@ -82,6 +85,7 @@ Rails.application.routes.draw do
   resources :trainings
   resources :contacts do
     collection do
+      get 'search'
       get 'load_contacts'
     end
   end
@@ -101,6 +105,8 @@ Rails.application.routes.draw do
   end
   resources :equipment do
     collection do
+      get 'search'
+      get 'facility_equipment_search'
       get 'load_equipment'
       get 'equipment_by_status'
       get 'equipment_by_category'

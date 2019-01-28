@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :equipment %>
+      <%= f.association :equipment, collection: @equipments %>
       <%= f.input :meet_standard, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'}, input_html:{class: "filled-in chk-col-pink"} %>
       <%= f.input :with_order_specification, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
       <%= f.input :installation_done, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
@@ -12,7 +12,7 @@
       <%= f.input :maintenance_personnel_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
       <%= f.input :end_users_trained, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
     </div>
-    <div class="col-sm-6" style="border-left: 1px solid skyblue;">
+    <div class="col-sm-6 left_form">
       <%= f.input :with_full_accessery, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
       <%= f.input :with_manual, wrapper: :horizontal_boolean, label_html: {class: 'transparent_label'},input_html:{class: "filled-in chk-col-pink"} %>
       <%= f.input :status, collection: Equipment::FUNCTIONAL_STATUSES %>

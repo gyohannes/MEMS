@@ -31,7 +31,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @training_request.requested_by %>
+  <%= @training_request.user %>
 </p>
 
 <p>
@@ -42,13 +42,21 @@
     <strong>Status:</strong>
     <%= @training_request.status %>
   </p>
-  <hr/>
   <%= simple_nested_form_for(@training_request, url: decision_training_request_path) do |f| %>
+  <% if can? :decision, @training_request and @training_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @training_request.comment %></p>
+      <p><label>Decided by:</label> <%= @training_request.decided_user %></p>
+  <% end %>
+
+  <hr/>
       <% if can? :decision, @training_request and @training_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @training_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @training_request.status == Constants::REJECTED %>
       <% end %>
   <% end %>
-<%= link_to 'Edit', edit_training_request_path(@training_request), class: 'btn btn-primary' if can? :edit, @training_request %>
+<%= link_to 'Edit', edit_training_request_path(@training_request), class: 'btn btn-primary' if can? :edit, @training_request and @training_request.status == Constants::PENDING  %>
 <%= link_to 'Back', training_requests_path %>
 </div>

@@ -1,10 +1,14 @@
 class DisposalsController < ApplicationController
   before_action :set_disposal, only: [:show, :edit, :update, :destroy]
+  before_action :load, only: [:new, :create, :edit, :update, :index]
 
-  # GET /disposals
-  # GET /disposals.json
+  def load
+    @equipments = current_user.load_equipment
+  end
+  # GET /installations
+  # GET /installations.json
   def index
-    @disposals = Disposal.all
+    @disposals = Disposal.joins(:equipment).where('equipment_id in (?)', @equipments.pluck(:id))
   end
 
   # GET /disposals/1

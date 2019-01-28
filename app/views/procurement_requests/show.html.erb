@@ -45,6 +45,14 @@
       <%= @procurement_request.status %>
     </p>
 
+        <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
+            <%= f.input :comment, wrapper: 'vertical_form' %>
+            <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+        <% else %>
+          <p><label>Comment:</label> <%= @procurement_request.comment %></p>
+            <p><label>Decided by:</label> <%= @procurement_request.decided_user %></p>
+        <% end %>
+
   <caption>Equipments</caption>
   <table class="table">
     <tr>
@@ -76,6 +84,6 @@
       </center>
   <% end %>
 <hr/>
-    <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request %> &nbsp;&nbsp;&nbsp;
+    <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request and @procurement_request.status == Constants::PENDING  %> &nbsp;&nbsp;&nbsp;
   <%= link_to 'Back', procurement_requests_path %>
 </div>

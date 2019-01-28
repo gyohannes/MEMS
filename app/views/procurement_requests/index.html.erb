@@ -24,7 +24,7 @@
         <td><%= procurement_request.status %></td>
         <td>
           <%= link_to 'Details', procurement_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_procurement_request_path(procurement_request), class: 'btn btn-primary' if can? :edit, procurement_request %>
+          <%= link_to 'Edit', edit_procurement_request_path(procurement_request), class: 'btn btn-primary' if can? :edit, procurement_request and procurement_request.status == Constants::PENDING %>
           <%= link_to 'Delete', procurement_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, procurement_request %>
         </td>
       </tr>

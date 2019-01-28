@@ -18,8 +18,10 @@
   <div class="col-sm-6" style="border-left: 1px solid skyblue;">
     <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :life_span %>
     <%= f.input :purchased_year, start_year: Date.today.year - 100, end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :use_of_years %>
     <%= f.input :purchase_price %>
     <%= f.input :supplier_id, collection: @suppliers %>
     <%= f.input :warranty_agreement_note %>

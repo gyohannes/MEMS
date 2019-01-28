@@ -9,4 +9,4 @@
 top_org_unit = OrganizationStructure.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
                                             organization_structure_type: Constants::FMOH)
 
-admin_user = User.create(organization_structure_id: top_org_unit.id,email: 'admin@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)
+admin_user = User.create(organization_structure_id: top_org_unit.id,email: 'admin@mems.com', password: 'admin123', role: Constants::ADMIN)

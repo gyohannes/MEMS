@@ -11,10 +11,12 @@ class Ability
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+         can :manage, [Receive]
        elsif user.is_role(Constants::BIOMEDICAL_HEAD)
          can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+         can :manage, [Receive]
        end
     #
     # The first argument to `can` is the action you are giving the user

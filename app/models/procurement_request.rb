@@ -3,6 +3,7 @@ class ProcurementRequest < ApplicationRecord
   belongs_to :facility, optional: true
   belongs_to :user
   belongs_to :institution, optional: true
+  belongs_to :decided_user, optional: true, :class_name => 'User', :foreign_key => "decision_by"
 
   has_many :procurement_request_equipments, dependent: :destroy
   validate :procurement_request_equipments

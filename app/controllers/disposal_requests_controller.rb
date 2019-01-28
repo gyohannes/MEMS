@@ -1,6 +1,10 @@
 class DisposalRequestsController < ApplicationController
-  before_action :set_disposal_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_disposal_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update]
 
+  def load
+    @equipments = current_user.load_equipment
+  end
   # GET /disposal_requests
   # GET /disposal_requests.json
   def index
@@ -30,7 +34,8 @@ class DisposalRequestsController < ApplicationController
   end
 
   def decision
-    @disposal_request.update(procurement_request_params)
+    @disposal_request.update(disposal_request_params)
+    @disposal_request.update(status: params[:status])
     redirect_to @disposal_request, notice: "Disposal request was successfully #{params[:status]}."
   end
 
@@ -93,6 +98,6 @@ class DisposalRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def disposal_request_params
-      params.require(:disposal_request).permit(:organization_structure_id, :facility_id, :equipment_id, :disposal_description, :request_to, :contact_address, :requested_by, :request_date)
+      params.require(:disposal_request).permit(:organization_structure_id, :facility_id, :equipment_id, :disposal_description, :request_to, :contact_address, :user_id, :request_date, :comment, :decision_by)
     end
 end

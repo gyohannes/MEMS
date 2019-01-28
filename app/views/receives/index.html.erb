@@ -1,18 +1,19 @@
 <div class="header">
   <h2>
-    Equipment Procurement
+    Equipment Logistics
   </h2>
 </div>
 <div class="body table-responsive">
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Store</th>
-      <th>Deliverer name</th>
-      <th>Recipient name</th>
-      <th>Witness name</th>
+      <th>Facility / Organization Unit</th>
+      <th>Equipment Name</th>
+      <th>Model</th>
+      <th>Quantity</th>
+      <th>Unit Cost</th>
       <th>Delivery date</th>
-      <th>Remark</th>
+      <th>Note</th>
       <th></th>
     </tr>
   </thead>
@@ -20,21 +21,21 @@
   <tbody>
     <% @receives.each do |receife| %>
       <tr>
-        <td><%= receife.store %></td>
-        <td><%= receife.deliverer_name %></td>
-        <td><%= receife.recipient_name %></td>
-        <td><%= receife.witness_name %></td>
+        <td><%= receife.store.facility || receife.store.organization_structure %></td>
+        <td><%= receife.equipment_name %></td>
+        <td><%= receife.model %></td>
+        <td><%= receife.quantity %></td>
+        <td><%= receife.unit_cost %></td>
         <td><%= receife.delivery_date %></td>
-        <td><%= receife.remark %></td>
+        <td><%= receife.note %></td>
         <td>
-          <%= link_to 'Details', receife %> |
-          <%= link_to 'Edit', edit_receife_path(receife) %> |
-          <%= link_to 'Delete', receife, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', receife, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_receife_path(receife), class: 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
   <hr/>
-<%= link_to 'New Equipment Receiving Form', new_receife_path, class: 'btn btn-primary' %>
+<%= link_to 'New Equipment Receiving Form', new_receife_path, class: 'btn btn-primary' if can? :create, Receive %>
 </div>

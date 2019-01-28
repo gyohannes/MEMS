@@ -1,0 +1,30 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Equipment</th>
+    <th>Inventory date</th>
+    <th>Trained end users</th>
+    <th>Trained maintenance personnel</th>
+    <th>Risk level</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @inventories.each do |inventory| %>
+      <tr>
+        <td><%= inventory.equipment %></td>
+        <td><%= inventory.inventory_date %></td>
+        <td><%= inventory.trained_end_users %></td>
+        <td><%= inventory.trained_maintenance_personnel %></td>
+        <td><%= inventory.risk_level %></td>
+        <td><%= inventory.status %></td>
+        <td>
+          <%= link_to 'Details', inventory, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_inventory_path(inventory), class: 'btn btn-primary' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

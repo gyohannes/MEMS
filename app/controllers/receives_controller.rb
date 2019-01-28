@@ -9,8 +9,15 @@ class ReceivesController < ApplicationController
   # GET /receives
   # GET /receives.json
   def index
-    @receives = Receive.joins(:store).where('stores.organization_structure_id = ? or stores.facility_id = ?',
-                                            current_user.organization_structure_id, current_user.facility_id)
+    @receives = []
+    if current_user.store
+      @receives = current_user.store.receive
+    elsif current_user.facility
+      @receives = current_user.facility.receive
+    elsif current_user.organization_structure
+      @receives = current_user.organization_structure.sub_receive
+    end
+    return @receives
   end
 
   # GET /receives/1
@@ -99,12 +106,7 @@ class ReceivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receife_params
-      params.require(:receive).permit(:store_id, :deliverer_name, :recipient_name, :witness_name, :delivery_date, :remark,
-                                      receive_equipments_attributes:
-                                          [
-                                              :id,:equipment_name, :model,
-                                              :description, :quantity, :unit_cost,:_destroy
-                                          ]
-      )
+      params.require(:receive).permit(:store_id, :deliverer_name, :recipient_name, :been_number, :equipment_name, :model, :with_full_checklist, :quantity, :unit_cost,
+                                      :recipient_contact_address, :witness_contact_address, :witness_name, :delivery_date, :note)
     end
 end

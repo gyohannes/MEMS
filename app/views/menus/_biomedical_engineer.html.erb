@@ -6,25 +6,68 @@
       <% end %>
     </li>
 
-    <li>
-      <%= link_to receives_path do %>
-          <i class="material-icons">add_shopping_cart</i>
-          <span>Equipment Procurement</span>
-      <% end %>
-    </li>
-
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">devices</i>
-      <span style="vertical-align: super">Equipment Management</span>
+      <i class="material-icons">plus_one</i>
+      <span style="vertical-align: super">Registrations</span>
     </a>
     <ul class="ml-menu">
+      <li>
+        <%= link_to contacts_path do %>
+            <i class="material-icons">people</i>
+            <span>Contacts</span>
+        <% end %>
+      </li>
+        <% if current_user.organization_structure %>
+            <li>
+              <%= link_to facilities_path do %>
+                  <i class="material-icons">home</i>
+                  <span>Facilities</span>
+              <% end %>
+            </li>
+        <% elsif current_user.facility %>
+            <li>
+              <%= link_to current_user.facility do %>
+                  <i class="material-icons">home</i>
+                  <span>Facility Information</span>
+              <% end %>
+            </li>
+        <% end %>
+
+          <li>
+            <%= link_to institutions_path do %>
+                <i class="material-icons">school</i>
+                <span>Suppliers/Local Representatives</span>
+            <% end %>
+          </li>
+
+      <li>
+        <%= link_to receives_path do %>
+            <i class="material-icons">add_shopping_cart</i>
+            <span>Equipment Logistics</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to store_registrations_path do %>
+            <i class="material-icons">store</i>
+            <span>Store Registration</span>
+        <% end %>
+      </li>
 
       <li>
         <%= link_to equipment_index_path do %>
             <i class="material-icons">devices</i>
-            <span>Equipment Management</span>
+            <span>Equipment</span>
         <% end %>
       </li>
+
+      <li>
+        <%= link_to specifications_path do %>
+            <i class="material-icons">list</i>
+            <span>Specifications</span>
+        <% end %>
+      </li>
+
       <li>
         <%= link_to installations_path do %>
             <i class="material-icons">add_to_queue</i>
@@ -33,7 +76,7 @@
       </li>
       <li>
         <%= link_to acceptance_tests_path do %>
-            <i class="material-icons">check</i>
+            <i class="material-icons">check_box</i>
             <span>Acceptance Tests</span>
         <% end %>
       </li>
@@ -51,14 +94,21 @@
       </li>
 
       <li>
-        <%= link_to trainings_path do %>
+        <%= link_to inventories_path do %>
+            <i class="material-icons">update</i>
+            <span>Inventories</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to disposals_path do %>
             <i class="material-icons">delete_sweep</i>
             <span>Disposals</span>
         <% end %>
       </li>
     </ul>
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">list</i> <span style="vertical-align: super">
+      <i class="material-icons">send</i> <span style="vertical-align: super">
       Requests</span>
     </a>
 
@@ -86,7 +136,7 @@
 
       <li>
         <%= link_to acceptance_requests_path do %>
-            <i class="material-icons">check</i>
+            <i class="material-icons">check_box</i>
             <span>Acceptance Requests</span>
         <% end %>
       </li>
@@ -140,6 +190,59 @@
         <% end %>
       </li>
 
+    </ul>
+
+    <a href="javascript:void(0);" class="menu-toggle">
+      <i class="material-icons">pie_chart</i>
+      <span style="vertical-align: super">Reports</span>
+    </a>
+    <ul class="ml-menu">
+
+      <li>
+        <%= link_to receives_path do %>
+            <i class="material-icons">add_shopping_cart</i>
+            <span>Procurements</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to specifications_path do %>
+            <i class="material-icons">list</i>
+            <span>Equipment Specifications</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to installations_path do %>
+            <i class="material-icons">add_to_queue</i>
+            <span>Installations</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to acceptance_tests_path do %>
+            <i class="material-icons">check_box</i>
+            <span>Acceptance Tests</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to maintenances_path do %>
+            <i class="material-icons">build</i>
+            <span>Maintenances</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to trainings_path do %>
+            <i class="material-icons">library_books</i>
+            <span>Trainings</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to disposals_path do %>
+            <i class="material-icons">delete_sweep</i>
+            <span>Disposals</span>
+        <% end %>
+      </li>
     </ul>
 
 <% end %>

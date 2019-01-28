@@ -31,13 +31,6 @@
         <% end %>
       </li>
 
-      <li>
-        <%= link_to contacts_path do %>
-            <i class="material-icons">people</i>
-            <span>Contacts</span>
-        <% end %>
-      </li>
-
       <% if current_user.organization_structure %>
       <li>
         <%= link_to facility_types_path do %>
@@ -46,7 +39,7 @@
         <% end %>
       </li>
     <% end %>
-    </ul>
+
     <% if current_user.organization_structure %>
       <li>
         <%= link_to organization_structures_path do %>
@@ -55,34 +48,5 @@
         <% end %>
       </li>
     <% end %>
-    <% if current_user.organization_structure %>
-    <li>
-      <%= link_to facilities_path do %>
-          <i class="material-icons">home</i>
-          <span>Facilities</span>
-      <% end %>
-    </li>
-    <% elsif current_user.facility %>
-        <li>
-          <%= link_to current_user.facility do %>
-              <i class="material-icons">home</i>
-              <span>Facility Information</span>
-          <% end %>
-        </li>
-    <% end %>
-    <% if current_user.organization_structure %>
-    <li>
-      <%= link_to institutions_path do %>
-          <i class="material-icons">school</i>
-          <span>Suppliers/Local Representatives</span>
-      <% end %>
-    </li>
-    <% elsif current_user.institution %>
-        <li>
-          <%= link_to current_user.institution do %>
-              <i class="material-icons">school</i>
-              <span>Suppliers/Local Representatives Information</span>
-          <% end %>
-        </li>
-    <% end %>
+    </ul>
 <% end %>

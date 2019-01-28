@@ -1,10 +1,14 @@
 class MaintenancesController < ApplicationController
   before_action :set_maintenance, only: [:show, :edit, :update, :destroy]
+  before_action :load, only: [:new, :create, :edit, :update, :index]
 
-  # GET /maintenances
-  # GET /maintenances.json
+  def load
+    @equipments = current_user.load_equipment
+  end
+  # GET /installations
+  # GET /installations.json
   def index
-    @maintenances = Maintenance.all
+    @maintenances = Maintenance.joins(:equipment).where('equipment_id in (?)', @equipments.pluck(:id))
   end
 
   # GET /maintenances/1

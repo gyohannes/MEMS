@@ -1,10 +1,14 @@
 class AcceptanceTestsController < ApplicationController
   before_action :set_acceptance_test, only: [:show, :edit, :update, :destroy]
+  before_action :load, only: [:new, :create, :edit, :update, :index]
 
-  # GET /acceptance_tests
-  # GET /acceptance_tests.json
+  def load
+    @equipments = current_user.load_equipment
+  end
+  # GET /installations
+  # GET /installations.json
   def index
-    @acceptance_tests = AcceptanceTest.all
+    @acceptance_tests = AcceptanceTest.joins(:equipment).where('equipment_id in (?)', @equipments.pluck(:id))
   end
 
   # GET /acceptance_tests/1

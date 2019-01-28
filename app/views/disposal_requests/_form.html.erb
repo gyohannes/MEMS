@@ -14,7 +14,7 @@
         <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
       </div>
       <div class="col-sm-6">
-        <%= f.association :equipment %>
+        <%= f.association :equipment, collection: @equipments %>
         <%= f.input :disposal_description %>
       </div>
     </div>

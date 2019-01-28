@@ -6,6 +6,41 @@
     </p>
 
     <p>
+      <strong>Been Number:</strong>
+      <%= @receife.been_number %>
+    </p>
+
+    <p>
+      <strong>Equipment Name:</strong>
+      <%= @receife.equipment_name %>
+    </p>
+
+    <p>
+      <strong>Model:</strong>
+      <%= @receife.model %>
+    </p>
+
+    <p>
+      <strong>With Full Checklist:</strong>
+      <%= @receife.with_full_checklist %>
+    </p>
+
+    <p>
+      <strong>Quantity:</strong>
+      <%= q = @receife.quantity %>
+    </p>
+
+    <p>
+      <strong>Unit Cost (Birr):</strong>
+      <%= uc = @receife.unit_cost %>
+    </p>
+
+    <p>
+      <strong>Total Cost (Birr):</strong>
+      <%= q * uc %>
+    </p>
+
+    <p>
       <strong>Deliverer name:</strong>
       <%= @receife.deliverer_name %>
     </p>
@@ -16,8 +51,18 @@
     </p>
 
     <p>
+      <strong>Recipient Contact Address:</strong>
+      <%= @receife.recipient_contact_address %>
+    </p>
+
+    <p>
       <strong>Witness name:</strong>
       <%= @receife.witness_name %>
+    </p>
+
+    <p>
+      <strong>Witness Contact Address:</strong>
+      <%= @receife.witness_contact_address %>
     </p>
 
     <p>
@@ -26,39 +71,12 @@
     </p>
 
     <p>
-      <strong>Remark:</strong>
-      <%= @receife.remark %>
+      <strong>Note:</strong>
+      <%= @receife.note %>
     </p>
-
-    <table border="1" style="width: 100%;">
-      <tr>
-        <th>Equipment</th>
-        <th>Model</th>
-        <th>Description</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Total</th>
-      </tr>
-      <% total= 0 %>
-      <% @receife.receive_equipments.each do |ri| %>
-          <tr>
-            <td><%= ri.equipment_name %></td>
-            <td><%= ri.model %></td>
-            <td><%= ri.description %></td>
-            <td><%= q=ri.quantity %></td>
-            <td><%= p=ri.unit_cost %></td>
-            <td><%= t = (q || 0) * (p || 0)  %></td>
-          </tr>
-          <% total += t %>
-      <% end %>
-      <tr>
-        <th colspan="5"><%=t :total %></th>
-        <td><%= total %></td>
-      </tr>
-    </table>
     <hr/>
-    <%= link_to 'Edit', edit_receife_path(@receife) %> |
-    <%= link_to 'Download Model 19', receife_path(@receife,:format=>:pdf),:class=>'btn' %> |
+    <%= link_to 'Edit', edit_receife_path(@receife), class: 'btn btn-primary' %>
+    <%= link_to 'Download Model 19', receife_path(@receife,:format=>:pdf),:class=>'btn', class: 'btn btn-primary' %>
     <%= link_to 'Back', receives_path %>
   </div>
 </div>

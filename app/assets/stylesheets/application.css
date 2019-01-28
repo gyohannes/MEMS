@@ -3,7 +3,7 @@
  *= require bootstrap-treeview
  *= require fullcalendar
  *= require new_style
- *= require_directory ./jquery-ui
+ *= require jquery-ui/jquery-ui
  */
 
 @font-face {

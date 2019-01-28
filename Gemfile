@@ -11,12 +11,14 @@ gem 'country_select'
 gem "nested_form"
 gem "simple_calendar", "~> 2.0"
 gem 'wicked_pdf', '~> 1.1'
+gem 'wkhtmltopdf-binary'
 gem "chartkick"
 gem "highcharts-rails"
 gem 'fullcalendar-rails', '~> 3.9'
 gem 'momentjs-rails'
 gem 'cancancan', '~> 2.0'
 gem 'pg'
+gem "paperclip", "~> 6.0.0"
 # Jquery
 gem 'jquery-rails'
 

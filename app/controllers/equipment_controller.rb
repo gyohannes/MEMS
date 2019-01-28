@@ -26,6 +26,16 @@ class EquipmentController < ApplicationController
     render json: calendars
   end
 
+  def search
+    equipments = Equipment.search(params[:term])
+    render json: equipments
+  end
+
+  def facility_equipment_search
+    equipments = Equipment.search(params[:term], current_user.facility)
+    render json: equipments
+  end
+
   def equipment_by_status
     equipment = []
     if !current_user.facility.blank?
@@ -51,15 +61,7 @@ class EquipmentController < ApplicationController
   # GET /equipment
   # GET /equipment.json
   def index
-    @equipment = []
-    if current_user.organization_structure
-      @equipment = current_user.organization_structure.try(:sub_equipment)
-    elsif current_user.facility and current_user.department
-      @equipment = current_user.department.department_equipment(current_user.facility_id)
-    elsif current_user.facility
-      @equipment = current_user.facility.equipment
-    end
-    return @equipment
+    @equipment = current_user.load_equipment
   end
 
   def load_equipment

@@ -10,6 +10,8 @@ class CreateMaintenanceToolkitRequests < ActiveRecord::Migration[5.1]
       t.string :request_to
       t.text :contact_address
       t.date :request_date
+      t.text :comment
+      t.string :decision_by, type: :uuid
       t.string :status
       t.timestamps
     end

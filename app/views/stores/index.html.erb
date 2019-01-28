@@ -25,12 +25,12 @@
         <td><%= store.block_number %></td>
         <td><%= store.room_number %></td>
         <td>
-          <%= link_to 'Edit', edit_store_path(store) %>
+          <%= link_to 'Edit', edit_store_path(store), class: 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <hr/>
-<%= link_to 'New Store', new_store_path %>
+<%= link_to 'New Store', new_store_path, class: 'btn btn-primary' %>
 </div>

@@ -10,6 +10,8 @@ class CreateMaintenanceRequests < ActiveRecord::Migration[5.1]
       t.string :request_to
       t.references :institution, type: :uuid, foreign_key: true
       t.date :request_date
+      t.text :comment
+      t.string :decision_by, type: :uuid
       t.string :status
       t.timestamps
     end

@@ -1,0 +1,36 @@
+<div class="panel-body">
+<p>
+  <strong>Store:</strong>
+  <%= @store_registration.store %>
+</p>
+
+<p>
+  <strong>Been number:</strong>
+  <%= @store_registration.been_number %>
+</p>
+
+<p>
+  <strong>Equipment Name:</strong>
+  <%= @store_registration.equipment.try(:equipment_name) %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @store_registration.equipment.model %>
+</p>
+
+<p>
+  <strong>Serial Number:</strong>
+  <%= @store_registration.equipment.serial_number %>
+</p>
+
+<p>
+  <strong>Tag Number:</strong>
+  <%= @store_registration.equipment.tag_number %>
+</p>
+
+<hr/>
+
+<%= link_to 'Edit', edit_store_registration_path(@store_registration), class: 'btn btn-primary' %>
+<%= link_to 'Back', store_registrations_path %>
+</div>

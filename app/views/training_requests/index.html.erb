@@ -26,7 +26,7 @@
         <td><%= training_request.request_date %></td>
         <td>
           <%= link_to 'Details', training_request, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_training_request_path(training_request), class: 'btn btn-primary' if can? :edit, training_request %>
+          <%= link_to 'Edit', edit_training_request_path(training_request), class: 'btn btn-primary' if can? :edit, training_request and training_request.status == Constants::PENDING %>
           <%= link_to 'Delete', training_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, training_request %>
         </td>
       </tr>

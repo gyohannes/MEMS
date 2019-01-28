@@ -12,7 +12,10 @@ class ContactsController < ApplicationController
     @contacts = @organization_structure.sub_contacts
     render partial: 'contacts'
   end
-
+  def search
+    contacts = Contact.search(params[:term], current_user)
+    render json: contacts
+  end
   # GET /contacts/1
   # GET /contacts/1.json
   def show

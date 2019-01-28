@@ -1,5 +1,5 @@
 class TrainingRequestsController < ApplicationController
-  before_action :set_training_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_training_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /training_requests
   # GET /training_requests.json
@@ -32,7 +32,8 @@ class TrainingRequestsController < ApplicationController
   end
 
   def decision
-    @training_request.update(procurement_request_params)
+    @training_request.update(training_request_params)
+    @training_request.update(status: params[:status])
     redirect_to @training_request, notice: "Training request was successfully #{params[:status]}."
   end
 
@@ -94,6 +95,6 @@ class TrainingRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_request_params
-      params.require(:training_request).permit(:organization_structure_id, :facility_id, :trainee_type, :training_description, :request_to, :institution_id, :requested_by, :request_date)
+      params.require(:training_request).permit(:organization_structure_id, :facility_id, :trainee_type, :training_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
     end
 end

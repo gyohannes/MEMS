@@ -2,12 +2,12 @@
       <li>
         <%= link_to equipment_index_path do %>
             <i class="material-icons">devices</i>
-            <span>Equipment Management</span>
+            <span>Equipment</span>
         <% end %>
       </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">list</i> <span style="vertical-align: super">
+      <i class="material-icons">send</i> <span style="vertical-align: super">
       Requests</span>
     </a>
 
@@ -20,23 +20,9 @@
       </li>
 
       <li>
-        <%= link_to specification_requests_path do %>
-            <i class="material-icons">help_outline</i>
-            <span>Specification Requests</span>
-        <% end %>
-      </li>
-
-      <li>
         <%= link_to spare_part_requests_path do %>
             <i class="material-icons">devices</i>
             <span>Spare Part Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to acceptance_requests_path do %>
-            <i class="material-icons">check</i>
-            <span>Acceptance Requests</span>
         <% end %>
       </li>
 
@@ -72,20 +58,6 @@
         <%= link_to disposal_requests_path do %>
             <i class="material-icons">delete_sweep</i>
             <span>Disposal Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to budget_requests_path do %>
-            <i class="material-icons">attach_money</i>
-            <span>Budget Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to maintenance_toolkit_requests_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenance Toolkit Requests</span>
         <% end %>
       </li>
 

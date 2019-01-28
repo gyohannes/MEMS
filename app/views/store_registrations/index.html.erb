@@ -1,0 +1,40 @@
+<div class="header">
+  <h2>
+    Store Registrations
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Store</th>
+      <th>Been number</th>
+      <th>Equipment</th>
+      <th>Model</th>
+      <th>Serial Number</th>
+      <th>Tag Number</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @store_registrations.each do |store_registration| %>
+      <tr>
+        <td><%= store_registration.store %></td>
+        <td><%= store_registration.been_number %></td>
+        <td><%= store_registration.equipment %></td>
+        <td><%= store_registration.equipment.model %></td>
+        <td><%= store_registration.equipment.serial_number %></td>
+        <td><%= store_registration.equipment.tag_number %></td>
+        <td>
+          <%= link_to 'Edit', edit_store_registration_path(store_registration), class: 'btn btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Store Registration', new_store_registration_path, class: 'btn btn-primary' %>
+</div>

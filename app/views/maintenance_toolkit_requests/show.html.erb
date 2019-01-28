@@ -29,7 +29,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @maintenance_toolkit_request.requested_by %>
+  <%= @maintenance_toolkit_request.user %>
 </p>
 
 <p>
@@ -46,14 +46,21 @@
     <strong>Status:</strong>
     <%= @maintenance_toolkit_request.status %>
   </p>
-
+  <%= simple_form_for(@maintenance_toolkit_request, url: decision_maintenance_toolkit_request_path) do |f| %>
+  <% if can? :decision, @maintenance_toolkit_request and @maintenance_toolkit_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @maintenance_toolkit_request.comment %></p>
+      <p><label>Decided by:</label> <%= @maintenance_toolkit_request.decided_user %></p>
+  <% end %>
   <hr/>
-  <%= simple_nested_form_for(@maintenance_toolkit_request, url: decision_maintenance_toolkit_request_path) do |f| %>
       <% if can? :decision, @maintenance_toolkit_request and @maintenance_toolkit_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @maintenance_toolkit_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @maintenance_toolkit_request.status == Constants::REJECTED %>
       <% end %>
   <% end %>
-<%= link_to 'Edit', edit_maintenance_toolkit_request_path(@maintenance_toolkit_request), class: 'btn btn-primary' if can? :edit, @maintenance_toolkit_request %>
+  <br/>
+<%= link_to 'Edit', edit_maintenance_toolkit_request_path(@maintenance_toolkit_request), class: 'btn btn-primary' if can? :edit, @maintenance_toolkit_request and @maintenance_toolkit_request.status == Constants::PENDING  %>
 <%= link_to 'Back', maintenance_toolkit_requests_path %>
 </div>

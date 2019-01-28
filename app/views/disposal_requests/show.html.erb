@@ -29,7 +29,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @disposal_request.requested_by %>
+  <%= @disposal_request.user %>
 </p>
 
 <p>
@@ -41,14 +41,21 @@
     <strong>Status:</strong>
     <%= @disposal_request.status %>
   </p>
-
+  <%= simple_form_for(@disposal_request, url: decision_disposal_request_path) do |f| %>
+  <% if can? :decision, @disposal_request and @disposal_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @disposal_request.comment %></p>
+      <p><label>Decided by:</label> <%= @disposal_request.decided_user %></p>
+  <% end %>
   <hr/>
-  <%= simple_nested_form_for(@disposal_request, url: decision_disposal_request_path) do |f| %>
       <% if can? :decision, @disposal_request and @disposal_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @disposal_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @disposal_request.status == Constants::REJECTED %>
       <% end %>
   <% end %>
-<%= link_to 'Edit', edit_disposal_request_path(@disposal_request), class: 'btn btn-primary' %>
+  <br/>
+<%= link_to 'Edit', edit_disposal_request_path(@disposal_request), class: 'btn btn-primary' if can? :edit, @disposal_request and @disposal_request.status == Constants::PENDING  %>
 <%= link_to 'Back', disposal_requests_path %>
 </div>

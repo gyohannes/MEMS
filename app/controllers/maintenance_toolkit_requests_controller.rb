@@ -1,5 +1,5 @@
 class MaintenanceToolkitRequestsController < ApplicationController
-  before_action :set_maintenance_toolkit_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_maintenance_toolkit_request, only: [:show, :edit, :update, :destroy, :decision]
 
   # GET /maintenance_toolkit_requests
   # GET /maintenance_toolkit_requests.json
@@ -32,7 +32,8 @@ class MaintenanceToolkitRequestsController < ApplicationController
   end
 
   def decision
-    @maintenance_toolkit_request.update(procurement_request_params)
+    @maintenance_toolkit_request.update(maintenance_toolkit_request_params)
+    @maintenance_toolkit_request.update(status: params[:status])
     redirect_to @maintenance_toolkit_request, notice: "Maintenance Toolkit request was successfully #{params[:status]}."
   end
 
@@ -94,6 +95,6 @@ class MaintenanceToolkitRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_toolkit_request_params
-      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity, :request_to, :institution_id, :requested_by, :contact_address, :request_date)
+      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity, :request_to, :institution_id, :user_id, :contact_address, :request_date, :comment, :decision_by)
     end
 end

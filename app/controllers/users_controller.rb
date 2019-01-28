@@ -78,6 +78,10 @@ class UsersController < BaseController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
     unless @user.organization_structure.blank?
       @facilities = @user.organization_structure.facilities
       @institutions = @user.organization_structure.institutions

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization structure:</strong>
+  <%= @specification.organization_structure %>
+</p>
+
+<p>
+  <strong>Facility:</strong>
+  <%= @specification.facility %>
+</p>
+
+<p>
+  <strong>Equipment name:</strong>
+  <%= @specification.equipment_name %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @specification.model %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @specification.description %>
+</p>
+
+<p>
+  <strong>Approximate cost:</strong>
+  <%= @specification.approximate_cost %>
+</p>
+
+<p>
+  <strong>Specification by:</strong>
+  <%= @specification.specification_by %>
+</p>
+
+<p>
+  <strong>Contact address:</strong>
+  <%= @specification.contact_address %>
+</p>
+
+<p>
+  <strong>Specification date:</strong>
+  <%= @specification.specification_date %>
+</p>
+
+<%= link_to 'Edit', edit_specification_path(@specification) %> |
+<%= link_to 'Back', specifications_path %>

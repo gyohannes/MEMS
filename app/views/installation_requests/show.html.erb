@@ -36,7 +36,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @installation_request.requested_by %>
+  <%= @installation_request.user %>
 </p>
 
 <p>
@@ -48,14 +48,20 @@
     <strong>Status:</strong>
     <%= @installation_request.status %>
   </p>
-
+  <%= simple_form_for(@installation_request, url: decision_installation_request_path) do |f| %>
+  <% if can? :decision, @installation_request and @installation_request.status == Constants::PENDING %>
+      <%= f.input :comment, wrapper: 'vertical_form' %>
+      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+  <% else %>
+      <p><label>Comment:</label> <%= @installation_request.comment %></p>
+      <p><label>Decided by:</label> <%= @installation_request.decided_user %></p>
+  <% end %>
   <hr/>
-  <%= simple_nested_form_for(@installation_request, url: decision_installation_request_path) do |f| %>
       <% if can? :decision, @installation_request and @installation_request.status == Constants::PENDING %>
           <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @installation_request.status == Constants::APPROVED %>
           &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @installation_request.status == Constants::REJECTED %>
       <% end %>
-  <% end %>
-<%= link_to 'Edit', edit_installation_request_path(@installation_request), class: 'btn btn-primary' %>
+  <% end %><br/>
+<%= link_to 'Edit', edit_installation_request_path(@installation_request), class: 'btn btn-primary' if can? :edit, @installation_request and @installation_request.status == Constants::PENDING  %>
 <%= link_to 'Back', installation_requests_path %>
 </div>
