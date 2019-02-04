@@ -14,5 +14,3 @@
 //= require AdminBSBMaterialDesign/jquery-datatable/jquery.dataTables
 //= require AdminBSBMaterialDesign/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap
 //= require_directory ..//AdminBSBMaterialDesign/jquery-datatable/extensions/export
-//= require AdminBSBMaterialDesign/js/pages/tables/jquery-datatable
-//= require AdminBSBMaterialDesign/js/demo

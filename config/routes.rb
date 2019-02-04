@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'reports/equipment'
+  post 'reports/equipment'
+  get 'reports/load_facilities'
+
+  resources :news
   resources :inventories
   resources :specifications
   resources :store_registrations
@@ -90,7 +95,11 @@ Rails.application.routes.draw do
     end
   end
   resources :disposals
-  resources :maintenances
+  resources :maintenances do
+    collection do
+      get 'load_maintenance_requests'
+    end
+  end
   resources :acceptance_tests
   resources :installations
   resources :receives

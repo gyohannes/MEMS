@@ -5,6 +5,7 @@ class CalibrationRequest < ApplicationRecord
   belongs_to :equipment
   belongs_to :user
   belongs_to :decided_user, optional: true, :class_name => 'User', :foreign_key => "decision_by"
+  belongs_to :assigned_user, optional: true, :class_name => 'User', :foreign_key => "assigned_to"
 
   def request_from
     if organization_structure_id?

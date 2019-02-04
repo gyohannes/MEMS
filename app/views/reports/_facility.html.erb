@@ -1,0 +1,4 @@
+<%= simple_fields_for :search do |f| %>
+<%=  f.input :facility, collection: @facilities, required: false %>
+<% end %>
+<%= javascript_include_tag 'global' %>

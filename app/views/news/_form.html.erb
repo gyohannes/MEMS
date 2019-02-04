@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@news) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :user, as: :hidden, input_html: {value: current_user.id} %>
+    <%= f.association :organization_structure, as: :hidden, input_html: {value: current_user.organization_structure_id} %>
+    <%= f.association :facility, as: :hidden, input_html: {value: current_user.facility_id} %>
+    <%= f.association :institution, as: :hidden, input_html: {value: current_user.institution_id} %>
+    <%= f.input :headline, label: 'Title' %>
+    <%= f.input :content, input_html: {class: 'wysihtml5'} %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

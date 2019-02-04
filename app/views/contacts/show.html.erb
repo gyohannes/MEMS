@@ -1,5 +1,11 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Contact Detail</h2>
+</div>
+<div class="body">
+  <p>
+    <strong>Organization Unit:</strong>
+    <%= @contact.organization_structure %>
+  </p>
 <p>
   <strong>Facility:</strong>
   <%= @contact.facility %>
@@ -44,6 +50,7 @@
   <strong>Email:</strong>
   <%= @contact.email %>
 </p>
-
-<%= link_to 'Edit', edit_contact_path(@contact) %> |
+<hr/>
+<%= link_to 'Edit', edit_contact_path(@contact), class: 'btn btn-primary' %>
 <%= link_to 'Back', contacts_path %>
+</div>

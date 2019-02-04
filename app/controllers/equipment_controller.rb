@@ -32,29 +32,17 @@ class EquipmentController < ApplicationController
   end
 
   def facility_equipment_search
-    equipments = Equipment.search(params[:term], current_user.facility)
+    equipments = Equipment.search(params[:term], nil, current_user.facility)
     render json: equipments
   end
 
   def equipment_by_status
-    equipment = []
-    if !current_user.facility.blank?
-      equipment = current_user.facility.equipment.group('status').count
-    elsif !current_user.organization_structure.blank?
-      equipment = current_user.organization_structure.sub_equipment.group('status').count
-    end
+    equipment = current_user.load_equipment.group('status').count
     render json: equipment
   end
 
   def equipment_by_category
-    equipment = []
-    if !current_user.facility.blank?
-      equipment = current_user.facility.equipment.
-          joins(:equipment_category).group('equipment_categories.name').count
-    elsif !current_user.organization_structure.blank?
-      equipment = current_user.organization_structure.sub_equipment.
-          joins(:equipment_category).group('equipment_categories.name').count
-    end
+    equipment = current_user.load_equipment.joins(:equipment_category).group('equipment_categories.name').count
     render json: equipment
   end
 

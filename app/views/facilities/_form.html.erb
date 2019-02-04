@@ -4,7 +4,8 @@
   <div class="row">
     <div class="col-sm-6">
     <%= f.input :organization_structure_id, collection: [@organization_structure] %>
-    <%= f.input :name %>
+      <%= f.input :name %>
+      <%= f.input :code %>
     <%= f.association :facility_type %>
     <%= f.input :category, as: :radio_buttons, collection: ['Public', 'Private', 'NGO'] %>
     </div>

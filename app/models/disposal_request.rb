@@ -15,9 +15,9 @@ class DisposalRequest < ApplicationRecord
 
   def request_from_type
     if organization_structure_id?
-      return organization_structure.organization_structure_type.to_s
+      return organization_structure.organization_structure_type
     elsif facility_id?
-      return 'Health Facility'
+      return Constants::FACILITY
     end
   end
 

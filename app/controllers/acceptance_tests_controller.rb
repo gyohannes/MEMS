@@ -20,10 +20,12 @@ class AcceptanceTestsController < ApplicationController
   def new
     @acceptance_test = AcceptanceTest.new
     @acceptance_test.equipment_id = params[:equipment]
+    session[:return_to] ||= request.referer
   end
 
   # GET /acceptance_tests/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /acceptance_tests
@@ -34,7 +36,7 @@ class AcceptanceTestsController < ApplicationController
     respond_to do |format|
       if @acceptance_test.save
         equipment.update(status: @acceptance_test.status)
-        format.html { redirect_to @acceptance_test, notice: 'Acceptance test was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Acceptance test was successfully created.' }
         format.json { render :show, status: :created, location: @acceptance_test }
       else
         format.html { render :new }
@@ -50,7 +52,7 @@ class AcceptanceTestsController < ApplicationController
     respond_to do |format|
       if @acceptance_test.update(acceptance_test_params)
         equipment.update(status: @acceptance_test.status)
-        format.html { redirect_to @acceptance_test, notice: 'Acceptance test was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Acceptance test was successfully updated.' }
         format.json { render :show, status: :ok, location: @acceptance_test }
       else
         format.html { render :edit }

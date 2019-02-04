@@ -1,5 +1,6 @@
 class Institution < ApplicationRecord
-  belongs_to :organization_structure
+  belongs_to :organization_structure, optional: true
+  belongs_to :facility, optional: true
   has_many :procurement_requests
   has_many :specification_requests
   has_many :spare_part_requests
@@ -12,6 +13,8 @@ class Institution < ApplicationRecord
 
   scope :suppliers, -> { where(category: 'Supplier') }
   scope :local_representatives, -> { where(category: 'Local Representative') }
+
+  validates :name, :category, :institution_type, presence: true
 
   def to_s
     name

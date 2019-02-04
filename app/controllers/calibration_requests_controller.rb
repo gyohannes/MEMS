@@ -1,9 +1,10 @@
 class CalibrationRequestsController < ApplicationController
   before_action :set_calibration_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load, only: [:new, :create, :edit, :update]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
   def load
     @equipments = current_user.load_equipment
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
   end
   # GET /calibration_requests
   # GET /calibration_requests.json
@@ -22,6 +23,8 @@ class CalibrationRequestsController < ApplicationController
   # GET /calibration_requests/1
   # GET /calibration_requests/1.json
   def show
+    @status = @calibration_request.status
+    @calibration_request = Constants::PENDING if @status==Constants::FORWARDED
   end
 
   # GET /calibration_requests/new
@@ -100,6 +103,7 @@ class CalibrationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calibration_request_params
-      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
+      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description,
+                                                  :status,:request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

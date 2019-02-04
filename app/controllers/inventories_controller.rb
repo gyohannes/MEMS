@@ -22,10 +22,12 @@ class InventoriesController < ApplicationController
     else
       @inventory.build_equipment
     end
+    session[:return_to] ||= request.referer
   end
 
   # GET /inventories/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /inventories
@@ -49,7 +51,7 @@ class InventoriesController < ApplicationController
 
     respond_to do |format|
       if @inventory.save
-        format.html { redirect_to @inventory, notice: 'Inventory was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Inventory was successfully created.' }
         format.json { render :show, status: :created, location: @inventory }
       else
         format.html { render :new }
@@ -77,7 +79,7 @@ class InventoriesController < ApplicationController
     params[:inventory].delete(:equipment_attributes)
     respond_to do |format|
       if @inventory.update(inventory_params)
-        format.html { redirect_to @inventory, notice: 'Inventory was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Inventory was successfully updated.' }
         format.json { render :show, status: :ok, location: @inventory }
       else
         format.html { render :edit }

@@ -1,10 +1,11 @@
-  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+<% unless @equipment.blank? %>
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
     <thead>
     <tr>
       <th>Facility</th>
       <th>Equipment name</th>
+      <th>Category</th>
       <th>Model</th>
-      <th>Power requirement</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -15,8 +16,8 @@
         <tr>
           <td><%= equipment.facility %></td>
           <td><%= equipment.equipment_name %></td>
+          <td><%= equipment.equipment_category %></td>
           <td><%= equipment.model %></td>
-          <td><%= equipment.power_requirement %></td>
           <td><label class="label <%= equipment.status == Equipment::NOT_FUNCTIONAL ? 'label-warning' :
                                                                     (equipment.status == Equipment::DISPOSED ? 'label-danger' :
                                                                          (equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>">
@@ -28,4 +29,5 @@
     </tbody>
   </table>
   <hr/>
+<% end %>
   <%= link_to 'New Equipment', new_equipment_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' unless @organization_structure.blank? %>

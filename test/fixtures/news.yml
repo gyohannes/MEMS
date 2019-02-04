@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  organization_structure: one
+  facility: one
+  institution: one
+  headline: MyString
+  content: MyText
+
+two:
+  user: two
+  organization_structure: two
+  facility: two
+  institution: two
+  headline: MyString
+  content: MyText

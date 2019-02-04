@@ -1,6 +1,10 @@
 class SparePartRequestsController < ApplicationController
   before_action :set_spare_part_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
+  def load
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+  end
   # GET /spare_part_requests
   # GET /spare_part_requests.json
   def index
@@ -18,6 +22,8 @@ class SparePartRequestsController < ApplicationController
   # GET /spare_part_requests/1
   # GET /spare_part_requests/1.json
   def show
+    @status = @spare_part_request.status
+    @spare_part_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /spare_part_requests/new
@@ -96,6 +102,8 @@ class SparePartRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def spare_part_request_params
-      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere, :power_requirement, :quantity, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
+      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere,
+                                                 :power_requirement, :quantity, :request_to, :institution_id, :user_id, :request_date,
+                                                 :comment, :decision_by, :assigned_to, :status)
     end
 end

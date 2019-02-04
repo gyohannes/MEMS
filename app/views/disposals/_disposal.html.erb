@@ -1,3 +1,7 @@
+<div class="header">
+  <h2>Disposal Details</h2>
+</div>
+<div class="body">
 <% unless @disposal.blank? %>
 <p>
   <strong>Equipment:</strong>
@@ -31,3 +35,4 @@
 <hr/>
 <%= link_to 'Edit', edit_disposal_path(@disposal) %>
 <% end %>
+</div>

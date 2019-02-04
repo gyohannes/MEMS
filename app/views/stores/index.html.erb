@@ -7,8 +7,7 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Organization structure</th>
-      <th>Facility</th>
+      <th>Organization Unit / Facility</th>
       <th>Store name</th>
       <th>Block number</th>
       <th>Room number</th>
@@ -19,8 +18,7 @@
   <tbody>
     <% @stores.each do |store| %>
       <tr>
-        <td><%= store.organization_structure %></td>
-        <td><%= store.facility %></td>
+        <td><%= store.facility || store.organization_structure %></td>
         <td><%= store.store_name %></td>
         <td><%= store.block_number %></td>
         <td><%= store.room_number %></td>

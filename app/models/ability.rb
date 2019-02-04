@@ -5,6 +5,7 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
        user ||= User.new # guest user (not logged in)
+       can :manage, [News, Contact]
        if user.is_role(Constants::BIOMEDICAL_ENGINEER) or user.is_role(Constants::DEPARTMENT)
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
                                                                       SparePartRequest, AcceptanceRequest,

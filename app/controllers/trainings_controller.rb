@@ -19,10 +19,12 @@ class TrainingsController < ApplicationController
     equipment = Equipment.find_by_id(params[:equipment])
     @training.equipment_name = equipment.equipment_name rescue nil
     @training.model = equipment.model rescue nil
+    session[:return_to] ||= request.referer
   end
 
   # GET /trainings/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /trainings
@@ -37,7 +39,7 @@ class TrainingsController < ApplicationController
     end
     respond_to do |format|
       if @training.save
-        format.html { redirect_to @training, notice: 'Training was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Training was successfully created.' }
         format.json { render :show, status: :created, location: @training }
       else
         format.html { render :new }
@@ -57,7 +59,7 @@ class TrainingsController < ApplicationController
     end
     respond_to do |format|
       if @training.update(training_params)
-        format.html { redirect_to @training, notice: 'Training was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Training was successfully updated.' }
         format.json { render :show, status: :ok, location: @training }
       else
         format.html { render :edit }

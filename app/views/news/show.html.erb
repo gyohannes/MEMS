@@ -1,0 +1,12 @@
+  <div class="card">
+    <div class="header">
+      <italic><%= @news.created_at.strftime("%B %d, %Y") %>, <%= @news.created_by %></italic>
+      <h3><%= @news.headline %></h3>
+    </div>
+    <div class="body">
+      <%= raw @news.content %>
+      <hr/>
+      <%= link_to 'Edit', edit_news_path(@news), class: 'btn btn-primary' if can? :manage, @news %>
+      <%= link_to 'Delete', @news, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :manage, @news %>
+    </div>
+  </div>

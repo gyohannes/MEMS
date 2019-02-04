@@ -9,9 +9,9 @@
     <tr>
       <th>Equipment name</th>
       <th>Model</th>
-      <th>Attachment</th>
       <th>Approximate cost</th>
       <th>Specification date</th>
+      <th>Attachment</th>
       <th></th>
     </tr>
   </thead>
@@ -21,9 +21,9 @@
       <tr>
         <td><%= specification.equipment_name %></td>
         <td><%= specification.model %></td>
-        <td><%= link_to 'Download', specification.attachment.url if specification.attachment %></td>
         <td><%= specification.approximate_cost %></td>
         <td><%= specification.specification_date %></td>
+        <td><%= link_to 'Download', specification.attachment.url, {target: '_blank'} if specification.attachment %></td>
         <td>
           <%= link_to 'Details', specification, class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_specification_path(specification),class: 'btn btn-primary' %>

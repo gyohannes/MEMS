@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190124210703) do
+ActiveRecord::Schema.define(version: 20190128132948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
 
   create_table "acceptance_tests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "equipment_id"
+    t.uuid "acceptance_request_id"
     t.boolean "meet_standard"
     t.boolean "with_order_specification"
     t.boolean "installation_done"
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.text "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["acceptance_request_id"], name: "index_acceptance_tests_on_acceptance_request_id"
     t.index ["equipment_id"], name: "index_acceptance_tests_on_equipment_id"
   end
 
@@ -72,6 +75,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -91,6 +95,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -136,6 +141,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -147,6 +153,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
 
   create_table "disposals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "equipment_id"
+    t.uuid "disposal_request_id"
     t.text "problem"
     t.text "action_taken"
     t.text "list_of_disposing_commitee"
@@ -154,6 +161,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "disposed_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["disposal_request_id"], name: "index_disposals_on_disposal_request_id"
     t.index ["equipment_id"], name: "index_disposals_on_equipment_id"
   end
 
@@ -205,6 +213,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   create_table "facilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.string "name"
+    t.string "code"
     t.uuid "facility_type_id"
     t.string "category"
     t.string "url"
@@ -237,6 +246,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -249,6 +259,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   create_table "installations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "equipment_id"
     t.uuid "department_id"
+    t.uuid "installation_request_id"
     t.string "block_number"
     t.date "date_of_installation"
     t.string "warranty_period"
@@ -261,15 +272,18 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_installations_on_department_id"
     t.index ["equipment_id"], name: "index_installations_on_equipment_id"
+    t.index ["installation_request_id"], name: "index_installations_on_installation_request_id"
   end
 
   create_table "institutions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
+    t.uuid "facility_id"
     t.string "name"
     t.string "category"
     t.string "institution_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["facility_id"], name: "index_institutions_on_facility_id"
     t.index ["organization_structure_id"], name: "index_institutions_on_organization_structure_id"
   end
 
@@ -302,6 +316,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -320,20 +335,24 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.text "toolkit_description"
     t.float "quantity"
     t.string "request_to"
+    t.uuid "institution_id"
     t.text "contact_address"
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_maintenance_toolkit_requests_on_facility_id"
+    t.index ["institution_id"], name: "index_maintenance_toolkit_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_maintenance_toolkit_requests_on_organization_structure_id"
     t.index ["user_id"], name: "index_maintenance_toolkit_requests_on_user_id"
   end
 
   create_table "maintenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "equipment_id"
+    t.uuid "maintenance_request_id"
     t.string "maintenance_type"
     t.text "problem"
     t.text "action_taken"
@@ -348,6 +367,22 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_maintenances_on_equipment_id"
+    t.index ["maintenance_request_id"], name: "index_maintenances_on_maintenance_request_id"
+  end
+
+  create_table "news", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "organization_structure_id"
+    t.uuid "facility_id"
+    t.uuid "institution_id"
+    t.string "headline"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facility_id"], name: "index_news_on_facility_id"
+    t.index ["institution_id"], name: "index_news_on_institution_id"
+    t.index ["organization_structure_id"], name: "index_news_on_organization_structure_id"
+    t.index ["user_id"], name: "index_news_on_user_id"
   end
 
   create_table "organization_structure_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -450,6 +485,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -470,6 +506,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "requested_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -482,6 +519,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   create_table "specifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_structure_id"
     t.uuid "facility_id"
+    t.uuid "specification_request_id"
     t.string "equipment_name"
     t.string "model"
     t.text "description"
@@ -497,6 +535,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.datetime "attachment_updated_at"
     t.index ["facility_id"], name: "index_specifications_on_facility_id"
     t.index ["organization_structure_id"], name: "index_specifications_on_organization_structure_id"
+    t.index ["specification_request_id"], name: "index_specifications_on_specification_request_id"
   end
 
   create_table "store_registrations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -532,6 +571,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.date "request_date"
     t.text "comment"
     t.string "decision_by"
+    t.string "assigned_to"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -543,6 +583,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
 
   create_table "trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "contact_id"
+    t.uuid "training_request_id"
     t.string "equipment_name"
     t.string "model"
     t.string "training_type"
@@ -552,6 +593,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contact_id"], name: "index_trainings_on_contact_id"
+    t.index ["training_request_id"], name: "index_trainings_on_training_request_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -590,6 +632,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "acceptance_requests", "institutions"
   add_foreign_key "acceptance_requests", "organization_structures"
   add_foreign_key "acceptance_requests", "users"
+  add_foreign_key "acceptance_tests", "acceptance_requests"
   add_foreign_key "acceptance_tests", "equipment"
   add_foreign_key "budget_requests", "facilities"
   add_foreign_key "budget_requests", "organization_structures"
@@ -605,6 +648,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "disposal_requests", "facilities"
   add_foreign_key "disposal_requests", "organization_structures"
   add_foreign_key "disposal_requests", "users"
+  add_foreign_key "disposals", "disposal_requests"
   add_foreign_key "disposals", "equipment"
   add_foreign_key "equipment", "equipment_categories"
   add_foreign_key "equipment", "facilities"
@@ -617,6 +661,8 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "installation_requests", "users"
   add_foreign_key "installations", "departments"
   add_foreign_key "installations", "equipment"
+  add_foreign_key "installations", "installation_requests"
+  add_foreign_key "institutions", "facilities"
   add_foreign_key "institutions", "organization_structures"
   add_foreign_key "inventories", "equipment"
   add_foreign_key "maintenance_requests", "equipment"
@@ -625,9 +671,15 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "maintenance_requests", "organization_structures"
   add_foreign_key "maintenance_requests", "users"
   add_foreign_key "maintenance_toolkit_requests", "facilities"
+  add_foreign_key "maintenance_toolkit_requests", "institutions"
   add_foreign_key "maintenance_toolkit_requests", "organization_structures"
   add_foreign_key "maintenance_toolkit_requests", "users"
   add_foreign_key "maintenances", "equipment"
+  add_foreign_key "maintenances", "maintenance_requests"
+  add_foreign_key "news", "facilities"
+  add_foreign_key "news", "institutions"
+  add_foreign_key "news", "organization_structures"
+  add_foreign_key "news", "users"
   add_foreign_key "procurement_request_equipments", "procurement_requests"
   add_foreign_key "procurement_requests", "facilities"
   add_foreign_key "procurement_requests", "institutions"
@@ -645,6 +697,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "specification_requests", "users"
   add_foreign_key "specifications", "facilities"
   add_foreign_key "specifications", "organization_structures"
+  add_foreign_key "specifications", "specification_requests"
   add_foreign_key "store_registrations", "equipment"
   add_foreign_key "store_registrations", "stores"
   add_foreign_key "stores", "facilities"
@@ -654,6 +707,7 @@ ActiveRecord::Schema.define(version: 20190124210703) do
   add_foreign_key "training_requests", "organization_structures"
   add_foreign_key "training_requests", "users"
   add_foreign_key "trainings", "contacts"
+  add_foreign_key "trainings", "training_requests"
   add_foreign_key "users", "departments"
   add_foreign_key "users", "facilities"
   add_foreign_key "users", "institutions"

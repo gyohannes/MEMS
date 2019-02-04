@@ -3,9 +3,10 @@
 
   <div class="form-inputs">
     <%= f.input :organization_structure_id, collection: [@organization_structure] %>
+    <%= f.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id } %>
     <%= f.input :name %>
-    <%= f.input :category, collection: ['Supplier', 'Local Representative'] %>
-    <%= f.input :institution_type, label: 'Type', collection: ['NGO', 'Government','Private'] %>
+    <%= f.input :category, collection: ['Supplier', 'Local Representative'], as: :radio_buttons %>
+    <%= f.input :institution_type, label: 'Type', collection: ['NGO', 'Government','Private'], as: :radio_buttons %>
   </div>
 
   <div class="form-actions">

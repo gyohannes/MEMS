@@ -2,8 +2,8 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :organization_structure, collection: [current_user.organization_structure], prompt: false %>
-    <%= f.association :facility, collection: [current_user.facility], prompt: false %>
+    <%= f.association :organization_structure, as: :hidden, input_html: {value: current_user.organization_structure_id} %>
+    <%= f.association :facility,as: :hidden, input_html: {value: current_user.facility_id} %>
     <%= f.input :store_name %>
     <%= f.input :block_number %>
     <%= f.input :room_number %>

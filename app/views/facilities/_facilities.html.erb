@@ -15,9 +15,8 @@
         <td><%= facility.facility_type %></td>
         <td><%= facility.category %></td>
         <td>
-          <%= link_to 'Details', facility %> |
-          <%= link_to 'Edit', edit_facility_path(facility) %> |
-          <%= link_to 'Delete', facility, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Details', facility, class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_facility_path(facility), class: 'btn btn-primary' %>
         </td>
       </tr>
   <% end %>

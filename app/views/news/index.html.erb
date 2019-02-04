@@ -1,0 +1,42 @@
+<div class="header">
+  <h3>
+    <%= link_to 'Create News', new_news_path, class: 'btn btn-primary' if can? :manage, News %>
+  </h3>
+</div>
+<div class="row body">
+<div class="col-sm-6">
+  <% @news.select{|x| @news.index(x).even? }.each do |news| %>
+      <div class="card">
+        <div class="header">
+          <italic><%= news.created_at.strftime("%B %d, %Y") %>, <%= news.created_by %></italic>
+        <h3 class="font-italic"><%= news.headline %></h3>
+        </div>
+        <div class="body">
+          <%= raw news.content.truncate_words(10, omission: " ... #{link_to 'Read More', news}") %>
+          <hr/>
+          <%= link_to 'Edit', edit_news_path(news), class: 'btn btn-primary' if can? :manage, news %>
+          <%= link_to 'Delete', news, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :manage, news %>
+        </div>
+      </div>
+  <% end %>
+</div>
+  <div class="col-sm-6">
+    <% @news.select{|x| @news.index(x).odd?}.each do |news| %>
+        <div class="card">
+          <div class="header">
+            <italic><%= news.created_at.strftime("%B %d, %Y") %>, <%= news.created_by %></italic>
+            <h3 class="font-italic"><%= news.headline %></h3>
+          </div>
+          <div class="body">
+            <%= raw news.content.truncate_words(10, omission: " ... #{link_to 'Read Full News', news}") %>
+            <hr/>
+            <%= link_to 'Edit', edit_news_path(news), class: 'btn btn-primary' if can? :manage, news %>
+            <%= link_to 'Delete', news, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :manage, news %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+<div class="apple_pagination">
+  <%= will_paginate @news, :container => false %>
+</div>

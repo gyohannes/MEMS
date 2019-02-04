@@ -1,0 +1,72 @@
+<% if current_user.is_role(Constants::SUPPLIER) or current_user.is_role(Constants::LOCAL_REPRESENTATIVE) %>
+<a href="javascript:void(0);" class="menu-toggle">
+  <i class="material-icons">send</i> <span style="vertical-align: super">
+      Requests</span>
+</a>
+<ul class="ml-menu">
+  <li>
+    <%= link_to procurement_requests_path do %>
+        <i class="material-icons">shopping_cart</i>
+        <span>Procurement Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to specification_requests_path do %>
+        <i class="material-icons">help_outline</i>
+        <span>Specification Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to spare_part_requests_path do %>
+        <i class="material-icons">devices</i>
+        <span>Spare Part Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to acceptance_requests_path do %>
+        <i class="material-icons">check_box</i>
+        <span>Acceptance Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to training_requests_path do %>
+        <i class="material-icons">library_books</i>
+        <span>Training Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to installation_requests_path do %>
+        <i class="material-icons">add_to_queue</i>
+        <span>Installation Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to maintenance_requests_path do %>
+        <i class="material-icons">build</i>
+        <span>Maintenance Requests</span>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to calibration_requests_path do %>
+        <i class="material-icons">tune</i>
+        <span>Calibration Requests</span>
+    <% end %>
+  </li>
+
+
+  <li>
+    <%= link_to maintenance_toolkit_requests_path do %>
+        <i class="material-icons">build</i>
+        <span>Maintenance Toolkit Requests</span>
+    <% end %>
+  </li>
+
+</ul>
+<% end %>

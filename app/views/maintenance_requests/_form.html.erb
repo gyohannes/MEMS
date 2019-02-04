@@ -18,7 +18,7 @@
       <div class="col-sm-6">
         <%= f.association :equipment, collection: @equipments %>
         <%= f.input :maintenance_type, as: :radio_buttons, collection: ['Corrective Maintenance', 'Preventive Maintenance'] %>
-        <%= f.input :maintenance_description %>
+        <%= f.input :maintenance_description, label: 'Description of Problem' %>
       </div>
     </div>
 

@@ -12,6 +12,7 @@ class CreateBudgetRequests < ActiveRecord::Migration[5.1]
       t.date :request_date
       t.text :comment
       t.string :decision_by, type: :uuid
+      t.string :assigned_to, type: :uuid
       t.string :status
       t.timestamps
     end

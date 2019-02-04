@@ -1,6 +1,10 @@
 class MaintenanceToolkitRequestsController < ApplicationController
   before_action :set_maintenance_toolkit_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
+  def load
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+  end
   # GET /maintenance_toolkit_requests
   # GET /maintenance_toolkit_requests.json
   def index
@@ -18,6 +22,8 @@ class MaintenanceToolkitRequestsController < ApplicationController
   # GET /maintenance_toolkit_requests/1
   # GET /maintenance_toolkit_requests/1.json
   def show
+    @status = @maintenance_toolkit_request.status
+    @maintenance_toolkit_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /maintenance_toolkit_requests/new
@@ -95,6 +101,7 @@ class MaintenanceToolkitRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_toolkit_request_params
-      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity, :request_to, :institution_id, :user_id, :contact_address, :request_date, :comment, :decision_by)
+      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity,
+                                                          :status, :request_to, :institution_id, :user_id, :contact_address, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

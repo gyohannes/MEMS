@@ -1,9 +1,11 @@
 class SpecificationRequestsController < ApplicationController
   before_action :set_specification_request, only: [:show, :edit, :update, :destroy, :decision]
-
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
   def load
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
   end
+
   # GET /specification_requests
   # GET /specification_requests.json
   def index
@@ -21,6 +23,7 @@ class SpecificationRequestsController < ApplicationController
   # GET /specification_requests/1
   # GET /specification_requests/1.json
   def show
+    @status = @specification_request.status
   end
 
   # GET /specification_requests/new
@@ -98,6 +101,7 @@ class SpecificationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def specification_request_params
-      params.require(:specification_request).permit(:organization_structure_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity, :user_id, :requested_date, :comment, :decision_by)
+      params.require(:specification_request).permit(:organization_structure_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity,
+                                                    :user_id, :requested_date, :comment, :decision_by, :assigned_by, :status)
     end
 end

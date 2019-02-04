@@ -1,9 +1,10 @@
 class MaintenanceRequestsController < ApplicationController
   before_action :set_maintenance_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load, only: [:new, :create, :edit, :update]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
   def load
     @equipments = current_user.load_equipment
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
   end
   # GET /maintenance_requests
   # GET /maintenance_requests.json
@@ -22,6 +23,8 @@ class MaintenanceRequestsController < ApplicationController
   # GET /maintenance_requests/1
   # GET /maintenance_requests/1.json
   def show
+    @status = @maintenance_request.status
+    @maintenance_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /maintenance_requests/new
@@ -37,7 +40,6 @@ class MaintenanceRequestsController < ApplicationController
 
   def decision
     @maintenance_request.update(maintenance_request_params)
-    @maintenance_request.update(status: params[:status])
     redirect_to @maintenance_request, notice: "Maintenance request was successfully #{params[:status]}."
   end
 
@@ -100,6 +102,7 @@ class MaintenanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_request_params
-      params.require(:maintenance_request).permit(:organization_structure_id, :facility_id, :equipment_id, :maintenance_type, :maintenance_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
+      params.require(:maintenance_request).permit(:organization_structure_id, :facility_id, :equipment_id, :maintenance_type, :maintenance_description, :request_to,
+                                                  :institution_id, :user_id, :request_date, :comment, :status, :decision_by, :assigned_to )
     end
 end

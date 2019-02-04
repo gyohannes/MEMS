@@ -1,3 +1,7 @@
+<div class="header">
+  <h2>Acceptance Test Details</h2>
+</div>
+<div class="body">
 <% unless @acceptance_test.blank? %>
 <p>
   <strong>Equipment:</strong>
@@ -74,5 +78,6 @@
   <%= @acceptance_test.note %>
 </p>
 <hr/>
-<%= link_to 'Edit', edit_acceptance_test_path(@acceptance_test) %>
+<%= link_to 'Edit', edit_acceptance_test_path(@acceptance_test), class: 'btn btn-primary' %>
 <% end %>
+</div>

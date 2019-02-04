@@ -9,7 +9,7 @@
       <%= f.association :facility, collection: [current_user.facility], prompt: false %>
       <%= f.input :name_of_contact %>
       <%= f.input :profession %>
-      <%= f.input :title %>
+      <%= f.input :title, label: 'Job Title' %>
     </div>
     <div class="col-sm-6" style="border-left: 1px solid skyblue;">
       <%= f.input :work_place %>

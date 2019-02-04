@@ -20,10 +20,12 @@ class DisposalsController < ApplicationController
   def new
     @disposal = Disposal.new
     @disposal.equipment_id = params[:equipment]
+    session[:return_to] ||= request.referer
   end
 
   # GET /disposals/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /disposals
@@ -34,7 +36,7 @@ class DisposalsController < ApplicationController
     respond_to do |format|
       if @disposal.save
         equipment.update(status: Equipment::DISPOSED)
-        format.html { redirect_to @disposal, notice: 'Disposal was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Disposal was successfully created.' }
         format.json { render :show, status: :created, location: @disposal }
       else
         format.html { render :new }
@@ -48,7 +50,7 @@ class DisposalsController < ApplicationController
   def update
     respond_to do |format|
       if @disposal.update(disposal_params)
-        format.html { redirect_to @disposal, notice: 'Disposal was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Disposal was successfully updated.' }
         format.json { render :show, status: :ok, location: @disposal }
       else
         format.html { render :edit }

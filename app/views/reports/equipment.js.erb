@@ -1,0 +1,9 @@
+$("#equipment_report").html("<%= escape_javascript( render :partial => "/equipment/equipment"  ) %>");
+$("#equipment_report").fadeIn(500);
+$('.js-exportable').DataTable({
+    dom: 'lrBfrtip',
+    responsive: true,
+    buttons: [
+        'copy', 'csv', 'excel', 'pdf', 'print'
+    ]
+});

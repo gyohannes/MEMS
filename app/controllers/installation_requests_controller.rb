@@ -1,6 +1,10 @@
 class InstallationRequestsController < ApplicationController
   before_action :set_installation_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
+  def load
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+  end
   # GET /installation_requests
   # GET /installation_requests.json
   def index
@@ -18,6 +22,8 @@ class InstallationRequestsController < ApplicationController
   # GET /installation_requests/1
   # GET /installation_requests/1.json
   def show
+    @status = @installation_request.status
+    @installation_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /installation_requests/new
@@ -96,6 +102,7 @@ class InstallationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def installation_request_params
-      params.require(:installation_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :installation_description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
+      params.require(:installation_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :installation_description,
+                                                  :status, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

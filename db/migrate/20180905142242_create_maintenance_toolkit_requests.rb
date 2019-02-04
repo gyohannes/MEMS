@@ -8,10 +8,12 @@ class CreateMaintenanceToolkitRequests < ActiveRecord::Migration[5.1]
       t.text :toolkit_description
       t.float :quantity
       t.string :request_to
+      t.references :institution, type: :uuid, foreign_key: true
       t.text :contact_address
       t.date :request_date
       t.text :comment
       t.string :decision_by, type: :uuid
+      t.string :assigned_to, type: :uuid
       t.string :status
       t.timestamps
     end

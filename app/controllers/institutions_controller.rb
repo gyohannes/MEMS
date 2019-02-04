@@ -81,6 +81,6 @@ class InstitutionsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def institution_params
-      params.require(:institution).permit(:organization_structure_id, :name, :category, :institution_type)
+      params.require(:institution).permit(:organization_structure_id, :facility_id, :name, :category, :institution_type)
     end
 end

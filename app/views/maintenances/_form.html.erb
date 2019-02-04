@@ -5,7 +5,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :equipment, collection: @equipments %>
+      <%= render partial: 'equipment' %>
       <%= f.input :maintenance_type, as: :radio_buttons, collection: ['Corrective','Preventive'] %>
       <%= f.input :problem %>
       <%= f.input :action_taken %>

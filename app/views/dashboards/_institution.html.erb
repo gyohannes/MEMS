@@ -1,0 +1,94 @@
+<% if current_user.is_role(Constants::SUPPLIER) or current_user.is_role(Constants::LOCAL_REPRESENTATIVE) %>
+<% content_for :header do %>
+        <div class="block-header">
+          <h2>DASHBOARD</h2>
+        </div>
+      <%= link_to procurement_requests_path do %>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box-4">
+          <div class="icon">
+            <i class="material-icons col-red">shopping_cart</i>
+          </div>
+          <div class="content">
+            <div class="text">Procurement Requests</div>
+            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">
+              <%= current_user.incoming_procurement_requests.count %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+      <%= link_to maintenance_requests_path do %>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box-4">
+          <div class="icon">
+            <i class="material-icons col-indigo">build</i>
+          </div>
+          <div class="content">
+            <div class="text">Maintenance Requests</div>
+            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">
+              <%= current_user.incoming_maintenance_requests.count %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+      <%= link_to training_requests_path do %>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box-4">
+          <div class="icon">
+            <i class="material-icons col-purple">library_book</i>
+          </div>
+          <div class="content">
+            <div class="text">Training Requests</div>
+            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">
+              <%= current_user.incoming_training_requests.count %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+      <%= link_to specification_requests_path do %>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box-4">
+          <div class="icon">
+            <i class="material-icons col-deep-purple">help_outline</i>
+          </div>
+          <div class="content">
+            <div class="text">Specification Requests</div>
+            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">
+              <%= current_user.incoming_specification_requests.count %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="header">
+            Calendar
+          </div>
+          <div class="body">
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="header">
+            Latest News
+          </div>
+          <div class="body">
+            <%= render '/news/latest' %>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<% end %>

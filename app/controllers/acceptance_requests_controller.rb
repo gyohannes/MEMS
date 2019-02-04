@@ -1,5 +1,10 @@
 class AcceptanceRequestsController < ApplicationController
   before_action :set_acceptance_request, only: [:show, :edit, :update, :destroy, :decision]
+  before_action :load, only: [:new, :create, :edit, :update, :show]
+
+  def load
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+  end
 
   # GET /acceptance_requests
   # GET /acceptance_requests.json
@@ -18,6 +23,8 @@ class AcceptanceRequestsController < ApplicationController
   # GET /acceptance_requests/1
   # GET /acceptance_requests/1.json
   def show
+    @status = @acceptance_request.status
+    @acceptance_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /acceptance_requests/new
@@ -96,6 +103,8 @@ class AcceptanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def acceptance_request_params
-      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere, :power_requirement, :description, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by)
+      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere,
+                                                 :power_requirement, :description, :request_to, :institution_id, :user_id,
+                                                 :request_date, :comment, :decision_by, :assigned_to, :status)
     end
 end

@@ -3,6 +3,7 @@ class CreateFacilities < ActiveRecord::Migration[5.1]
     create_table :facilities, id: :uuid do |t|
       t.references :organization_structure, type: :uuid, foreign_key: true
       t.string :name
+      t.string :code
       t.references :facility_type, type: :uuid, foreign_key: true
       t.string :category
       t.string :url

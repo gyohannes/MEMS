@@ -1,6 +1,7 @@
 $(function () {
     $('.js-exportable').DataTable({
         responsive: true,
+        retrieve: true,
         dom: '<"html5buttons"B>lTfgtip',
         buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
     });
@@ -9,9 +10,14 @@ $(function () {
         events: 'equipment/load_calendar'
     });
 
+    $('.wysihtml5').wysihtml5({'toolbar': {'blockquote': false, 'html': true}})
+
     $( "#accordion" ).accordion({
         collapsible: true
     });
+
+    $( "select" ).select2();
+
 
     // Populating equipment details based on selected equipment name
     // Used in store registration and training
@@ -45,7 +51,7 @@ $(function () {
     })
 
     $("#store_registration_equipment_attributes_equipment_name, #training_equipment_name, " +
-        "#specification_equipment_name, #receive_equipment_name").autocomplete({
+        "#specification_equipment_name, #receive_equipment_name, #search_equipment_name").autocomplete({
         source: function( request, response ) {
             $.ajax({
                 url: "/equipment/search",

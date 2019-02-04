@@ -20,6 +20,8 @@ class DisposalRequestsController < ApplicationController
   # GET /disposal_requests/1
   # GET /disposal_requests/1.json
   def show
+    @status = @disposal_request.status
+    @disposal_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /disposal_requests/new

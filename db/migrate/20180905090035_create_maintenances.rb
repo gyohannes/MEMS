@@ -2,6 +2,7 @@ class CreateMaintenances < ActiveRecord::Migration[5.1]
   def change
     create_table :maintenances, id: :uuid do |t|
       t.references :equipment, type: :uuid, foreign_key: true
+      t.references :maintenance_request, type: :uuid, foreign_key: true
       t.string :maintenance_type
       t.text :problem
       t.text :action_taken

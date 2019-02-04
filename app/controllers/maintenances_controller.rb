@@ -4,7 +4,15 @@ class MaintenancesController < ApplicationController
 
   def load
     @equipments = current_user.load_equipment
+    @maintenance_requests = current_user.incoming_maintenance_requests.where('status in (?)',[Constants::PENDING, Constants::APPROVED])
   end
+
+  def load_maintenance_requests
+    maintenance_request = MaintenanceRequest.find_by(id: params[:maintenance_request])
+    @equipments = maintenance_request.equipment
+    render partial: 'equipment'
+  end
+
   # GET /installations
   # GET /installations.json
   def index
@@ -20,10 +28,12 @@ class MaintenancesController < ApplicationController
   def new
     @maintenance = Maintenance.new
     @maintenance.equipment_id = params[:equipment]
+    session[:return_to] ||= request.referer
   end
 
   # GET /maintenances/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /maintenances
@@ -33,7 +43,7 @@ class MaintenancesController < ApplicationController
 
     respond_to do |format|
       if @maintenance.save
-        format.html { redirect_to @maintenance, notice: 'Maintenance was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Maintenance was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance }
       else
         format.html { render :new }
@@ -47,7 +57,7 @@ class MaintenancesController < ApplicationController
   def update
     respond_to do |format|
       if @maintenance.update(maintenance_params)
-        format.html { redirect_to @maintenance, notice: 'Maintenance was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Maintenance was successfully updated.' }
         format.json { render :show, status: :ok, location: @maintenance }
       else
         format.html { render :edit }

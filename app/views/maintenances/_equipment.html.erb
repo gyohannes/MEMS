@@ -1,0 +1,4 @@
+<%= simple_fields_for(:maintenance, @maintenance) do |f| %>
+<%=  f.input :equipment_id, collection: @equipments, selected: @equipment %>
+<% end %>
+<%= javascript_include_tag 'global' %>

@@ -36,6 +36,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'passenger'
 gem 'sassc-rails'
+gem 'bootstrap-wysihtml5-rails'
+gem 'will_paginate', '~> 3.1.0'
+gem "select2-rails"
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

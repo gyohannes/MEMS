@@ -1,8 +1,14 @@
-
+[type="checkbox"] + label{
+    text-align: left;
+}
 .form-check{
     margin-right: 10px;
     float: left;
     width: 33%;
+}
+.single_columned_list .form-check {
+    float: left;
+    width: 100%;
 }
 .nav-tabs li a{
     border: 1px solid red;

@@ -21,6 +21,8 @@ class OrganizationStructure < ApplicationRecord
   has_many :budget_requests
   has_many :maintenance_toolkit_requests
 
+  validates :name, :code, :organization_structure_type, presence: true
+
   def top_organization_unit_exists?
     !OrganizationStructure.top_organization_unit.blank?
   end

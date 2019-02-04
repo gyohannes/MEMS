@@ -1,5 +1,7 @@
-<p id="notice"><%= notice %></p>
-
+<div class="header">
+  <h2>Specification Details</h2>
+</div>
+<div class="body">
 <p>
   <strong>Organization structure:</strong>
   <%= @specification.organization_structure %>
@@ -44,6 +46,7 @@
   <strong>Specification date:</strong>
   <%= @specification.specification_date %>
 </p>
-
+<hr/>
 <%= link_to 'Edit', edit_specification_path(@specification) %> |
 <%= link_to 'Back', specifications_path %>
+</div>

@@ -1,0 +1,7 @@
+<% News.latest_news.each do |news| %>
+    <h4 class="font-italic"><%= news.headline %>
+      <%= link_to ' ...Read More', news %>
+    </h4>
+    <hr/>
+<% end %>
+<%= link_to 'More News', news_index_path, class: 'btn btn-primary' %>

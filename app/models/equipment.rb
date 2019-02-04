@@ -16,15 +16,36 @@ class Equipment < ApplicationRecord
 
   validates :equipment_name, :model, :serial_number, :tag_number, presence: true
 
-  STATUSES = [NEW='New', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NOT_FUNCTIONAL='Not Functional', DISPOSED='Disposed']
+  STATUSES = [IN_STORE = 'In Store', NEW='New', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NOT_FUNCTIONAL='Not Functional', DISPOSED='Disposed']
 
   FUNCTIONAL_STATUSES = [FUNCTIONAL='Functional', NOT_FUNCTIONAL='Not Functional']
   scope :active, -> { where.not(status: self::DISPOSED)}
 
+  scope :list_by_user, -> (user) { user.load_equipment unless user.blank? }
+  scope :list_by_org_structure, -> (org_structure) { OrganizationStructure.find_by(id: org_structure).sub_equipment unless org_structure.blank? }
+  scope :list_by_facility, -> (facility) { Facility.find_by(id: facility).equipment unless facility.blank? }
+  scope :list_by_category, -> (category) { EquipmentCategory.find_by(id: category).equipment unless category.blank? }
+  scope :list_by_name, -> (name) { where('LOWER(equipment_name) LIKE :term', term: "%#{name.downcase}%") unless name.blank? }
+  scope :list_by_model, -> (model) { where('LOWER(model) LIKE :term', term: "%#{model.downcase}%") unless model.blank?}
+  scope :list_by_status, -> (status) { where('status in (:term)', term: status) unless status.blank? }
+
+  def self.search(name=nil, org_structure=nil, facility=nil, category=nil, model=nil, status=nil, user=nil)
+    equipment = []
+    available_filters = {org_structure => list_by_org_structure(org_structure), facility => list_by_facility(facility), category => list_by_category(category),
+                         name => list_by_name(name), model => list_by_model(model), status => list_by_status(status), user => list_by_user(user) }.select{|k,v| !k.blank?}
+    counter = 0
+    available_filters.each do |k,v|
+      equipment = counter == 0 ? v : equipment.merge(v)
+      counter += 1
+    end
+    return equipment.uniq
+  end
+
+
   def preventive_maintenance_date
     dates = []
     dates << installation.preventive_maintenance_date unless installation.blank?
-    dates << maintenances.sort_by{|x| x.end_date }.last unless maintenances.blank?
+    dates << maintenances.sort_by{|x| x.end_date }.last.preventive_maintenance_date unless maintenances.blank?
     return dates.sort.last
   end
   def set_trained_end_users
@@ -46,18 +67,10 @@ class Equipment < ApplicationRecord
   end
 
   def trainings
-    return Training.where('equipment_name = ? and model = ?', equipment_name, model)
-  end
-
-  def self.search(term, facility=nil)
-    if facility
-      facility.equipment.where('LOWER(equipment_name) LIKE :term', term: "%#{term.downcase}%")
-    else
-      where('LOWER(equipment_name) LIKE :term', term: "%#{term.downcase}%")
-    end
+    return Training.where('equipment_name = ? and (model = ? or model is null)', equipment_name, model)
   end
 
   def to_s
-    [equipment_name, model].join(' - ')
+    [equipment_name, serial_number].join(' - ')
   end
 end

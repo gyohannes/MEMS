@@ -36,7 +36,7 @@
 
 <p>
   <strong>Requested by:</strong>
-  <%= @maintenance_request.user %>
+  <%= @maintenance_request.user.name_and_from_type %>
 </p>
 
 <p>
@@ -46,20 +46,26 @@
 
   <p>
     <strong>Status:</strong>
-    <%= @maintenance_request.status %>
+    <%= @status %>
   </p>
   <%= simple_form_for(@maintenance_request, url: decision_maintenance_request_path) do |f| %>
-  <% if can? :decision, @maintenance_request and @maintenance_request.status == Constants::PENDING %>
-      <%= f.input :comment, wrapper: 'vertical_form' %>
+  <% if can? :decision, @maintenance_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
+          <%= f.input :comment %>
+          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+          <div id="forward">
+          <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST_TO %>
+          </div>
+          <div id="maintenance_request_to">
+            <%= render partial: 'request_to' %>
+          </div>
       <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
   <% else %>
       <p><label>Comment:</label> <%= @maintenance_request.comment %></p>
-      <p><label>Decided by:</label> <%= @maintenance_request.decided_user %></p>
+      <p><label><%= @status unless @status==Constants::PENDING %> by: </label> <%= @maintenance_request.decided_user.try(:name_and_from_type) %></p>
   <% end %>
   <hr/>
-      <% if can? :decision, @maintenance_request and @maintenance_request.status == Constants::PENDING %>
-          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @maintenance_request.status == Constants::APPROVED %>
-          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @maintenance_request.status == Constants::REJECTED %>
+      <% if can? :decision, @maintenance_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
+          <center><%= f.button :submit, 'Submit' %></center>
       <% end %>
   <% end %>
   <br/>

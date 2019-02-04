@@ -20,10 +20,12 @@ class InstallationsController < ApplicationController
   def new
     @installation = Installation.new
     @installation.equipment_id = params[:equipment]
+    session[:return_to] ||= request.referer
   end
 
   # GET /installations/1/edit
   def edit
+    session[:return_to] ||= request.referer
   end
 
   # POST /installations
@@ -33,7 +35,7 @@ class InstallationsController < ApplicationController
 
     respond_to do |format|
       if @installation.save
-        format.html { redirect_to @installation.equipment, notice: 'Installation was successfully created.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Installation was successfully created.' }
         format.json { render :show, status: :created, location: @installation }
       else
         format.html { render :new }
@@ -47,7 +49,7 @@ class InstallationsController < ApplicationController
   def update
     respond_to do |format|
       if @installation.update(installation_params)
-        format.html { redirect_to @installation.equipment, notice: 'Installation was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to), notice: 'Installation was successfully updated.' }
         format.json { render :show, status: :ok, location: @installation }
       else
         format.html { render :edit }

@@ -1,3 +1,7 @@
+<div class="header">
+  <h2>Installation Details</h2>
+</div>
+<div class="body">
 <% unless @installation.blank? %>
 <p>
   <strong>Equipment:</strong>
@@ -49,5 +53,6 @@
   <%= @installation.note %>
 </p>
 <hr/>
-<%= link_to 'Edit', edit_installation_path(@installation) %>
+<%= link_to 'Edit', edit_installation_path(@installation), class: 'btn btn-primary' %>
 <% end %>
+</div>
