@@ -42,10 +42,9 @@ form > label{
     font-size: 12px;
 }
 .card{
-    min-height: auto;
+    min-height: inherit;
 }
 .login-page{
-    background-image: image-url('doc-background.png');
     background-repeat: no-repeat;
 }
 

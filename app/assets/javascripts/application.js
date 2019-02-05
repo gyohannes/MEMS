@@ -29,4 +29,3 @@
 //= require chartkick
 //= require AdminBSBMaterialDesign/index
 //= require global
-

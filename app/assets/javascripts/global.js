@@ -7,7 +7,15 @@ $(function () {
     });
 
     $('#calendar').fullCalendar({
-        events: 'equipment/load_calendar'
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listWeek'
+        },
+        navLinks: true, // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: '/equipment/load_calendar'
     });
 
     $('.wysihtml5').wysihtml5({'toolbar': {'blockquote': false, 'html': true}})
