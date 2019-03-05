@@ -7,7 +7,6 @@ class CreateInventories < ActiveRecord::Migration[5.1]
       t.boolean :trained_end_users
       t.boolean :trained_maintenance_personnel
       t.text :suggestion
-      t.string :risk_level
       t.date :inventory_date
       t.string :inventory_done_by
       t.text :contact_address

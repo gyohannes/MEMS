@@ -32,8 +32,8 @@ class UsersController < BaseController
       @institutions = @user.organization_structure.institutions
     end
     unless current_user.facility.blank?
-      @user.facility_id = current_user.facility_id
       @facilities = [@user.facility]
+      @institutions = current_user.facility.institutions
     end
 
     unless current_user.institution.blank?

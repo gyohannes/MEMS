@@ -4,6 +4,9 @@ class CreateEquipment < ActiveRecord::Migration[5.1]
       t.references :facility, type: :uuid, foreign_key: true
       t.string :equipment_name
       t.references :equipment_category, type: :uuid, foreign_key: true
+      t.string :inventory_number
+      t.string :acquisition_type
+      t.string :risk_level
       t.string :model
       t.string :serial_number
       t.string :tag_number

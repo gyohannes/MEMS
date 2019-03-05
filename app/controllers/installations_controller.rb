@@ -20,12 +20,12 @@ class InstallationsController < ApplicationController
   def new
     @installation = Installation.new
     @installation.equipment_id = params[:equipment]
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # GET /installations/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /installations

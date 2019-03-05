@@ -6,6 +6,7 @@
     <div class="col-sm-6">
       <%= f.association :facility, collection: @facilities %>
       <%= f.input :equipment_name %>
+      <%= f.input :inventory_number %>
       <%= f.association :equipment_category %>
       <%= f.input :model %>
       <%= f.input :serial_number %>
@@ -14,13 +15,15 @@
       <%= f.input :power_requirement, label: "Power Requirement (in Volts)", hint: 'Eg. 220' %>
       <%= f.input :manufacturer %>
       <%= f.input :country, label: 'Country of Origin' %>
+      <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
+                  discard_day: true, discard_month: true, prompt: true %>
     </div>
   <div class="col-sm-6" style="border-left: 1px solid skyblue;">
-    <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
-                discard_day: true, discard_month: true, prompt: true %>
     <%= f.input :life_span %>
-    <%= f.input :purchased_year, start_year: Date.today.year - 100, end_year: Date.today.year,
+    <%= f.input :risk_level, collection: Constants::RISK_LEVELS %>
+    <%= f.input :purchased_year, label: 'Acquired Year', start_year: Date.today.year - 100, end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :acquisition_type, collection: Constants::EQUIPMENT_ACQUISITIONS %>
     <%= f.input :use_of_years %>
     <%= f.input :purchase_price %>
     <%= f.input :supplier_id, collection: @suppliers %>

@@ -6,20 +6,24 @@
   <%= simple_form_for :search, url:  reports_equipment_path, remote: true, html: { novalidate: true } do |f| %>
 
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div id="report_organization_structure_tree"></div>
           <%=  f.input :organization_structure, as: :hidden, required: false %>
+        </div>
+        <div class="col-sm-3">
           <div id="facility_display">
           <%= render partial: 'facility' %>
           </div>
           <%=  f.input :category, collection: EquipmentCategory.all, required: false %>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <%=  f.input :equipment_name, required: false %>
+          <%=  f.input :inventory_number, required: false %>
           <%=  f.input :model, required: false %>
         </div>
-        <div class="col-sm-4">
-          <%=  f.input :status, collection: Equipment::STATUSES, as: :check_boxes, label: false, input_html:{class: "filled-in chk-col-pink"} %>
+        <div class="col-sm-3">
+          <%=  f.input :status, collection: Equipment::STATUSES, as: :check_boxes,
+                       wrapper_html:{class: "single_columned_list"}, input_html:{class: "filled-in chk-col-pink"} %>
         </div>
       </div>
       <div class="form-actions align-center">

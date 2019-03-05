@@ -20,12 +20,12 @@ class AcceptanceTestsController < ApplicationController
   def new
     @acceptance_test = AcceptanceTest.new
     @acceptance_test.equipment_id = params[:equipment]
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # GET /acceptance_tests/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /acceptance_tests

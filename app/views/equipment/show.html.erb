@@ -1,19 +1,23 @@
 <div class="header">
   <h3>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-6"><a href="javascript:void(0);" class="list-group-item">
+        <span class="font-15">Inventory Number:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.inventory_number %></span>
+      </a>
+      </div>
+      <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
         <span class="font-15">Preventive Maintenance Date:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.preventive_maintenance_date %></span>
         </a>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-          <span class="font-15">Status:</span> <label class="right font-15 font-italic label <%= @equipment.status == Equipment::NOT_FUNCTIONAL ? 'label-warning' :
-                                              (@equipment.status == Equipment::DISPOSED ? 'label-danger' :
-                                                   (@equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>"><%= @equipment.status %></label>
+          <span class="font-15">Status:</span> <label class="right font-15 font-italic label <%= @equipment.status == Equipment::NON_FUNCTIONAL ? 'label-warning' :
+                                                                                                     (@equipment.status == Equipment::DISPOSED ? 'label-danger' :
+                                                                                                          (@equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>"><%= @equipment.status %></label>
         </a>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
           <span class="font-15">Years of Use:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.use_of_years %></span>
         </a>
@@ -41,19 +45,19 @@
 
     <div role="tabpanel" class="tab-pane fade in" id="equipment_installation">
       <%= render partial: 'installations/installation', locals: { :@installation => @equipment.installation } %>
-      <%= link_to 'Register Installation', new_installation_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.installation.blank? %>
+      <%= link_to 'Register Installation', new_installation_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.installation.blank? and can? :create, Installation  %>
     </div>
 
     <div role="tabpanel" class="tab-pane fade in" id="acceptance_test">
       <%= render partial: 'acceptance_tests/acceptance_test', locals: { :@acceptance_test => @equipment.acceptance_test } %>
-      <%= link_to 'Acceptance Test', new_acceptance_test_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.acceptance_test.blank? %>
+      <%= link_to 'Acceptance Test', new_acceptance_test_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.acceptance_test.blank? and can? :create, AcceptanceTest %>
     </div>
 
     <div role="tabpanel" class="tab-pane fade in" id="maintenance">
       <div class="body table-responsive">
       <%= render partial: 'maintenances/maintenances', locals: { :@maintenances => @equipment.maintenances } %>
         <hr/>
-      <%= link_to 'New Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' %>
+      <%= link_to 'New Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
       </div>
     </div>
 
@@ -61,7 +65,7 @@
       <div class="body table-responsive">
         <%= render partial: 'trainings/trainings', locals: { :@trainings => @equipment.trainings } %>
         <hr/>
-        <%= link_to 'New Training', new_training_path(equipment: @equipment.id), class: 'btn btn-primary' %>
+        <%= link_to 'New Training', new_training_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Training %>
       </div>
     </div>
 
@@ -69,13 +73,13 @@
       <div class="body table-responsive">
         <%= render partial: 'inventories/inventories', locals: { :@inventories => @equipment.inventories } %>
         <hr/>
-        <%= link_to 'New Inventory', new_inventory_path(equipment: @equipment.id), class: 'btn btn-primary' %>
+        <%= link_to 'New Inventory', new_inventory_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Inventory %>
       </div>
     </div>
 
     <div role="tabpanel" class="tab-pane fade in" id="disposal">
       <%= render partial: 'disposals/disposal', locals: { :@disposal => @equipment.disposal } %>
-      <%= link_to 'Register Disposal', new_disposal_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.disposal.blank? %>
+      <%= link_to 'Register Disposal', new_disposal_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.disposal.blank? and can? :create, Disposal %>
     </div>
 
   </div>

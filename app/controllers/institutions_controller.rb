@@ -4,9 +4,7 @@ class InstitutionsController < BaseController
   # GET /institutions
   # GET /institutions.json
   def index
-    parent_org_unit = current_user.super_admin? ? OrganizationStructure.top_organization_structure :
-                          current_user.organization_structure
-    @institutions = parent_org_unit.try(:sub_institutions)
+    @institutions = !current_user.organization_structure.blank? ? current_user.organization_structure.sub_institutions : current_user.facility.institutions
   end
 
   def load_institutions
@@ -22,9 +20,11 @@ class InstitutionsController < BaseController
 
   # GET /institutions/new
   def new
-    @organization_structure = OrganizationStructure.find(params[:organization_structure])
+    @organization_structure = OrganizationStructure.find_by(id: params[:organization_structure])
+    @facility = Facility.find_by(id: params[:facility])
     @institution = Institution.new
     @institution.organization_structure = @organization_structure
+    @institution.facility = @facility
   end
 
   # GET /institutions/1/edit
@@ -37,6 +37,7 @@ class InstitutionsController < BaseController
   def create
     @institution = Institution.new(institution_params)
     @organization_structure = @institution.organization_structure
+    @facility = @institution.facility
     respond_to do |format|
       if @institution.save
         format.html { redirect_to institutions_path, notice: 'Institution was successfully created.' }
@@ -52,6 +53,7 @@ class InstitutionsController < BaseController
   # PATCH/PUT /institutions/1.json
   def update
     @organization_structure = @institution.organization_structure
+    @facility = @institution.facility
     respond_to do |format|
       if @institution.update(institution_params)
         format.html { redirect_to institutions_path, notice: 'Institution was successfully updated.' }
@@ -81,6 +83,7 @@ class InstitutionsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def institution_params
-      params.require(:institution).permit(:organization_structure_id, :facility_id, :name, :category, :institution_type)
+      params.require(:institution).permit(:organization_structure_id, :facility_id, :name, :category, :institution_type,
+                                          :contact_person, :contact_phone, :contact_email, :address)
     end
 end

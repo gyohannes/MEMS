@@ -20,12 +20,12 @@ class DisposalsController < ApplicationController
   def new
     @disposal = Disposal.new
     @disposal.equipment_id = params[:equipment]
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # GET /disposals/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /disposals

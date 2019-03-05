@@ -1,0 +1,52 @@
+<div class="header">
+  <h2>Work Order Details</h2>
+</div>
+<div class="body">
+<p>
+  <strong>Equipment:</strong>
+  <%= @maintenance_work_order.equipment %>
+</p>
+
+<p>
+  <strong>Task Allocated to:</strong>
+  <%= @maintenance_work_order.user %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @maintenance_work_order.location %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @maintenance_work_order.date %>
+</p>
+
+<p>
+  <strong>Description of problem:</strong>
+  <%= @maintenance_work_order.description_of_problem %>
+</p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= @maintenance_work_order.status %>
+  </p>
+
+  <p>
+    <strong>Note:</strong>
+    <%= @maintenance_work_order.note %>
+  </p>
+
+  <% if can? :edit, @maintenance_work_order %>
+    <%= simple_form_for(@maintenance_work_order) do |f| %>
+          <%= f.input :status, collection: Constants::WORK_ORDER_STATUS %>
+          <%= f.input :note %>
+        <div class="form-actions">
+          <%= f.button :submit, 'Update Status' %>
+        </div>
+    <% end %>
+  <% end %>
+  <hr/>
+<%= link_to 'Back', maintenance_work_orders_path, class: 'btn btn-primary' %>
+  <%= link_to 'edit', @maintenance_work_order, class: 'btn btn-primary' if can? :manage, @maintenance_work_order %>
+</div>

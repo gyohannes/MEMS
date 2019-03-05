@@ -9,17 +9,10 @@ class EquipmentController < ApplicationController
 
   def load_calendar
     calendars = []
-    equipment = current_user.load_equipment.pluck(:id)
-    installations = Installation.where('equipment_id in (?)', equipment)
-    maintenances = Maintenance.where('equipment_id in (?)', equipment)
+    equipment = current_user.load_equipment
 
-    installations.each do |ins|
-      calendars << {title: ins.equipment.to_s + ' Preventive Maintenance',
-                    start: ins.preventive_maintenance_date }
-    end
-
-    maintenances.each do |m|
-      calendars << {title: m.equipment.to_s + ' Preventive Maintenance',
+    equipment.each do |m|
+      calendars << {title: m.to_s + ' Preventive Maintenance',
                     start: m.preventive_maintenance_date }
     end
 
@@ -27,12 +20,12 @@ class EquipmentController < ApplicationController
   end
 
   def search
-    equipments = Equipment.search(params[:term])
+    equipments = Equipment.search(params[:term]).uniq{ |e| e.equipment_name}
     render json: equipments
   end
 
   def facility_equipment_search
-    equipments = Equipment.search(params[:term], nil, current_user.facility)
+    equipments = Equipment.search(nil, nil, current_user.facility_id, nil,nil,nil,nil,params[:term])
     render json: equipments
   end
 
@@ -50,6 +43,7 @@ class EquipmentController < ApplicationController
   # GET /equipment.json
   def index
     @equipment = current_user.load_equipment
+    @facility = current_user.facility
   end
 
   def load_equipment
@@ -65,8 +59,8 @@ class EquipmentController < ApplicationController
   # GET /equipment/new
   def new
     @equipment = Equipment.new
-    @organization_structure = OrganizationStructure.find(params[:organization_structure])
-    @facilities = @organization_structure.facilities
+    @equipment.facility_id = params[:facility]
+    @facilities = [current_user.facility]
     @equipment.status = Equipment::NEW
   end
 
@@ -80,8 +74,7 @@ class EquipmentController < ApplicationController
   # POST /equipment.json
   def create
     @equipment = Equipment.new(equipment_params)
-    @organization_structure = OrganizationStructure.find(params[:organization_structure])
-    @facilities = @organization_structure.facilities
+    @facilities = [current_user.facility]
     respond_to do |format|
       if @equipment.save
         format.html { redirect_to @equipment, notice: 'Equipment was successfully created.' }
@@ -96,8 +89,7 @@ class EquipmentController < ApplicationController
   # PATCH/PUT /equipment/1
   # PATCH/PUT /equipment/1.json
   def update
-    @organization_structure = @equipment.facility.organization_structure
-    @facilities = @organization_structure.facilities
+    @facilities = [current_user.facility]
     respond_to do |format|
       if @equipment.update(equipment_params)
         format.html { redirect_to @equipment, notice: 'Equipment was successfully updated.' }
@@ -127,6 +119,9 @@ class EquipmentController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipment_params
-      params.require(:equipment).permit(:facility_id, :equipment_name, :equipment_category_id, :model, :serial_number, :tag_number, :volt_ampere, :power_requirement, :manufacturer, :country, :manufactured_year, :purchased_year, :purchase_price, :supplier_id, :manual_attached, :warranty_agreement_note, :local_representative_id, :remark, :status)
+      params.require(:equipment).permit(:facility_id, :equipment_name, :equipment_category_id, :model, :serial_number, :tag_number,
+                                        :volt_ampere, :power_requirement, :manufacturer, :country, :manufactured_year, :purchased_year,
+                                        :purchase_price, :supplier_id, :manual_attached, :warranty_agreement_note, :local_representative_id,
+                                        :remark, :status, :acquisition_type, :inventory_number, :risk_level)
     end
 end

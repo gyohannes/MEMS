@@ -53,6 +53,6 @@
   <%= @installation.note %>
 </p>
 <hr/>
-<%= link_to 'Edit', edit_installation_path(@installation), class: 'btn btn-primary' %>
+<%= link_to 'Edit', edit_installation_path(@installation), class: 'btn btn-primary' if can? :edit, @installation %>
 <% end %>
 </div>

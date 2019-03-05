@@ -30,13 +30,13 @@ $(function () {
     // Populating equipment details based on selected equipment name
     // Used in store registration and training
 
-    $("#inventory_equipment_attributes_equipment_name").autocomplete({
+    $("#inventory_equipment_attributes_inventory_number, #store_registration_equipment_attributes_inventory_number").autocomplete({
         source: function( request, response ) {
             $.ajax({
                 url: "/equipment/facility_equipment_search",
                 data: {term: request.term},
                 success: function (data) {
-                    response(data.map(function (equipment) {return equipment.equipment_name }));
+                    response(data.map(function (equipment) {return equipment.inventory_number }));
                 }
             });
         },
@@ -45,6 +45,7 @@ $(function () {
                 url: "/equipment/facility_equipment_search",
                 data: {term: ui.item.value},
                 success: function (data) {
+                    $("#inventory_equipment_attributes_equipment_name").val(data[0].equipment_name)
                     $("#inventory_equipment_attributes_model").val(data[0].model)
                     $("#inventory_equipment_attributes_serial_number").val(data[0].serial_number)
                     $("#inventory_equipment_attributes_tag_number").val(data[0].tag_number)
@@ -53,13 +54,17 @@ $(function () {
                     $("#inventory_equipment_attributes_status").val(data[0].status)
                     $("#inventory_equipment_attributes_trained_end_users").prop('checked',data[0].trained_end_users)
                     $("#inventory_equipment_attributes_trained_maintenance_personnel").prop('checked', data[0].trained_maintenance_personnel)
+
+                    $("#store_registration_equipment_attributes_equipment_name").val(data[0].equipment_name)
+                    $("#store_registration_equipment_attributes_model").val(data[0].model)
+                    $("#store_registration_equipment_attributes_serial_number").val(data[0].serial_number)
+                    $("#store_registration_equipment_attributes_tag_number").val(data[0].tag_number)
                 }
             });
         }
     })
 
-    $("#store_registration_equipment_attributes_equipment_name, #training_equipment_name, " +
-        "#specification_equipment_name, #receive_equipment_name, #search_equipment_name").autocomplete({
+    $("#training_equipment_name, #specification_equipment_name, #receive_equipment_name, #search_equipment_name").autocomplete({
         source: function( request, response ) {
             $.ajax({
                 url: "/equipment/search",
@@ -71,12 +76,9 @@ $(function () {
         },
         select: function( event, ui ) {
             $.ajax({
-                url: "/equipment/search",
+                url: "/equipment/facility_equipment_search",
                 data: {term: ui.item.value},
                 success: function (data) {
-                    $("#store_registration_equipment_attributes_model").val(data[0].model)
-                    $("#store_registration_equipment_attributes_serial_number").val(data[0].serial_number)
-                    $("#store_registration_equipment_attributes_tag_number").val(data[0].tag_number)
 
                 }
             });

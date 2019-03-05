@@ -90,44 +90,45 @@
 
     </ul>
 
+    <li>
+      <%= link_to receives_path do %>
+          <i class="material-icons">add_shopping_cart</i>
+          <span>Equipment Logistics</span>
+      <% end %>
+    </li>
+
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">plus_one</i>
-      <span style="vertical-align: super">Registrations</span>
+      <i class="material-icons">devices</i>
+      <span style="vertical-align: super">Equipment Management</span>
     </a>
     <ul class="ml-menu">
 
-      <li>
-        <%= link_to receives_path do %>
-            <i class="material-icons">add_shopping_cart</i>
-            <span>Equipment Logistics</span>
-        <% end %>
-      </li>
       <% unless current_user.facility_id.blank? %>
       <li>
         <%= link_to store_registrations_path do %>
             <i class="material-icons">store</i>
-            <span>Store Registration</span>
+            <span>Store Equipment Registration</span>
         <% end %>
       </li>
       <% end %>
       <li>
         <%= link_to equipment_index_path do %>
-            <i class="material-icons">devices</i>
-            <span>Equipment</span>
+            <i class="material-icons">plus_one</i>
+            <span>Equipment Registration</span>
         <% end %>
       </li>
 
       <li>
         <%= link_to specifications_path do %>
             <i class="material-icons">list</i>
-            <span>Specifications</span>
+            <span>Equipment Specifications</span>
         <% end %>
       </li>
 
       <li>
         <%= link_to installations_path do %>
             <i class="material-icons">add_to_queue</i>
-            <span>Installations</span>
+            <span>Equipment Installations</span>
         <% end %>
       </li>
       <li>
@@ -137,32 +138,44 @@
         <% end %>
       </li>
       <li>
-        <%= link_to maintenances_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenances</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to trainings_path do %>
-            <i class="material-icons">library_books</i>
-            <span>Trainings</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to inventories_path do %>
-            <i class="material-icons">update</i>
-            <span>Inventories</span>
-        <% end %>
-      </li>
-
-      <li>
         <%= link_to disposals_path do %>
             <i class="material-icons">delete_sweep</i>
-            <span>Disposals</span>
+            <span>Equipment Disposals</span>
         <% end %>
       </li>
     </ul>
+    <a href="javascript:void(0);" class="menu-toggle">
+      <i class="material-icons">build</i>
+      <span style="vertical-align: super">Maintenance Management</span>
+    </a>
+    <ul class="ml-menu">
+      <li>
+        <%= link_to maintenances_path do %>
+            <i class="material-icons">build</i>
+            <span>Equipment Maintenances</span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to maintenance_work_orders_path do %>
+            <i class="material-icons">work</i>
+            <span>Maintenance Work Orders</span>
+        <% end %>
+      </li>
+    </ul>
+
+    <li>
+      <%= link_to trainings_path do %>
+          <i class="material-icons">library_books</i>
+          <span>Equipment Trainings</span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to inventories_path do %>
+          <i class="material-icons">update</i>
+          <span>Equipment Inventories</span>
+      <% end %>
+    </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
     <i class="material-icons">send</i> <span style="vertical-align: super">
@@ -172,7 +185,7 @@
     <li>
       <%= link_to procurement_requests_path do %>
         <i class="material-icons">shopping_cart</i>
-        <span>Procurement
+        <span>Procurement Requests
           <span class="badge btn-info"><%= current_user.incoming_procurement_requests.count unless current_user.incoming_procurement_requests.blank? %></span>
         </span>
       <% end %>
@@ -181,7 +194,7 @@
     <li>
       <%= link_to specification_requests_path do %>
         <i class="material-icons">help_outline</i>
-        <span>Specification<span class="badge btn-info"><%= current_user.incoming_specification_requests.count unless current_user.incoming_specification_requests.blank? %></span>
+        <span>Specification Requests<span class="badge btn-info"><%= current_user.incoming_specification_requests.count unless current_user.incoming_specification_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -189,7 +202,7 @@
     <li>
       <%= link_to spare_part_requests_path do %>
         <i class="material-icons">devices</i>
-        <span>Spare Part<span class="badge btn-info"><%= current_user.incoming_spare_part_requests.count unless current_user.incoming_spare_part_requests.blank? %></span>
+        <span>Spare Part Requests<span class="badge btn-info"><%= current_user.incoming_spare_part_requests.count unless current_user.incoming_spare_part_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -197,7 +210,7 @@
     <li>
       <%= link_to acceptance_requests_path do %>
         <i class="material-icons">check_box</i>
-        <span>Acceptance<span class="badge btn-info"><%= current_user.incoming_acceptance_requests.count unless current_user.incoming_acceptance_requests.blank? %></span>
+        <span>Acceptance Requests<span class="badge btn-info"><%= current_user.incoming_acceptance_requests.count unless current_user.incoming_acceptance_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -205,7 +218,7 @@
     <li>
       <%= link_to training_requests_path do %>
         <i class="material-icons">library_books</i>
-        <span>Training<span class="badge btn-info"><%= current_user.incoming_training_requests.count unless current_user.incoming_training_requests.blank? %></span>
+        <span>Training Requests<span class="badge btn-info"><%= current_user.incoming_training_requests.count unless current_user.incoming_training_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -213,7 +226,7 @@
     <li>
       <%= link_to installation_requests_path do %>
         <i class="material-icons">add_to_queue</i>
-        <span>Installation<span class="badge btn-info"><%= current_user.incoming_installation_requests.count unless current_user.incoming_installation_requests.blank? %></span>
+        <span>Installation Requests<span class="badge btn-info"><%= current_user.incoming_installation_requests.count unless current_user.incoming_installation_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -221,7 +234,7 @@
     <li>
       <%= link_to maintenance_requests_path do %>
         <i class="material-icons">build</i>
-        <span>Maintenance<span class="badge btn-info"><%= current_user.incoming_maintenance_requests.count unless current_user.incoming_maintenance_requests.blank? %></span>
+        <span>Maintenance Requests<span class="badge btn-info"><%= current_user.incoming_maintenance_requests.count unless current_user.incoming_maintenance_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -229,7 +242,7 @@
     <li>
       <%= link_to calibration_requests_path do %>
         <i class="material-icons">tune</i>
-        <span>Calibration<span class="badge btn-info"><%= current_user.incoming_calibration_requests.count unless current_user.incoming_calibration_requests.blank? %></span>
+        <span>Calibration Requests<span class="badge btn-info"><%= current_user.incoming_calibration_requests.count unless current_user.incoming_calibration_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -237,7 +250,7 @@
     <li>
       <%= link_to disposal_requests_path do %>
         <i class="material-icons">delete_sweep</i>
-        <span>Disposal<span class="badge btn-info"><%= current_user.incoming_disposal_requests.count unless current_user.incoming_disposal_requests.blank? %></span>
+        <span>Disposal Requests<span class="badge btn-info"><%= current_user.incoming_disposal_requests.count unless current_user.incoming_disposal_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -245,7 +258,7 @@
     <li>
       <%= link_to budget_requests_path do %>
         <i class="material-icons">attach_money</i>
-        <span>Budget<span class="badge btn-info"><%= current_user.incoming_budget_requests.count unless current_user.incoming_budget_requests.blank? %></span>
+        <span>Budget Requests<span class="badge btn-info"><%= current_user.incoming_budget_requests.count unless current_user.incoming_budget_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -253,7 +266,7 @@
     <li>
       <%= link_to maintenance_toolkit_requests_path do %>
         <i class="material-icons">build</i>
-        <span>Maintenance Toolkit<span class="badge btn-info"><%= current_user.incoming_maintenance_toolkit_requests.count unless current_user.incoming_maintenance_toolkit_requests.blank? %></span>
+        <span>Maintenance Toolkit Requests<span class="badge btn-info"><%= current_user.incoming_maintenance_toolkit_requests.count unless current_user.incoming_maintenance_toolkit_requests.blank? %></span>
         </span>
       <% end %>
     </li>
@@ -274,48 +287,9 @@
       </li>
 
       <li>
-        <%= link_to receives_path do %>
-            <i class="material-icons">add_shopping_cart</i>
-            <span>Procurements</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to specifications_path do %>
-            <i class="material-icons">list</i>
-            <span>Equipment Specifications</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to installations_path do %>
-            <i class="material-icons">add_to_queue</i>
-            <span>Installations</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to acceptance_tests_path do %>
-            <i class="material-icons">check_box</i>
-            <span>Acceptance Tests</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to maintenances_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenances</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to trainings_path do %>
+        <%= link_to reports_trainings_path do %>
             <i class="material-icons">library_books</i>
-            <span>Trainings</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to disposals_path do %>
-            <i class="material-icons">delete_sweep</i>
-            <span>Disposals</span>
+            <span>Equipment Training Report</span>
         <% end %>
       </li>
     </ul>

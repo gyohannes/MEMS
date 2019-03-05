@@ -18,4 +18,13 @@ class Constants
 
   ACTIONS = [['Approve', APPROVED], ['Forward', FORWARDED], ['Reject', REJECTED]]
 
+  EQUIPMENT_ACQUISITIONS = [PURCHASING='Purchasing',DONATION='Donation', LEASING_AND_RENTING='Leasing and Renting', \
+CLUSTER_SHARING='Cluster Based Equipment Sharing', INNOVATION='Innovation, refubrished, local production and technology transfer']
+
+  RISK_LEVELS = [HIGH_RISK='High Risk', MEDIUM_RISK='Medium Risk', LOW_RISK='Low Risk', HAZARD_SURVEILLANCE='Hazard Surveillance']
+
+  ACCEPTANCE_TEST_RESULT = [ACCEPTED='Accepted', NOT_ACCEPTED='Not Accepted']
+
+  WORK_ORDER_STATUS = [PENDING='Pending', COMPLETED='Completed', NOT_COMPLETED='Not Completed']
+
 end

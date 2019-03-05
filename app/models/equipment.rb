@@ -16,9 +16,12 @@ class Equipment < ApplicationRecord
 
   validates :equipment_name, :model, :serial_number, :tag_number, presence: true
 
-  STATUSES = [IN_STORE = 'In Store', NEW='New', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NOT_FUNCTIONAL='Not Functional', DISPOSED='Disposed']
+  STATUSES = [IN_STORE = 'In Store', NEW='New', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
+              NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable', DISPOSED='Disposed']
 
-  FUNCTIONAL_STATUSES = [FUNCTIONAL='Functional', NOT_FUNCTIONAL='Not Functional']
+  FUNCTIONAL_STATUSES = [NOT_ACCEPTED='Not Accepted', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
+                         NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable']
+
   scope :active, -> { where.not(status: self::DISPOSED)}
 
   scope :list_by_user, -> (user) { user.load_equipment unless user.blank? }
@@ -28,11 +31,13 @@ class Equipment < ApplicationRecord
   scope :list_by_name, -> (name) { where('LOWER(equipment_name) LIKE :term', term: "%#{name.downcase}%") unless name.blank? }
   scope :list_by_model, -> (model) { where('LOWER(model) LIKE :term', term: "%#{model.downcase}%") unless model.blank?}
   scope :list_by_status, -> (status) { where('status in (:term)', term: status) unless status.blank? }
+  scope :list_by_inventory_number, -> (inventory_number) { where('LOWER(inventory_number) LIKE :term', term: "%#{inventory_number.downcase}%") unless inventory_number.blank?}
 
-  def self.search(name=nil, org_structure=nil, facility=nil, category=nil, model=nil, status=nil, user=nil)
+  def self.search(name=nil, org_structure=nil, facility=nil, category=nil, model=nil, status=nil, user=nil, inventory_number=nil)
     equipment = []
     available_filters = {org_structure => list_by_org_structure(org_structure), facility => list_by_facility(facility), category => list_by_category(category),
-                         name => list_by_name(name), model => list_by_model(model), status => list_by_status(status), user => list_by_user(user) }.select{|k,v| !k.blank?}
+                         name => list_by_name(name), model => list_by_model(model), status => list_by_status(status),
+                         user => list_by_user(user), inventory_number => list_by_inventory_number(inventory_number) }.select{|k,v| !k.blank?}
     counter = 0
     available_filters.each do |k,v|
       equipment = counter == 0 ? v : equipment.merge(v)
@@ -43,19 +48,16 @@ class Equipment < ApplicationRecord
 
 
   def preventive_maintenance_date
-    dates = []
-    dates << installation.preventive_maintenance_date unless installation.blank?
-    dates << maintenances.sort_by{|x| x.end_date }.last.preventive_maintenance_date unless maintenances.blank?
-    return dates.sort.last
+    maintenances.order('end_date DESC').first.try(:preventive_maintenance_date) || installation.try(:preventive_maintenance_date)
   end
   def set_trained_end_users
-    self.trained_end_users = !trainings.joins(:contact).where('contacts.facility_id = ? and training_type = ?',
-                                     facility_id, Constants::END_USER).blank?
+    self.trained_end_users = !Training.joins(:contact).where('contacts.facility_id = ? and training_type = ? and equipment_name = ? and (model = ? or model = ?)',
+                                     facility_id, Constants::END_USER, equipment_name, "",model).blank?
   end
 
   def set_trained_maintenance_personnel
-    self.trained_maintenance_personnel= !trainings.joins(:contact).where('contacts.facility_id = ? and training_type = ?',
-                                     facility_id, Constants::MAINTENANCE_PERSONNEL).blank?
+    self.trained_maintenance_personnel = !Training.joins(:contact).where('contacts.facility_id = ? and training_type = ? and equipment_name = ? and (model = ? or model = ?)',
+                                    facility_id, Constants::MAINTENANCE_PERSONNEL, equipment_name, "",model).blank?
   end
 
   def set_date_of_installation
@@ -63,7 +65,7 @@ class Equipment < ApplicationRecord
   end
 
   def set_use_of_years
-    self.use_of_years = self.use_of_years || 0 + (Date.today - (set_date_of_installation || Date.today))/365
+    self.use_of_years = (self.use_of_years || 0 + (Date.today - (set_date_of_installation || Date.today))/365).floor
   end
 
   def trainings
@@ -71,6 +73,6 @@ class Equipment < ApplicationRecord
   end
 
   def to_s
-    [equipment_name, serial_number].join(' - ')
+    [equipment_name, inventory_number].join(' - ')
   end
 end

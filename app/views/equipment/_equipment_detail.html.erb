@@ -95,4 +95,4 @@
   </div>
 </div>
 <hr/>
-<%= link_to 'Edit', edit_equipment_path(@equipment), class: 'btn btn-primary' %>
+<%= link_to 'Edit', edit_equipment_path(@equipment), class: 'btn btn-primary' if can? :edit, @equipment %>

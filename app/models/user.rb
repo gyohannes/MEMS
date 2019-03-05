@@ -4,6 +4,7 @@ class User < ApplicationRecord
   belongs_to :facility, optional: true
   belongs_to :department, optional: true
   belongs_to :store, optional: true
+  has_many :maintenance_work_orders
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -16,7 +17,11 @@ class User < ApplicationRecord
   end
 
   def correct_user
-    if !facility.blank? or !institution.blank?
+    if !institution.blank?
+      self[:organization_structure_id] = nil
+      self[:facility_id] = nil
+    end
+    if !facility.blank?
       self[:organization_structure_id] = nil
     end
   end

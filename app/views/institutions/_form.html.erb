@@ -2,11 +2,15 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :organization_structure_id, collection: [@organization_structure] %>
-    <%= f.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id } %>
+    <%= f.association :organization_structure, label: 'Organization Unit', collection: [@organization_structure] unless @organization_structure.blank? %>
+    <%= f.association :facility, collection: [@facility] unless @facility.blank? %>
     <%= f.input :name %>
     <%= f.input :category, collection: ['Supplier', 'Local Representative'], as: :radio_buttons %>
     <%= f.input :institution_type, label: 'Type', collection: ['NGO', 'Government','Private'], as: :radio_buttons %>
+    <%= f.input :contact_person %>
+    <%= f.input :contact_phone %>
+    <%= f.input :contact_email %>
+    <%= f.input :address %>
   </div>
 
   <div class="form-actions">

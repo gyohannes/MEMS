@@ -28,12 +28,12 @@ class MaintenancesController < ApplicationController
   def new
     @maintenance = Maintenance.new
     @maintenance.equipment_id = params[:equipment]
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # GET /maintenances/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /maintenances

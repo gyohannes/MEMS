@@ -4,31 +4,31 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="row">
+    <%= f.simple_fields_for :equipment, @inventory.equipment do |ef| %>
     <div class="col-sm-6">
-    <%= f.simple_fields_for :equipment do |ef| %>
-          <%= ef.input :equipment_name  %>
+      <%= ef.input :inventory_number %>
+      <%= ef.input :equipment_name, readonly: true  %>
           <%= ef.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id} %>
           <%= ef.input :model, readonly: true %>
           <%= ef.input :serial_number, readonly: true  %>
           <%= ef.input :tag_number, readonly: true  %>
           <%= ef.input :date_of_installation, as: 'string', input_html: {class: 'datepicker'}, disabled: true  %>
-          <%= ef.input :use_of_years, readonly: true %>
-          <%= ef.input :status, collection: Equipment::STATUSES %>
-          <%= ef.input :trained_end_users, as: :boolean, label: '', disabled: true %>
-          <%= ef.input :trained_maintenance_personnel, as: :boolean, label: '', disabled: true %>
-      <% end %>
+          <%= ef.input :use_of_years, label: 'Years Used', readonly: true %>
+          <%= f.input :status, collection: Equipment::STATUSES %>
+          <%= ef.input :risk_level %>
     </div>
     <div class="col-sm-6 left_form">
+      <%= ef.input :trained_end_users, as: :boolean, label: '', disabled: true %>
+      <%= ef.input :trained_maintenance_personnel, as: :boolean, label: '', disabled: true %>
       <%= f.input :description_of_problem %>
       <%= f.input :suggestion %>
-      <%= f.input :risk_level %>
       <%= f.input :inventory_date, as: 'string', input_html: {class: 'datepicker'} %>
       <%= f.input :inventory_done_by %>
       <%= f.input :contact_address %>
       <%= f.input :note %>
     </div>
+    <% end %>
   </div>
-
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

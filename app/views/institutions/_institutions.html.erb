@@ -23,4 +23,4 @@
   </tbody>
 </table>
 <br/><br/>
-<%= link_to 'New Supplier/Local Representative', new_institution_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' unless @organization_structure.blank? %>
+<%= link_to 'New Supplier/Local Representative', new_institution_path(organization_structure: @organization_structure.try(:id), facility: current_user.facility_id), class: 'btn btn-primary' %>

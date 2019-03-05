@@ -19,24 +19,24 @@ class TrainingsController < ApplicationController
     equipment = Equipment.find_by_id(params[:equipment])
     @training.equipment_name = equipment.equipment_name rescue nil
     @training.model = equipment.model rescue nil
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # GET /trainings/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /trainings
   # POST /trainings.json
   def create
-    @training = Training.new(training_params)
-    contact = Contact.find_by(name_of_contact: @training.contact.name_of_contact,
-                                  phone_number: @training.contact.phone_number)
+    contact = Contact.find_by(name_of_contact: params[:training][:contact_attributes][:name_of_contact],
+                              phone_number: params[:training][:contact_attributes][:phone_number])
     unless contact.blank?
-      params[:training].delete(:contact_attributes)
-      @training.contact = contact
+      params[:training][:contact_id] = contact.id
+      params[:training].delete('contact_attributes')
     end
+    @training = Training.new(training_params)
     respond_to do |format|
       if @training.save
         format.html { redirect_to session.delete(:return_to), notice: 'Training was successfully created.' }
@@ -51,12 +51,14 @@ class TrainingsController < ApplicationController
   # PATCH/PUT /trainings/1
   # PATCH/PUT /trainings/1.json
   def update
-    contact = Contact.find_by(name_of_contact: @training.contact.name_of_contact,
-                              phone_number: @training.contact.phone_number)
+    contact = Contact.find_by(name_of_contact: params[:training][:contact_attributes][:name_of_contact],
+                              phone_number: params[:training][:contact_attributes][:phone_number])
+
     unless contact.blank?
-      params[:training].delete(:contact_attributes)
-      @training.contact = contact
+      params[:training][:contact_id] = contact.id
     end
+    params[:training].delete('contact_attributes')
+
     respond_to do |format|
       if @training.update(training_params)
         format.html { redirect_to session.delete(:return_to), notice: 'Training was successfully updated.' }

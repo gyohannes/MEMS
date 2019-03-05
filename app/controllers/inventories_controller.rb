@@ -17,40 +17,33 @@ class InventoriesController < ApplicationController
   def new
     @inventory = Inventory.new
     equipment = Equipment.find_by(id: params[:equipment])
-    unless equipment.blank?
-      @inventory.equipment = equipment
-    else
-      @inventory.build_equipment
-    end
-    session[:return_to] ||= request.referer
+    @inventory.equipment = equipment || Equipment.new
+    session[:return_to] = request.referer
   end
 
   # GET /inventories/1/edit
   def edit
-    session[:return_to] ||= request.referer
+    session[:return_to] = request.referer
   end
 
   # POST /inventories
   # POST /inventories.json
   def create
-    @inventory = Inventory.new(inventory_params)
-    equipment = Equipment.find_by(facility_id: @inventory.equipment.facility_id,
-                                  equipment_name: @inventory.equipment.equipment_name,
-                                  model: @inventory.equipment.model,
-                                  serial_number: @inventory.equipment.serial_number,
-                                  tag_number: @inventory.equipment.tag_number)
+    equipment = Equipment.find_by(facility_id: params[:inventory][:equipment_attributes][:facility_id],
+                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number],
+                                  equipment_name: params[:inventory][:equipment_attributes][:equipment_name])
 
     unless equipment.blank?
-      @inventory.equipment = equipment
-      equipment.update(status: params[:inventory][:equipment_attributes][:status])
-      @inventory.status = equipment.status
-      @inventory.trained_end_users = equipment.trained_end_users
-      @inventory.trained_maintenance_personnel = equipment.trained_maintenance_personnel
+      params[:inventory][:equipment_id] = equipment.id
+      params[:inventory][:trained_end_users] = equipment.trained_end_users
+      params[:inventory][:trained_maintenance_personnel] = equipment.trained_maintenance_personnel
     end
-    params[:inventory].delete(:equipment_attributes)
+    params[:inventory].delete('equipment_attributes')
+    @inventory = Inventory.new(inventory_params)
 
     respond_to do |format|
       if @inventory.save
+        equipment.update(status: @inventory.status)
         format.html { redirect_to session.delete(:return_to), notice: 'Inventory was successfully created.' }
         format.json { render :show, status: :created, location: @inventory }
       else
@@ -63,22 +56,20 @@ class InventoriesController < ApplicationController
   # PATCH/PUT /inventories/1
   # PATCH/PUT /inventories/1.json
   def update
-    equipment = Equipment.find_by(facility_id: @inventory.equipment.facility_id,
-                                  equipment_name: @inventory.equipment.equipment_name,
-                                  model: @inventory.equipment.model,
-                                  serial_number: @inventory.equipment.serial_number,
-                                  tag_number: @inventory.equipment.tag_number)
+    equipment = Equipment.find_by(facility_id: params[:inventory][:equipment_attributes][:facility_id],
+                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number],
+                                  equipment_name: params[:inventory][:equipment_attributes][:equipment_name])
 
     unless equipment.blank?
-      @inventory.equipment = equipment
-      equipment.update(status: params[:inventory][:equipment_attributes][:status])
-      @inventory.status = equipment.status
-      @inventory.trained_end_users = equipment.trained_end_users
-      @inventory.trained_maintenance_personnel = equipment.trained_maintenance_personnel
+      params[:inventory][:equipment_id] = equipment.id
+      params[:inventory][:trained_end_users] = equipment.trained_end_users
+      params[:inventory][:trained_maintenance_personnel] = equipment.trained_maintenance_personnel
     end
-    params[:inventory].delete(:equipment_attributes)
+    params[:inventory].delete('equipment_attributes')
+
     respond_to do |format|
       if @inventory.update(inventory_params)
+        @inventory.equipment.update(status: @inventory.status )
         format.html { redirect_to session.delete(:return_to), notice: 'Inventory was successfully updated.' }
         format.json { render :show, status: :ok, location: @inventory }
       else

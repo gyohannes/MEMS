@@ -6,6 +6,10 @@ class CreateInstitutions < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :category
       t.string :institution_type
+      t.string :contact_person
+      t.string :contact_phone
+      t.string :contact_email
+      t.text :address
 
       t.timestamps
     end

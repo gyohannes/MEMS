@@ -7,6 +7,7 @@
     <%= f.association :store, collection: current_user.facility.try(:stores) || [] %>
     <%= f.input :been_number %>
     <%= f.simple_fields_for :equipment  do |ef| %>
+        <%= ef.input :inventory_number  %>
         <%= ef.input :equipment_name  %>
         <%= ef.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id}  %>
         <%= ef.input :model  %>

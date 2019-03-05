@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  equipment: one
+  user: one
+  location: MyString
+  date: 2019-02-11
+  description_of_problem: MyText
+
+two:
+  equipment: two
+  user: two
+  location: MyString
+  date: 2019-02-11
+  description_of_problem: MyText

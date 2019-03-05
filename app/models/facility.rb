@@ -19,6 +19,7 @@ class Facility < ApplicationRecord
   has_many :disposal_requests
   has_many :budget_requests
   has_many :maintenance_toolkit_requests
+  has_many :institutions
 
   validates :population, numericality: {greater_than: 0}, allow_blank: true
 

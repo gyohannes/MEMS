@@ -32,16 +32,16 @@ class StoreRegistrationsController < ApplicationController
   # POST /store_registrations
   # POST /store_registrations.json
   def create
-    @store_registration = StoreRegistration.new(store_registration_params)
-    equipment = Equipment.find_by(facility_id: @store_registration.equipment.facility_id,
-                                  equipment_name: @store_registration.equipment.equipment_name,
-                                  model: @store_registration.equipment.model,
-                                  serial_number: @store_registration.equipment.serial_number,
-                                  tag_number: @store_registration.equipment.tag_number)
+    equipment = Equipment.find_by(facility_id: params[:store_registration][:equipment_attributes][:facility_id],
+                                  inventory_number: params[:store_registration][:equipment_attributes][:inventory_number],
+                                  equipment_name: params[:store_registration][:equipment_attributes][:equipment_name])
+
     unless equipment.blank?
-      params[:store_registration].delete(:equipment_attributes)
-      @store_registration.equipment = equipment
+      params[:store_registration][:equipment_id] = equipment.id
+      params[:store_registration].delete('equipment_attributes')
     end
+    @store_registration = StoreRegistration.new(store_registration_params)
+
     respond_to do |format|
       if @store_registration.save
         @store_registration.equipment.update(status: Equipment::IN_STORE)
@@ -57,17 +57,18 @@ class StoreRegistrationsController < ApplicationController
   # PATCH/PUT /store_registrations/1
   # PATCH/PUT /store_registrations/1.json
   def update
-    equipment = Equipment.find_by(facility_id: @store_registration.equipment.facility_id,
-                                  equipment_name: @store_registration.equipment.equipment_name,
-                                  model: @store_registration.equipment.model,
-                                  serial_number: @store_registration.equipment.serial_number,
-                                  tag_number: @store_registration.equipment.tag_number)
+    equipment = Equipment.find_by(facility_id: params[:store_registration][:equipment_attributes][:facility_id],
+                                  inventory_number: params[:store_registration][:equipment_attributes][:inventory_number],
+                                  equipment_name: params[:store_registration][:equipment_attributes][:equipment_name])
+
     unless equipment.blank?
-      params[:store_registration].delete(:equipment_attributes)
-      @store_registration.equipment = equipment
+      params[:store_registration][:equipment_id] = equipment.id
+      params[:store_registration].delete('equipment_attributes')
     end
+
     respond_to do |format|
       if @store_registration.update(store_registration_params)
+        @store_registration.equipment.update(status: Equipment::IN_STORE)
         format.html { redirect_to @store_registration, notice: 'Store registration was successfully updated.' }
         format.json { render :show, status: :ok, location: @store_registration }
       else
@@ -95,6 +96,6 @@ class StoreRegistrationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_registration_params
-      params.require(:store_registration).permit(:store_id, :been_number, equipment_attributes: [:id, :facility_id, :status, :equipment_name, :model, :serial_number, :tag_number, :_destroy])
+      params.require(:store_registration).permit(:store_id, :equipment_id, :been_number, equipment_attributes: [:id, :facility_id, :status, :equipment_name, :model, :serial_number, :tag_number, :_destroy])
     end
 end

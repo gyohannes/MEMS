@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190128132948) do
+ActiveRecord::Schema.define(version: 20190211082556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,9 @@ ActiveRecord::Schema.define(version: 20190128132948) do
     t.uuid "facility_id"
     t.string "equipment_name"
     t.uuid "equipment_category_id"
+    t.string "inventory_number"
+    t.string "acquisition_type"
+    t.string "risk_level"
     t.string "model"
     t.string "serial_number"
     t.string "tag_number"
@@ -281,6 +284,10 @@ ActiveRecord::Schema.define(version: 20190128132948) do
     t.string "name"
     t.string "category"
     t.string "institution_type"
+    t.string "contact_person"
+    t.string "contact_phone"
+    t.string "contact_email"
+    t.text "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["facility_id"], name: "index_institutions_on_facility_id"
@@ -294,7 +301,6 @@ ActiveRecord::Schema.define(version: 20190128132948) do
     t.boolean "trained_end_users"
     t.boolean "trained_maintenance_personnel"
     t.text "suggestion"
-    t.string "risk_level"
     t.date "inventory_date"
     t.string "inventory_done_by"
     t.text "contact_address"
@@ -348,6 +354,21 @@ ActiveRecord::Schema.define(version: 20190128132948) do
     t.index ["institution_id"], name: "index_maintenance_toolkit_requests_on_institution_id"
     t.index ["organization_structure_id"], name: "index_maintenance_toolkit_requests_on_organization_structure_id"
     t.index ["user_id"], name: "index_maintenance_toolkit_requests_on_user_id"
+  end
+
+  create_table "maintenance_work_orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "equipment_id"
+    t.uuid "user_id"
+    t.string "location"
+    t.date "date"
+    t.text "description_of_problem"
+    t.text "remark"
+    t.string "status"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_id"], name: "index_maintenance_work_orders_on_equipment_id"
+    t.index ["user_id"], name: "index_maintenance_work_orders_on_user_id"
   end
 
   create_table "maintenances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -674,6 +695,8 @@ ActiveRecord::Schema.define(version: 20190128132948) do
   add_foreign_key "maintenance_toolkit_requests", "institutions"
   add_foreign_key "maintenance_toolkit_requests", "organization_structures"
   add_foreign_key "maintenance_toolkit_requests", "users"
+  add_foreign_key "maintenance_work_orders", "equipment"
+  add_foreign_key "maintenance_work_orders", "users"
   add_foreign_key "maintenances", "equipment"
   add_foreign_key "maintenances", "maintenance_requests"
   add_foreign_key "news", "facilities"

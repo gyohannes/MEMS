@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  resources :maintenance_work_orders
   get 'reports/equipment'
   post 'reports/equipment'
   get 'reports/load_facilities'
+  get 'reports/trainings'
+  post 'reports/trainings'
 
   resources :news
   resources :inventories
