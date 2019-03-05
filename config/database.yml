@@ -18,7 +18,7 @@ default: &default
 
 development:
   <<: *default
-  database: medical_inventory_development
+  database: mems_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -48,4 +48,4 @@ test:
 #
 production:
   <<: *default
-  database: medical_inventory_development
+  database: mems_production
