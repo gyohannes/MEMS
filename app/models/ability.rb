@@ -31,7 +31,8 @@ class Ability
          can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can :manage, [Equipment, Receive, Contact, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
+         can :manage, [OrganizationStructure, User, Department, FacilityType, Facility, Store, Contact, Institution, EquipmentCategory,
+                       Equipment, Receive, Contact, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
          can :edit, MaintenanceWorkOrder, not_completed: true
          cannot :manage, MaintenanceWorkOrder, status: Constants::COMPLETED
