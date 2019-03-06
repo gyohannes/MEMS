@@ -1,3 +1,6 @@
+.treeview .list-group-item{
+    color: deepskyblue;
+}
 .sidebar .menu .list a span{
     border-bottom: 1px solid darkgray;
     width: 100%;
