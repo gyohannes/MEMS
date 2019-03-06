@@ -81,7 +81,7 @@ class OrganizationStructure < ApplicationRecord
   end
 
   def sub_facilities
-    facilities + sub_units.collect{|x| x.sub_facilities}.flatten
+    facilities + sub_organization_structures.collect{|x| x.sub_facilities}.flatten
   end
 
   def sub_institutions
