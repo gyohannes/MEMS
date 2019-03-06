@@ -11,7 +11,7 @@
     <%= f.input :grand_father_name %>
     </div>
     <div class="col-sm-6" style="border-left: 1px solid skyblue;">
-      <%= f.association :organization_structure, collection: [@user.organization_structure || current_user.organization_structure] if current_user.organization_structure %>
+      <%= f.association :organization_structure, label: 'Organization Unit', collection: [@user.organization_structure || current_user.organization_structure] if current_user.organization_structure %>
       <%= f.association :facility, collection: @facilities %>
       <%= f.association :department if current_user.facility %>
       <%= f.association :institution, label: 'Supplier/Local Representative', collection: @institutions %>

@@ -1,5 +1,8 @@
-<p id="notice"><%= notice %></p>
+<div class="header">
+  <h2>Supplier/Local Representative Details</h2>
+</div>
 
+<div class="body">
 <p>
   <strong>Organization Unit:</strong>
   <%= @institution.organization_structure %>
@@ -20,5 +23,26 @@
   <%= @institution.institution_type %>
 </p>
 
+<p>
+  <strong>Contact Person:</strong>
+  <%= @institution.contact_person %>
+</p>
+
+<p>
+  <strong>Contact Phone:</strong>
+  <%= @institution.contact_phone %>
+</p>
+
+<p>
+  <strong>Contact Email:</strong>
+  <%= @institution.contact_email %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @institution.address %>
+</p>
+<hr/>
 <%= link_to 'Edit', edit_institution_path(@institution) %> |
 <%= link_to 'Back', institutions_path %>
+</div>

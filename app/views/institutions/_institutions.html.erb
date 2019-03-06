@@ -15,6 +15,7 @@
         <td><%= institution.category %></td>
         <td><%= institution.institution_type %></td>
         <td>
+          <%= link_to 'Details', institution %> |
           <%= link_to 'Edit', edit_institution_path(institution) %> |
           <%= link_to 'Delete', institution, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
