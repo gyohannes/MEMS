@@ -22,7 +22,7 @@ class Ability
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can :manage, [Equipment, Receive, Contact, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
+         can :manage, [Equipment, Receive, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_structure_id: user.organization_structure_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
@@ -31,11 +31,13 @@ class Ability
          can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can :manage, [OrganizationStructure, User, Department, FacilityType, Facility, Store, Contact, Institution, EquipmentCategory,
-                       Equipment, Receive, Contact, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
+         can :manage, [OrganizationStructure, User, Department, FacilityType, Facility, Store, Institution, EquipmentCategory,
+                       Equipment, Receive, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
          can :edit, MaintenanceWorkOrder, not_completed: true
          cannot :manage, MaintenanceWorkOrder, status: Constants::COMPLETED
+         can :manage, Contact, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
+         can [:read, :create], Contact
        end
 
        if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)

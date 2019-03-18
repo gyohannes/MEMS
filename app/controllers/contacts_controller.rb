@@ -14,7 +14,7 @@ class ContactsController < ApplicationController
     render partial: 'contacts'
   end
   def search
-    contacts = Contact.search(params[:term], current_user)
+    contacts = Contact.search(params[:term], current_user).uniq
     render json: contacts
   end
   # GET /contacts/1

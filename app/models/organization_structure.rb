@@ -36,8 +36,8 @@ class OrganizationStructure < ApplicationRecord
     [parent.facility_children]
   end
 
-  def self.organization_tree(user)
-    parent = user.try(:super_admin?) ? OrganizationStructure.top_organization_structure : user.try(:organization_structure)
+  def self.organization_tree(user=nil)
+    parent = user.blank? ? OrganizationStructure.top_organization_structure : user.try(:organization_structure)
     [parent.org_children]
   end
 
@@ -93,7 +93,7 @@ class OrganizationStructure < ApplicationRecord
   end
 
   def sub_contacts
-    contacts + sub_organization_structures.collect{|x| x.sub_contacts}.flatten
+    Contact.where('organization_structure_id in (?) or facility_id in (?)', (sub_units.pluck(:id) << id), sub_facilities.pluck(:id) )
   end
 
   def sub_equipment

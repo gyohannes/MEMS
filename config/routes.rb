@@ -154,6 +154,7 @@ Rails.application.routes.draw do
   resources :organization_structures do
     collection do
       get 'load_tree'
+      get 'load_all_tree'
       get 'load_facility_tree'
       get 'load_sub_units'
     end

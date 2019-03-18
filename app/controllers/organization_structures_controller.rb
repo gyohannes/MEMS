@@ -11,6 +11,10 @@ class OrganizationStructuresController < BaseController
     render json: OrganizationStructure.organization_tree(current_user)
   end
 
+  def load_all_tree
+    render json: OrganizationStructure.organization_tree
+  end
+
   def load_facility_tree
     render json: OrganizationStructure.facilities_tree
   end

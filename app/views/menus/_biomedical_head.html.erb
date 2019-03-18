@@ -104,7 +104,7 @@
     </a>
     <ul class="ml-menu">
 
-      <% unless current_user.facility_id.blank? %>
+      <% unless current_user.facility.blank? %>
       <li>
         <%= link_to store_registrations_path do %>
             <i class="material-icons">store</i>
