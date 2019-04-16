@@ -74,6 +74,7 @@ $(function () {
                 }
             });
         },
+        minLength: 0,
         select: function( event, ui ) {
             $.ajax({
                 url: "/equipment/facility_equipment_search",

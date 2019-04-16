@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   before_save :correct_user
 
+  def user_type
+    facility  ? Constants::FACILITY : (organization_structure ? organization_structure.organization_structure_type :
+                                           (institution ? institution.institution_type : ''))
+  end
   def from_type
     facility ? facility.to_s : (organization_structure ? organization_structure.to_s : (institution ? institution.to_s : '' ))
   end

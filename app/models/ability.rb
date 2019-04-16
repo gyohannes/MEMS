@@ -28,9 +28,15 @@ class Ability
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
-         can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
+         can [:read,:create], [ProcurementRequest, SpecificationRequest, SparePartRequest,
+                                 AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                                 CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+         can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+                                  CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest], user_id: user.id
+         can :decision, [ProcurementRequest, SpecificationRequest, SparePartRequest,
+                         AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                         CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest], request_to: user.user_type
          can :manage, [OrganizationStructure, User, Department, FacilityType, Facility, Store, Institution, EquipmentCategory,
                        Equipment, Receive, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
