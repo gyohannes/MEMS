@@ -11,7 +11,7 @@ class TrainingRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @training_requests = current_user.training_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @training_requests = current_user.incoming_training_requests
+      @training_requests = current_user.training_requests + current_user.incoming_training_requests
     elsif !current_user.institution.blank?
       @training_requests = current_user.incoming_training_requests
     else

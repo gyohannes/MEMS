@@ -12,7 +12,7 @@ class AcceptanceRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @acceptance_requests = current_user.acceptance_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @acceptance_requests = current_user.incoming_acceptance_requests
+      @acceptance_requests = current_user.acceptance_requests + current_user.incoming_acceptance_requests
     elsif !current_user.institution.blank?
       @acceptance_requests = current_user.incoming_acceptance_requests
     else

@@ -12,7 +12,7 @@ class MaintenanceRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @maintenance_requests = current_user.maintenance_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @maintenance_requests = current_user.incoming_maintenance_requests
+      @maintenance_requests = current_user.maintenance_requests + current_user.incoming_maintenance_requests
     elsif !current_user.institution.blank?
       @maintenance_requests = current_user.incoming_maintenance_requests
     else

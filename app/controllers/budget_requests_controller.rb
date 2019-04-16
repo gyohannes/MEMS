@@ -7,7 +7,7 @@ class BudgetRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @budget_requests = current_user.budget_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @budget_requests = current_user.incoming_budget_requests
+      @budget_requests = current_user.budget_requests + current_user.incoming_budget_requests
     else
       @budget_requests = []
     end

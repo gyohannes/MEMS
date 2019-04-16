@@ -11,7 +11,7 @@ class SparePartRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @spare_part_requests = current_user.spare_part_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @spare_part_requests = current_user.incoming_spare_part_requests
+      @spare_part_requests = current_user.spare_part_requests + current_user.incoming_spare_part_requests
     elsif !current_user.institution.blank?
       @spare_part_requests = current_user.incoming_spare_part_requests
     else
