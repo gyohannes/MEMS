@@ -24,7 +24,7 @@
     <%= f.input :purchased_year, label: 'Acquired Year', start_year: Date.today.year - 100, end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
     <%= f.input :acquisition_type, collection: Constants::EQUIPMENT_ACQUISITIONS %>
-    <%= f.input :use_of_years %>
+    <%= f.input :use_of_years, label: 'Years Used' %>
     <%= f.input :purchase_price %>
     <%= f.input :supplier_id, collection: @suppliers %>
     <%= f.input :warranty_agreement_note %>

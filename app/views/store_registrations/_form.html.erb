@@ -5,7 +5,7 @@
 
   <div class="form-inputs">
     <%= f.association :store, collection: current_user.facility.try(:stores) || [] %>
-    <%= f.input :been_number %>
+    <%= f.input :bin_number %>
     <%= f.simple_fields_for :equipment  do |ef| %>
         <%= ef.input :inventory_number  %>
         <%= ef.input :equipment_name  %>

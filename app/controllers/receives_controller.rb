@@ -106,7 +106,7 @@ class ReceivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receife_params
-      params.require(:receive).permit(:store_id, :deliverer_name, :recipient_name, :been_number, :equipment_name, :model, :with_full_checklist, :quantity, :unit_cost,
+      params.require(:receive).permit(:store_id, :deliverer_name, :recipient_name, :bin_number, :equipment_name, :model, :with_full_checklist, :quantity, :unit_cost,
                                       :recipient_contact_address, :witness_contact_address, :witness_name, :delivery_date, :note)
     end
 end

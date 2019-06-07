@@ -35,7 +35,6 @@ class AcceptanceTestsController < ApplicationController
     equipment = @acceptance_test.equipment
     respond_to do |format|
       if @acceptance_test.save
-        equipment.update(status: @acceptance_test.status)
         format.html { redirect_to session.delete(:return_to), notice: 'Acceptance test was successfully created.' }
         format.json { render :show, status: :created, location: @acceptance_test }
       else
@@ -51,7 +50,6 @@ class AcceptanceTestsController < ApplicationController
     equipment = @acceptance_test.equipment
     respond_to do |format|
       if @acceptance_test.update(acceptance_test_params)
-        equipment.update(status: @acceptance_test.status)
         format.html { redirect_to session.delete(:return_to), notice: 'Acceptance test was successfully updated.' }
         format.json { render :show, status: :ok, location: @acceptance_test }
       else
@@ -79,6 +77,8 @@ class AcceptanceTestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def acceptance_test_params
-      params.require(:acceptance_test).permit(:equipment_id, :meet_standard, :with_order_specification, :installation_done, :test_run, :accepted, :maintenance_personnel_trained, :end_users_trained, :with_full_accessery, :with_manual, :status, :approved_by, :acceptance_testing_date, :contact_address, :note)
+      params.require(:acceptance_test).permit(:equipment_id, :meet_standard, :with_order_specification, :installation_done,
+                                              :test_run, :accepted, :maintenance_personnel_trained, :end_users_trained, :with_full_accessery,
+                                              :user_manual, :service_manual, :approved_by, :acceptance_testing_date, :contact_address, :note)
     end
 end

@@ -2,7 +2,7 @@ class CreateReceives < ActiveRecord::Migration[5.1]
   def change
     create_table :receives, id: :uuid do |t|
       t.references :store, type: :uuid, foreign_key: true
-      t.string :been_number
+      t.string :bin_number
       t.string :equipment_name
       t.string :model
       t.string :deliverer_name

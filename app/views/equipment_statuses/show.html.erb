@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Equipment:</strong>
+  <%= @equipment_status.equipment %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @equipment_status.status %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @equipment_status.remark %>
+</p>
+
+<%= link_to 'Edit', edit_equipment_status_path(@equipment_status) %> |
+<%= link_to 'Back', equipment_statuses_path %>

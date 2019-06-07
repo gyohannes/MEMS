@@ -96,6 +96,6 @@ class StoreRegistrationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_registration_params
-      params.require(:store_registration).permit(:store_id, :equipment_id, :been_number, equipment_attributes: [:id, :facility_id, :status, :equipment_name, :model, :serial_number, :tag_number, :_destroy])
+      params.require(:store_registration).permit(:store_id, :equipment_id, :bin_number, equipment_attributes: [:id, :facility_id, :status, :equipment_name, :model, :serial_number, :tag_number, :_destroy])
     end
 end

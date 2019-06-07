@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th>Store</th>
-      <th>Been number</th>
+      <th>Bin number</th>
       <th>Equipment</th>
       <th>Model</th>
       <th>Serial Number</th>
@@ -21,7 +21,7 @@
     <% @store_registrations.each do |store_registration| %>
       <tr>
         <td><%= store_registration.store %></td>
-        <td><%= store_registration.been_number %></td>
+        <td><%= store_registration.bin_number %></td>
         <td><%= store_registration.equipment %></td>
         <td><%= store_registration.equipment.model %></td>
         <td><%= store_registration.equipment.serial_number %></td>

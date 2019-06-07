@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :equipment_statuses
   resources :maintenance_work_orders
   get 'reports/equipment'
   post 'reports/equipment'

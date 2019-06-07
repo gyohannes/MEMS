@@ -11,10 +11,10 @@ class Constants
   ORGANIZATION_TYPES = [FMOH='Federal Ministry of Health', RHB='Regional Health Bureau',
                         ZHB = 'Zonal Health Bureau', WHB = 'Woreda Health Bureau']
 
-  ROLES = [DEPARTMENT = 'Department', BIOMEDICAL_ENGINEER = 'Biomedical Engineer', BIOMEDICAL_HEAD = 'Biomedical Head',
+  ROLES = [DEPARTMENT = 'Department', BIOMEDICAL_ENGINEER = 'Biomedical Engineer', BIOMEDICAL_HEAD = 'Biomedical Engineering Head',
            SUPPLIER = 'Supplier', LOCAL_REPRESENTATIVE = 'Local Representative']
 
-  TRAINING_TYPES = [END_USER = 'End User', MAINTENANCE_PERSONNEL = 'Maintenance Personnel']
+  TRAINING_TYPES = [END_USER = 'End User', MAINTENANCE_PERSONNEL = 'Technical Personnel']
 
   ACTIONS = [['Approve', APPROVED], ['Forward', FORWARDED], ['Reject', REJECTED]]
 

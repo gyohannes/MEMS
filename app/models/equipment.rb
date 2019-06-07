@@ -16,7 +16,7 @@ class Equipment < ApplicationRecord
 
   validates :equipment_name, :model, :serial_number, :tag_number, presence: true
 
-  STATUSES = [IN_STORE = 'In Store', NEW='New', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
+  STATUSES = [IN_STORE = 'In Store', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
               NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable', DISPOSED='Disposed']
 
   FUNCTIONAL_STATUSES = [NOT_ACCEPTED='Not Accepted', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
@@ -65,7 +65,7 @@ class Equipment < ApplicationRecord
   end
 
   def set_use_of_years
-    self.use_of_years = (self.use_of_years || 0 + (Date.today - (set_date_of_installation || Date.today))/365).floor
+    self.use_of_years = ((Date.today - (manufactured_year || Date.today))/365).floor
   end
 
   def trainings

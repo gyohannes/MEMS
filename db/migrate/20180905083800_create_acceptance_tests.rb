@@ -11,8 +11,8 @@ class CreateAcceptanceTests < ActiveRecord::Migration[5.1]
       t.boolean :maintenance_personnel_trained
       t.boolean :end_users_trained
       t.boolean :with_full_accessery
-      t.boolean :with_manual
-      t.string :status
+      t.boolean :user_manual
+      t.boolean :service_manual
       t.string :approved_by
       t.date :acceptance_testing_date
       t.string :contact_address

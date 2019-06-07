@@ -13,9 +13,11 @@
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
           <span class="font-15">Status:</span> <label class="right font-15 font-italic label <%= @equipment.status == Equipment::NON_FUNCTIONAL ? 'label-warning' :
-                                                                                                     (@equipment.status == Equipment::DISPOSED ? 'label-danger' :
-                                                                                                          (@equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>"><%= @equipment.status %></label>
+                                                                                                     (@equipment.status == Equipment::DISPOSED ? 'label-danger' : (@equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>"><%= @equipment.status %></label>
         </a>
+        <p style="text-align: right">
+          <%= link_to 'Update equipment Status', new_equipment_status_path(equipment: @equipment.id), {class: 'btn btn-primary'} %>
+        </p>
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">

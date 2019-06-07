@@ -2,7 +2,8 @@
     color: deepskyblue;
 }
 .sidebar .menu .list a span{
-    border-bottom: 1px solid darkgray;
+    border-bottom: 1px solid skyblue;
+    width: 100%;
 }
 [type="checkbox"] + label{
     text-align: left;
