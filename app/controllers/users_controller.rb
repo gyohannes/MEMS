@@ -32,7 +32,7 @@ class UsersController < BaseController
       @institutions = @user.organization_structure.institutions
     end
     unless current_user.facility.blank?
-      @facilities = [@user.facility]
+      @facilities = [current_user.facility]
       @institutions = current_user.facility.institutions
     end
 
