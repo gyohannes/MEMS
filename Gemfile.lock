@@ -75,7 +75,7 @@ GEM
     country_select (3.1.1)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
-    crass (1.0.3)
+    crass (1.0.5)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -85,7 +85,6 @@ GEM
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
-    fullcalendar (3.8.2)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     highcharts-rails (6.0.3)
@@ -105,7 +104,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.1.1)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -116,7 +115,7 @@ GEM
     mime-types-data (3.2018.0812)
     mimemagic (0.3.3)
     mini_mime (1.0.0)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.11.1)
     momentjs-rails (2.17.1)
       railties (>= 3.1)
@@ -126,8 +125,8 @@ GEM
     mysql2 (0.4.10)
     nested_form (0.3.2)
     nio4r (2.2.0)
-    nokogiri (1.8.1)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.5)
+      mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     paperclip (6.0.0)
       activemodel (>= 4.2.0)
@@ -266,7 +265,6 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   country_select
   devise
-  fullcalendar
   highcharts-rails
   jbuilder (~> 2.5)
   jquery-rails
