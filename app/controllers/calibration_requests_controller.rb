@@ -103,7 +103,7 @@ class CalibrationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calibration_request_params
-      params.require(:calibration_request).permit(:organization_structure_id, :facility_id, :equipment_id, :calibration_description,
+      params.require(:calibration_request).permit(:organization_unit_id, :facility_id, :equipment_id, :calibration_description,
                                                   :status,:request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

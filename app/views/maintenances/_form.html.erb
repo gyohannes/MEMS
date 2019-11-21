@@ -1,23 +1,26 @@
 
 <%= simple_form_for(@maintenance) do |f| %>
+    <%= f.association :maintenance_request, as: :hidden %>
+    <%= f.association :maintenance_work_order, as: :hidden %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="row">
     <div class="col-sm-6">
       <%= render partial: 'equipment' %>
-      <%= f.input :maintenance_type, as: :radio_buttons, collection: ['Corrective','Preventive'] %>
-      <%= f.input :problem %>
-      <%= f.input :action_taken %>
+      <%= f.input :description_of_equipment_failure %>
+      <%= f.input :cause_of_equipment_failure %>
+      <%= f.input :part_of_equipment_maintained %>
+      <%= f.input :corrective_action %>
       <%= f.input :spare_parts_used %>
     </div>
     <div class="col-sm-6" style="border-left: 1px solid skyblue;">
       <%= f.input :start_date, as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :end_date, as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :maintenance_cost %>
-      <%= f.input :maintained_by %>
-      <%= f.input :contact_address %>
-      <%= f.input :preventive_maintenance_date, label: 'Next Preventive Maintenance Date', as: :string, input_html: {class: 'datepicker'} %>
+      <%= f.input :engineer_name_and_contact, label: 'Engineer/s name and contact' %>
+      <%= f.association :status %>
+      <%= f.input :preventive_maintenance_date, label: 'Next Planned Preventive Maintenance Date', as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :note %>
     </div>
   </div>

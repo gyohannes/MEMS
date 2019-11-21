@@ -1,11 +1,10 @@
-<% unless @equipment.blank? %>
 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
     <thead>
     <tr>
       <th>Facility</th>
       <th>Inventory Number</th>
       <th>Equipment name</th>
-      <th>Category</th>
+      <th>Equipment Type</th>
       <th>Model</th>
       <th>Status</th>
       <th></th>
@@ -15,14 +14,12 @@
     <tbody>
     <% @equipment.each do |equipment| %>
         <tr>
-          <td><%= equipment.facility %></td>
+          <td><%= equipment.organization_unit %></td>
           <td><%= equipment.inventory_number %></td>
           <td><%= equipment.equipment_name %></td>
-          <td><%= equipment.equipment_category %></td>
+          <td><%= equipment.equipment_type %></td>
           <td><%= equipment.model %></td>
-          <td><label class="label <%= equipment.status == Equipment::NON_FUNCTIONAL ? 'label-warning' :
-                                                                    (equipment.status == Equipment::DISPOSED ? 'label-danger' :
-                                                                         (equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>">
+          <td><label class="label" style="background-color: <%= equipment.status.color %>">
             <%= equipment.status %>
           </label>
           <td><%= link_to 'Details', equipment, class: 'btn btn-primary' %></td>
@@ -31,5 +28,4 @@
     </tbody>
   </table>
   <hr/>
-<% end %>
-<%= link_to 'New Equipment', new_equipment_path(facility: @facility.try(:id)), class: 'btn btn-primary' unless @facility.blank? if can? :create, Equipment %>
+<%= link_to 'Register Equipment', new_equipment_path(organization_unit_id: current_user.organization_unit.try(:id)), class: 'btn btn-primary' if current_user.organization_unit.facility if can? :create, Equipment %>

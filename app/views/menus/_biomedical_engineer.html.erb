@@ -19,7 +19,7 @@
     </a>
     <ul class="ml-menu">
 
-      <% unless current_user.facility_id.blank? %>
+      <% if current_user.organization_unit.facility %>
           <li>
             <%= link_to store_registrations_path do %>
                 <i class="material-icons">store</i>

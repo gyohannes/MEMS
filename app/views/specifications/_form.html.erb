@@ -5,16 +5,16 @@
 
   <div class="row">
     <div class="col-sm-6">
-    <%= f.association :organization_structure, collection: [current_user.organization_structure] %>
-    <%= f.association :facility, collection: [current_user.facility] %>
-    <%= f.input :equipment_name %>
+    <%= f.association :organization_unit, as: :hidden, input_html: {value: current_user.organization_unit_id} %>
+    <%= f.association :facility, as: :hidden, input_html: {value: current_user.facility_id} %>
+    <%= f.association :equipment_name %>
     <%= f.input :model %>
     <%= f.input :description %>
+      <%= f.input :attachment, as: :file, hint: 'attach pdf file' %>
     </div>
     <div class="col-sm-6 left_form">
-    <%= f.input :attachment, as: :file, hint: 'attach pdf file' %>
     <%= f.input :approximate_cost %>
-    <%= f.input :specification_by %>
+    <%= f.input :specification_by, label: 'Prepared by' %>
     <%= f.input :contact_address %>
     <%= f.input :specification_date, label: 'Date', as: :string, input_html: {class: 'datepicker'} %>
     </div>

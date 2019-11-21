@@ -7,31 +7,25 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Equipment category</th>
       <th>Name</th>
-      <th>Actions</th>
+      <th>Equipment Type</th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @equipment_names.each do |equipment_name| %>
       <tr>
-        <td><%= equipment_name.equipment_category %></td>
+        <td><%= equipment_name.equipment_type %></td>
         <td><%= equipment_name.name %></td>
         <td>
-          <%= link_to edit_equipment_name_path(equipment_name) do %>
-              <i class="material-icons">edit</i>
-          <% end %>
-          <%= link_to equipment_name, method: :delete, data: { confirm: 'Are you sure?' } do %>
-              <i class="material-icons">delete</i>
-          <% end %>
+          <%= link_to 'Edit', edit_equipment_name_path(equipment_name) %> |
+          <%= link_to 'Delete', equipment_name, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <hr/>
-
-<%= link_to 'New Equipment Name', new_equipment_name_path %>
+<%= link_to 'Add Equipment Name', new_equipment_name_path, class: 'btn btn-primary' %>
 </div>

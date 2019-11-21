@@ -15,7 +15,7 @@ class SpecificationsController < ApplicationController
   # GET /specifications/new
   def new
     @specification = Specification.new
-    @specification.organization_structure = current_user.organization_structure
+    @specification.organization_unit = current_user.organization_unit
     @specification.facility = current_user.facility
   end
 
@@ -71,6 +71,6 @@ class SpecificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def specification_params
-      params.require(:specification).permit(:organization_structure_id, :attachment, :facility_id, :equipment_name, :model, :description, :approximate_cost, :specification_by, :contact_address, :specification_date)
+      params.require(:specification).permit(:organization_unit_id, :attachment, :facility_id, :equipment_name_id, :model, :description, :approximate_cost, :specification_by, :contact_address, :specification_date)
     end
 end

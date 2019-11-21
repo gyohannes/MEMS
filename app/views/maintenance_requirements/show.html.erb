@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @maintenance_requirement.name %>
+</p>
+
+<p>
+  <strong>Days:</strong>
+  <%= @maintenance_requirement.days %>
+</p>
+
+<%= link_to 'Edit', edit_maintenance_requirement_path(@maintenance_requirement) %> |
+<%= link_to 'Back', maintenance_requirements_path %>

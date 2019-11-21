@@ -26,6 +26,11 @@ class MaintenanceWorkOrdersController < ApplicationController
   # GET /maintenance_work_orders/new
   def new
     @maintenance_work_order = MaintenanceWorkOrder.new
+    maintenance_request = MaintenanceRequest.find_by(id: params[:maintenance_request])
+    unless maintenance_request.blank?
+      @maintenance_work_order.maintenance_request_id = maintenance_request.id
+      @maintenance_work_order.equipment_id = maintenance_request.equipment_id
+    end
   end
 
   # GET /maintenance_work_orders/1/edit
@@ -39,6 +44,9 @@ class MaintenanceWorkOrdersController < ApplicationController
     @maintenance_work_order.status = Constants::PENDING
     respond_to do |format|
       if @maintenance_work_order.save
+        unless @maintenance_work_order.maintenance_request.blank?
+          @maintenance_work_order.maintenance_request.update_attribute('request_status', 'Work Order Started')
+        end
         format.html { redirect_to @maintenance_work_order, notice: 'Maintenance work order was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance_work_order }
       else
@@ -80,6 +88,6 @@ class MaintenanceWorkOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_work_order_params
-      params.require(:maintenance_work_order).permit(:equipment_id, :user_id, :location, :date, :description_of_problem, :status, :note)
+      params.require(:maintenance_work_order).permit(:equipment_id, :user_id, :work_order_number, :maintenance_request_id, :priority, :date, :status, :note)
     end
 end

@@ -1,7 +1,7 @@
 class CreateSparePartRequests < ActiveRecord::Migration[5.1]
   def change
     create_table :spare_part_requests, id: :uuid do |t|
-      t.references :organization_structure, type: :uuid, foreign_key: true
+      t.references :organization_unit, type: :uuid, foreign_key: true
       t.references :facility, type: :uuid, foreign_key: true
       t.references :user, type: :uuid, foreign_key: true
       t.string :spare_part_name

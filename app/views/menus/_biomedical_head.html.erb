@@ -5,7 +5,7 @@
       <span>Dashboard</span>
     <% end %>
   </li>
-
+    <li>
     <a href="javascript:void(0);" class="menu-toggle">
       <i class="material-icons">settings</i>
       <span style="vertical-align: super">Settings</span>
@@ -19,27 +19,26 @@
         <% end %>
       </li>
 
-      <% if current_user.organization_structure %>
-          <li>
-            <%= link_to facility_types_path do %>
-                <i class="material-icons">category</i>
-                <span>Facility Types</span>
-            <% end %>
-          </li>
-      <% end %>
+      <% if current_user.super_admin? %>
 
-      <% if current_user.organization_structure %>
+      <li>
+        <%= link_to maintenance_requirements_path do %>
+            <i class="material-icons">build</i>
+            <span>Maintenance Requirements</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to statuses_path do %>
+            <i class="material-icons">build</i>
+            <span>Equipment Statuses</span>
+        <% end %>
+      </li>
+
           <li>
-            <%= link_to facilities_path do %>
-                <i class="material-icons">home</i>
-                <span>Facilities</span>
-            <% end %>
-          </li>
-      <% elsif current_user.facility %>
-          <li>
-            <%= link_to current_user.facility do %>
-                <i class="material-icons">home</i>
-                <span>Facility Information</span>
+            <%= link_to organization_unit_types_path do %>
+                <i class="material-icons">category</i>
+                <span>Organization Unit Types</span>
             <% end %>
           </li>
       <% end %>
@@ -59,9 +58,9 @@
         <% end %>
       </li>
 
-      <% if current_user.organization_structure %>
+      <% unless current_user.organization_unit.facility %>
           <li>
-            <%= link_to organization_structures_path do %>
+            <%= link_to organization_units_path do %>
                 <i class="material-icons">filter_list</i>
                 <span>Organization Units</span>
             <% end %>
@@ -75,15 +74,8 @@
         <% end %>
       </li>
 
-      <li>
-        <%= link_to equipment_categories_path do %>
-            <i class="material-icons">category</i>
-            <span>Equipment Categories</span>
-        <% end %>
-      </li>
-
     </ul>
-
+    </li>
     <li>
       <%= link_to users_path do %>
           <i class="material-icons">people</i>
@@ -91,34 +83,54 @@
       <% end %>
     </li>
 
-    <li>
-      <%= link_to receives_path do %>
-          <i class="material-icons">add_shopping_cart</i>
-          <span>Equipment Logistics</span>
-      <% end %>
-    </li>
+    <a href="javascript:void(0);" class="menu-toggle">
+      <i class="material-icons">store</i>
+      <span style="vertical-align: super">Spare Part Management</span>
+    </a>
+    <ul class="ml-menu">
+
+      <li>
+        <%= link_to spare_parts_path do %>
+            <i class="material-icons">devices</i>
+            <span>Spare Parts List</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to receives_path do %>
+            <i class="material-icons">add_shopping_cart</i>
+            <span>Receive Spare Part</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to issues_path do %>
+            <i class="material-icons">remove_from_queue</i>
+            <span>Issue Spare Part</span>
+        <% end %>
+      </li>
+    </ul>
 
     <a href="javascript:void(0);" class="menu-toggle">
       <i class="material-icons">devices</i>
       <span style="vertical-align: super">Equipment Management</span>
     </a>
     <ul class="ml-menu">
-
-      <% unless current_user.facility.blank? %>
+      <% if current_user.super_admin? %>
       <li>
-        <%= link_to store_registrations_path do %>
-            <i class="material-icons">store</i>
-            <span>Store Equipment Registration</span>
+        <%= link_to equipment_types_path do %>
+            <i class="material-icons">category</i>
+            <span>Equipment Types</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to equipment_names_path do %>
+            <i class="material-icons">devices</i>
+            <span>Equipment Names</span>
         <% end %>
       </li>
       <% end %>
-      <li>
-        <%= link_to equipment_index_path do %>
-            <i class="material-icons">plus_one</i>
-            <span>Equipment Registration</span>
-        <% end %>
-      </li>
-
       <li>
         <%= link_to specifications_path do %>
             <i class="material-icons">list</i>
@@ -126,24 +138,22 @@
         <% end %>
       </li>
 
+      <% if current_user.organization_unit.facility %>
+          <li>
+            <%= link_to current_user.organization_unit.model_equipment_list || new_model_equipment_list_path do %>
+                <i class="material-icons">store</i>
+                <span>Core Equipment List</span>
+            <% end %>
+          </li>
+
+      <% end %>
       <li>
-        <%= link_to installations_path do %>
-            <i class="material-icons">add_to_queue</i>
-            <span>Equipment Installations</span>
+        <%= link_to equipment_index_path do %>
+            <i class="material-icons">devices</i>
+            <span>Equipment List</span>
         <% end %>
       </li>
-      <li>
-        <%= link_to acceptance_tests_path do %>
-            <i class="material-icons">check_box</i>
-            <span>Acceptance Tests</span>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to disposals_path do %>
-            <i class="material-icons">delete_sweep</i>
-            <span>Equipment Disposals</span>
-        <% end %>
-      </li>
+
     </ul>
     <a href="javascript:void(0);" class="menu-toggle">
       <i class="material-icons">build</i>
@@ -151,9 +161,15 @@
     </a>
     <ul class="ml-menu">
       <li>
+        <%= link_to planned_preventive_maintenaces_path do %>
+            <i class="material-icons">build</i>
+            <span>Planned Preventive Maintenances</span>
+        <% end %>
+      </li>
+      <li>
         <%= link_to maintenances_path do %>
             <i class="material-icons">build</i>
-            <span>Equipment Maintenances</span>
+            <span>Corrective Maintenances</span>
         <% end %>
       </li>
       <li>
@@ -201,22 +217,6 @@
     </li>
 
     <li>
-      <%= link_to spare_part_requests_path do %>
-        <i class="material-icons">devices</i>
-        <span>Spare Part Requests<span class="badge btn-info"><%= current_user.incoming_spare_part_requests.count unless current_user.incoming_spare_part_requests.blank? %></span>
-        </span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to acceptance_requests_path do %>
-        <i class="material-icons">check_box</i>
-        <span>Acceptance Requests<span class="badge btn-info"><%= current_user.incoming_acceptance_requests.count unless current_user.incoming_acceptance_requests.blank? %></span>
-        </span>
-      <% end %>
-    </li>
-
-    <li>
       <%= link_to training_requests_path do %>
         <i class="material-icons">library_books</i>
         <span>Training Requests<span class="badge btn-info"><%= current_user.incoming_training_requests.count unless current_user.incoming_training_requests.blank? %></span>
@@ -256,22 +256,6 @@
       <% end %>
     </li>
 
-    <li>
-      <%= link_to budget_requests_path do %>
-        <i class="material-icons">attach_money</i>
-        <span>Budget Requests<span class="badge btn-info"><%= current_user.incoming_budget_requests.count unless current_user.incoming_budget_requests.blank? %></span>
-        </span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to maintenance_toolkit_requests_path do %>
-        <i class="material-icons">build</i>
-        <span>Maintenance Toolkit Requests<span class="badge btn-info"><%= current_user.incoming_maintenance_toolkit_requests.count unless current_user.incoming_maintenance_toolkit_requests.blank? %></span>
-        </span>
-      <% end %>
-    </li>
-
   </ul>
 
     <a href="javascript:void(0);" class="menu-toggle">
@@ -293,6 +277,28 @@
             <span>Equipment Training Report</span>
         <% end %>
       </li>
+
+      <li>
+        <%= link_to maintenances_path do %>
+            <i class="material-icons">tune</i>
+            <span>Corrective Maintenance Report</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to planned_preventive_maintenaces_path do %>
+            <i class="material-icons">event</i>
+            <span>Planned Preventive Maintenance Report</span>
+        <% end %>
+      </li>
+
+      <li>
+        <%= link_to disposals_path do %>
+            <i class="material-icons">delete</i>
+            <span>Disposal Report</span>
+        <% end %>
+      </li>
+
     </ul>
 
 <% end %>

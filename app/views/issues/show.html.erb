@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="body">
+<p>
+  <strong>Store:</strong>
+  <%= @issue.store %>
+</p>
+
+<p>
+  <strong>Reference number:</strong>
+  <%= @issue.reference_number %>
+</p>
+
+<p>
+  <strong>Issue date:</strong>
+  <%= @issue.issue_date %>
+</p>
+
+<p>
+  <strong>Issued by:</strong>
+  <%= @issue.issued_by %>
+</p>
+
+<p>
+  <strong>Received by:</strong>
+  <%= @issue.received_by %>
+</p>
+
+<caption>Issued spare parts</caption>
+<table id="spare_parts" class="table table-responsive">
+  <tr>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Remarks</th>
+  </tr>
+  <% @issue.issue_spare_parts.each do |sp| %>
+      <tr>
+        <td><%= sp.spare_part %></td>
+        <td><%= sp.quantity %></td>
+        <td><%= sp.remarks %></td>
+      </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<%= link_to 'Back', issues_path %>
+  </div>

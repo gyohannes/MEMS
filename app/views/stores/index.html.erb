@@ -18,7 +18,7 @@
   <tbody>
     <% @stores.each do |store| %>
       <tr>
-        <td><%= store.facility || store.organization_structure %></td>
+        <td><%= store.facility || store.organization_unit %></td>
         <td><%= store.store_name %></td>
         <td><%= store.block_number %></td>
         <td><%= store.room_number %></td>

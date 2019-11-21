@@ -1,0 +1,55 @@
+<div class="header">
+  <h2>
+    Spare Part Details
+  </h2>
+</div>
+
+<div class="body table-responsive row">
+<p>
+  <strong>Equipment name:</strong>
+  <%= @spare_part.equipment_name %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @spare_part.name %>
+</p>
+
+<p>
+  <strong>Item Code Number:</strong>
+  <%= @spare_part.item_code_number %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @spare_part.description %>
+</p>
+
+<p>
+  <strong>UOM:</strong>
+  <%= @spare_part.uom %>
+</p>
+
+<p>
+  <strong>Max Stock Level:</strong>
+  <%= @spare_part.max_stock_level %>
+</p>
+
+<p>
+<strong>Min re-order Level:</strong>
+<%= @spare_part.min_reorder_level %>
+</p>
+
+<p>
+  <strong>Lead Time:</strong>
+  <%= @spare_part.lead_time %>
+</p>
+
+<p>
+  <strong>Order Quantity</strong>
+  <%= @spare_part.order_quantity %>
+</p>
+<hr/>
+<%= link_to 'Edit', edit_spare_part_path(@spare_part) %> |
+<%= link_to 'Back', spare_parts_path %>
+</div>

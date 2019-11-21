@@ -1,6 +1,6 @@
 class Contact < ApplicationRecord
   belongs_to :facility, optional: true
-  belongs_to :organization_structure, optional: true
+  belongs_to :organization_unit, optional: true
 
   validates :name_of_contact, :profession, :title, :phone_number, :work_place, presence: true
 

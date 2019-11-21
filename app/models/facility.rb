@@ -1,5 +1,5 @@
 class Facility < ApplicationRecord
-  belongs_to :organization_structure
+  belongs_to :organization_unit
   belongs_to :facility_type
   has_many :equipment
   has_many :inventories, through: :equipment
@@ -20,8 +20,6 @@ class Facility < ApplicationRecord
   has_many :budget_requests
   has_many :maintenance_toolkit_requests
   has_many :institutions
-
-  validates :population, numericality: {greater_than: 0}, allow_blank: true
 
   def to_s
     name

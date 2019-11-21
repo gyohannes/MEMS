@@ -4,13 +4,13 @@ class FacilitiesController < BaseController
   # GET /facilities
   # GET /facilities.json
   def index
-    org_unit = current_user.organization_structure
+    org_unit = current_user.organization_unit
     @facilities = org_unit.try(:sub_facilities) || []
   end
 
   def load_facilities
-    @organization_structure  = OrganizationStructure.find(params[:node])
-    @facilities = @organization_structure.sub_facilities
+    @organization_unit  = OrganizationUnit.find(params[:node])
+    @facilities = @organization_unit.sub_facilities
     render partial: 'facilities'
   end
   # GET /facilities/1
@@ -20,21 +20,21 @@ class FacilitiesController < BaseController
 
   # GET /facilities/new
   def new
-    @organization_structure = OrganizationStructure.find(params[:organization_structure])
+    @organization_unit = OrganizationUnit.find(params[:organization_unit])
     @facility = Facility.new
-    @facility.organization_structure = @organization_structure
+    @facility.organization_unit = @organization_unit
   end
 
   # GET /facilities/1/edit
   def edit
-    @organization_structure = @facility.organization_structure
+    @organization_unit = @facility.organization_unit
   end
 
   # POST /facilities
   # POST /facilities.json
   def create
     @facility = Facility.new(facility_params)
-    @organization_structure = @facility.organization_structure
+    @organization_unit = @facility.organization_unit
     respond_to do |format|
       if @facility.save
         format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
@@ -49,7 +49,7 @@ class FacilitiesController < BaseController
   # PATCH/PUT /facilities/1
   # PATCH/PUT /facilities/1.json
   def update
-    @organization_structure = @facility.organization_structure
+    @organization_unit = @facility.organization_unit
     respond_to do |format|
       if @facility.update(facility_params)
         format.html { redirect_to @facility, notice: 'Facility was successfully updated.' }
@@ -79,6 +79,6 @@ class FacilitiesController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def facility_params
-      params.require(:facility).permit(:organization_structure_id, :name, :code, :facility_type_id, :category, :url, :latitude, :longitude, :population, :note)
+      params.require(:facility).permit(:organization_unit_id, :name, :code, :facility_type_id, :category, :url, :latitude, :longitude, :population, :note)
     end
 end

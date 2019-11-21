@@ -1,0 +1,31 @@
+<div class="header">
+  <h2>
+    Maintenance Requirements
+  </h2>
+</div>
+<div class="body">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Days</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @maintenance_requirements.each do |maintenance_requirement| %>
+      <tr>
+        <td><%= maintenance_requirement.name %></td>
+        <td><%= maintenance_requirement.days %></td>
+        <td>
+          <%= link_to 'Edit', edit_maintenance_requirement_path(maintenance_requirement) %> |
+          <%= link_to 'Delete', maintenance_requirement, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'Add Maintenance Requirement', new_maintenance_requirement_path, class: 'btn btn-primary' %>
+</div>

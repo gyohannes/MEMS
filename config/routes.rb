@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  resources :statuses
+  resources :maintenance_requirements
+  resources :issues
+  resources :planned_preventive_maintenaces
+  resources :notifications
+  resources :spare_parts do
+    collection do
+      get 'ideal_vs_available_by_type'
+    end
+  end
+  resources :model_equipment_list
+  resources :equipment_types
   resources :equipment_statuses
   resources :maintenance_work_orders
   get 'reports/equipment'
@@ -45,7 +57,7 @@ Rails.application.routes.draw do
   end
   resources :maintenance_requests do
     member do
-      patch 'decision'
+      get 'forward'
     end
     collection do
       get 'load_request_to'
@@ -122,7 +134,11 @@ Rails.application.routes.draw do
       get 'facility_equipment_search'
       get 'load_equipment'
       get 'equipment_by_status'
-      get 'equipment_by_category'
+      get 'equipment_by_type'
+      get 'equipment_by_department'
+      get 'equipment_by_org_unit_and_status'
+      get 'equipment_by_org_unit_and_type'
+      get 'ideal_vs_available_by_type'
       get 'load_calendar'
     end
   end
@@ -152,7 +168,7 @@ Rails.application.routes.draw do
     end
   end
   resources :facility_types
-  resources :organization_structures do
+  resources :organization_units do
     collection do
       get 'load_tree'
       get 'load_all_tree'
@@ -160,7 +176,7 @@ Rails.application.routes.draw do
       get 'load_sub_units'
     end
   end
-  resources :organization_structure_types
+  resources :organization_unit_types
   resources :roles
   get 'home/index'
   root 'home#index'

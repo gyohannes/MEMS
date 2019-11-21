@@ -21,7 +21,7 @@
     <% @maintenance_requests.each do |maintenance_request| %>
       <tr>
         <td><%= maintenance_request.request_from %></td>
-        <td><%= maintenance_request.request_date %></td>
+        <td><%= maintenance_request.created_at.strftime("%b %d, %Y") %></td>
         <td><%= maintenance_request.equipment %></td>
         <td><%= maintenance_request.maintenance_type %></td>
         <td><%= maintenance_request.request_to %></td>

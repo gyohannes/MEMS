@@ -1,36 +1,40 @@
 <%= simple_form_for(@equipment) do |f| %>
-    <%= hidden_field_tag 'organization_structure', @organization_structure.try(:id) %>
+    <%= hidden_field_tag 'organization_unit', @organization_unit.try(:id) %>
   <%= f.error_notification %>
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :facility, collection: @facilities %>
-      <%= f.input :equipment_name %>
       <%= f.input :inventory_number %>
-      <%= f.association :equipment_category %>
+      <%= f.association :equipment_type %>
+      <%= f.association :equipment_name %>
+      <%= f.association :department, label: 'Installed Department' %>
+      <%= f.input :location %>
+      <%= f.input :installation_date, as: :string, input_html: {class: 'datepicker'} %>
+      <%= f.input :warranty_expire_date, as: :string, input_html: {class: 'datepicker'} %>
+      <%= f.input :maintenance_service_provider, collection: Institution.all %>
+      <%= f.association :maintenance_requirement %>
+      <%= f.input :description, label: 'Brief description of item' %>
+      <%= f.input :country, label: 'Country of Origin' %>
+      <%= f.input :manufacturer %>
       <%= f.input :model %>
       <%= f.input :serial_number %>
-      <%= f.input :tag_number %>
-      <%= f.input :volt_ampere, label: 'Volt/Ampere' %>
-      <%= f.input :power_requirement, label: "Power Requirement (in Volts)", hint: 'Eg. 220' %>
-      <%= f.input :manufacturer %>
-      <%= f.input :country, label: 'Country of Origin' %>
-      <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
-                  discard_day: true, discard_month: true, prompt: true %>
     </div>
-  <div class="col-sm-6" style="border-left: 1px solid skyblue;">
-    <%= f.input :life_span %>
-    <%= f.input :risk_level, collection: Constants::RISK_LEVELS %>
-    <%= f.input :purchased_year, label: 'Acquired Year', start_year: Date.today.year - 100, end_year: Date.today.year,
+  <div class="col-sm-6 left_form">
+    <%= f.input :tag_number %>
+    <%= f.input :volt_ampere, label: 'Volt/Ampere' %>
+    <%= f.input :power_requirement, label: "Power Requirement (in Volts)", hint: 'Eg. 220' %>
+    <%= f.input :manufactured_year, start_year: Date.today.year - 100,end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
     <%= f.input :acquisition_type, collection: Constants::EQUIPMENT_ACQUISITIONS %>
-    <%= f.input :use_of_years, label: 'Years Used' %>
-    <%= f.input :purchase_price %>
-    <%= f.input :supplier_id, collection: @suppliers %>
-    <%= f.input :warranty_agreement_note %>
-    <%= f.input :local_representative_id, collection: @local_representatives %>
-    <%= f.input :remark %>
-    <%= f.input :status, collection: Equipment::STATUSES %>
+    <%= f.input :years_used, label: 'Years used (if device is used)' %>
+    <%= f.association :institution, label: 'Supplier/Agent' %>
+    <%= f.input :purchased_year, start_year: Date.today.year - 100, end_year: Date.today.year,
+                discard_day: true, discard_month: true, prompt: true %>
+    <%= f.input :order_number %>
+    <%= f.input :cost %>
+    <%= f.input :estimated_life_span %>
+    <%= f.input :equipment_risk_classification, collection: Constants::RISK_LEVELS %>
+    <%= f.association :status %>
   </div>
   </div>
 

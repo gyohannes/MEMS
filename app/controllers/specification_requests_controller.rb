@@ -101,7 +101,7 @@ class SpecificationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def specification_request_params
-      params.require(:specification_request).permit(:organization_structure_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity,
+      params.require(:specification_request).permit(:organization_unit_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity,
                                                     :user_id, :requested_date, :comment, :decision_by, :assigned_by, :status)
     end
 end

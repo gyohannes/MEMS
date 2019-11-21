@@ -4,11 +4,12 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
+    <%= f.input :work_order_number %>
+    <%= f.association :maintenance_request, as: :hidden %>
     <%= f.association :equipment, collection: @equipment %>
-    <%= f.association :user, collection: @engineers, label: 'Task Allocated to' %>
-    <%= f.input :location %>
-    <%= f.input :date, as: :string, input_html: {class: 'datepicker'} %>
-    <%= f.input :description_of_problem %>
+    <%= f.association :user, collection: @engineers, label: 'Assigned to' %>
+    <%= f.input :priority, collection: ['High', 'Medium', 'Low'] %>
+    <%= f.input :note %>
   </div>
 
   <div class="form-actions">

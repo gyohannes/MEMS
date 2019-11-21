@@ -1,18 +1,16 @@
 <div class="header">
   <h2>
-    Equipment Logistics
+    Item Receivals
   </h2>
 </div>
 <div class="body table-responsive">
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Facility / Organization Unit</th>
-      <th>Equipment Name</th>
-      <th>Model</th>
-      <th>Quantity</th>
-      <th>Unit Cost</th>
-      <th>Delivery date</th>
+      <th>Store</th>
+      <th>Delivered by</th>
+      <th>Received by</th>
+      <th>Receive date</th>
       <th>Note</th>
       <th></th>
     </tr>
@@ -21,12 +19,10 @@
   <tbody>
     <% @receives.each do |receife| %>
       <tr>
-        <td><%= receife.store.facility || receife.store.organization_structure %></td>
-        <td><%= receife.equipment_name %></td>
-        <td><%= receife.model %></td>
-        <td><%= receife.quantity %></td>
-        <td><%= receife.unit_cost %></td>
-        <td><%= receife.delivery_date %></td>
+        <td><%= receife.store %></td>
+        <td><%= receife.deliverer_name %></td>
+        <td><%= receife.recipient_name %></td>
+        <td><%= receife.receive_date %></td>
         <td><%= receife.note %></td>
         <td>
           <%= link_to 'Details', receife, class: 'btn btn-primary' %>
@@ -37,5 +33,5 @@
   </tbody>
 </table>
   <hr/>
-<%= link_to 'New Equipment Receiving Form', new_receife_path, class: 'btn btn-primary' if can? :create, Receive %>
+<%= link_to 'Items Receiving Form', new_receife_path, class: 'btn btn-primary' if can? :create, Receive %>
 </div>

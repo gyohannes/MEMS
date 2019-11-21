@@ -102,7 +102,7 @@ class SparePartRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def spare_part_request_params
-      params.require(:spare_part_request).permit(:organization_structure_id, :facility_id, :spare_part_name, :model, :volts_ampere,
+      params.require(:spare_part_request).permit(:organization_unit_id, :facility_id, :spare_part_name, :model, :volts_ampere,
                                                  :power_requirement, :quantity, :request_to, :institution_id, :user_id, :request_date,
                                                  :comment, :decision_by, :assigned_to, :status)
     end

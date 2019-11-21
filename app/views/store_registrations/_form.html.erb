@@ -5,10 +5,10 @@
 
   <div class="form-inputs">
     <%= f.association :store, collection: current_user.facility.try(:stores) || [] %>
-    <%= f.input :bin_number %>
+    <%= f.input :bin_number, label: 'Been Number' %>
     <%= f.simple_fields_for :equipment  do |ef| %>
         <%= ef.input :inventory_number  %>
-        <%= ef.input :equipment_name  %>
+        <%= ef.association :equipment_name %>
         <%= ef.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id}  %>
         <%= ef.input :model  %>
         <%= ef.input :serial_number  %>

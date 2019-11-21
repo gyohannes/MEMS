@@ -4,7 +4,7 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
-    @inventories = current_user.organization_structure ? current_user.organization_structure.sub_inventories :
+    @inventories = current_user.organization_unit ? current_user.organization_unit.sub_inventories :
                        (current_user.facility ? current_user.facility.inventories : [])
   end
 

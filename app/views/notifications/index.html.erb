@@ -1,0 +1,24 @@
+<div class="header">
+  <h2>
+    Notifications
+  </h2>
+</div>
+<div class="body table-responsive">
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @notifications.each do |notification| %>
+      <tr>
+        <td><%= notification.name %></td>
+        <td><%= notification.created_at.strftime("%b %d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

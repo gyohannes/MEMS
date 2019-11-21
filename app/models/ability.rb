@@ -23,7 +23,7 @@ class Ability
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
          can :manage, [Equipment, Receive, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
-         can :manage, News, organization_structure_id: user.organization_structure_id
+         can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
        end
@@ -34,15 +34,15 @@ class Ability
          can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                                   AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest], user_id: user.id
-         can :decision, [ProcurementRequest, SpecificationRequest, SparePartRequest,
+         can [:manage], [ProcurementRequest, SpecificationRequest, SparePartRequest,
                          AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                         CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest], request_to: user.user_type
-         can :manage, [OrganizationStructure, User, Department, FacilityType, Facility, Store, Institution, EquipmentCategory,
+                         CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+         can :manage, [OrganizationUnit, User, Department, FacilityType, Facility, Store, Institution, EquipmentCategory,
                        Equipment, Receive, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
-         can :manage, News, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
+         can :manage, News, organization_unit_id: user.organization_unit_id, facility_id: user.facility_id
          can :edit, MaintenanceWorkOrder, not_completed: true
          cannot :manage, MaintenanceWorkOrder, status: Constants::COMPLETED
-         can :manage, Contact, organization_structure_id: user.organization_structure_id, facility_id: user.facility_id
+         can :manage, Contact, organization_unit_id: user.organization_unit_id, facility_id: user.facility_id
          can [:read, :create], Contact
        end
 

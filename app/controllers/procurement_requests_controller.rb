@@ -4,7 +4,7 @@ class ProcurementRequestsController < ApplicationController
   before_action :load
 
   def load
-    @organization_structures = [current_user.try(:organization_structure)]
+    @organization_units = [current_user.try(:organization_unit)]
     @facilities = [current_user.try(:facility)]
     @user = [current_user]
   end
@@ -46,8 +46,7 @@ class ProcurementRequestsController < ApplicationController
   # GET /procurement_requests/new
   def new
     @procurement_request = ProcurementRequest.new
-    @procurement_request.organization_structure_id = current_user.organization_structure
-    @procurement_request.facility = current_user.facility
+    @procurement_request.organization_unit_id = current_user.organization_unit
     @procurement_request.procurement_request_equipments.build
   end
 
@@ -115,7 +114,7 @@ class ProcurementRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def procurement_request_params
-      params.require(:procurement_request).permit(:organization_structure_id, :facility_id, :user_id, :contact_phone, :contact_email,
+      params.require(:procurement_request).permit(:organization_unit_id, :facility_id, :user_id, :contact_phone, :contact_email,
                                                   :request_date, :request_to, :institution_id, :comment, :decision_by,
       procurement_request_equipments_attributes: [:id, :equipment_name, :specification, :quantity, :approved_quantity, :_destroy])
     end

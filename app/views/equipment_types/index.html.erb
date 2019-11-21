@@ -1,0 +1,31 @@
+<div class="header">
+  <h2>
+    Equipment Types
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @equipment_types.each do |equipment_type| %>
+      <tr>
+        <td><%= equipment_type.name %></td>
+        <td><%= equipment_type.code %></td>
+        <td>
+          <%= link_to 'Edit', edit_equipment_type_path(equipment_type) %> |
+          <%= link_to 'Delete', equipment_type, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'New Equipment Type', new_equipment_type_path, class: 'btn btn-primary' %>
+</div>

@@ -12,7 +12,7 @@
   <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
-        <td><%= user.organization_structure || user.facility || user.institution %></td>
+        <td><%= user.organization_unit || user.facility || user.institution %></td>
         <td><%= user.role %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
       </tr>
@@ -20,4 +20,4 @@
   </tbody>
 </table>
 
-<%= link_to 'New User', new_user_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' %>
+<%= link_to 'New User', new_user_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' %>

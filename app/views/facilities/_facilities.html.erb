@@ -23,4 +23,4 @@
   </tbody>
 </table>
 <br/><br/>
-<%= link_to 'New Facility', new_facility_path(organization_structure: @organization_structure.try(:id)), class: 'btn btn-primary' unless @organization_structure.blank? %>
+<%= link_to 'New Facility', new_facility_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' unless @organization_unit.blank? %>

@@ -1,0 +1,33 @@
+<div class="header">
+  <h2>
+    Statuses Setup
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Color</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @statuses.each do |status| %>
+      <tr>
+        <td><%= status.name %></td>
+        <td><%= status.description %></td>
+        <td style="background-color: <%= status.color %>"><label class="label"><%= status.color %></label></td>
+        <td>
+          <%= link_to 'Edit', edit_status_path(status), class: 'btn btn-primary' %>
+          <%= link_to 'Delete', status, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Add Status Name', new_status_path, class: 'btn btn-primary' %>
+</div>

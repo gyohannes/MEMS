@@ -1,0 +1,31 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Equipment</th>
+    <th>Action taken</th>
+    <th>Maintained date</th>
+    <th>Maintenace cost</th>
+    <th>Enginneer name and address</th>
+    <th>Next ppm</th>
+    <th>Note</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @planned_preventive_maintenaces.each do |planned_preventive_maintenace| %>
+      <tr>
+        <td><%= planned_preventive_maintenace.user %></td>
+        <td><%= planned_preventive_maintenace.equipment %></td>
+        <td><%= planned_preventive_maintenace.action_taken %></td>
+        <td><%= planned_preventive_maintenace.maintained_date %></td>
+        <td><%= planned_preventive_maintenace.maintenace_cost %></td>
+        <td><%= planned_preventive_maintenace.enginneer_name_and_address %></td>
+        <td><%= planned_preventive_maintenace.next_ppm %></td>
+        <td><%= planned_preventive_maintenace.note %></td>
+        <td><%= link_to 'Edit', edit_planned_preventive_maintenace_path(planned_preventive_maintenace) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,36 @@
+<div class="header">
+  <h2>
+    Item Issues
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Store</th>
+      <th>Reference number</th>
+      <th>Issue date</th>
+      <th>Issued by</th>
+      <th>Received by</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr>
+        <td><%= issue.store %></td>
+        <td><%= issue.reference_number %></td>
+        <td><%= issue.issue_date %></td>
+        <td><%= issue.issued_by %></td>
+        <td><%= issue.received_by %></td>
+        <td><%= link_to 'Details', issue, class: 'btn btn-primary' %>
+        <%= link_to 'Edit', edit_issue_path(issue), class: 'btn btn-primary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'Item Issue Form', new_issue_path, class: 'btn btn-success' %>
+</div>

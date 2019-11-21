@@ -14,8 +14,8 @@ class UsersController < BaseController
   end
 
   def load_users
-    @organization_structure  = OrganizationStructure.find(params[:node])
-    @users = @organization_structure.sub_users
+    @organization_unit  = OrganizationUnit.find(params[:node])
+    @users = @organization_unit.sub_users
     render partial: 'users'
   end
   # GET /users/1
@@ -26,10 +26,10 @@ class UsersController < BaseController
   # GET /users/new
   def new
     @user = User.new
-    unless params[:organization_structure].blank?
-      @user.organization_structure_id = params[:organization_structure]
-      @facilities = @user.organization_structure.facilities
-      @institutions = @user.organization_structure.institutions
+    unless params[:organization_unit].blank?
+      @user.organization_unit_id = params[:organization_unit]
+      @facilities = @user.organization_unit.facilities
+      @institutions = @user.organization_unit.institutions
     end
     unless current_user.facility.blank?
       @facilities = [current_user.facility]
@@ -44,9 +44,9 @@ class UsersController < BaseController
 
   # GET /users/1/edit
   def edit
-    unless @user.organization_structure.blank?
-      @facilities = @user.organization_structure.facilities
-      @institutions = @user.organization_structure.institutions
+    unless @user.organization_unit.blank?
+      @facilities = @user.organization_unit.facilities
+      @institutions = @user.organization_unit.institutions
     else
       @facilities = [@user.facility]
       @institutions = [@user.institution]
@@ -57,9 +57,9 @@ class UsersController < BaseController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    unless @user.organization_structure.blank?
-      @facilities = @user.organization_structure.facilities
-      @institutions = @user.organization_structure.institutions
+    unless @user.organization_unit.blank?
+      @facilities = @user.organization_unit.facilities
+      @institutions = @user.organization_unit.institutions
     else
       @facilities = [@user.facility]
       @institutions = [@user.institution]
@@ -82,9 +82,9 @@ class UsersController < BaseController
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
-    unless @user.organization_structure.blank?
-      @facilities = @user.organization_structure.facilities
-      @institutions = @user.organization_structure.institutions
+    unless @user.organization_unit.blank?
+      @facilities = @user.organization_unit.facilities
+      @institutions = @user.organization_unit.institutions
     else
       @facilities = [@user.facility]
       @institutions = [@user.institution]
@@ -119,6 +119,6 @@ class UsersController < BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :father_name, :grand_father_name,
-                                   :department_id, :store_id, :organization_structure_id, :facility_id, :institution_id, :role)
+                                   :department_id, :store_id, :organization_unit_id, :facility_id, :institution_id, :role)
     end
 end

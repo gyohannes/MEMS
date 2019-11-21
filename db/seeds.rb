@@ -5,8 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+org_unit_type = OrganizationUnitType.create(name: 'Ministry')
+top_org_unit = OrganizationUnit.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
+                                       organization_unit_type_id: org_unit_type.id)
 
-top_org_unit = OrganizationStructure.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
-                                            organization_structure_type: Constants::FMOH)
-
-User.create(organization_structure_id: top_org_unit.id,email: 'fmohhead@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)
+User.create(organization_unit_id: top_org_unit.id,email: 'fmohhead@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)

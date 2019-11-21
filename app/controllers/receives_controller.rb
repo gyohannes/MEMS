@@ -4,7 +4,7 @@ class ReceivesController < ApplicationController
 
   def load
     @stores = current_user.facility ? current_user.facility.stores :
-                  (current_user.organization_structure ? current_user.organization_structure.stores : [])
+                  (current_user.organization_unit ? current_user.organization_unit.stores : [])
   end
   # GET /receives
   # GET /receives.json
@@ -14,8 +14,8 @@ class ReceivesController < ApplicationController
       @receives = current_user.store.receive
     elsif current_user.facility
       @receives = current_user.facility.receive
-    elsif current_user.organization_structure
-      @receives = current_user.organization_structure.sub_receive
+    elsif current_user.organization_unit
+      @receives = current_user.organization_unit.sub_receive
     end
     return @receives
   end
@@ -106,7 +106,8 @@ class ReceivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receife_params
-      params.require(:receive).permit(:store_id, :deliverer_name, :recipient_name, :bin_number, :equipment_name, :model, :with_full_checklist, :quantity, :unit_cost,
-                                      :recipient_contact_address, :witness_contact_address, :witness_name, :delivery_date, :note)
+      params.require(:receive).permit(:store_id, :reference_number, :deliverer_name, :recipient_name, :receive_date, :note,
+                                      receive_spare_parts_attributes: [:id, :receive_id, :spare_part_id, :quantity,
+                                                                       :unit_price, :expiry_date, :remarks, :_destroy])
     end
 end

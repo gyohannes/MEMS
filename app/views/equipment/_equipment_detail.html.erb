@@ -1,97 +1,85 @@
 <div class="row">
   <div class="col-sm-6">
-    <p>
-      <label>Facility:</label>
-      <%= @equipment.facility %>
-    </p>
+  <table class="table table-responsive">
+    <tr>
+      <th>Facility:</th>
+      <td><%= @equipment.organization_unit %></td>
+    </tr>
 
-    <p>
-      <label>Equipment name:</label>
-      <%= @equipment.equipment_name %>
-    </p>
+    <tr>
+      <th>Equipment name:</th>
+      <td><%= @equipment.equipment_name %></td>
+    </tr>
 
-    <p>
-      <label>Model:</label>
-      <%= @equipment.model %>
-    </p>
+    <tr>
+      <th>Model:</th>
+      <td><%= @equipment.model %></td>
+    </tr>
 
-    <p>
-      <label>Serial number:</label>
-      <%= @equipment.serial_number %>
-    </p>
+    <tr>
+      <th>Serial number:</th>
+      <td><%= @equipment.serial_number %></td>
+    </tr>
 
-    <p>
-      <label>Tag number:</label>
-      <%= @equipment.tag_number %>
-    </p>
+    <tr>
+      <th>Tag number:</th>
+      <td><%= @equipment.tag_number %></td>
+    </tr>
 
-    <p>
-      <label>Volt/Ampere:</label>
-      <%= @equipment.volt_ampere %>
-    </p>
+    <tr>
+      <th>Volt/Ampere:</th>
+      <td><%= @equipment.volt_ampere %></td>
+    </tr>
 
-    <p>
-      <label>Power requirement:</label>
-      <%= @equipment.power_requirement %>
-    </p>
+    <tr>
+      <th>Power requirement:</th>
+      <td><%= @equipment.power_requirement %></td>
+    </tr>
 
-    <p>
-      <label>Manufacturer:</label>
-      <%= @equipment.manufacturer %>
-    </p>
+    <tr>
+      <th>Manufacturer:</th>
+      <td><%= @equipment.manufacturer %></td>
+    </tr>
 
-    <p>
-      <label>Country of origin:</label>
-      <%= @equipment.country %>
-    </p>
-
+    <tr>
+      <th>Country of origin:</th>
+      <td><%= @equipment.country %></td>
+    </tr>
+  </table>
   </div>
 
-  <div class="col-sm-6">
-    <p>
-      <label>Manufactured year:</label>
-      <%= @equipment.manufactured_year %>
-    </p>
+  <div class="col-sm-6 left_form">
+    <table class="table table-responsive">
+    <tr>
+      <th>Manufactured year:</th>
+      <td><%= @equipment.manufactured_year %></td>
+    </tr>
 
-    <p>
-      <label>Purchased year:</label>
-      <%= @equipment.purchased_year %>
-    </p>
+    <tr>
+      <th>Purchased year:</th>
+      <td><%= @equipment.purchased_year %></td>
+    </tr>
 
-    <p>
-      <label>Purchase price:</label>
-      <%= @equipment.purchase_price %>
-    </p>
+    <tr>
+      <th>Cost:</th>
+      <td><%= @equipment.cost %></td>
+    </tr>
 
-    <p>
-      <label>Supplier:</label>
-      <%= @equipment.supplier %>
-    </p>
+    <tr>
+      <th>Supplier/Agent:</th>
+      <td><%= @equipment.institution %></td>
+    </tr>
 
-    <p>
-      <label>Manual attached:</label>
-      <%= @equipment.manual_attached %>
-    </p>
+    <tr>
+      <th>Warranty Expire Date:</th>
+      <td><%= @equipment.warranty_expire_date.strftime("%B %d, %Y") %></td>
+    </tr>
 
-    <p>
-      <label>Warranty agreement note:</label>
-      <%= @equipment.warranty_agreement_note %>
-    </p>
-
-    <p>
-      <label>Local representative:</label>
-      <%= @equipment.local_representative %>
-    </p>
-
-    <p>
-      <label>Remark:</label>
-      <%= @equipment.remark %>
-    </p>
-
-    <p>
-      <label>Status:</label>
-      <%= @equipment.status %>
-    </p>
+    <tr>
+      <th>Status:</th>
+      <td><%= @equipment.status %></td>
+    </tr>
+    </table>
   </div>
 </div>
 <hr/>

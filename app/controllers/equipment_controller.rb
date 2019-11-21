@@ -25,7 +25,7 @@ class EquipmentController < ApplicationController
   end
 
   def facility_equipment_search
-    equipments = Equipment.search(nil, nil, current_user.facility_id, nil,nil,nil,nil,params[:term])
+    equipments = Equipment.search(nil, nil,nil,nil,nil,nil,params[:term])
     render json: equipments
   end
 
@@ -34,8 +34,49 @@ class EquipmentController < ApplicationController
     render json: equipment
   end
 
-  def equipment_by_category
-    equipment = current_user.load_equipment.joins(:equipment_category).group('equipment_categories.name').count
+  def equipment_by_type
+    equipment = current_user.load_equipment.joins(:equipment_type).group('equipment_types.name').count
+    render json: equipment
+  end
+
+  def ideal_vs_available_by_type
+    org_unit = current_user.organization_unit
+    equipment = []
+    OrganizationUnit::IDEAL_VS_AVAILABLE.each do |status|
+      equipment << {name: status, data: EquipmentName.all.map{|eq| [eq.to_s, org_unit.ideal_vs_available(eq.id,status)]} }
+    end
+    render json: equipment
+  end
+
+  def equipment_by_department
+    equipment = []
+    Department.all.each do |d|
+      equipment << {name: d.to_s, data: Equipment::STATUSES.map{|s| [s,current_user.load_equipment.where(status: s, department_id: d.id).count]}}
+    end
+    render json: equipment
+  end
+
+  def equipment_by_org_unit_and_status
+    equipment = []
+    current_user.organization_unit.sub_organization_units.each do |ou|
+      equipment << {name: ou.to_s, data: Equipment::STATUSES.map{|s| [s, ou.sub_equipment.where(status: s).count]} }
+    end
+    render json: equipment
+  end
+
+  def equipment_by_facility_and_type
+    equipment = []
+    current_user.organization_unit.facilities.each do |ou|
+      equipment << {name: ou.to_s, data: EquipmentType.all.map{|t| [t.to_s, ou.equipment.where(equipment_type_id: t).count]} }
+    end
+    render json: equipment
+  end
+
+  def equipment_by_org_unit_and_type
+    equipment = []
+    current_user.organization_unit.sub_organization_units.each do |ou|
+      equipment << {name: ou.to_s, data: EquipmentType.all.map{|t| [t.to_s, ou.sub_equipment.where(equipment_type_id: t).count]} }
+    end
     render json: equipment
   end
 
@@ -47,8 +88,8 @@ class EquipmentController < ApplicationController
   end
 
   def load_equipment
-    @organization_structure  = OrganizationStructure.find(params[:node])
-    @equipment = @organization_structure.sub_equipment
+    @organization_unit  = OrganizationUnit.find(params[:node])
+    @equipment = @organization_unit.sub_equipment
     render partial: 'equipment'
   end
   # GET /equipment/1
@@ -59,22 +100,19 @@ class EquipmentController < ApplicationController
   # GET /equipment/new
   def new
     @equipment = Equipment.new
-    @equipment.facility_id = params[:facility]
-    @facilities = [current_user.facility]
-    @equipment.status = Equipment::NEW
   end
 
   # GET /equipment/1/edit
   def edit
-    @organization_structure = @equipment.facility.organization_structure
-    @facilities = @organization_structure.facilities
+    @organization_unit = @equipment.organization_unit
+    @facilities = @organization_unit.facilities
   end
 
   # POST /equipment
   # POST /equipment.json
   def create
     @equipment = Equipment.new(equipment_params)
-    @facilities = [current_user.facility]
+    @equipment.organization_unit_id = current_user.organization_unit_id
     respond_to do |format|
       if @equipment.save
         format.html { redirect_to @equipment, notice: 'Equipment was successfully created.' }
@@ -119,9 +157,11 @@ class EquipmentController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def equipment_params
-      params.require(:equipment).permit(:facility_id, :equipment_name, :equipment_category_id, :model, :serial_number, :tag_number,
-                                        :volt_ampere, :power_requirement, :manufacturer, :country, :manufactured_year, :purchased_year,
-                                        :purchase_price, :supplier_id, :manual_attached, :warranty_agreement_note, :local_representative_id,
-                                        :remark, :status, :acquisition_type, :inventory_number, :risk_level)
+      params.require(:equipment).permit(:organization_unit_id, :equipment_name_id, :equipment_type_id, :model, :serial_number, :tag_number,
+                                        :volt_ampere, :power_requirement, :maintenance_requirement_id, :manufacturer, :country, :manufactured_year, :purchased_year,
+                                        :purchase_price, :supplier_id, :manual_attached, :warranty_expire_date, :institution_id,
+                                        :status_id, :acquisition_type, :inventory_number, :equipment_risk_classification, :installation_date,
+                                        :warranty_expire_date, :maintenance_service_provider, :description, :years_used, :order_number, :cost,
+                                        :estimated_life_span, :department_id, :location)
     end
 end

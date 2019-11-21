@@ -5,7 +5,7 @@
 //= require bootstrap-treeview
 //= require bootstrap-wysihtml5
 //= require select2
-//= require organization_structures
+//= require organization_units
 //= require users
 //= require requests
 //= require facilities
@@ -27,5 +27,7 @@
 //= require maintenances
 //= require highcharts
 //= require chartkick
+//= require jquery.minicolors
+//= require jquery.minicolors.simple_form
 //= require AdminBSBMaterialDesign/index
 //= require global

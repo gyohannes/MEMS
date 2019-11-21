@@ -5,20 +5,11 @@
 
   <div class="form-inputs">
     <div class="row">
-      <div class="col-sm-6 left_form">
-        <%= f.association :organization_structure, collection: [current_user.organization_structure], prompt: false %>
-        <%= f.association :facility, collection: [current_user.facility], prompt: false %>
-        <%= f.input :request_to, collection: Constants::REQUEST_TO %>
-        <div id="maintenance_request_to">
-          <%= render partial: 'request_to' %>
-        </div>
-        <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
-        <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
-      </div>
-      <div class="col-sm-6">
-        <%= f.association :equipment, collection: @equipments %>
-        <%= f.input :maintenance_type, as: :radio_buttons, collection: ['Corrective Maintenance', 'Preventive Maintenance'] %>
-        <%= f.input :maintenance_description, label: 'Description of Problem' %>
+      <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
+      <%= f.association :equipment, collection: @equipments %>
+      <%= f.input :failure_date, as: :string, input_html: {class: 'datepicker'} %>
+      <%= f.input :description_of_problem, label: 'Description of Problem' %>
+      <%= f.association :status %>
       </div>
     </div>
 

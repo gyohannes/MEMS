@@ -2,11 +2,8 @@
     <thead>
     <tr>
       <th>Equipment</th>
-      <th>Maintenance type</th>
-      <th>Problem</th>
       <th>Maintenance cost</th>
       <th>Maintained by</th>
-      <th>Contact address</th>
       <th>Next Preventive maintenance date</th>
       <th>Note</th>
       <th></th>
@@ -17,11 +14,8 @@
     <% @maintenances.each do |maintenance| %>
         <tr>
           <td><%= maintenance.equipment %></td>
-          <td><%= maintenance.maintenance_type %></td>
-          <td><%= maintenance.problem %></td>
           <td><%= maintenance.maintenance_cost %></td>
-          <td><%= maintenance.maintained_by %></td>
-          <td><%= maintenance.contact_address %></td>
+          <td><%= maintenance.engineer_name_and_contact %></td>
           <td><%= maintenance.preventive_maintenance_date %></td>
           <td><%= maintenance.note %></td>
           <td>

@@ -6,77 +6,45 @@
     </p>
 
     <p>
-      <strong>Bin Number:</strong>
-      <%= @receife.bin_number %>
-    </p>
-
-    <p>
-      <strong>Equipment Name:</strong>
-      <%= @receife.equipment_name %>
-    </p>
-
-    <p>
-      <strong>Model:</strong>
-      <%= @receife.model %>
-    </p>
-
-    <p>
-      <strong>With Full Checklist:</strong>
-      <%= @receife.with_full_checklist %>
-    </p>
-
-    <p>
-      <strong>Quantity:</strong>
-      <%= q = @receife.quantity %>
-    </p>
-
-    <p>
-      <strong>Unit Cost (Birr):</strong>
-      <%= uc = @receife.unit_cost %>
-    </p>
-
-    <p>
-      <strong>Total Cost (Birr):</strong>
-      <%= q * uc %>
-    </p>
-
-    <p>
-      <strong>Deliverer name:</strong>
+      <strong>Delivered by:</strong>
       <%= @receife.deliverer_name %>
     </p>
 
     <p>
-      <strong>Recipient name:</strong>
+      <strong>Received by:</strong>
       <%= @receife.recipient_name %>
     </p>
 
     <p>
-      <strong>Recipient Contact Address:</strong>
-      <%= @receife.recipient_contact_address %>
-    </p>
-
-    <p>
-      <strong>Witness name:</strong>
-      <%= @receife.witness_name %>
-    </p>
-
-    <p>
-      <strong>Witness Contact Address:</strong>
-      <%= @receife.witness_contact_address %>
-    </p>
-
-    <p>
-      <strong>Delivery date:</strong>
-      <%= @receife.delivery_date %>
+      <strong>Receive date:</strong>
+      <%= @receife.receive_date %>
     </p>
 
     <p>
       <strong>Note:</strong>
       <%= @receife.note %>
     </p>
-    <hr/>
+    <caption>Received spare parts list</caption>
+    <table id="spare_parts" class="table table-responsive">
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Expiry Date</th>
+        <th>Remarks</th>
+      </tr>
+      <% @receife.receive_spare_parts.each do |sp| %>
+          <tr>
+            <td><%= sp.spare_part %></td>
+            <td><%= sp.quantity %></td>
+            <td><%= sp.unit_price %></td>
+            <td><%= sp.expiry_date.strftime('%B %d, %Y') %></td>
+            <td><%= sp.remarks %></td>
+          </tr>
+      <% end %>
+    </table>
+    <%= link_to 'Back', receives_path %>
     <%= link_to 'Edit', edit_receife_path(@receife), class: 'btn btn-primary' %>
     <%= link_to 'Download Model 19', receife_path(@receife,:format=>:pdf),:class=>'btn', class: 'btn btn-primary' %>
-    <%= link_to 'Back', receives_path %>
   </div>
 </div>

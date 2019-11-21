@@ -1,6 +1,6 @@
 $(function () {
     $.ajax({
-        url: '/organization_structures/load_all_tree',
+        url: '/organization_units/load_all_tree',
         success: function(response){
             $('#contact_tree').treeview({
                 data: response,

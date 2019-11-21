@@ -1,0 +1,25 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Organization Unit Type</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @organization_units.each do |organization_unit| %>
+      <tr>
+        <td><%= organization_unit.name %></td>
+        <td><%= organization_unit.code %></td>
+        <td><%= organization_unit.organization_unit_type %></td>
+        <td>
+          <%= link_to 'Edit', edit_organization_unit_path(organization_unit), class: 'edit' if can? :edit, organization_unit %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Organization Unit', new_organization_unit_path(parent: @parent.try(:id)),class: 'btn btn-primary' unless @parent.blank? %>

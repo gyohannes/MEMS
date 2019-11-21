@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-sm-6">
       <%= f.simple_fields_for :contact  do |cf| %>
-          <%= cf.input :organization_structure_id, as: :hidden, input_html: {value: current_user.organization_structure_id}  %>
+          <%= cf.input :organization_unit_id, as: :hidden, input_html: {value: current_user.organization_unit_id}  %>
           <%= cf.input :facility_id, as: :hidden, input_html: {value: current_user.facility_id}  %>
           <%= cf.input :name_of_contact, label: 'Full Name'  %>
           <%= cf.input :profession  %>

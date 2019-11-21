@@ -3,8 +3,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :organization_structure, collection: @organization_structures, prompt: false %>
-      <%= f.association :facility, collection: @facilities, prompt: false %>
+      <%= f.association :organization_unit, collection: @organization_units, prompt: false %>
       <%= f.input :request_to, collection: Constants::REQUEST_TO %>
       <div id="procurement_request_to">
         <%= render partial: 'request_to' %>
@@ -17,7 +16,6 @@
       <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
     </div>
   </div>
-    <hr/>
     <%= render partial: 'procurement_request_equipment_fields', locals: {f: f} %>
 
   <div class="form-actions">

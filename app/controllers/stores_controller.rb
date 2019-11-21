@@ -3,13 +3,13 @@ class StoresController < ApplicationController
   before_action :load
 
   def load
-    @organization_structures = [current_user.organization_structure]
+    @organization_units = [current_user.organization_unit]
     @facilities = [current_user.facility]
   end
   # GET /stores
   # GET /stores.json
   def index
-    @stores = current_user.facility.try(:stores) || current_user.organization_structure.try(:stores) || []
+    @stores = current_user.facility.try(:stores) || current_user.organization_unit.try(:stores) || []
   end
 
   # GET /stores/1
@@ -74,6 +74,6 @@ class StoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_params
-      params.require(:store).permit(:organization_structure_id, :facility_id, :store_name, :block_number, :room_number)
+      params.require(:store).permit(:organization_unit_id, :facility_id, :store_name, :block_number, :room_number)
     end
 end

@@ -4,71 +4,44 @@
 <div class="body">
 <p>
   <strong>Request from:</strong>
-  <%= @maintenance_request.request_from %>
+  <%= @maintenance_request.user.organization_unit %>
 </p>
+
+  <p>
+    <strong>Requested by:</strong>
+    <%= @maintenance_request.user %>
+  </p>
 
 <p>
   <strong>Equipment:</strong>
   <%= @maintenance_request.equipment %>
 </p>
 
+  <p>
+    <strong>Failure date:</strong>
+    <%= @maintenance_request.failure_date %>
+  </p>
+
 <p>
-  <strong>Maintenance type:</strong>
-  <%= @maintenance_request.maintenance_type %>
+  <strong>Description of problem:</strong>
+  <%= @maintenance_request.description_of_problem %>
 </p>
 
 <p>
-  <strong>Maintenance description:</strong>
-  <%= @maintenance_request.maintenance_description %>
+  <strong>Equipment status:</strong>
+  <%= @maintenance_request.status %>
 </p>
 
-<p>
-  <strong>Request to:</strong>
-  <%= @maintenance_request.request_to %>
-</p>
-
-  <% if @maintenance_request.institution_id? %>
-      <p>
-        <label><%= @maintenance_request.request_to %>:</label>
-        <%= @maintenance_request.institution %>
-      </p>
-  <% end %>
-
-<p>
-  <strong>Requested by:</strong>
-  <%= @maintenance_request.user.name_and_from_type %>
-</p>
-
-<p>
-  <strong>Request date:</strong>
-  <%= @maintenance_request.request_date %>
-</p>
 
   <p>
-    <strong>Status:</strong>
+    <strong>Request Status:</strong>
     <%= @status %>
   </p>
-  <%= simple_form_for(@maintenance_request, url: decision_maintenance_request_path) do |f| %>
-  <% if can? :decision, @maintenance_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-          <%= f.input :comment %>
-          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-          <div id="forward">
-          <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST_TO %>
-          </div>
-          <div id="maintenance_request_to">
-            <%= render partial: 'request_to' %>
-          </div>
-      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-  <% else %>
-      <p><label>Comment:</label> <%= @maintenance_request.comment %></p>
-      <p><label><%= @status unless @status==Constants::PENDING %> by: </label> <%= @maintenance_request.decided_user.try(:name_and_from_type) %></p>
-  <% end %>
   <hr/>
-      <% if can? :decision, @maintenance_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-          <center><%= f.button :submit, 'Submit' %></center>
-      <% end %>
+<%= link_to 'Back', maintenance_requests_path, class: 'btn btn-default' %>
+  <% if can? :manage, @maintenance_request and [Constants::PENDING].include?(@status) %>
+      <%= link_to 'Start Work Order', new_maintenance_work_order_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' %>
+      <%= link_to 'Forward', forward_maintenance_request_path(id: @maintenance_request.id), class: 'btn btn-primary' %>
+      <%= link_to 'Maintenance Report', new_maintenance_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' %>
   <% end %>
-  <br/>
-<%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request), class: 'btn btn-primary' if can? :edit, @maintenance_request and @maintenance_request.status == Constants::PENDING  %>
-<%= link_to 'Back', maintenance_requests_path %>
 </div>

@@ -7,8 +7,8 @@ class StoreRegistrationsController < ApplicationController
     @store_registrations = []
     if current_user.facility
       @store_registrations = current_user.facility.store_registrations
-    elsif current_user.organization_structure
-      @store_registrations = current_user.organization_structure.store_registrations
+    elsif current_user.organization_unit
+      @store_registrations = current_user.organization_unit.store_registrations
     end
     return @store_registrations
   end
@@ -32,9 +32,7 @@ class StoreRegistrationsController < ApplicationController
   # POST /store_registrations
   # POST /store_registrations.json
   def create
-    equipment = Equipment.find_by(facility_id: params[:store_registration][:equipment_attributes][:facility_id],
-                                  inventory_number: params[:store_registration][:equipment_attributes][:inventory_number],
-                                  equipment_name: params[:store_registration][:equipment_attributes][:equipment_name])
+    equipment = Equipment.find_by(inventory_number: params[:store_registration][:equipment_attributes][:inventory_number])
 
     unless equipment.blank?
       params[:store_registration][:equipment_id] = equipment.id
@@ -96,6 +94,6 @@ class StoreRegistrationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_registration_params
-      params.require(:store_registration).permit(:store_id, :equipment_id, :bin_number, equipment_attributes: [:id, :facility_id, :status, :equipment_name, :model, :serial_number, :tag_number, :_destroy])
+      params.require(:store_registration).permit(:store_id, :equipment_id, :bin_number, equipment_attributes: [:id, :facility_id, :status, :inventory_number, :equipment_name_id, :model, :serial_number, :tag_number, :_destroy])
     end
 end

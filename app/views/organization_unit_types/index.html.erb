@@ -1,0 +1,33 @@
+<div class="header">
+  <h2>
+    Organization Unit Types
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @organization_unit_types.each do |organization_unit_type| %>
+      <tr>
+        <td><%= organization_unit_type.name %></td>
+        <td><%= organization_unit_type.description %></td>
+        <td>
+          <%= link_to 'Edit', edit_organization_unit_type_path(organization_unit_type) %> |
+          <%= link_to 'Delete', organization_unit_type, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Organization Unit Type', new_organization_unit_type_path, class: 'btn btn-primary' %>
+</div>

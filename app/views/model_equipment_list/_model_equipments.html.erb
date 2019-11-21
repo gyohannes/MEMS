@@ -1,0 +1,18 @@
+<table id="model_equipments" width="100%" class="table"%>
+  <tr>
+    <th>Equipment Name</th>
+    <th>Equipment Type</th>
+    <th>Quantity</th>
+    <th></th>
+  </tr>
+  <%= f.simple_fields_for :model_equipments, :wrapper => false do |model_equipment| %>
+      <tr class="fields">
+        <td><%= model_equipment.input :equipment_name_id, collection: EquipmentName.all, label: false %></td>
+        <td><%= model_equipment.input :equipment_type_id, collection: EquipmentType.all, label: false %></td>
+        <td><%= model_equipment.input :quantity, label: false %></td>
+        <td style="vertical-align: top"><%= model_equipment.link_to_remove 'Remove' %></td>
+      </tr>
+      <%= javascript_include_tag 'global' %>
+  <% end %>
+</table>
+<p><%= f.link_to_add "Add Equipment", :model_equipments, :data => { :target => "#model_equipments" }, class: 'btn btn-primary' %></p>

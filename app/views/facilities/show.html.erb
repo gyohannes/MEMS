@@ -4,7 +4,7 @@
 <div class="body">
 <p>
   <strong>Organization Unit:</strong>
-  <%= @facility.organization_structure %>
+  <%= @facility.organization_unit %>
 </p>
 
 <p>
@@ -44,5 +44,5 @@
 <hr/>
 <%= link_to 'Edit', edit_facility_path(@facility), class: 'btn btn-primary' %>
 
-<%= link_to 'Back', facilities_path if current_user.organization_structure %>
+<%= link_to 'Back', facilities_path if current_user.organization_unit %>
 </div>

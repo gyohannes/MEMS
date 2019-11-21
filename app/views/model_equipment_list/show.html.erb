@@ -1,0 +1,21 @@
+<div class="header">
+  <h2>Facility Model Equipment List</h2>
+</div>
+
+<div class="body">
+  <table class="table"%>
+    <tr>
+      <th>Equipment Name</th>
+      <th>Equipment Type</th>
+      <th>Quantity</th>
+    </tr>
+    <% @model_equipment_list.model_equipments.each do |model_equipment| %>
+        <tr>
+          <td><%= model_equipment.equipment_name %></td>
+          <td><%= model_equipment.equipment_type %></td>
+          <td><%= model_equipment.quantity %></td>
+        </tr>
+    <% end %>
+  </table>
+  <p><%= link_to "Edit Model Equipment List",edit_model_equipment_list_path(@model_equipment_list), class: 'btn btn-primary' %></p>
+</div>

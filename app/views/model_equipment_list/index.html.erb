@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Model Equipment List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Organization unit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @model_equipment_list.each do |model_equipment_list| %>
+      <tr>
+        <td><%= model_equipment_list.organization_unit %></td>
+        <td><%= link_to 'Show', model_equipment_list %></td>
+        <td><%= link_to 'Edit', edit_model_equipment_list_path(model_equipment_list) %></td>
+        <td><%= link_to 'Destroy', model_equipment_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Model Equipment List', new_model_equipment_list_path %>

@@ -1,0 +1,27 @@
+<table id="spare_parts" class="table table-responsive">
+  <tr>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Expiry Date</th>
+    <th>Remarks</th>
+    <th></th>
+  </tr>
+<%= f.simple_fields_for :receive_spare_parts, :wrapper=>false do |eq_form| %>
+      <tr class="fields">
+        <td><%= eq_form.input_field :spare_part_id, collection: SparePart.all, label: false %></td>
+        <td><%= eq_form.input_field :quantity %></td>
+        <td><%= eq_form.input_field :unit_price %></td>
+        <td><%= eq_form.input_field :expiry_date, as: 'string', class: 'datepicker' %></td>
+        <td><%= eq_form.input_field :remarks %></td>
+        <td>
+          <%= eq_form.link_to_remove do%>
+              <i class="material-icons">delete</i>
+          <% end %>
+        </td>
+      </tr>
+      <%= javascript_include_tag 'global' %>
+<% end %>
+</table>
+<p><%= f.link_to_add "Add Spare Part", :receive_spare_parts,"data-target" => "#spare_parts", class: 'btn btn-primary'  %></p>
+<br/>

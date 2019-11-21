@@ -25,6 +25,8 @@ CLUSTER_SHARING='Cluster Based Equipment Sharing', INNOVATION='Innovation, refub
 
   ACCEPTANCE_TEST_RESULT = [ACCEPTED='Accepted', NOT_ACCEPTED='Not Accepted']
 
-  WORK_ORDER_STATUS = [PENDING='Pending', COMPLETED='Completed', NOT_COMPLETED='Not Completed']
+  WORK_ORDER_STATUS = [PENDING='Work Order Pending', COMPLETED='Work Order Completed', NOT_COMPLETED='Not Completed']
+
+  STATUSES_AT_MAINTENANCE_REQUEST = [FUNCTIONAL='Functional', PARTIALLY_FUNCTIONAL='Partially Functional', NON_FUNCTIONAL='Non Functional']
 
 end

@@ -31,18 +31,18 @@
         <% end %>
       </li>
 
-      <% if current_user.organization_structure %>
+      <% if current_user.organization_unit %>
       <li>
-        <%= link_to facility_types_path do %>
+        <%= link_to organization_unit_types_path do %>
             <i class="material-icons">category</i>
-            <span>Facility Types</span>
+            <span>Organization Unit Types</span>
         <% end %>
       </li>
     <% end %>
 
-    <% if current_user.organization_structure %>
+    <% if current_user.organization_unit %>
       <li>
-        <%= link_to organization_structures_path do %>
+        <%= link_to organization_units_path do %>
             <i class="material-icons">people</i>
             <span>Organization Units</span>
         <% end %>

@@ -22,7 +22,7 @@ gem "paperclip", "~> 6.0.0"
 gem 'jquery-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
@@ -38,6 +38,7 @@ gem 'sassc-rails'
 gem 'bootstrap-wysihtml5-rails'
 gem 'will_paginate', '~> 3.1.0'
 gem "select2-rails"
+gem 'jquery-minicolors-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

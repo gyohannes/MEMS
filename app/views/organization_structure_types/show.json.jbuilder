@@ -1,1 +1,0 @@
-json.partial! "organization_structure_types/organization_structure_type", organization_structure_type: @organization_structure_type

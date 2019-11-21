@@ -1,0 +1,22 @@
+
+<%= simple_nested_form_for(@issue) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="col-sm-6">
+    <%= f.association :store %>
+    <%= f.input :reference_number %>
+    <%= f.input :issue_date, as: :string, input_html: {class: 'datepicker'} %>
+    </div>
+    <div class="col-sm-6 left_form">
+    <%= f.input :issued_by %>
+    <%= f.input :received_by %>
+    </div>
+    <%= render partial: 'spare_part_fields', locals: {f: f} %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

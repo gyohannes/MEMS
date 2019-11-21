@@ -10,39 +10,72 @@
           Equipments By Status
         </div>
         <div class="body">
-          <%= pie_chart equipment_by_status_equipment_index_path, download: true %>
+          <%= pie_chart equipment_by_status_equipment_index_path, donut: true %>
         </div>
       </div>
-
-      <div class="card">
-      <div class="body">
-        <div id="calendar"></div>
-      </div>
-    </div>
-
      </div>
-
 
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
-          Equipment by Category
+          Ideal vs Available Functional Equipment
         </div>
         <div class="body">
-          <%= column_chart equipment_by_category_equipment_index_path %>
+          <%= column_chart ideal_vs_available_by_type_equipment_index_path %>
         </div>
       </div>
-
-      <div class="card">
-        <div class="header">
-          Latest News
-        </div>
-        <div class="body">
-          <%= render '/news/latest' %>
-        </div>
-      </div>
-
     </div>
-    </div>
+     <% if current_user.organization_unit.facility %>
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+       <div class="card">
+         <div class="header">
+           Equipment by Department
+         </div>
+         <div class="body">
+           <%= column_chart equipment_by_department_equipment_index_path %>
+         </div>
+       </div>
      </div>
+
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+       <div class="card">
+         <div class="header">
+           Spare Parts' Min Re-order Level vs Available
+         </div>
+         <div class="body">
+           <%= column_chart ideal_vs_available_by_type_spare_parts_path %>
+         </div>
+       </div>
+     </div>
+     <% end %>
+
+     <% unless current_user.organization_unit.facility %>
+         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+           <div class="card">
+             <div class="header">
+               Equipment by Organization unit and Status
+             </div>
+             <div class="body">
+               <%= column_chart equipment_by_org_unit_and_status_equipment_index_path %>
+             </div>
+           </div>
+         </div>
+
+         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+           <div class="card">
+             <div class="header">
+               Equipment by Organization unit and Type
+             </div>
+             <div class="body">
+               <%= column_chart equipment_by_org_unit_and_type_equipment_index_path %>
+             </div>
+           </div>
+         </div>
+     <% end %>
+    </div>
+    <div class="card">
+      <div class="body">
+        <div id="calendar"></div>
+      </div>
+    </div>
 <% end %>

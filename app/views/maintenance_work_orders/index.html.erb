@@ -9,8 +9,7 @@
     <tr>
       <th>Equipment</th>
       <th>Assigned to</th>
-      <th>Location</th>
-      <th>Date</th>
+      <th>priority</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -21,8 +20,7 @@
       <tr>
         <td><%= maintenance_work_order.equipment %></td>
         <td><%= maintenance_work_order.user %></td>
-        <td><%= maintenance_work_order.location %></td>
-        <td><%= maintenance_work_order.date %></td>
+        <td><%= maintenance_work_order.priority %></td>
         <td><%= maintenance_work_order.status %></td>
         <td>
           <%= link_to 'Edit', edit_maintenance_work_order_path(maintenance_work_order), class: 'btn btn-primary' if can? :manage, maintenance_work_order %>

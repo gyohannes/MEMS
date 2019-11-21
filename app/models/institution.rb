@@ -1,5 +1,5 @@
 class Institution < ApplicationRecord
-  belongs_to :organization_structure, optional: true
+  belongs_to :organization_unit, optional: true
   belongs_to :facility, optional: true
   has_many :procurement_requests
   has_many :specification_requests

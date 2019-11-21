@@ -103,7 +103,7 @@ class AcceptanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def acceptance_request_params
-      params.require(:acceptance_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :volts_ampere,
+      params.require(:acceptance_request).permit(:organization_unit_id, :facility_id, :equipment_name, :model, :volts_ampere,
                                                  :power_requirement, :description, :request_to, :institution_id, :user_id,
                                                  :request_date, :comment, :decision_by, :assigned_to, :status)
     end

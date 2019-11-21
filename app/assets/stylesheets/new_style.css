@@ -1,16 +1,29 @@
-.treeview .list-group-item{
-    color: deepskyblue;
+.login-page {
+    min-width: 800px;
+    background: white;
+}
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label,[type="checkbox"]:not(:checked) + label, [type="checkbox"]:checked + label {
+    font-size: inherit;
+    font-weight: bold;
+    text-align: left;
+}
+.navbar{
+    background: white;
+}
+.label-count{
+    background: red;
+    color: black;
 }
 .sidebar .menu .list a span{
     border-bottom: 1px solid skyblue;
 }
-[type="checkbox"] + label{
-    text-align: left;
-}
+
 .form-check{
+    padding-left: inherit;
     margin-right: 10px;
     float: left;
     width: 33%;
+    font-weight: bold;
 }
 .single_columned_list .form-check {
     float: left;
@@ -22,6 +35,7 @@
 form label{
     text-align: right;
 }
+
 .fc-title{
     white-space: initial;
 }

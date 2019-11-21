@@ -13,18 +13,13 @@
 </p>
 
 <p>
-  <strong>Location:</strong>
-  <%= @maintenance_work_order.location %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @maintenance_work_order.date %>
+  <strong>Task Priority:</strong>
+  <%= @maintenance_work_order.priority %>
 </p>
 
 <p>
   <strong>Description of problem:</strong>
-  <%= @maintenance_work_order.description_of_problem %>
+  <%= @maintenance_work_order.maintenance_request.description_of_problem rescue nil %>
 </p>
 
   <p>
@@ -36,17 +31,8 @@
     <strong>Note:</strong>
     <%= @maintenance_work_order.note %>
   </p>
-
-  <% if can? :edit, @maintenance_work_order %>
-    <%= simple_form_for(@maintenance_work_order) do |f| %>
-          <%= f.input :status, collection: Constants::WORK_ORDER_STATUS %>
-          <%= f.input :note %>
-        <div class="form-actions">
-          <%= f.button :submit, 'Update Status' %>
-        </div>
-    <% end %>
-  <% end %>
   <hr/>
 <%= link_to 'Back', maintenance_work_orders_path, class: 'btn btn-primary' %>
-  <%= link_to 'edit', @maintenance_work_order, class: 'btn btn-primary' if can? :manage, @maintenance_work_order %>
+  <%= link_to 'Maintenance Report', new_maintenance_path(work_order: @maintenance_work_order.id,
+                                                         maintenance_request: @maintenance_work_order.maintenance_request_id), class: 'btn btn-primary' if can? :create, Maintenance %>
 </div>

@@ -101,7 +101,7 @@ class TrainingRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_request_params
-      params.require(:training_request).permit(:organization_structure_id, :facility_id, :trainee_type, :training_description,
+      params.require(:training_request).permit(:organization_unit_id, :facility_id, :trainee_type, :training_description,
                                                :status, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

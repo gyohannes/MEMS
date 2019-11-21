@@ -7,21 +7,17 @@
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-        <span class="font-15">Preventive Maintenance Date:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.preventive_maintenance_date %></span>
+        <span class="font-15">Next Preventive Maintenance Date:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.preventive_maintenance_date.strftime("%B %d, %Y") %></span>
         </a>
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-          <span class="font-15">Status:</span> <label class="right font-15 font-italic label <%= @equipment.status == Equipment::NON_FUNCTIONAL ? 'label-warning' :
-                                                                                                     (@equipment.status == Equipment::DISPOSED ? 'label-danger' : (@equipment.status == Equipment::FUNCTIONAL ? 'label-success' : 'label-default')) %>"><%= @equipment.status %></label>
+          <span class="font-15">Status:</span> <label class="right font-15 font-italic label" style="background-color: <%= @equipment.status.color %>"><%= @equipment.status %></label>
         </a>
-        <p style="text-align: right">
-          <%= link_to 'Update equipment Status', new_equipment_status_path(equipment: @equipment.id), {class: 'btn btn-primary'} %>
-        </p>
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-          <span class="font-15">Years of Use:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.use_of_years %></span>
+          <span class="font-15">Years Used:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.years_used %></span>
         </a>
       </div>
     </div>
@@ -30,11 +26,10 @@
 <div class="body">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs tab-nav-right" role="tablist">
-    <li role="presentation" class="active"><a href="#equipment_details" data-toggle="tab">Basic Info</a></li>
-    <li role="presentation"><a href="#equipment_installation" data-toggle="tab">Installation</a></li>
-    <li role="presentation"><a href="#acceptance_test" data-toggle="tab">Acceptance Test</a></li>
-    <li role="presentation"><a href="#maintenance" data-toggle="tab">Maintenance</a></li>
-    <li role="presentation"><a href="#trainings" data-toggle="tab">Trainings</a></li>
+    <li role="presentation" class="active"><a href="#equipment_details" data-toggle="tab">Equipment Registration</a></li>
+    <li role="presentation"><a href="#ppm" data-toggle="tab">Planned Preventive Maintenance</a></li>
+    <li role="presentation"><a href="#maintenance" data-toggle="tab">Corrective Maintenance</a></li>
+    <li role="presentation"><a href="#trainings" data-toggle="tab">Trainees</a></li>
     <li role="presentation"><a href="#inventories" data-toggle="tab">Inventories</a></li>
     <li role="presentation"><a href="#disposal" data-toggle="tab">Disposal</a></li>
   </ul>
@@ -45,21 +40,19 @@
       <%= render 'equipment_detail' %>
     </div>
 
-    <div role="tabpanel" class="tab-pane fade in" id="equipment_installation">
-      <%= render partial: 'installations/installation', locals: { :@installation => @equipment.installation } %>
-      <%= link_to 'Register Installation', new_installation_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.installation.blank? and can? :create, Installation  %>
-    </div>
-
-    <div role="tabpanel" class="tab-pane fade in" id="acceptance_test">
-      <%= render partial: 'acceptance_tests/acceptance_test', locals: { :@acceptance_test => @equipment.acceptance_test } %>
-      <%= link_to 'Acceptance Test', new_acceptance_test_path(equipment: @equipment.id), class: 'btn btn-primary' if @equipment.acceptance_test.blank? and can? :create, AcceptanceTest %>
-    </div>
-
     <div role="tabpanel" class="tab-pane fade in" id="maintenance">
       <div class="body table-responsive">
       <%= render partial: 'maintenances/maintenances', locals: { :@maintenances => @equipment.maintenances } %>
         <hr/>
-      <%= link_to 'New Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
+      <%= link_to 'Add Corrective Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
+      </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="ppm">
+      <div class="body table-responsive">
+        <%= render partial: 'planned_preventive_maintenaces/ppms', locals: { :@planned_preventive_maintenaces => @equipment.planned_preventive_maintenaces } %>
+        <hr/>
+        <%= link_to 'Add Planned Preventive Maintenance', new_planned_preventive_maintenace_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
       </div>
     </div>
 

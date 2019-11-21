@@ -4,7 +4,7 @@ class DepartmentsController < ApplicationController
   # GET /departments
   # GET /departments.json
   def index
-    @departments = Department.all
+    @departments = current_user.organization_unit.departments
   end
 
   # GET /departments/1
@@ -25,7 +25,7 @@ class DepartmentsController < ApplicationController
   # POST /departments.json
   def create
     @department = Department.new(department_params)
-
+    @department.organization_unit_id = current_user.organization_unit_id
     respond_to do |format|
       if @department.save
         format.html { redirect_to departments_path, notice: 'Department was successfully created.' }
@@ -69,6 +69,6 @@ class DepartmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def department_params
-      params.require(:department).permit(:name, :description)
+      params.require(:department).permit(:name, :description, :organization_unit_id)
     end
 end

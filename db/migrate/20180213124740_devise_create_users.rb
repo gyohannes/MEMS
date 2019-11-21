@@ -7,7 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :first_name
       t.string :father_name
       t.string :grand_father_name
-      t.references :organization_structure, type: :uuid, foreign_key: true
+      t.references :organization_unit, type: :uuid, foreign_key: true
       t.references :facility, type: :uuid, foreign_key: true
       t.references :institution, type: :uuid, foreign_key: true
       t.references :department, type: :uuid, foreign_key: true

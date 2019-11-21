@@ -102,7 +102,7 @@ class InstallationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def installation_request_params
-      params.require(:installation_request).permit(:organization_structure_id, :facility_id, :equipment_name, :model, :installation_description,
+      params.require(:installation_request).permit(:organization_unit_id, :facility_id, :equipment_name, :model, :installation_description,
                                                   :status, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

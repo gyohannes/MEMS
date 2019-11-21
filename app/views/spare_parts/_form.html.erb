@@ -1,0 +1,25 @@
+
+<%= simple_form_for(@spare_part) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="row">
+    <div class="col-sm-6">
+    <%= f.association :equipment_name %>
+    <%= f.input :name %>
+    <%= f.input :item_code_number %>
+    <%= f.input :description %>
+    </div>
+    <div class="col-sm-6 left_form">
+      <%= f.input :uom %>
+    <%= f.input :max_stock_level %>
+    <%= f.input :min_reorder_level %>
+    <%= f.input :lead_time %>
+    <%= f.input :order_quantity %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

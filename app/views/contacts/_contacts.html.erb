@@ -15,7 +15,7 @@
     <tbody>
     <% @contacts.each do |contact| %>
         <tr>
-          <td><%= contact.facility || contact.organization_structure %></td>
+          <td><%= contact.facility || contact.organization_unit %></td>
           <td><%= contact.name_of_contact %></td>
           <td><%= contact.profession %></td>
           <td><%= contact.title %></td>

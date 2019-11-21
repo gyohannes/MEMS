@@ -4,12 +4,12 @@ class InstitutionsController < BaseController
   # GET /institutions
   # GET /institutions.json
   def index
-    @institutions = !current_user.organization_structure.blank? ? current_user.organization_structure.sub_institutions : current_user.facility.institutions
+    @institutions = !current_user.organization_unit.blank? ? current_user.organization_unit.sub_institutions : current_user.facility.institutions
   end
 
   def load_institutions
-    @organization_structure  = OrganizationStructure.find(params[:node])
-    @institutions = @organization_structure.sub_institutions
+    @organization_unit  = OrganizationUnit.find(params[:node])
+    @institutions = @organization_unit.sub_institutions
     render partial: 'institutions'
   end
 
@@ -20,23 +20,23 @@ class InstitutionsController < BaseController
 
   # GET /institutions/new
   def new
-    @organization_structure = OrganizationStructure.find_by(id: params[:organization_structure])
+    @organization_unit = OrganizationUnit.find_by(id: params[:organization_unit])
     @facility = Facility.find_by(id: params[:facility])
     @institution = Institution.new
-    @institution.organization_structure = @organization_structure
+    @institution.organization_unit = @organization_unit
     @institution.facility = @facility
   end
 
   # GET /institutions/1/edit
   def edit
-    @organization_structure = @institution.organization_structure
+    @organization_unit = @institution.organization_unit
   end
 
   # POST /institutions
   # POST /institutions.json
   def create
     @institution = Institution.new(institution_params)
-    @organization_structure = @institution.organization_structure
+    @organization_unit = @institution.organization_unit
     @facility = @institution.facility
     respond_to do |format|
       if @institution.save
@@ -52,7 +52,7 @@ class InstitutionsController < BaseController
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
-    @organization_structure = @institution.organization_structure
+    @organization_unit = @institution.organization_unit
     @facility = @institution.facility
     respond_to do |format|
       if @institution.update(institution_params)
@@ -83,7 +83,7 @@ class InstitutionsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def institution_params
-      params.require(:institution).permit(:organization_structure_id, :facility_id, :name, :category, :institution_type,
+      params.require(:institution).permit(:organization_unit_id, :facility_id, :name, :category, :institution_type,
                                           :contact_person, :contact_phone, :contact_email, :address)
     end
 end

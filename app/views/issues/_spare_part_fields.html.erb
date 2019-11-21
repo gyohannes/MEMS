@@ -1,0 +1,24 @@
+<table id="spare_parts" class="table table-responsive">
+  <tr>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Remarks</th>
+    <th></th>
+  </tr>
+<%= f.simple_fields_for :issue_spare_parts, :wrapper=>false do |eq_form| %>
+      <tr class="fields">
+        <td><%= eq_form.input :spare_part_id, collection: @spare_parts, label: false %></td>
+        <td>
+          <%= eq_form.input :quantity, label: false %></td>
+        <td><%= eq_form.input :remarks, label: false %></td>
+        <td>
+          <%= eq_form.link_to_remove do%>
+              <i class="material-icons">delete</i>
+          <% end %>
+        </td>
+      </tr>
+      <%= javascript_include_tag 'global' %>
+<% end %>
+</table>
+<p><%= f.link_to_add "Add Spare Part", :issue_spare_parts,"data-target" => "#spare_parts", class: 'btn btn-primary'  %></p>
+<br/>

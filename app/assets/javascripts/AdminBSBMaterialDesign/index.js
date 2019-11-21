@@ -10,5 +10,4 @@
 //= require AdminBSBMaterialDesign/jquery-steps/jquery.steps
 //= require AdminBSBMaterialDesign/sweetalert/sweetalert.min
 //= require AdminBSBMaterialDesign/js/pages/forms/form-wizard
-//= require AdminBSBMaterialDesign/js/pages/forms/basic-form-elements
 //= require AdminBSBMaterialDesign/jquery-datatable/index

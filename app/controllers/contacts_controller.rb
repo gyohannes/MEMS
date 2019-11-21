@@ -9,8 +9,8 @@ class ContactsController < ApplicationController
   end
 
   def load_contacts
-    @organization_structure  = OrganizationStructure.find(params[:node])
-    @contacts = @organization_structure.sub_contacts
+    @organization_unit  = OrganizationUnit.find(params[:node])
+    @contacts = @organization_unit.sub_contacts
     render partial: 'contacts'
   end
   def search
@@ -78,6 +78,6 @@ class ContactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:organization_structure_id, :facility_id, :name_of_contact, :profession, :title, :work_place, :city, :phone_number, :country, :email)
+      params.require(:contact).permit(:organization_unit_id, :facility_id, :name_of_contact, :profession, :title, :work_place, :city, :phone_number, :country, :email)
     end
 end

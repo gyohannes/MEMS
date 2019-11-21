@@ -1,4 +1,30 @@
 $(function () {
+
+    //Textare auto growth
+    autosize($('textarea.auto-growth'));
+
+    $('.colorpicker').minicolors({theme: 'bootstrap'});
+
+    //Datetimepicker plugin
+    $('.datetimepicker').bootstrapMaterialDatePicker({
+        format: 'dddd DD MMMM YYYY - HH:mm',
+        clearButton: true,
+        weekStart: 1
+    });
+
+    $('.datepicker').bootstrapMaterialDatePicker({
+        format: 'dddd DD MMMM YYYY',
+        clearButton: true,
+        weekStart: 1,
+        time: false
+    });
+
+    $('.timepicker').bootstrapMaterialDatePicker({
+        format: 'HH:mm',
+        clearButton: true,
+        date: false
+    });
+
     $('.js-exportable').DataTable({
         responsive: true,
         retrieve: true,
@@ -24,8 +50,6 @@ $(function () {
         collapsible: true
     });
 
-    $( "select" ).select2();
-
 
     // Populating equipment details based on selected equipment name
     // Used in store registration and training
@@ -45,7 +69,8 @@ $(function () {
                 url: "/equipment/facility_equipment_search",
                 data: {term: ui.item.value},
                 success: function (data) {
-                    $("#inventory_equipment_attributes_equipment_name").val(data[0].equipment_name)
+                    console.log(data)
+                    $("#inventory_equipment_attributes_equipment_name_id").val(data[0].equipment_name_id)
                     $("#inventory_equipment_attributes_model").val(data[0].model)
                     $("#inventory_equipment_attributes_serial_number").val(data[0].serial_number)
                     $("#inventory_equipment_attributes_tag_number").val(data[0].tag_number)
@@ -55,7 +80,7 @@ $(function () {
                     $("#inventory_equipment_attributes_trained_end_users").prop('checked',data[0].trained_end_users)
                     $("#inventory_equipment_attributes_trained_maintenance_personnel").prop('checked', data[0].trained_maintenance_personnel)
 
-                    $("#store_registration_equipment_attributes_equipment_name").val(data[0].equipment_name)
+                    $('select[name="store_registration[equipment_attributes][equipment_name_id]"]').val(data[0].equipment_name_id);
                     $("#store_registration_equipment_attributes_model").val(data[0].model)
                     $("#store_registration_equipment_attributes_serial_number").val(data[0].serial_number)
                     $("#store_registration_equipment_attributes_tag_number").val(data[0].tag_number)
@@ -115,5 +140,7 @@ $(function () {
             });
         }
     })
+
+    $('select').select2({})
 
 });

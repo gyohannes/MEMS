@@ -28,6 +28,8 @@ class MaintenancesController < ApplicationController
   def new
     @maintenance = Maintenance.new
     @maintenance.equipment_id = params[:equipment]
+    @maintenance.maintenance_request_id = params[:maintenance_request]
+    @maintenance.maintenance_work_order_id = params[:work_order]
     session[:return_to] = request.referer
   end
 
@@ -43,6 +45,15 @@ class MaintenancesController < ApplicationController
 
     respond_to do |format|
       if @maintenance.save
+        unless @maintenance.maintenance_work_order.blank?
+          mwo = @maintenance.maintenance_work_order
+          mwo.update_attribute('status', Constants::COMPLETED)
+        end
+        unless @maintenance.maintenance_request.blank?
+          mr = @maintenance.maintenance_request
+          mr.update_attribute('status', 'Maintenance Done')
+        end
+        @maintenance.equipment.update_attribute('status', @maintenance.equipment_status)
         format.html { redirect_to session.delete(:return_to), notice: 'Maintenance was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance }
       else
@@ -84,6 +95,8 @@ class MaintenancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_params
-      params.require(:maintenance).permit(:equipment_id, :maintenance_type, :problem, :action_taken, :spare_parts_used, :start_date, :end_date, :maintenance_cost, :maintained_by, :contact_address, :preventive_maintenance_date, :note)
+      params.require(:maintenance).permit(:equipment_id, :maintenance_work_order_id, :description_of_equipment_failure, :cause_of_equipment_failure,
+                                          :maintenance_request_id, :status_id, :part_of_equipment_maintained, :corrective_action, :spare_parts_used,
+                                          :start_date, :end_date, :maintenance_cost, :engineer_name_and_contact, :preventive_maintenance_date, :note)
     end
 end

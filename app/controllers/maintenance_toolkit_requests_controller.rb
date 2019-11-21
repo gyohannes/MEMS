@@ -101,7 +101,7 @@ class MaintenanceToolkitRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_toolkit_request_params
-      params.require(:maintenance_toolkit_request).permit(:organization_structure_id, :facility_id, :toolkit_name, :toolkit_description, :quantity,
+      params.require(:maintenance_toolkit_request).permit(:organization_unit_id, :facility_id, :toolkit_name, :toolkit_description, :quantity,
                                                           :status, :request_to, :institution_id, :user_id, :contact_address, :request_date, :comment, :decision_by, :assigned_to)
     end
 end

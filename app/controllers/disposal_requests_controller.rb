@@ -100,6 +100,6 @@ class DisposalRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def disposal_request_params
-      params.require(:disposal_request).permit(:organization_structure_id, :facility_id, :equipment_id, :disposal_description, :request_to, :contact_address, :user_id, :request_date, :comment, :decision_by)
+      params.require(:disposal_request).permit(:organization_unit_id, :facility_id, :equipment_id, :disposal_description, :request_to, :contact_address, :user_id, :request_date, :comment, :decision_by)
     end
 end

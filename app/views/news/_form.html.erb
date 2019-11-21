@@ -5,7 +5,7 @@
 
   <div class="form-inputs">
     <%= f.association :user, as: :hidden, input_html: {value: current_user.id} %>
-    <%= f.association :organization_structure, as: :hidden, input_html: {value: current_user.organization_structure_id} %>
+    <%= f.association :organization_unit, as: :hidden, input_html: {value: current_user.organization_unit_id} %>
     <%= f.association :facility, as: :hidden, input_html: {value: current_user.facility_id} %>
     <%= f.association :institution, as: :hidden, input_html: {value: current_user.institution_id} %>
     <%= f.input :headline, label: 'Title' %>
