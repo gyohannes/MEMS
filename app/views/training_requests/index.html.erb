@@ -7,9 +7,10 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Request from</th>
-      <th>Request date</th>
-      <th>Trainee type</th>
+      <th>Equipment Name</th>
+      <th>Training Type</th>
+      <th>Level</th>
+      <th>Request Date</th>
       <th>Request to</th>
       <th>Status</th>
       <th></th>
@@ -19,11 +20,12 @@
   <tbody>
     <% @training_requests.each do |training_request| %>
       <tr>
-        <td><%= training_request.request_from %></td>
-        <td><%= training_request.request_date %></td>
+        <td><%= training_request.equipment_name %></td>
         <td><%= training_request.trainee_type %></td>
-        <td><%= training_request.request_to %></td>
+        <td><%= training_request.level %></td>
         <td><%= training_request.request_date %></td>
+        <td><%= training_request.organization_unit %></td>
+        <td><%= training_request.status %></td>
         <td>
           <%= link_to 'Details', training_request, class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_training_request_path(training_request), class: 'btn btn-primary' if can? :edit, training_request and training_request.status == Constants::PENDING %>

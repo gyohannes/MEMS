@@ -1,10 +1,11 @@
 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
   <tr>
-    <th>Trainee Name</th>
-    <th>Equipment name</th>
+    <th>Name</th>
+    <th>Equipment</th>
     <th>Model</th>
     <th>Training type</th>
+    <th>Level</th>
     <th>Training date</th>
     <th></th>
   </tr>
@@ -17,7 +18,8 @@
         <td><%= training.equipment_name %></td>
         <td><%= training.model %></td>
         <td><%= training.training_type %></td>
-        <td><%= training.training_date %></td>
+        <td><%= training.level %></td>
+        <td><%= training.training_date.strftime("%B %d, %Y") rescue nil %></td>
         <td>
           <%= link_to 'Details', training, class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_training_path(training), class: 'btn btn-primary' %>

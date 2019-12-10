@@ -2,67 +2,81 @@
   <h2>Training Request</h2>
 </div>
 <div class="body">
-<p>
-  <strong>Request from:</strong>
-  <%= @training_request.request_from %>
-</p>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="row">
+        <label class="col-sm-6">Equipment Name</label>
+        <%= @training_request.equipment_name %>
+      </div>
 
-<p>
-  <strong>Trainee type:</strong>
-  <%= @training_request.trainee_type %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Training type:</label>
+        <%= @training_request.trainee_type %>
+      </div>
 
-<p>
-  <strong>Training description:</strong>
-  <%= @training_request.training_description %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Training Level:</label>
+        <%= @training_request.level %>
+      </div>
 
-<p>
-  <strong>Request to:</strong>
-  <%= @training_request.request_to %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Training description:</label>
+        <%= @training_request.training_description %>
+      </div>
 
-  <% if @training_request.institution_id? %>
-      <p>
-        <label><%= @training_request.request_to %>:</label>
-        <%= @training_request.institution %>
+      <div class="row">
+        <label class="col-sm-6">Requested by:</label>
+        <%= @training_request.user.organization_unit %>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-6">Request date:</label>
+        <%= @training_request.request_date %>
+      </div>
+      <p class="row">
+        <% if @training_request.attachment.attached? %>
+            <label class="col-sm-6">Attached Document:</label>
+            <%= link_to @training_request.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+            <% end %>
+        <% end %>
       </p>
-  <% end %>
-
-<p>
-  <strong>Requested by:</strong>
-  <%= @training_request.user %>
-</p>
-
-<p>
-  <strong>Request date:</strong>
-  <%= @training_request.request_date %>
-</p>
-  <p>
-    <strong>Status:</strong>
-    <%= @status %>
-  </p>
-  <%= simple_nested_form_for(@training_request, url: decision_training_request_path) do |f| %>
-  <% if can? :decision, @training_request and @training_request.status == Constants::PENDING %>
-          <%= f.input :comment %>
-          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-          <div id="forward">
-            <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST_TO %>
-          </div>
-          <div id="training_request_to">
-            <%= render partial: 'request_to' %>
-          </div>
-      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-  <% else %>
-      <p><label>Comment:</label> <%= @training_request.comment %></p>
-      <p><label><%= @status unless @status==Constants::PENDING %> by:</label> <%= @training_request.decided_user.try(:name_and_from_type) %></p>
-  <% end %>
-
-  <hr/>
-      <% if can? :decision, @training_request and @training_request.status == Constants::PENDING %>
-          <%= f.button :submit, 'Submit' %>
+      <div class="row">
+        <label class="col-sm-6">Status:</label> <%= @status %>
+        <% if @status == Constants::OUT_SOURCED %>
+            to <%= @training_request.forwards.order('created_at DESC').first.institution %>
+        <% end %>
+        <% if @status == Constants::FORWARDED %>
+            to <%= @training_request.forwards.order('created_at DESC').first.organization_unit %>
+        <% end %>
+      </div>
+      <% unless @status==Constants::PENDING %>
+          <div class="row"><label class="col-sm-6"><%= @status %> by:</label> <%= @training_request.decided_user.organization_unit %></div>
+        <div class="row"><label class="col-sm-6">Comment:</label> <%= @training_request.comment %></div>
       <% end %>
-  <% end %>
+    </div>
+    <div class="col-sm-8 left_form">
+      <% if can? :decision, @training_request and @training_request.status == Constants::PENDING %>
+      <%= simple_nested_form_for(@training_request, url: decision_training_request_path) do |f| %>
+              <%= f.input :comment %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+                <%= f.simple_fields_for :forwards do |ff| %>
+                    <div id="outsource">
+                    <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
+                    </div>
+                  <div id="forward">
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                  </div>
+                <% end %>
+              <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+
+          <hr/>
+              <%= f.button :submit, 'Submit' %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+<hr/>
+  <%= link_to 'Back', training_requests_path, class: 'btn btn-primary' %>
 <%= link_to 'Edit', edit_training_request_path(@training_request), class: 'btn btn-primary' if can? :edit, @training_request and @training_request.status == Constants::PENDING  %>
-<%= link_to 'Back', training_requests_path %>
 </div>

@@ -36,7 +36,7 @@ $(function () {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay,listMonth'
+            right:  'month,listMonth,agendaWeek,agendaDay'
         },
         navLinks: true, // can click day/week names to navigate views
         editable: true,
@@ -70,15 +70,15 @@ $(function () {
                 data: {term: ui.item.value},
                 success: function (data) {
                     console.log(data)
-                    $("#inventory_equipment_attributes_equipment_name_id").val(data[0].equipment_name_id)
+                    $("#inventory_equipment_attributes_equipment_name_id").val(data[0].location)
                     $("#inventory_equipment_attributes_model").val(data[0].model)
                     $("#inventory_equipment_attributes_serial_number").val(data[0].serial_number)
                     $("#inventory_equipment_attributes_tag_number").val(data[0].tag_number)
-                    $("#inventory_equipment_attributes_date_of_installation").val(data[0].date_of_installation)
-                    $("#inventory_equipment_attributes_use_of_years").val(data[0].use_of_years)
-                    $("#inventory_equipment_attributes_status").val(data[0].status)
+                    $("#inventory_equipment_attributes_installation_date").val(data[0].installation_date)
+                    $("#inventory_equipment_attributes_years_used").val(data[0].years_used)
+                    $("#inventory_equipment_attributes_equipment_risk_classification").val(data[0].equipment_risk_classification)
                     $("#inventory_equipment_attributes_trained_end_users").prop('checked',data[0].trained_end_users)
-                    $("#inventory_equipment_attributes_trained_maintenance_personnel").prop('checked', data[0].trained_maintenance_personnel)
+                    $("#inventory_equipment_attributes_trained_technical_personnel").prop('checked', data[0].trained_technical_personnel)
 
                     $('select[name="store_registration[equipment_attributes][equipment_name_id]"]').val(data[0].equipment_name_id);
                     $("#store_registration_equipment_attributes_model").val(data[0].model)
@@ -114,13 +114,13 @@ $(function () {
     // Populating contact details based on selected contact name
     // Used in training
 
-    $("#training_contact_attributes_name_of_contact").autocomplete({
+    $("#training_contact_attributes_name").autocomplete({
         source: function( request, response ) {
             $.ajax({
                 url: "/contacts/search",
                 data: {term: request.term},
                 success: function (data) {
-                    response(data.map(function (contact) {return contact.name_of_contact }));
+                    response(data.map(function (contact) {return contact.name }));
                 }
             });
         },
@@ -141,6 +141,12 @@ $(function () {
         }
     })
 
-    $('select').select2({})
+    $('select').select2();
+
+    $(function(){
+        $("button:reset").click(function(){
+            $("select").select2('val', 'All');
+        });
+    });
 
 });

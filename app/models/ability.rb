@@ -8,50 +8,49 @@ class Ability
        can :read, News
        if user.is_role(Constants::DEPARTMENT)
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
-                                                                      SparePartRequest, AcceptanceRequest,
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
-                                                                      DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+                                                                      DisposalRequest, BudgetRequest]
          can :manage, [Receive]
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
        end
        if user.is_role(Constants::BIOMEDICAL_ENGINEER)
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
-                                                                      SparePartRequest, AcceptanceRequest,
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
-                                                                      DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can :manage, [Equipment, Receive, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
+                                                                      DisposalRequest, BudgetRequest]
+         can :manage, [Equipment, Receive, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
+         cannot :edit, Equipment
+         can :edit, Equipment, status_id: !(Status.find_by(name: 'Disposed').id)
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
-         can [:read,:create], [ProcurementRequest, SpecificationRequest, SparePartRequest,
-                                 AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                 CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, SparePartRequest,
-                                  AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest], user_id: user.id
-         can [:manage], [ProcurementRequest, SpecificationRequest, SparePartRequest,
-                         AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                         CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
-         can :manage, [OrganizationUnit, User, Department, FacilityType, Facility, Store, Institution, EquipmentCategory,
-                       Equipment, Receive, MaintenanceWorkOrder, Installation, AcceptanceTest, Maintenance, Training, Inventory, Disposal]
-         can :manage, News, organization_unit_id: user.organization_unit_id, facility_id: user.facility_id
+         can [:read,:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                                 CalibrationRequest, DisposalRequest, BudgetRequest]
+         can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                                  CalibrationRequest, DisposalRequest, BudgetRequest]
+         can [:manage, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                         CalibrationRequest, DisposalRequest, BudgetRequest], organization_unit_id: user.organization_unit_id
+         can :manage, [OrganizationUnit, User, Department, Store, Institution, EquipmentStatus,
+                       Equipment, Receive, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
+         cannot [:edit, :update, :destroy], [Maintenance]
+         can [:edit, :update, :destroy], [Maintenance], user_id: user.id
+         can :manage, News, organization_unit_id: user.organization_unit_id
          can :edit, MaintenanceWorkOrder, not_completed: true
          cannot :manage, MaintenanceWorkOrder, status: Constants::COMPLETED
-         can :manage, Contact, organization_unit_id: user.organization_unit_id, facility_id: user.facility_id
+         can :manage, Contact, organization_unit_id: user.organization_unit_id
          can [:read, :create], Contact
+         can :manage, [Specification] if user.super_admin?
        end
 
        if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)
          can :manage, News, institution_id: user.institution_id
          can :manage, User, institution_id: user.institution_id
-         can [:read, :decision], [ProcurementRequest, SpecificationRequest, SparePartRequest,
-                                  AcceptanceRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest, BudgetRequest, MaintenanceToolkitRequest]
+         can [:read, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                                  CalibrationRequest, DisposalRequest, BudgetRequest]
        end
     #
     # The first argument to `can` is the action you are giving the user

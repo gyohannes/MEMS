@@ -1,0 +1,16 @@
+<%= f.simple_fields_for :documents do |df| %>
+  <div class="row fields">
+    <div class="col-sm-5"><%= df.input :name, label: false, placeholder: 'Document Name' %></div>
+    <div class="col-sm-5"><%= df.input :attachment, label: false, as: :file %></div>
+    <div class="col-sm-2">
+      <%= df.link_to_remove do %>
+          <button type="button" class="btn btn-rounded btn-outline btn-danger"><i class="fa fa-close"></i> Remove</button>
+      <% end %>
+    </div>
+  </div>
+    <br/>
+  <% end %>
+
+<%= f.link_to_add :documents do %>
+    <button type="button" class="btn btn-outline btn-primary"><i class="fa fa-plus"></i> Add Attachment</button>
+<% end %>

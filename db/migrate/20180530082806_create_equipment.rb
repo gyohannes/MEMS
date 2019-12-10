@@ -22,7 +22,6 @@ class CreateEquipment < ActiveRecord::Migration[5.1]
       t.string :country
       t.date :manufactured_year
       t.date :purchased_year
-      t.string :volt_ampere
       t.integer :power_requirement
       t.references :maintenance_requirement, type: :uuid, foreign_key: true
       t.integer :estimated_life_span

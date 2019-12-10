@@ -13,13 +13,23 @@
 </p>
 
 <p>
-  <strong>Problem:</strong>
-  <%= @maintenance.problem %>
+  <strong>Description of equipment failure:</strong>
+  <%= @maintenance.description_of_equipment_failure %>
 </p>
 
+  <p>
+    <strong>Cause of equipment failure:</strong>
+    <%= @maintenance.cause_of_equipment_failure %>
+  </p>
+
+  <p>
+    <strong>Part of equipment maintained:</strong>
+    <%= @maintenance.part_of_equipment_maintained %>
+  </p>
+
 <p>
-  <strong>Action taken:</strong>
-  <%= @maintenance.action_taken %>
+  <strong>Corrective action:</strong>
+  <%= @maintenance.corrective_action %>
 </p>
 
 <p>
@@ -43,24 +53,19 @@
 </p>
 
 <p>
-  <strong>Maintained by:</strong>
-  <%= @maintenance.maintained_by %>
+  <strong>Engineer/s name and contact:</strong>
+  <%= @maintenance.engineer_name_and_contact %>
 </p>
 
-<p>
-  <strong>Contact address:</strong>
-  <%= @maintenance.contact_address %>
-</p>
-
-<p>
-  <strong>Preventive maintenance date:</strong>
-  <%= @maintenance.preventive_maintenance_date %>
-</p>
+  <p>
+    <strong>Equipment Status:</strong>
+    <%= @maintenance.status %>
+  </p>
 
 <p>
   <strong>Note:</strong>
   <%= @maintenance.note %>
 </p>
 <hr/>
-<%= link_to 'Edit', edit_maintenance_path(@maintenance) %> |
+<%= link_to 'Edit', edit_maintenance_path(@maintenance), class: 'btn btn-primary' if can? :edit, @maintenance %>
 </div>

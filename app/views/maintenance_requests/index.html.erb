@@ -7,12 +7,11 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Request from</th>
-      <th>Request date</th>
+      <th>Department</th>
       <th>Equipment</th>
-      <th>Maintenance type</th>
-      <th>Request to</th>
-      <th>Status</th>
+      <th>Failure date</th>
+      <th>Request Date</th>
+      <th>Request Status</th>
       <th></th>
     </tr>
   </thead>
@@ -20,16 +19,15 @@
   <tbody>
     <% @maintenance_requests.each do |maintenance_request| %>
       <tr>
-        <td><%= maintenance_request.request_from %></td>
-        <td><%= maintenance_request.created_at.strftime("%b %d, %Y") %></td>
+        <td><%= maintenance_request.equipment.department %></td>
         <td><%= maintenance_request.equipment %></td>
-        <td><%= maintenance_request.maintenance_type %></td>
-        <td><%= maintenance_request.request_to %></td>
-        <td><%= maintenance_request.status %></td>
+        <td><%= maintenance_request.failure_date.strftime("%B %d, %Y") %></td>
+        <td><%= maintenance_request.created_at.strftime("%B %d, %Y") %></td>
+        <td><%= maintenance_request.request_status %></td>
         <td>
           <%= link_to 'Details', maintenance_request, class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_maintenance_request_path(maintenance_request), class: 'btn btn-primary' if can? :edit, maintenance_request and maintenance_request.status == Constants::PENDING %>
-          <%= link_to 'Delete', maintenance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, maintenance_request %>
+          <%= link_to 'Delete', maintenance_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, maintenance_request and maintenance_request.status == Constants::PENDING %>
         </td>
       </tr>
     <% end %>

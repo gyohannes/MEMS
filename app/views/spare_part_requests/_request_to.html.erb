@@ -1,6 +1,0 @@
-<% if @request_to_type == Constants::SUPPLIER || @request_to_type == Constants::REPRESENTATIVE %>
-  <%= simple_fields_for(:spare_part_request, @spare_part_request) do |f| %>
-      <%= f.input :institution_id, label: "#{@request_to_type}", collection: @institutions %>
-  <% end %>
-<% end %>
-

@@ -3,21 +3,30 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <%= f.association :organization_unit, collection: @organization_units, prompt: false %>
-      <%= f.input :request_to, collection: Constants::REQUEST_TO %>
-      <div id="procurement_request_to">
-        <%= render partial: 'request_to' %>
-      </div>
-    </div>
-    <div class="col-sm-6">
       <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
-      <%= f.input :contact_phone %>
-      <%= f.input :contact_email %>
       <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
     </div>
+    <div class="col-sm-6 left_form">
+      <%= f.input :contact_phone %>
+      <%= f.input :contact_email %>
+      <%= f.input :attachment, as: :file %>
+    </div>
   </div>
-    <%= render partial: 'procurement_request_equipment_fields', locals: {f: f} %>
 
+    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+      <li role="presentation" class="active"><a href="#equipment" data-toggle="tab">Equipment</a></li>
+      <li role="presentation"><a href="#spare_parts" data-toggle="tab">Spare Parts/Accesseries</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="equipment">
+        <%= render partial: 'procurement_request_equipment_fields', locals: {f: f} %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade in" id="spare_parts">
+        <%= render partial: 'procurement_request_spare_part_fields', locals: {f: f} %>
+      </div>
+    </div>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

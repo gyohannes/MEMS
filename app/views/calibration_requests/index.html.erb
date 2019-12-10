@@ -7,11 +7,10 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Request from</th>
+      <th>Request by</th>
       <th>Request date</th>
       <th>Equipment</th>
-      <th>Calibration description</th>
-      <th>Requested to</th>
+      <th>Description</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -20,11 +19,10 @@
   <tbody>
     <% @calibration_requests.each do |calibration_request| %>
       <tr>
-        <td><%= calibration_request.request_from %></td>
-        <td><%= calibration_request.request_date %></td>
+        <td><%= calibration_request.user.organization_unit %></td>
+        <td><%= calibration_request.request_date.strftime("%B %d, %Y") %></td>
         <td><%= calibration_request.equipment %></td>
-        <td><%= calibration_request.calibration_description %></td>
-        <td><%= calibration_request.request_to %></td>
+        <td><%= calibration_request.description %></td>
         <td><%= calibration_request.status %></td>
         <td>
           <%= link_to 'Details', calibration_request, class: 'btn btn-primary' %>

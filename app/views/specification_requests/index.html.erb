@@ -9,9 +9,8 @@
     <tr>
       <th>Request from</th>
       <th>Requested date</th>
-      <th>Request to</th>
       <th>Equipment name</th>
-      <th>Quantity</th>
+      <th>Description</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -20,11 +19,10 @@
   <tbody>
     <% @specification_requests.each do |specification_request| %>
       <tr>
-        <td><%= specification_request.request_from %></td>
-        <td><%= specification_request.requested_date %></td>
-        <td><%= specification_request.request_to %></td>
+        <td><%= specification_request.user.organization_unit %></td>
+        <td><%= specification_request.requested_date.strftime("%B %d, %Y") %></td>
         <td><%= specification_request.equipment_name %></td>
-        <td><%= specification_request.quantity %></td>
+        <td><%= specification_request.description %></td>
         <td><%= specification_request.status %></td>
         <td>
           <%= link_to 'Details', specification_request, class: 'btn btn-primary' %>

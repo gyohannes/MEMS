@@ -1,9 +1,12 @@
 class DisposalRequestsController < ApplicationController
   before_action :set_disposal_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load, only: [:new, :create, :edit, :update]
+  before_action :load
 
   def load
     @equipments = current_user.load_equipment
+    @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
+    @organization_units = [current_user.parent_org_unit]
+    @institutions = Institution.all
   end
   # GET /disposal_requests
   # GET /disposal_requests.json
@@ -11,7 +14,7 @@ class DisposalRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @disposal_requests = current_user.disposal_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @disposal_requests = current_user.disposal_requests + current_user.incoming_disposal_requests
+      @disposal_requests = current_user.outgoing_disposal_requests + current_user.incoming_disposal_requests
     else
       @disposal_requests = []
     end
@@ -20,8 +23,7 @@ class DisposalRequestsController < ApplicationController
   # GET /disposal_requests/1
   # GET /disposal_requests/1.json
   def show
-    @status = @disposal_request.status
-    @disposal_request.status = Constants::PENDING if @status == Constants::FORWARDED
+    @disposal_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /disposal_requests/new
@@ -29,34 +31,32 @@ class DisposalRequestsController < ApplicationController
     @disposal_request = DisposalRequest.new
   end
 
-  def load_request_to
-    @request_to_type = params[:request_to]
-    @institutions = Institution.where('category = ?', @request_to_type)
-    render partial: 'request_to'
-  end
-
   def decision
     @disposal_request.update(disposal_request_params)
-    @disposal_request.update(status: params[:status])
-    redirect_to @disposal_request, notice: "Disposal request was successfully #{params[:status]}."
+    if @disposal_request.status == Constants::FORWARDED
+      n = @disposal_request.notifications.build(name: @disposal_request.equipment.to_s << ' Disposal Request Forwarded',
+                                                   organization_unit_id: current_user.parent_org_unit.try(:id))
+      n.save
+    end
+    redirect_to @disposal_request, notice: "Disposal request was successfully #{params[:disposal_request][:status]}."
   end
 
 
   # GET /disposal_requests/1/edit
   def edit
-    @request_to_type = @disposal_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /disposal_requests
   # POST /disposal_requests.json
   def create
     @disposal_request = DisposalRequest.new(disposal_request_params)
-    @request_to_type = @disposal_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
+    @disposal_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @disposal_request.status = Constants::PENDING
     respond_to do |format|
       if @disposal_request.save
-        @disposal_request.update(status: Constants::PENDING)
+        n = @disposal_request.notifications.build(name: @disposal_request.equipment.to_s << ' Disposal Request',
+                                                     organization_unit_id: @disposal_request.organization_unit_id)
+        n.save
         format.html { redirect_to @disposal_request, notice: 'Disposal request was successfully created.' }
         format.json { render :show, status: :created, location: @disposal_request }
       else
@@ -69,8 +69,6 @@ class DisposalRequestsController < ApplicationController
   # PATCH/PUT /disposal_requests/1
   # PATCH/PUT /disposal_requests/1.json
   def update
-    @request_to_type = @disposal_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @disposal_request.update(disposal_request_params)
         format.html { redirect_to @disposal_request, notice: 'Disposal request was successfully updated.' }
@@ -100,6 +98,8 @@ class DisposalRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def disposal_request_params
-      params.require(:disposal_request).permit(:organization_unit_id, :facility_id, :equipment_id, :disposal_description, :request_to, :contact_address, :user_id, :request_date, :comment, :decision_by)
+      params.require(:disposal_request).permit(:organization_unit_id, :equipment_id, :description, :attachment,
+                                               :contact_address, :user_id, :request_date, :comment, :decision_by,
+                                               forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

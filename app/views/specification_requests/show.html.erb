@@ -2,68 +2,73 @@
   <h2>Specification Request</h2>
 </div>
 <div class="body">
-<p>
-  <strong>Request From:</strong>
-  <%= @specification_request.request_from %>
-</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <label class="col-sm-6">Request By:</label>
+        <%= @specification_request.user.organization_unit %>
+      </div>
 
-<p>
-  <strong>Equipment name:</strong>
-  <%= @specification_request.equipment_name %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Request Date:</label>
+        <%= @specification_request.requested_date.strftime("%B %d, %Y") %>
+      </div>
 
-<p>
-  <strong>Quantity:</strong>
-  <%= @specification_request.quantity %>
-</p>
-
-  <p>
-    <strong>Request to:</strong>
-    <%= @specification_request.request_to %>
-  </p>
-
-  <% if @specification_request.institution_id? %>
-      <p>
-        <label><%= @specification_request.request_to %>:</label>
-        <%= @specification_request.institution %>
+      <p class="row">
+        <label class="col-sm-6">Equipment Name:</label>
+        <%= @specification_request.equipment_name %>
       </p>
-  <% end %>
-<p>
-  <strong>Requested by:</strong>
-  <%= @specification_request.user %>
-</p>
 
-<p>
-  <strong>Requested date:</strong>
-  <%= @specification_request.requested_date %>
-</p>
-  <p>
-    <label>Status:</label>
-    <%= @status %>
-  </p>
-  <%= simple_form_for(@specification_request, url: decision_specification_request_path) do |f| %>
-  <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING %>
-          <%= f.input :comment %>
-          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-          <div id="forward">
-            <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST_TO %>
-          </div>
-          <div id="specification_request_to">
-            <%= render partial: 'request_to' %>
-          </div>
-      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-  <% else %>
-      <p><label>Comment:</label> <%= @specification_request.comment %></p>
-      <p><label><%= @status unless @status==Constants::PENDING %> by:</label> <%= @specification_request.decided_user.try(:name_and_from_type) %></p>
-  <% end %>
-<hr/>
-<center>
-    <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING %>
-      <%= f.button :submit, 'Submit' %>
-    <% end %>
-  <% end %>
-</center>
+      <p class="row">
+        <label class="col-sm-6">Description:</label>
+        <%= @specification_request.description %>
+      </p>
+      <p class="row">
+        <% if @specification_request.attachment.attached? %>
+            <label class="col-sm-6">Attached Document:</label>
+            <%= link_to @specification_request.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+            <% end %>
+        <% end %>
+      </p>
+      <p class="row">
+        <label class="col-sm-6">Status:</label>
+        <%= @specification_request.status %>
+        <% if @specification_request.status == Constants::OUT_SOURCED %>
+            to <%= @specification_request.forwards.order('created_at DESC').first.institution %>
+        <% end %>
+        <% if @specification_request.status == Constants::FORWARDED %>
+            to <%= @specification_request.forwards.order('created_at DESC').first.organization_unit %>
+        <% end %>
+      </p>
+      <% unless @specification_request.status==Constants::PENDING %>
+          <div class="row"><label class="col-sm-6"><%= @specification_request.status %> by:</label> <%= @specification_request.decided_user.organization_unit %></div>
+          <div class="row"><label class="col-sm-6">Comment:</label> <%= @specification_request.comment %></div>
+      <% end %>
 
-<%= link_to 'Edit', edit_specification_request_path(@specification_request),class: 'btn btn-primary' if can? :edit, @specification_request and @specification_request.status == Constants::PENDING  %>
-<%= link_to 'Back', specification_requests_path %>
+    </div>
+    <div class="col-sm-6 left_form">
+      <% if can? :decision, @specification_request and @specification_request.status == Constants::PENDING  %>
+          <%= simple_nested_form_for(@specification_request, url: decision_specification_request_path) do |f| %>
+              <%= f.input :comment %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+              <%= f.simple_fields_for :forwards do |ff| %>
+                  <div id="outsource">
+                    <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
+                  </div>
+                  <div id="forward">
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                  </div>
+              <% end %>
+              <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+
+              <hr/>
+              <%= f.button :submit, 'Submit' %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <hr/>
+  <%= link_to 'Back', specification_requests_path %>
+  <%= link_to 'Edit', edit_specification_request_path(@specification_request), class: 'btn btn-primary' if can? :edit, @specification_request and @specification_request.status == Constants::PENDING  %>
 </div>

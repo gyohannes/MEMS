@@ -7,9 +7,8 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Request From</th>
+      <th>Request by</th>
       <th>Requested date</th>
-      <th>Request to</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -18,9 +17,8 @@
   <tbody>
     <% @procurement_requests.each do |procurement_request| %>
       <tr>
-        <td><%= procurement_request.request_from %></td>
-        <td><%= procurement_request.request_date %></td>
-        <td><%= procurement_request.request_to %></td>
+        <td><%= procurement_request.user.organization_unit %></td>
+        <td><%= procurement_request.request_date.strftime("%B %d, %Y") %></td>
         <td><%= procurement_request.status %></td>
         <td>
           <%= link_to 'Details', procurement_request, class: 'btn btn-primary' %>

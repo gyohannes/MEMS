@@ -27,8 +27,7 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs tab-nav-right" role="tablist">
     <li role="presentation" class="active"><a href="#equipment_details" data-toggle="tab">Equipment Registration</a></li>
-    <li role="presentation"><a href="#ppm" data-toggle="tab">Planned Preventive Maintenance</a></li>
-    <li role="presentation"><a href="#maintenance" data-toggle="tab">Corrective Maintenance</a></li>
+    <li role="presentation"><a href="#maintenance" data-toggle="tab">Maintenance</a></li>
     <li role="presentation"><a href="#trainings" data-toggle="tab">Trainees</a></li>
     <li role="presentation"><a href="#inventories" data-toggle="tab">Inventories</a></li>
     <li role="presentation"><a href="#disposal" data-toggle="tab">Disposal</a></li>
@@ -44,15 +43,7 @@
       <div class="body table-responsive">
       <%= render partial: 'maintenances/maintenances', locals: { :@maintenances => @equipment.maintenances } %>
         <hr/>
-      <%= link_to 'Add Corrective Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
-      </div>
-    </div>
-
-    <div role="tabpanel" class="tab-pane fade in" id="ppm">
-      <div class="body table-responsive">
-        <%= render partial: 'planned_preventive_maintenaces/ppms', locals: { :@planned_preventive_maintenaces => @equipment.planned_preventive_maintenaces } %>
-        <hr/>
-        <%= link_to 'Add Planned Preventive Maintenance', new_planned_preventive_maintenace_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
+      <%= link_to 'Register Maintenance', new_maintenance_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Maintenance %>
       </div>
     </div>
 
@@ -60,7 +51,7 @@
       <div class="body table-responsive">
         <%= render partial: 'trainings/trainings', locals: { :@trainings => @equipment.trainings } %>
         <hr/>
-        <%= link_to 'New Training', new_training_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Training %>
+        <%= link_to 'Register Training', new_training_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Training %>
       </div>
     </div>
 
@@ -68,7 +59,7 @@
       <div class="body table-responsive">
         <%= render partial: 'inventories/inventories', locals: { :@inventories => @equipment.inventories } %>
         <hr/>
-        <%= link_to 'New Inventory', new_inventory_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Inventory %>
+        <%= link_to 'Register Inventory', new_inventory_path(equipment: @equipment.id), class: 'btn btn-primary' if can? :create, Inventory %>
       </div>
     </div>
 

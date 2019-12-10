@@ -7,11 +7,10 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Request from</th>
+      <th>Request by</th>
       <th>Request date</th>
       <th>Equipment</th>
-      <th>Disposal description</th>
-      <th>Requested to</th>
+      <th>Description</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -20,11 +19,10 @@
   <tbody>
     <% @disposal_requests.each do |disposal_request| %>
       <tr>
-        <td><%= disposal_request.request_from %></td>
-        <td><%= disposal_request.request_date %></td>
+        <td><%= disposal_request.user.organization_unit %></td>
+        <td><%= disposal_request.request_date.strftime("%B %d, %Y") %></td>
         <td><%= disposal_request.equipment %></td>
-        <td><%= disposal_request.disposal_description %></td>
-        <td><%= disposal_request.request_to %></td>
+        <td><%= disposal_request.description %></td>
         <td><%= disposal_request.status %></td>
         <td>
           <%= link_to 'Details', disposal_request, class: 'btn btn-primary' %>

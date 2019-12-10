@@ -10,6 +10,13 @@ class NotificationsController < ApplicationController
   # GET /notifications/1
   # GET /notifications/1.json
   def show
+    if current_user
+      unless @notification.read(current_user.id)
+        nuv = @notification.notification_user_visits.build(user_id: current_user.id)
+        nuv.save
+      end
+    end
+    redirect_to @notification.notifiable
   end
 
   # GET /notifications/new
@@ -69,6 +76,6 @@ class NotificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def notification_params
-      params.require(:notification).permit(:organization_unit_id, :name, :notifiable_id)
+      params.require(:notification).permit(:organization_unit_id, :institution_id, :department_id, :user_id, :name, :notifiable_id)
     end
 end

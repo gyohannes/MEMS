@@ -1,0 +1,7 @@
+$("#disposal_report").html("<%= escape_javascript( render :partial => "/disposals/disposals"  ) %>");
+$("#disposal_report").fadeIn(500);
+$('.js-exportable').DataTable({
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgtip',
+    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+});

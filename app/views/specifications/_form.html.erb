@@ -5,11 +5,10 @@
 
   <div class="row">
     <div class="col-sm-6">
-    <%= f.association :organization_unit, as: :hidden, input_html: {value: current_user.organization_unit_id} %>
-    <%= f.association :facility, as: :hidden, input_html: {value: current_user.facility_id} %>
-    <%= f.association :equipment_name %>
-    <%= f.input :model %>
-    <%= f.input :description %>
+      <%= f.input :name, label: 'Specification Name' %>
+      <%= f.association :equipment_name %>
+      <%= f.input :model %>
+      <%= f.input :description %>
       <%= f.input :attachment, as: :file, hint: 'attach pdf file' %>
     </div>
     <div class="col-sm-6 left_form">

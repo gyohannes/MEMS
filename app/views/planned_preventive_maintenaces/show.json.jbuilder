@@ -1,1 +1,0 @@
-json.partial! "planned_preventive_maintenaces/planned_preventive_maintenace", planned_preventive_maintenace: @planned_preventive_maintenace

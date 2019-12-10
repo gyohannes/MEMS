@@ -4,9 +4,11 @@ class ProcurementRequestsController < ApplicationController
   before_action :load
 
   def load
-    @organization_units = [current_user.try(:organization_unit)]
-    @facilities = [current_user.try(:facility)]
     @user = [current_user]
+    @spare_parts = current_user.organization_unit.spare_parts
+    @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
+    @organization_units = [current_user.parent_org_unit]
+    @institutions = Institution.all
   end
   # GET /procurement_requests
   # GET /procurement_requests.json
@@ -14,7 +16,7 @@ class ProcurementRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @procurement_requests = current_user.procurement_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @procurement_requests = current_user.incoming_procurement_requests + current_user.procurement_requests
+      @procurement_requests = current_user.outgoing_procurement_requests + current_user.incoming_procurement_requests
     elsif !current_user.institution.blank?
       @procurement_requests = current_user.incoming_procurement_requests
     else
@@ -24,52 +26,42 @@ class ProcurementRequestsController < ApplicationController
 
   def decision
       @procurement_request.update(procurement_request_params)
-      if @procurement_request.errors.blank?
-      @procurement_request.update(status: params[:status])
-      if params[:status] == Constants::REJECTED
-        @procurement_request.procurement_request_equipments.each do |pe|
-          pe.update(approved_quantity: nil)
-          pe.save
-        end
+      if @procurement_request.status == Constants::FORWARDED
+        n = @procurement_request.notifications.build(name: @procurement_request.user.organization_unit.try(:to_s) << ' Procurement Request Forwarded',
+                                                  organization_unit_id: current_user.parent_org_unit.try(:id))
+        n.save
       end
-      redirect_to @procurement_request, notice: "Procurement request was successfully #{params[:status]}."
-    else
-      render 'show'
-    end
+      redirect_to @procurement_request, notice: "Procurement request was successfully #{params[:procurement_request][:status]}."
   end
 
   # GET /procurement_requests/1
   # GET /procurement_requests/1.json
   def show
+    @procurement_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /procurement_requests/new
   def new
     @procurement_request = ProcurementRequest.new
     @procurement_request.organization_unit_id = current_user.organization_unit
-    @procurement_request.procurement_request_equipments.build
   end
 
-  def load_request_to
-    @request_to_type = params[:request_to]
-    @institutions = Institution.where('category = ?', @request_to_type)
-    render partial: 'request_to'
-  end
   # GET /procurement_requests/1/edit
   def edit
-    @request_to_type = @procurement_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /procurement_requests
   # POST /procurement_requests.json
   def create
     @procurement_request = ProcurementRequest.new(procurement_request_params)
-    @request_to_type = @procurement_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
+    @procurement_request.organization_unit_id = current_user.department or (current_user.is_role(Constants::BIOMEDICAL_ENGINEER)) ?
+                                                                               current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @procurement_request.status = Constants::PENDING
     respond_to do |format|
       if @procurement_request.save
-        @procurement_request.update(status: Constants::PENDING)
+        n = @procurement_request.notifications.build(name: @procurement_request.user.organization_unit.try(:to_s) << ' Procurement Request',
+                                                  organization_unit_id: @procurement_request.organization_unit_id)
+        n.save
         format.html { redirect_to @procurement_request, notice: 'Procurement request was successfully created.' }
         format.json { render :show, status: :created, location: @procurement_request }
       else
@@ -114,8 +106,10 @@ class ProcurementRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def procurement_request_params
-      params.require(:procurement_request).permit(:organization_unit_id, :facility_id, :user_id, :contact_phone, :contact_email,
-                                                  :request_date, :request_to, :institution_id, :comment, :decision_by,
-      procurement_request_equipments_attributes: [:id, :equipment_name, :specification, :quantity, :approved_quantity, :_destroy])
+      params.require(:procurement_request).permit(:organization_unit_id, :user_id, :status, :contact_phone, :contact_email,
+                                                  :request_date, :comment, :decision_by, :attachment,
+                                                  procurement_request_equipments_attributes: [:id, :equipment_name_id, :specification_id, :quantity, :approved_quantity, :_destroy],
+                                                  procurement_request_spare_parts_attributes: [:id, :spare_part_id, :description, :requested_quantity, :approved_quantity, :_destroy],
+                                                  forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

@@ -3,7 +3,7 @@
     <thead>
     <tr>
       <th>Organization Unit / Facility</th>
-      <th>Name of contact</th>
+      <th>Name</th>
       <th>Profession</th>
       <th>Title</th>
       <th>Work place</th>
@@ -15,8 +15,8 @@
     <tbody>
     <% @contacts.each do |contact| %>
         <tr>
-          <td><%= contact.facility || contact.organization_unit %></td>
-          <td><%= contact.name_of_contact %></td>
+          <td><%= contact.organization_unit %></td>
+          <td><%= contact.name %></td>
           <td><%= contact.profession %></td>
           <td><%= contact.title %></td>
           <td><%= contact.work_place %></td>

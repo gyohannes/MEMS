@@ -27,7 +27,7 @@ class OrganizationUnit < ApplicationRecord
   has_many :model_equipments, through: :model_equipment_list
   has_many :notifications
   has_many :spare_parts
-
+  has_many :inventories, through: :equipment
   validates :name, :code, :organization_unit_type, presence: true
 
   IDEAL_VS_AVAILABLE = [IDEAL='Ideal', AVAILABLE='Available']
@@ -37,7 +37,7 @@ class OrganizationUnit < ApplicationRecord
       return ModelEquipment.joins(:model_equipment_list).where('equipment_name_id = ? and model_equipment_list.organization_unit_id in (?)',
                                                       equipment_name, (sub_units.pluck(:id) << id)).sum(:quantity)
     else
-      return sub_equipment.where(equipment_name_id: equipment_name, status: Equipment::FUNCTIONAL).count
+      return sub_equipment.where(equipment_name_id: equipment_name).select{|x| !x.disposed}.count
     end
   end
 
@@ -54,9 +54,14 @@ class OrganizationUnit < ApplicationRecord
     [parent.facility_children]
   end
 
+  def self.full_organization_tree
+    org_unit = top_organization_unit
+    [org_unit.org_children] unless org_unit.blank?
+  end
+
   def self.organization_tree(user=nil)
-    parent = user.blank? ? OrganizationUnit.top_organization_unit : user.try(:organization_unit)
-    [parent.org_children]
+    org_unit = !user.department.blank? ? nil : user.try(:organization_unit)
+    [org_unit.org_children] unless org_unit.blank?
   end
 
   def org_children
@@ -98,20 +103,20 @@ class OrganizationUnit < ApplicationRecord
     sub_organization_units + sub_organization_units.collect{|x| x.sub_units}.flatten
   end
 
-  def sub_facilities
-    facilities + sub_organization_units.collect{|x| x.sub_facilities}.flatten
-  end
-
   def sub_institutions
     institutions + sub_organization_units.map { |x| x.sub_institutions }.flatten
   end
 
   def sub_users
-    (users + sub_organization_units.collect{|x| x.sub_users} + facilities.collect{|x| x.users}).flatten
+    (users + sub_organization_units.collect{|x| x.sub_users}).flatten
+  end
+
+  def all_contacts
+    Contact.where('organization_unit_id in (?)', (sub_units.pluck(:id) << self.id)).pluck(:id)
   end
 
   def sub_contacts
-    Contact.where('organization_unit_id in (?) or facility_id in (?)', (sub_units.pluck(:id) << id), sub_facilities.pluck(:id) )
+    Contact.where('organization_unit_id = ? ', self.id)
   end
 
   def sub_equipment
@@ -119,7 +124,7 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_receive
-    (receive + sub_organization_units.collect{|x| x.sub_receive} + facilities.collect{|x| x.receive}).flatten
+    (receive + sub_organization_units.collect{|x| x.sub_receive}).flatten
   end
 
   def sub_store_registrations
@@ -127,7 +132,7 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_inventories
-    sub_facilities.collect{ |x| x.inventories }.flatten
+    inventories + sub_units.collect{ |x| x.inventories }.flatten
   end
 
   def to_s

@@ -12,8 +12,6 @@
 //= require institutions
 //= require contacts
 //= require equipment
-//= require procurement_requests
-//= require specification_requests
 //= require spare_part_requests
 //= require acceptance_requests
 //= require training_requests

@@ -3,7 +3,6 @@ class CreateInstallations < ActiveRecord::Migration[5.1]
     create_table :installations, id: :uuid do |t|
       t.references :equipment, type: :uuid, foreign_key: true
       t.references :department, type: :uuid, foreign_key: true
-      t.references :installation_request, type: :uuid, foreign_key: true
       t.string :block_number
       t.date :date_of_installation
       t.string :warranty_period

@@ -25,7 +25,7 @@ class EquipmentController < ApplicationController
   end
 
   def facility_equipment_search
-    equipments = Equipment.search(nil, nil,nil,nil,nil,nil,params[:term])
+    equipments = Equipment.search(nil, current_user.organization_unit_id,nil,nil,nil,nil,params[:term])
     render json: equipments
   end
 
@@ -51,7 +51,7 @@ class EquipmentController < ApplicationController
   def equipment_by_department
     equipment = []
     Department.all.each do |d|
-      equipment << {name: d.to_s, data: Equipment::STATUSES.map{|s| [s,current_user.load_equipment.where(status: s, department_id: d.id).count]}}
+      equipment << {name: d.to_s, data: Status.all.map{|s| [s.to_s, current_user.load_equipment.where(status_id: s, department_id: d.id).count]}}
     end
     render json: equipment
   end
@@ -59,7 +59,7 @@ class EquipmentController < ApplicationController
   def equipment_by_org_unit_and_status
     equipment = []
     current_user.organization_unit.sub_organization_units.each do |ou|
-      equipment << {name: ou.to_s, data: Equipment::STATUSES.map{|s| [s, ou.sub_equipment.where(status: s).count]} }
+      equipment << {name: ou.to_s, data: Status.all.map{|s| [s.to_s, ou.sub_equipment.where(status_id: s).count]} }
     end
     render json: equipment
   end
@@ -84,7 +84,6 @@ class EquipmentController < ApplicationController
   # GET /equipment.json
   def index
     @equipment = current_user.load_equipment
-    @facility = current_user.facility
   end
 
   def load_equipment
@@ -105,7 +104,6 @@ class EquipmentController < ApplicationController
   # GET /equipment/1/edit
   def edit
     @organization_unit = @equipment.organization_unit
-    @facilities = @organization_unit.facilities
   end
 
   # POST /equipment
@@ -127,7 +125,6 @@ class EquipmentController < ApplicationController
   # PATCH/PUT /equipment/1
   # PATCH/PUT /equipment/1.json
   def update
-    @facilities = [current_user.facility]
     respond_to do |format|
       if @equipment.update(equipment_params)
         format.html { redirect_to @equipment, notice: 'Equipment was successfully updated.' }
@@ -162,6 +159,6 @@ class EquipmentController < ApplicationController
                                         :purchase_price, :supplier_id, :manual_attached, :warranty_expire_date, :institution_id,
                                         :status_id, :acquisition_type, :inventory_number, :equipment_risk_classification, :installation_date,
                                         :warranty_expire_date, :maintenance_service_provider, :description, :years_used, :order_number, :cost,
-                                        :estimated_life_span, :department_id, :location)
+                                        :estimated_life_span, :department_id, :location, documents_attributes: [:id, :name, :attachment, :_destroy])
     end
 end

@@ -12,7 +12,7 @@ class OrganizationUnitsController < BaseController
   end
 
   def load_all_tree
-    render json: OrganizationUnit.organization_tree
+    render json: OrganizationUnit.full_organization_tree
   end
 
   def load_facility_tree

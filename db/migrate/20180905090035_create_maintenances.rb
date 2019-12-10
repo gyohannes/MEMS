@@ -3,6 +3,7 @@ class CreateMaintenances < ActiveRecord::Migration[5.1]
     create_table :maintenances, id: :uuid do |t|
       t.references :user, type: :uuid, foreign_key: true
       t.references :equipment, type: :uuid, foreign_key: true
+      t.string :maintenance_type
       t.references :maintenance_request, type: :uuid, foreign_key: true
       t.string :maintenance_work_order_id, type: :uuid
       t.text :description_of_equipment_failure
@@ -16,7 +17,6 @@ class CreateMaintenances < ActiveRecord::Migration[5.1]
       t.string :maintenance_type
       t.references :status, type: :uuid, foreign_key: true
       t.text :engineer_name_and_contact
-      t.date :preventive_maintenance_date
       t.text :note
 
       t.timestamps

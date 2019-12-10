@@ -1,0 +1,30 @@
+<div class="header">
+  <h2>Spare Parts Report</h2>
+</div>
+
+<div class="body">
+  <%= simple_form_for :search, url:  reports_spare_parts_path, remote: true, html: { novalidate: true } do |f| %>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div id="report_organization_unit_tree"></div>
+          <%=  f.input :organization_unit, as: :hidden, required: false %>
+        </div>
+
+        <div class="col-sm-6">
+          <%=  f.input :equipment_name, collection: EquipmentName.all, required: false %>
+          <%=  f.input :spare_part_name, collection: SparePart.all, required: false %>
+
+        </div>
+      </div>
+      <div class="form-actions align-center">
+        <%= f.button :button, 'Reset Form', type: :reset, class: 'btn btn-default' %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.button :submit, 'Search', class: 'btn btn-primary' %>
+      </div>
+  <% end %>
+  <hr/>
+  <div id="spare_parts_report">
+    <%= render '/reports/spare_parts', locals: {:@spare_parts => @spare_parts} %>
+  </div>
+
+</div>

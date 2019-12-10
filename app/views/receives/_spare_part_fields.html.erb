@@ -1,4 +1,4 @@
-<table id="spare_parts" class="table table-responsive">
+<table id="spare_parts_fields" class="table table-responsive">
   <tr>
     <th>Name</th>
     <th>Quantity</th>
@@ -19,9 +19,9 @@
               <i class="material-icons">delete</i>
           <% end %>
         </td>
+        <%= javascript_include_tag 'global' %>
       </tr>
-      <%= javascript_include_tag 'global' %>
 <% end %>
 </table>
-<p><%= f.link_to_add "Add Spare Part", :receive_spare_parts,"data-target" => "#spare_parts", class: 'btn btn-primary'  %></p>
+<p><%= f.link_to_add "Add Spare Part", :receive_spare_parts,"data-target" => "#spare_parts_fields", class: 'btn btn-primary'  %></p>
 <br/>

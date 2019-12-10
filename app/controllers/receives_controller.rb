@@ -3,8 +3,7 @@ class ReceivesController < ApplicationController
   before_action :load, only: [:new, :create, :edit, :update]
 
   def load
-    @stores = current_user.facility ? current_user.facility.stores :
-                  (current_user.organization_unit ? current_user.organization_unit.stores : [])
+    @stores = current_user.organization_unit ? current_user.organization_unit.stores : []
   end
   # GET /receives
   # GET /receives.json
@@ -12,8 +11,6 @@ class ReceivesController < ApplicationController
     @receives = []
     if current_user.store
       @receives = current_user.store.receive
-    elsif current_user.facility
-      @receives = current_user.facility.receive
     elsif current_user.organization_unit
       @receives = current_user.organization_unit.sub_receive
     end
@@ -30,7 +27,7 @@ class ReceivesController < ApplicationController
                :encoding => 'utf-8',
                :disposition => 'attachment',
                :margin => {
-                   :top => 35,
+                   :top => 40,
                    :bottom => 25
                },
                :header => {
@@ -108,6 +105,8 @@ class ReceivesController < ApplicationController
     def receife_params
       params.require(:receive).permit(:store_id, :reference_number, :deliverer_name, :recipient_name, :receive_date, :note,
                                       receive_spare_parts_attributes: [:id, :receive_id, :spare_part_id, :quantity,
-                                                                       :unit_price, :expiry_date, :remarks, :_destroy])
+                                                                       :unit_price, :expiry_date, :remarks, :_destroy],
+                                      receive_equipment_attributes: [:id, :receive_id, :equipment_name_id, :quantity,
+                                                                       :unit_cost, :model, :description, :_destroy])
     end
 end

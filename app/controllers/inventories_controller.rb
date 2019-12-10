@@ -4,8 +4,7 @@ class InventoriesController < ApplicationController
   # GET /inventories
   # GET /inventories.json
   def index
-    @inventories = current_user.organization_unit ? current_user.organization_unit.sub_inventories :
-                       (current_user.facility ? current_user.facility.inventories : [])
+    @inventories = current_user.organization_unit.sub_inventories
   end
 
   # GET /inventories/1
@@ -29,18 +28,17 @@ class InventoriesController < ApplicationController
   # POST /inventories
   # POST /inventories.json
   def create
-    equipment = Equipment.find_by(facility_id: params[:inventory][:equipment_attributes][:facility_id],
-                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number],
-                                  equipment_name: params[:inventory][:equipment_attributes][:equipment_name])
+    equipment = Equipment.find_by(organization_unit_id: params[:inventory][:equipment_attributes][:organization_unit_id],
+                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number])
 
     unless equipment.blank?
       params[:inventory][:equipment_id] = equipment.id
       params[:inventory][:trained_end_users] = equipment.trained_end_users
-      params[:inventory][:trained_maintenance_personnel] = equipment.trained_maintenance_personnel
+      params[:inventory][:trained_technical_personnel] = equipment.trained_technical_personnel
     end
     params[:inventory].delete('equipment_attributes')
     @inventory = Inventory.new(inventory_params)
-
+    @inventory.user_id = current_user.id
     respond_to do |format|
       if @inventory.save
         equipment.update(status: @inventory.status)
@@ -56,14 +54,13 @@ class InventoriesController < ApplicationController
   # PATCH/PUT /inventories/1
   # PATCH/PUT /inventories/1.json
   def update
-    equipment = Equipment.find_by(facility_id: params[:inventory][:equipment_attributes][:facility_id],
-                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number],
-                                  equipment_name: params[:inventory][:equipment_attributes][:equipment_name])
+    equipment = Equipment.find_by(organization_unit_id: params[:inventory][:equipment_attributes][:organization_unit_id],
+                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number])
 
     unless equipment.blank?
       params[:inventory][:equipment_id] = equipment.id
       params[:inventory][:trained_end_users] = equipment.trained_end_users
-      params[:inventory][:trained_maintenance_personnel] = equipment.trained_maintenance_personnel
+      params[:inventory][:trained_technical_personnel] = equipment.trained_technical_personnel
     end
     params[:inventory].delete('equipment_attributes')
 
@@ -97,10 +94,10 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:equipment_id, :status, :description_of_problem, :trained_end_users,
+      params.require(:inventory).permit(:equipment_id, :status_id, :user_id, :description_of_problem, :trained_end_users,
                                         :trained_maintenance_personnel, :suggestion, :risk_level, :inventory_date,
                                         :inventory_done_by, :contact_address, :note,
-                                        equipment_attributes: [:id, :facility_id, :equipment_name, :model, :serial_number,:status,
+                                        equipment_attributes: [:id, :organization_unit_id, :equipment_name, :model, :serial_number,:status_id,
                                                                :trained_end_users, :trained_maintenance_personnel, :tag_number, :_destroy])
     end
 end

@@ -1,0 +1,7 @@
+<% unless @models.blank? %>
+    <%= simple_fields_for :search do |f| %>
+        <%= f.input :model, collection: @models %>
+    <% end %>
+<% end %>
+
+<%= javascript_include_tag 'global'  %>

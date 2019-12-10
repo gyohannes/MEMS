@@ -4,7 +4,14 @@ class UsersController < BaseController
   before_action :load, only: [:new, :create, :edit, :update]
 
   def load
-    @stores = current_user.facility.try(:stores)
+    @stores = current_user.organization_unit.try(:stores)
+  end
+
+  def load_departments
+    @role = params[:role]
+    org_unit = OrganizationUnit.find_by(id: params["org_unit"])
+    @departments = org_unit.blank? ? [] : org_unit.departments
+    render partial: 'department'
   end
   # GET /users
   # GET /users.json
@@ -28,12 +35,6 @@ class UsersController < BaseController
     @user = User.new
     unless params[:organization_unit].blank?
       @user.organization_unit_id = params[:organization_unit]
-      @facilities = @user.organization_unit.facilities
-      @institutions = @user.organization_unit.institutions
-    end
-    unless current_user.facility.blank?
-      @facilities = [current_user.facility]
-      @institutions = current_user.facility.institutions
     end
 
     unless current_user.institution.blank?
@@ -45,10 +46,8 @@ class UsersController < BaseController
   # GET /users/1/edit
   def edit
     unless @user.organization_unit.blank?
-      @facilities = @user.organization_unit.facilities
       @institutions = @user.organization_unit.institutions
     else
-      @facilities = [@user.facility]
       @institutions = [@user.institution]
     end
   end
@@ -58,10 +57,8 @@ class UsersController < BaseController
   def create
     @user = User.new(user_params)
     unless @user.organization_unit.blank?
-      @facilities = @user.organization_unit.facilities
       @institutions = @user.organization_unit.institutions
     else
-      @facilities = [@user.facility]
       @institutions = [@user.institution]
     end
     respond_to do |format|
@@ -83,10 +80,8 @@ class UsersController < BaseController
       params[:user].delete(:password_confirmation)
     end
     unless @user.organization_unit.blank?
-      @facilities = @user.organization_unit.facilities
       @institutions = @user.organization_unit.institutions
     else
-      @facilities = [@user.facility]
       @institutions = [@user.institution]
     end
     respond_to do |format|

@@ -1,5 +1,5 @@
 class ReceiveEquipment < ApplicationRecord
   belongs_to :receive
-
-  validates :equipment_name, :model, :quantity, :unit_cost, presence: true
+  belongs_to :equipment_name
+  validates :equipment_name_id, :model, :quantity, :unit_cost, presence: true
 end

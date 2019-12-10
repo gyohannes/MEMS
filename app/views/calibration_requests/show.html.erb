@@ -2,69 +2,74 @@
   <h2>Calibration Request</h2>
 </div>
 <div class="body">
-<p>
-  <strong>Request from:</strong>
-  <%= @calibration_request.request_from %>
-</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <label class="col-sm-6">Request By:</label>
+        <%= @calibration_request.user.organization_unit %>
+      </div>
 
-<p>
-  <strong>Equipment:</strong>
-  <%= @calibration_request.equipment %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Request Date:</label>
+        <%= @calibration_request.request_date.strftime("%B %d, %Y") %>
+      </div>
 
-<p>
-  <strong>Calibration description:</strong>
-  <%= @calibration_request.calibration_description %>
-</p>
-
-<p>
-  <strong>Request to:</strong>
-  <%= @calibration_request.request_to %>
-</p>
-
-  <% if @calibration_request.institution_id? %>
-      <p>
-        <label><%= @calibration_request.request_to %>:</label>
-        <%= @calibration_request.institution %>
+      <p class="row">
+        <label class="col-sm-6">Equipment:</label>
+        <%= @calibration_request.equipment %>
       </p>
-  <% end %>
 
+      <p class="row">
+        <label class="col-sm-6">Description:</label>
+        <%= @calibration_request.description %>
+      </p>
 
-  <p>
-  <strong>Requested by:</strong>
-  <%= @calibration_request.user.name_and_from_type %>
-</p>
+      <p class="row">
+        <% if @calibration_request.attachment.attached? %>
+            <label class="col-sm-6">Attached Document:</label>
+            <%= link_to @calibration_request.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+        <% end %>
+        <% end %>
+      </p>
+      <p class="row">
+        <label class="col-sm-6">Status:</label>
+        <%= @calibration_request.status %>
+        <% if @calibration_request.status == Constants::OUT_SOURCED %>
+            to <%= @calibration_request.forwards.order('created_at DESC').first.institution %>
+        <% end %>
+        <% if @calibration_request.status == Constants::FORWARDED %>
+            to <%= @calibration_request.forwards.order('created_at DESC').first.organization_unit %>
+        <% end %>
+      </p>
+      <% unless @calibration_request.status==Constants::PENDING %>
+          <div class="row"><label class="col-sm-6"><%= @calibration_request.status %> by:</label> <%= @calibration_request.decided_user.organization_unit %></div>
+          <div class="row"><label class="col-sm-6">Comment:</label> <%= @calibration_request.comment %></div>
+      <% end %>
 
-<p>
-  <strong>Request date:</strong>
-  <%= @calibration_request.request_date %>
-</p>
+    </div>
+    <div class="col-sm-6 left_form">
+      <% if can? :decision, @calibration_request and @calibration_request.status == Constants::PENDING  %>
+          <%= simple_nested_form_for(@calibration_request, url: decision_calibration_request_path) do |f| %>
+              <%= f.input :comment %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+              <%= f.simple_fields_for :forwards do |ff| %>
+                  <div id="outsource">
+                    <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
+                  </div>
+                  <div id="forward">
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                  </div>
+              <% end %>
+              <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
 
-  <p>
-  <strong>Status:</strong>
-  <%= @status %>
-  </p>
-  <%= simple_form_for(@calibration_request, url: decision_calibration_request_path) do |f| %>
-  <% if can? :decision, @calibration_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-          <%= f.input :comment %>
-          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-          <div id="forward">
-            <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST_TO %>
-          </div>
-          <div id="calibration_request_to">
-            <%= render partial: 'request_to' %>
-          </div>
-      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-  <% else %>
-      <p><label>Comment:</label> <%= @calibration_request.comment %></p>
-      <p><label><%= @status unless @status==Constants::PENDING %> by:</label> <%= @calibration_request.decided_user.try(:name_and_from_type) %></p>
-  <% end %>
-<hr/>
-      <% if can? :decision, @calibration_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-        <%= f.button :submit,'Submit' %>
-    <% end %>
-<% end %>
-<br/>
-<%= link_to 'Edit', edit_calibration_request_path(@calibration_request), class: 'btn btn-primary' if can? :edit, @calibration_request and @calibration_request.status == Constants::PENDING  %>
-<%= link_to 'Back', calibration_requests_path %>
+              <hr/>
+              <%= f.button :submit, 'Submit' %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <hr/>
+  <%= link_to 'Back', calibration_requests_path, class: 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_calibration_request_path(@calibration_request), class: 'btn btn-primary' if can? :edit, @calibration_request and @calibration_request.status == Constants::PENDING  %>
 </div>

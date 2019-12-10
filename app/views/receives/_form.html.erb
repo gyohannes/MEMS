@@ -13,8 +13,22 @@
       <%= f.input :receive_date, as: 'string', input_html: {class: 'datepicker'}, label: 'Delivery Date' %>
       <%= f.input :note %>
     </div>
-    <%= render partial: 'spare_part_fields', locals: {f: f} %>
   </div>
+
+    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+      <li role="presentation" class="active"><a href="#equipment" data-toggle="tab">Equipment</a></li>
+      <li role="presentation"><a href="#spare_parts" data-toggle="tab">Spare Parts/Accesseries</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="equipment">
+        <%= render partial: 'equipment_fields', locals: {f: f} %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade in" id="spare_parts">
+        <%= render partial: 'spare_part_fields', locals: {f: f} %>
+      </div>
+    </div>
 
   <div class="form-actions">
     <%= f.button :submit, 'Save Receiving Form' %>

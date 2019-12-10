@@ -10,3 +10,4 @@ top_org_unit = OrganizationUnit.create(name: 'Ethiopian Federal Ministry of Heal
                                        organization_unit_type_id: org_unit_type.id)
 
 User.create(organization_unit_id: top_org_unit.id,email: 'fmohhead@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)
+Status.create(name: 'Disposed', static: true, color: '#FF0000')

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  resources :forwards
   resources :statuses
   resources :maintenance_requirements
   resources :issues
-  resources :planned_preventive_maintenaces
   resources :notifications
   resources :spare_parts do
     collection do
@@ -13,11 +13,17 @@ Rails.application.routes.draw do
   resources :equipment_types
   resources :equipment_statuses
   resources :maintenance_work_orders
+  get 'reports/load_models'
   get 'reports/equipment'
   post 'reports/equipment'
-  get 'reports/load_facilities'
   get 'reports/trainings'
   post 'reports/trainings'
+  get 'reports/maintenances'
+  post 'reports/maintenances'
+  get 'reports/disposals'
+  post 'reports/disposals'
+  get 'reports/spare_parts'
+  post 'reports/spare_parts'
 
   resources :news
   resources :inventories
@@ -57,10 +63,7 @@ Rails.application.routes.draw do
   end
   resources :maintenance_requests do
     member do
-      get 'forward'
-    end
-    collection do
-      get 'load_request_to'
+      patch 'decision'
     end
   end
   resources :installation_requests do
@@ -74,9 +77,6 @@ Rails.application.routes.draw do
   resources :training_requests do
     member do
       patch 'decision'
-    end
-    collection do
-      get 'load_request_to'
     end
   end
   resources :acceptance_requests do
@@ -154,6 +154,7 @@ Rails.application.routes.draw do
     resources :users do
       collection do
         get 'load_users'
+        get 'load_departments'
       end
     end
   end
@@ -167,7 +168,6 @@ Rails.application.routes.draw do
       get 'load_facilities'
     end
   end
-  resources :facility_types
   resources :organization_units do
     collection do
       get 'load_tree'

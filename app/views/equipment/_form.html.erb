@@ -1,4 +1,4 @@
-<%= simple_form_for(@equipment) do |f| %>
+<%= simple_nested_form_for(@equipment) do |f| %>
     <%= hidden_field_tag 'organization_unit', @organization_unit.try(:id) %>
   <%= f.error_notification %>
 
@@ -35,6 +35,8 @@
     <%= f.input :estimated_life_span %>
     <%= f.input :equipment_risk_classification, collection: Constants::RISK_LEVELS %>
     <%= f.association :status %>
+    <legend>Documents</legend>
+    <%= render partial: 'documents', locals: {f: f} %>
   </div>
   </div>
 

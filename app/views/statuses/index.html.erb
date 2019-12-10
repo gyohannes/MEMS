@@ -21,8 +21,10 @@
         <td><%= status.description %></td>
         <td style="background-color: <%= status.color %>"><label class="label"><%= status.color %></label></td>
         <td>
-          <%= link_to 'Edit', edit_status_path(status), class: 'btn btn-primary' %>
-          <%= link_to 'Delete', status, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <% unless status.static %>
+            <%= link_to 'Edit', edit_status_path(status), class: 'btn btn-primary' %>
+            <%= link_to 'Delete', status, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

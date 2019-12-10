@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organization unit:</strong>
+  <%= @forward.organization_unit %>
+</p>
+
+<p>
+  <strong>Institution:</strong>
+  <%= @forward.institution %>
+</p>
+
+<p>
+  <strong>Forwardable:</strong>
+  <%= @forward.forwardable %>
+</p>
+
+<%= link_to 'Edit', edit_forward_path(@forward) %> |
+<%= link_to 'Back', forwards_path %>

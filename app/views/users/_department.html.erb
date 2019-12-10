@@ -1,0 +1,7 @@
+<% if @role == Constants::DEPARTMENT %>
+<%= simple_fields_for :user,@user do |f|  %>
+        <%= f.input :department_id, collection: @departments %>
+<% end %>
+<% end %>
+
+<%= javascript_include_tag 'global'  %>

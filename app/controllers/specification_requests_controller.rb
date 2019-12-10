@@ -1,9 +1,12 @@
 class SpecificationRequestsController < ApplicationController
   before_action :set_specification_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load, only: [:new, :create, :edit, :update, :show]
+  before_action :load
 
   def load
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+    @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
+    @organization_units = [current_user.parent_org_unit]
+    @institutions = Institution.all
   end
 
   # GET /specification_requests
@@ -12,7 +15,7 @@ class SpecificationRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @specification_requests = current_user.specification_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @specification_requests = current_user.specification_requests + current_user.incoming_specification_requests
+      @specification_requests = current_user.outgoing_specification_requests + current_user.incoming_specification_requests
     elsif !current_user.institution.blank?
       @specification_requests = current_user.incoming_specification_requests
     else
@@ -23,7 +26,7 @@ class SpecificationRequestsController < ApplicationController
   # GET /specification_requests/1
   # GET /specification_requests/1.json
   def show
-    @status = @specification_request.status
+    @specification_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /specification_requests/new
@@ -31,33 +34,31 @@ class SpecificationRequestsController < ApplicationController
     @specification_request = SpecificationRequest.new
   end
 
-  def load_request_to
-    @request_to_type = params[:request_to]
-    @institutions = Institution.where('category = ?', @request_to_type)
-    render partial: 'request_to'
-  end
-
   def decision
     @specification_request.update(specification_request_params)
-    @specification_request.update(status: params[:status])
-    redirect_to @specification_request, notice: "Specification request was successfully #{params[:status]}."
+    if @specification_request.status == Constants::FORWARDED
+      n = @specification_request.notifications.build(name: @specification_request.equipment_name.to_s << ' Specification Request Forwarded',
+                                                   organization_unit_id: current_user.parent_org_unit.try(:id))
+      n.save
+    end
+    redirect_to @specification_request, notice: "Specification request was successfully #{params[:specification_request][:status]}."
   end
 
   # GET /specification_requests/1/edit
   def edit
-    @request_to_type = @specification_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /specification_requests
   # POST /specification_requests.json
   def create
     @specification_request = SpecificationRequest.new(specification_request_params)
-    @request_to_type = @specification_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
+    @specification_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @specification_request.status = Constants::PENDING
     respond_to do |format|
       if @specification_request.save
-        @specification_request.update(status: Constants::PENDING)
+        n = @specification_request.notifications.build(name: @specification_request.equipment_name.to_s << ' Specification Request',
+                                                     organization_unit_id: @specification_request.organization_unit_id)
+        n.save
         format.html { redirect_to @specification_request, notice: 'Specification request was successfully created.' }
         format.json { render :show, status: :created, location: @specification_request }
       else
@@ -101,7 +102,8 @@ class SpecificationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def specification_request_params
-      params.require(:specification_request).permit(:organization_unit_id, :facility_id, :request_to, :institution_id, :equipment_name, :quantity,
-                                                    :user_id, :requested_date, :comment, :decision_by, :assigned_by, :status)
+      params.require(:specification_request).permit(:organization_unit_id, :equipment_name_id, :description, :attachment,
+                                                    :user_id, :requested_date, :comment, :decision_by, :assigned_by, :status,
+                                                    forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

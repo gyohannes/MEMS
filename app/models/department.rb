@@ -1,13 +1,9 @@
 class Department < ApplicationRecord
   belongs_to :organization_unit
-  has_many :installations
-  has_many :equipment, through: :installations
+  has_many :notifications
+  has_many :equipment
 
   validates :name, presence: true
-
-  def department_equipment(facility)
-    equipment.where('equipment.organization_unit_id = ?', facility)
-  end
 
   def to_s
     name

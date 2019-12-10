@@ -4,12 +4,11 @@ class StoresController < ApplicationController
 
   def load
     @organization_units = [current_user.organization_unit]
-    @facilities = [current_user.facility]
   end
   # GET /stores
   # GET /stores.json
   def index
-    @stores = current_user.facility.try(:stores) || current_user.organization_unit.try(:stores) || []
+    @stores = current_user.organization_unit.try(:stores)
   end
 
   # GET /stores/1

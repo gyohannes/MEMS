@@ -1,65 +1,74 @@
 <div class="header">
-  <h2>Disposal Requests</h2>
+  <h2>Disposal Request</h2>
 </div>
 <div class="body">
-<p>
-  <strong>Request from:</strong>
-  <%= @disposal_request.request_from %>
-</p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <label class="col-sm-6">Request By:</label>
+        <%= @disposal_request.user.organization_unit %>
+      </div>
 
-<p>
-  <strong>Equipment:</strong>
-  <%= @disposal_request.equipment %>
-</p>
+      <div class="row">
+        <label class="col-sm-6">Request Date:</label>
+        <%= @disposal_request.request_date.strftime("%B %d, %Y") %>
+      </div>
 
-<p>
-  <strong>Disposal description:</strong>
-  <%= @disposal_request.disposal_description %>
-</p>
+      <p class="row">
+        <label class="col-sm-6">Equipment:</label>
+        <%= @disposal_request.equipment %>
+      </p>
 
-<p>
-  <strong>Request to:</strong>
-  <%= @disposal_request.request_to %>
-</p>
-
-<p>
-  <strong>Contact address:</strong>
-  <%= @disposal_request.contact_address %>
-</p>
-
-<p>
-  <strong>Requested by:</strong>
-  <%= @disposal_request.user.name_and_from_type %>
-</p>
-
-<p>
-  <strong>Request date:</strong>
-  <%= @disposal_request.request_date %>
-</p>
-
-  <p>
-    <strong>Status:</strong>
-    <%= @status %>
-  </p>
-  <%= simple_form_for(@disposal_request, url: decision_disposal_request_path) do |f| %>
-  <% if can? :decision, @disposal_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-          <%= f.input :comment %>
-          <%= f.input :status, label: 'Action', collection: Constants::ACTIONS, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-          <div id="forward">
-            <%= f.input :request_to, label: 'Forward to', collection: Constants::REQUEST %>
-          </div>
-
-      <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-  <% else %>
-      <p><label>Comment:</label> <%= @disposal_request.comment %></p>
-      <p><label><%= @status unless @status==Constants::PENDING %> by:</label> <%= @disposal_request.decided_user.try(:name_and_from_type) %></p>
-  <% end %>
-  <hr/>
-      <% if can? :decision, @disposal_request and [Constants::PENDING, Constants::FORWARDED].include?(@status) %>
-          <%= f.button :submit, 'submit' %>
+      <p class="row">
+        <label class="col-sm-6">Description:</label>
+        <%= @disposal_request.description %>
+      </p>
+      <p class="row">
+        <% if @disposal_request.attachment.attached? %>
+            <label class="col-sm-6">Attached Document:</label>
+            <%= link_to @disposal_request.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+            <% end %>
+        <% end %>
+      </p>
+      <p class="row">
+        <label class="col-sm-6">Status:</label>
+        <%= @disposal_request.status %>
+        <% if @disposal_request.status == Constants::OUT_SOURCED %>
+            to <%= @disposal_request.forwards.order('created_at DESC').first.institution %>
+        <% end %>
+        <% if @disposal_request.status == Constants::FORWARDED %>
+            to <%= @disposal_request.forwards.order('created_at DESC').first.organization_unit %>
+        <% end %>
+      </p>
+      <% unless @disposal_request.status==Constants::PENDING %>
+          <div class="row"><label class="col-sm-6"><%= @disposal_request.status %> by:</label> <%= @disposal_request.decided_user.organization_unit %></div>
+          <div class="row"><label class="col-sm-6">Comment:</label> <%= @disposal_request.comment %></div>
       <% end %>
-  <% end %>
-  <br/>
-<%= link_to 'Edit', edit_disposal_request_path(@disposal_request), class: 'btn btn-primary' if can? :edit, @disposal_request and @disposal_request.status == Constants::PENDING  %>
-<%= link_to 'Back', disposal_requests_path %>
+
+    </div>
+    <div class="col-sm-6 left_form">
+      <% if can? :decision, @disposal_request and @disposal_request.status == Constants::PENDING  %>
+          <%= simple_nested_form_for(@disposal_request, url: decision_disposal_request_path) do |f| %>
+              <%= f.input :comment %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+              <%= f.simple_fields_for :forwards do |ff| %>
+                  <div id="outsource">
+                    <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
+                  </div>
+                  <div id="forward">
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                  </div>
+              <% end %>
+              <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
+
+              <hr/>
+              <%= f.button :submit, 'Submit' %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <hr/>
+  <%= link_to 'Back', disposal_requests_path, class: 'btn btn-primary' %>
+  <%= link_to 'Edit', edit_disposal_request_path(@disposal_request), class: 'btn btn-primary' if can? :edit, @disposal_request and @disposal_request.status == Constants::PENDING  %>
 </div>

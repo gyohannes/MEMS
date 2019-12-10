@@ -1,5 +1,6 @@
 class Inventory < ApplicationRecord
   belongs_to :equipment
+  belongs_to :status
 
   accepts_nested_attributes_for :equipment, allow_destroy: true
 

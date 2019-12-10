@@ -15,7 +15,6 @@ class MaintenanceWorkOrdersController < ApplicationController
     elsif current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @maintenance_work_orders = current_user.maintenance_work_orders
     end
-
   end
 
   # GET /maintenance_work_orders/1
@@ -41,9 +40,12 @@ class MaintenanceWorkOrdersController < ApplicationController
   # POST /maintenance_work_orders.json
   def create
     @maintenance_work_order = MaintenanceWorkOrder.new(maintenance_work_order_params)
-    @maintenance_work_order.status = Constants::PENDING
+    @maintenance_work_order.status = Constants::WORK_ORDER_PENDING
     respond_to do |format|
       if @maintenance_work_order.save
+        n = @maintenance_work_order.notifications.build(name: @maintenance_work_order.equipment.to_s << ' Maintenance Work Order',
+                                                     user_id: current_user.id)
+        n.save
         unless @maintenance_work_order.maintenance_request.blank?
           @maintenance_work_order.maintenance_request.update_attribute('request_status', 'Work Order Started')
         end

@@ -7,16 +7,20 @@
 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
+      <th></th>
       <th>Title</th>
       <th>Date</th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @notifications.each do |notification| %>
       <tr>
+        <td><i class="material-icons"><%= notification.read(current_user.id) ? 'done' : 'fiber_new' %></i></td>
         <td><%= notification.name %></td>
-        <td><%= notification.created_at.strftime("%b %d, %Y") %></td>
+        <td><%= notification.created_at.strftime("%B %d, %Y") %></td>
+        <td><%= link_to 'Details', notification.notifiable %></td>
       </tr>
     <% end %>
   </tbody>

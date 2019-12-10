@@ -12,17 +12,11 @@
     </a>
 
     <ul class="ml-menu">
-      <li>
-        <%= link_to procurement_requests_path do %>
-            <i class="material-icons">shopping_cart</i>
-            <span>Procurement Requests</span>
-        <% end %>
-      </li>
 
       <li>
-        <%= link_to spare_part_requests_path do %>
-            <i class="material-icons">devices</i>
-            <span>Spare Part Requests</span>
+        <%= link_to maintenance_requests_path do %>
+            <i class="material-icons">build</i>
+            <span>Maintenance Requests</span>
         <% end %>
       </li>
 
@@ -30,20 +24,6 @@
         <%= link_to training_requests_path do %>
             <i class="material-icons">library_books</i>
             <span>Training Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to installation_requests_path do %>
-            <i class="material-icons">add_to_queue</i>
-            <span>Installation Requests</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to maintenance_requests_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenance Requests</span>
         <% end %>
       </li>
 

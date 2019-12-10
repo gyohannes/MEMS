@@ -2,16 +2,16 @@
   <h2>Specification Details</h2>
 </div>
 <div class="body">
+
 <p>
   <strong>Organization Unit:</strong>
   <%= @specification.organization_unit %>
 </p>
 
-<p>
-  <strong>Facility:</strong>
-  <%= @specification.facility %>
-</p>
-
+  <p>
+    <strong>Specification Name:</strong>
+    <%= @specification.name %>
+  </p>
 <p>
   <strong>Equipment name:</strong>
   <%= @specification.equipment_name %>
@@ -46,6 +46,12 @@
   <strong>Specification date:</strong>
   <%= @specification.specification_date %>
 </p>
+
+  <% if @specification.attachment.attached? %>
+      <%= link_to @specification.attachment, target: '_blank' do %>
+          <button>Attached Document<i class="material-icons">file_download</i></button>
+      <% end %>
+  <% end %>
 <hr/>
 <%= link_to 'Edit', edit_specification_path(@specification) %> |
 <%= link_to 'Back', specifications_path %>

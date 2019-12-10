@@ -6,8 +6,7 @@
   <div class="row">
     <div class="col-sm-6">
       <%= f.association :organization_unit, collection: [current_user.organization_unit], prompt: false %>
-      <%= f.association :facility, collection: [current_user.facility], prompt: false %>
-      <%= f.input :name_of_contact %>
+      <%= f.input :name %>
       <%= f.input :profession %>
       <%= f.input :title, label: 'Job Title' %>
     </div>
@@ -15,7 +14,7 @@
       <%= f.input :work_place %>
       <%= f.input :city %>
       <%= f.input :phone_number %>
-      <%= f.input :country, priority: ["Ethiopia"] %>
+      <%= f.input :nationality, as: :country, priority: ["Ethiopia"] %>
       <%= f.input :email %>
     </div>
   </div>

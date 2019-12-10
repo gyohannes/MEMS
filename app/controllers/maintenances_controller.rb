@@ -42,7 +42,7 @@ class MaintenancesController < ApplicationController
   # POST /maintenances.json
   def create
     @maintenance = Maintenance.new(maintenance_params)
-
+    @maintenance.user_id = current_user.id
     respond_to do |format|
       if @maintenance.save
         unless @maintenance.maintenance_work_order.blank?
@@ -53,7 +53,7 @@ class MaintenancesController < ApplicationController
           mr = @maintenance.maintenance_request
           mr.update_attribute('status', 'Maintenance Done')
         end
-        @maintenance.equipment.update_attribute('status', @maintenance.equipment_status)
+        @maintenance.equipment.update_attribute('status_id', @maintenance.status_id)
         format.html { redirect_to session.delete(:return_to), notice: 'Maintenance was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance }
       else
@@ -66,6 +66,7 @@ class MaintenancesController < ApplicationController
   # PATCH/PUT /maintenances/1
   # PATCH/PUT /maintenances/1.json
   def update
+    @maintenance.user_id = current_user.id
     respond_to do |format|
       if @maintenance.update(maintenance_params)
         format.html { redirect_to session.delete(:return_to), notice: 'Maintenance was successfully updated.' }
@@ -97,6 +98,6 @@ class MaintenancesController < ApplicationController
     def maintenance_params
       params.require(:maintenance).permit(:equipment_id, :maintenance_work_order_id, :description_of_equipment_failure, :cause_of_equipment_failure,
                                           :maintenance_request_id, :status_id, :part_of_equipment_maintained, :corrective_action, :spare_parts_used,
-                                          :start_date, :end_date, :maintenance_cost, :engineer_name_and_contact, :preventive_maintenance_date, :note)
+                                          :start_date, :end_date, :maintenance_cost, :engineer_name_and_contact, :maintenance_type, :note)
     end
 end

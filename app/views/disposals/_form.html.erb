@@ -5,10 +5,9 @@
 
   <div class="form-inputs">
     <%= f.association :equipment, collection: @equipments %>
-    <%= f.input :problem %>
-    <%= f.input :action_taken %>
-    <%= f.input :list_of_disposing_commitee %>
-    <%= f.input :contact_address %>
+    <%= f.input :reason_for_disposal, collection: Constants::DISPOSAL_REASONS %>
+    <%= f.input :disposal_method, collection: Constants::DISPOSAL_METHODS %>
+    <%= f.input :disposing_commitee %>
     <%= f.input :disposed_date, as: :string, input_html: {class: 'datepicker'} %>
   </div>
 

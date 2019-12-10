@@ -4,22 +4,11 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <div class="row">
-      <div class="col-sm-6 left_form">
-        <%= f.association :organization_unit, collection: [current_user.organization_unit], prompt: false %>
-        <%= f.association :facility, collection: [current_user.facility], prompt: false %>
-        <%= f.input :request_to, collection: Constants::REQUEST_TO %>
-        <div id="calibration_request_to">
-          <%= render partial: 'request_to' %>
-        </div>
-        <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
-        <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
-      </div>
-      <div class="col-sm-6">
-        <%= f.association :equipment, collection: @equipments %>
-        <%= f.input :calibration_description %>
-      </div>
-    </div>
+    <%= f.association :equipment, collection: @equipments %>
+    <%= f.input :description %>
+    <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
+    <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'} %>
+    <%= f.input :attachment, as: :file %>
   </div>
 
   <div class="form-actions">

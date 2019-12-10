@@ -1,0 +1,27 @@
+<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Item Code Number</th>
+    <th>UOM</th>
+    <th>Available</th>
+    <th>Max Stock Level</th>
+    <th>Min Re-order Level</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @spare_parts.each do |spare_part| %>
+      <tr>
+        <td><%= spare_part.name %></td>
+        <td><%= spare_part.item_code_number %>
+        <td><%= spare_part.uom %></td>
+        <td><%= spare_part.available %></td>
+        <td><%= spare_part.max_stock_level %></td>
+        <td><%= spare_part.min_reorder_level %></td>
+        <td><%= link_to 'Edit', edit_spare_part_path(spare_part) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,7 +1,9 @@
 class ProcurementRequestEquipment < ApplicationRecord
   belongs_to :procurement_request
+  belongs_to :equipment_name
+  belongs_to :specification, optional: true
 
-  validates :equipment_name, :specification, :quantity, presence: true
+  validates :equipment_name_id, :quantity, presence: true
   validate :approved_must_be_less_or_equal_requested
 
   def approved_must_be_less_or_equal_requested

@@ -6,23 +6,29 @@
   <%= simple_form_for :search, url:  reports_trainings_path, remote: true, html: { novalidate: true } do |f| %>
 
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
         <div id="report_organization_unit_tree"></div>
         <%=  f.input :organization_unit, as: :hidden, required: false %>
-        </div>
-        <div class="col-sm-3">
-          <div id="facility_display">
-            <%= render partial: 'facility' %>
+          <%=  f.input :equipment_type, collection: EquipmentType.all, required: false %>
+          <%=  f.input :equipment_name, collection: EquipmentName.all, required: false %>
+          <div id='model'>
+            <%= render partial: 'model' %>
           </div>
-          <%=  f.input :category, collection: EquipmentCategory.all, required: false %>
         </div>
-        <div class="col-sm-3">
-          <%=  f.input :equipment_name, required: false %>
-          <%=  f.input :model, required: false %>
-        </div>
-        <div class="col-sm-3">
-          <%=  f.input :training_type, collection: Constants::TRAINING_TYPES, as: :check_boxes,
+
+        <div class="col-sm-4">
+          <%=  f.input :training_type, collection: Constants::TRAINING_TYPES, required: false, as: :check_boxes,
                        wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
+
+          <%=  f.input :taining_level, collection: Constants::TRAINING_LEVELS, required: false, as: :check_boxes,
+                       wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
+        </div>
+        <div class="col-sm-4">
+          <fieldset class="sub_form">
+            <legend>Training Date</legend>
+            <%=  f.input :from, required: false, input_html: {class: 'datepicker'} %>
+            <%=  f.input :to, required: false, input_html: {class: 'datepicker'} %>
+          </fieldset>
         </div>
       </div>
       <div class="form-actions align-center">

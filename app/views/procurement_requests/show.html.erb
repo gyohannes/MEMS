@@ -1,89 +1,107 @@
 <div class="header">
-  <h2>
-    Procurement Request
-  </h2>
+  <h2>Procurement Request</h2>
 </div>
 <div class="body">
-  <%= simple_nested_form_for(@procurement_request, url: decision_procurement_request_path) do |f| %>
-      <p>
-        <label>Request From:</label>
-        <%= @procurement_request.request_from %>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="row">
+        <label class="col-sm-6">Request By:</label>
+        <%= @procurement_request.user.organization_unit %>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-6">Request Date:</label>
+        <%= @procurement_request.request_date.strftime("%B %d, %Y") %>
+      </div>  
+
+      <p class="row">
+        <label class="col-sm-6">Contact phone:</label>
+        <%= @procurement_request.contact_phone %>
       </p>
 
-      <p>
-        <label>Request Date:</label>
-        <%= @procurement_request.request_date %>
+      <p class="row">
+        <label class="col-sm-6">Contact email:</label>
+        <%= @procurement_request.contact_email %>
       </p>
-
-    <p>
-      <label>Requested by:</label>
-      <%= @procurement_request.user %>
-    </p>
-
-    <p>
-      <label>Contact phone:</label>
-      <%= @procurement_request.contact_phone %>
-    </p>
-
-    <p>
-      <label>Contact email:</label>
-      <%= @procurement_request.contact_email %>
-    </p>
-
-    <p>
-      <label>Request to:</label>
-      <%= @procurement_request.request_to %>
-    </p>
-    <% if @procurement_request.institution_id? %>
-      <p>
-        <label><%= @procurement_request.request_to %>:</label>
-        <%= @procurement_request.institution %>
-      </p>
-    <% end %>
-    <p>
-      <label>Status:</label>
-      <%= @procurement_request.status %>
-    </p>
-
-        <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
-            <%= f.input :comment, wrapper: 'vertical_form' %>
-            <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
-        <% else %>
-          <p><label>Comment:</label> <%= @procurement_request.comment %></p>
-            <p><label>Decided by:</label> <%= @procurement_request.decided_user %></p>
+      <p class="row">
+        <% if @procurement_request.attachment.attached? %>
+            <label class="col-sm-6">Attached Document:</label>
+            <%= link_to @procurement_request.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+            <% end %>
         <% end %>
+      </p>
+      <p class="row">
+        <label class="col-sm-6">Status:</label>
+        <%= @procurement_request.status %>
+        <% if @procurement_request.status == Constants::OUT_SOURCED %>
+            to <%= @procurement_request.forwards.order('created_at DESC').first.institution %>
+        <% end %>
+        <% if @procurement_request.status == Constants::FORWARDED %>
+            to <%= @procurement_request.forwards.order('created_at DESC').first.organization_unit %>
+        <% end %>
+      </p>
+      <% unless @procurement_request.status==Constants::PENDING %>
+          <div class="row"><label class="col-sm-6"><%= @procurement_request.status %> by:</label> <%= @procurement_request.decided_user.organization_unit %></div>
+          <div class="row"><label class="col-sm-6">Comment:</label> <%= @procurement_request.comment %></div>
+      <% end %>
+      <% unless @procurement_request.procurement_request_equipments.blank? %>
+      <h4>Equipments</h4>
+      <table class="table">
+        <tr>
+          <th>Equipment</th>
+          <th>Specification</th>
+          <th>Quantity</th>
+        </tr>
+        <% @procurement_request.procurement_request_equipments.each do |eq| %>
+            <tr>
+              <td><%= eq.equipment_name %></td>
+              <td><%= eq.specification %></td>
+              <td><%= eq.quantity %></td>
+            </tr>
+        <% end %>
+      </table>
+      <% end %>
+      <% unless @procurement_request.procurement_request_spare_parts.blank? %>
+      <h4>Spare Parts/Accessries</h4>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Quantity</th>
+        </tr>
+        <% @procurement_request.procurement_request_spare_parts.each do |sp| %>
+            <tr>
+              <td><%= sp.spare_part %></td>
+              <td><%= sp.description %></td>
+              <td><%= sp.requested_quantity %></td>
+            </tr>
+        <% end %>
+      </table>
+      <% end %>
+    </div>
+    <div class="col-sm-6 left_form">
+      <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING  %>
+          <%= simple_nested_form_for(@procurement_request, url: decision_procurement_request_path) do |f| %>
+              <%= f.input :comment %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+              <%= f.simple_fields_for :forwards do |ff| %>
+                  <div id="outsource">
+                    <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
+                  </div>
+                  <div id="forward">
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                  </div>
+              <% end %>
+              <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>
 
-  <caption>Equipments</caption>
-  <table class="table">
-    <tr>
-      <th>Equipment</th>
-      <th>Specification</th>
-      <th>Requested Quanitity</th>
-      <th>Approved Quanitity</th>
-    </tr>
-    <%= f.simple_fields_for :procurement_request_equipments do |eq| %>
-      <tr>
-        <td><%= eq.object.equipment_name %></td>
-        <td><%= eq.object.specification %></td>
-        <td><%= eq.object.quantity %></td>
-        <td>
-          <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
-            <%= eq.input :approved_quantity, label: false, input_html: {value: eq.object.approved_quantity || eq.object.quantity} %>
-          <% else %>
-            <%= eq.object.approved_quantity %>
+              <hr/>
+              <%= f.button :submit, 'Submit' %>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-      <center>
-        <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING %>
-          <%= f.button :button, 'Approve', type: 'submit', name: 'status', value: Constants::APPROVED  unless @procurement_request.status == Constants::APPROVED %>
-          &nbsp;&nbsp;&nbsp;<%= f.button :button, 'Reject', type: 'submit', name: 'status', value: Constants::REJECTED unless @procurement_request.status == Constants::REJECTED %>
-        <% end %>
-      </center>
-  <% end %>
-<hr/>
-    <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request and @procurement_request.status == Constants::PENDING  %> &nbsp;&nbsp;&nbsp;
+      <% end %>
+    </div>
+  </div>
+  <hr/>
   <%= link_to 'Back', procurement_requests_path %>
+  <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request and @procurement_request.status == Constants::PENDING  %>
 </div>

@@ -6,7 +6,7 @@
   </tr>
   <%= f.simple_fields_for :procurement_request_equipments, :wrapper => false do |equipment_form| %>
       <tr class="fields">
-        <td><%= equipment_form.input :equipment_name, label: false %></td>
+        <td><%= equipment_form.input :equipment_name_id, collection: EquipmentName.all, label: false %></td>
         <td><%= equipment_form.input :specification_id, collection: Specification.all, label: false %></td>
         <td><%= equipment_form.input :quantity, label: false %></td>
         <td style="vertical-align: top"><%= equipment_form.link_to_remove 'Remove' %></td>

@@ -2,10 +2,11 @@
     <thead>
     <tr>
       <th>Equipment</th>
-      <th>Maintenance cost</th>
+      <th>Maintenance Type</th>
       <th>Maintained by</th>
-      <th>Next Preventive maintenance date</th>
-      <th>Note</th>
+      <th>Maintenance cost</th>
+      <th>Equipment Status</th>
+      <th>Date</th>
       <th></th>
     </tr>
     </thead>
@@ -14,14 +15,14 @@
     <% @maintenances.each do |maintenance| %>
         <tr>
           <td><%= maintenance.equipment %></td>
-          <td><%= maintenance.maintenance_cost %></td>
+          <td><%= maintenance.maintenance_type %></td>
           <td><%= maintenance.engineer_name_and_contact %></td>
-          <td><%= maintenance.preventive_maintenance_date %></td>
-          <td><%= maintenance.note %></td>
+          <td><%= maintenance.maintenance_cost %></td>
+          <td><%= maintenance.status %></td>
+          <td><%= maintenance.end_date.strftime("%B %d, %Y") %></td>
           <td>
-            <%= link_to 'Details', maintenance %> |
-            <%= link_to 'Edit', edit_maintenance_path(maintenance) %> |
-            <%= link_to 'Delete', maintenance, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Details', maintenance, class: 'btn btn-primary' %>
+            <%= link_to 'Edit', edit_maintenance_path(maintenance), class: 'btn btn-primary' if can? :edit, maintenance %>
           </td>
         </tr>
     <% end %>

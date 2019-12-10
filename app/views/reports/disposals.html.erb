@@ -1,0 +1,41 @@
+<div class="header">
+  <h2>Disposal and Decommissioning Report</h2>
+</div>
+
+<div class="body">
+  <%= simple_form_for :search, url:  reports_disposals_path, remote: true, html: { novalidate: true } do |f| %>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div id="report_organization_unit_tree"></div>
+          <%=  f.input :organization_unit, as: :hidden, required: false %>
+          <%=  f.input :equipment_type, collection: EquipmentType.all, required: false %>
+        </div>
+
+        <div class="col-sm-4">
+          <%=  f.input :disposal_reason, collection: Constants::DISPOSAL_REASONS, required: false, as: :check_boxes,
+                       wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
+
+          <%=  f.input :disposal_method, collection: Constants::DISPOSAL_METHODS, required: false, as: :check_boxes,
+                       wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
+
+        </div>
+        <div class="col-sm-4">
+          <fieldset class="sub_form">
+            <legend>Disposal Date</legend>
+            <%=  f.input :from, required: false, input_html: {class: 'datepicker'} %>
+            <%=  f.input :to, required: false, input_html: {class: 'datepicker'} %>
+          </fieldset>
+        </div>
+      </div>
+      <div class="form-actions align-center">
+        <%= f.button :button, 'Reset Form', type: :reset, class: 'btn btn-default' %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.button :submit, 'Search', class: 'btn btn-primary' %>
+      </div>
+  <% end %>
+  <hr/>
+  <div id="disposal_report">
+    <%= render '/disposals/disposals', locals: {:@maintenances => @maintenances} %>
+  </div>
+
+</div>

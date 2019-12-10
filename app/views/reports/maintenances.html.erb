@@ -1,0 +1,41 @@
+<div class="header">
+  <h2>Equipment Maintenance Report</h2>
+</div>
+
+<div class="body">
+  <%= simple_form_for :search, url:  reports_maintenances_path, remote: true, html: { novalidate: true } do |f| %>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div id="report_organization_unit_tree"></div>
+          <%=  f.input :organization_unit, as: :hidden, required: false %>
+        </div>
+
+        <div class="col-sm-4">
+          <%=  f.input :equipment_name, collection: EquipmentName.all, required: false %>
+          <div id='model'>
+            <%= render partial: 'model' %>
+          </div>
+          <%=  f.input :maintenance_type, collection: Constants::MAINTENANCE_TYPES, required: false, as: :check_boxes,
+                       wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
+
+        </div>
+        <div class="col-sm-4">
+          <fieldset class="sub_form">
+            <legend>Maintenance Date</legend>
+            <%=  f.input :from, required: false, input_html: {class: 'datepicker'} %>
+            <%=  f.input :to, required: false, input_html: {class: 'datepicker'} %>
+          </fieldset>
+        </div>
+      </div>
+      <div class="form-actions align-center">
+        <%= f.button :button, 'Reset Form', type: :reset, class: 'btn btn-default' %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%= f.button :submit, 'Search', class: 'btn btn-primary' %>
+      </div>
+  <% end %>
+  <hr/>
+  <div id="maintenance_report">
+    <%= render '/maintenances/maintenances', locals: {:@maintenances => @maintenances} %>
+  </div>
+
+</div>

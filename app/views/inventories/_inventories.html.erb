@@ -20,7 +20,7 @@
         <td><%= inventory.status %></td>
         <td>
           <%= link_to 'Details', inventory, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_inventory_path(inventory), class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_inventory_path(inventory), class: 'btn btn-primary' if can? :edit, inventory %>
         </td>
       </tr>
   <% end %>

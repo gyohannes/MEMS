@@ -4,14 +4,17 @@ class TrainingRequestsController < ApplicationController
 
   def load
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+    @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
+    @organization_units = [current_user.parent_org_unit]
+    @institutions = Institution.all
   end
   # GET /training_requests
   # GET /training_requests.json
   def index
-    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)
       @training_requests = current_user.training_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @training_requests = current_user.training_requests + current_user.incoming_training_requests
+      @training_requests = current_user.outgoing_training_requests + current_user.incoming_training_requests
     elsif !current_user.institution.blank?
       @training_requests = current_user.incoming_training_requests
     else
@@ -22,8 +25,8 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
+    @training_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
     @status = @training_request.status
-    @training_request.status = Constants::PENDING if @status == Constants::FORWARDED
   end
 
   # GET /training_requests/new
@@ -31,33 +34,32 @@ class TrainingRequestsController < ApplicationController
     @training_request = TrainingRequest.new
   end
 
-  def load_request_to
-    @request_to_type = params[:request_to]
-    @institutions = Institution.where('category = ?', @request_to_type)
-    render partial: 'request_to'
-  end
-
   def decision
     @training_request.update(training_request_params)
-    @training_request.update(status: params[:status])
-    redirect_to @training_request, notice: "Training request was successfully #{params[:status]}."
+    if @training_request.status == Constants::FORWARDED
+      n = @training_request.notifications.build(name: @training_request.equipment_name.try(:to_s) << ' Training Request Forwarded',
+                                                organization_unit_id: current_user.parent_org_unit.try(:id))
+      n.save
+    end
+    redirect_to @training_request, notice: "Training request was successfully #{params[:training_request][:status]}."
   end
 
   # GET /training_requests/1/edit
   def edit
-    @request_to_type = @training_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /training_requests
   # POST /training_requests.json
   def create
     @training_request = TrainingRequest.new(training_request_params)
-    @request_to_type = @training_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
+    @training_request.user_id = current_user.id
+    @training_request.status = Constants::PENDING
+    @training_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     respond_to do |format|
       if @training_request.save
-        @training_request.update(status: Constants::PENDING)
+        n = @training_request.notifications.build(name: @training_request.equipment_name.try(:to_s) << ' Training Request',
+                                                     organization_unit_id: @training_request.organization_unit_id)
+        n.save
         format.html { redirect_to @training_request, notice: 'Training request was successfully created.' }
         format.json { render :show, status: :created, location: @training_request }
       else
@@ -70,8 +72,6 @@ class TrainingRequestsController < ApplicationController
   # PATCH/PUT /training_requests/1
   # PATCH/PUT /training_requests/1.json
   def update
-    @request_to_type = @training_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @training_request.update(training_request_params)
         format.html { redirect_to @training_request, notice: 'Training request was successfully updated.' }
@@ -101,7 +101,8 @@ class TrainingRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_request_params
-      params.require(:training_request).permit(:organization_unit_id, :facility_id, :trainee_type, :training_description,
-                                               :status, :request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
+      params.require(:training_request).permit(:organization_unit_id, :equipment_name_id, :trainee_type, :level, :training_description, :attachment,
+                                               :status, :user_id, :request_date, :comment, :decision_by, :assigned_to,
+                                               forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

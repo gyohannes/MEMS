@@ -7,22 +7,32 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
+      <th>Name</th>
       <th>Equipment name</th>
       <th>Model</th>
       <th>Approximate cost</th>
       <th>Specification date</th>
       <th>Attachment</th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @specifications.each do |specification| %>
       <tr>
+        <td><%= specification.name %></td>
         <td><%= specification.equipment_name %></td>
         <td><%= specification.model %></td>
         <td><%= specification.approximate_cost %></td>
         <td><%= specification.specification_date %></td>
-        <td><%= link_to 'Download', specification.attachment.url, {target: '_blank'} unless specification.attachment.blank? %></td>
+        <td>
+          <% if specification.attachment.attached? %>
+          <%= link_to specification.attachment, target: '_blank' do %>
+          <i class="material-icons">file_download</i>
+          <% end %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Edit', edit_specification_path(specification), class: 'btn btn-primary' if can? :edit, specification %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,5 +40,5 @@
 
 <br>
 
-<%= link_to 'New Specification', new_specification_path, class: 'btn btn-primary' %>
+<%= link_to 'Register Specification', new_specification_path, class: 'btn btn-primary' if can? :manage, Specification %>
 </div>

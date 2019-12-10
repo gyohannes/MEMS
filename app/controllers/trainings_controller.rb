@@ -30,7 +30,7 @@ class TrainingsController < ApplicationController
   # POST /trainings
   # POST /trainings.json
   def create
-    contact = Contact.find_by(name_of_contact: params[:training][:contact_attributes][:name_of_contact],
+    contact = Contact.find_by(name: params[:training][:contact_attributes][:name],
                               phone_number: params[:training][:contact_attributes][:phone_number])
     unless contact.blank?
       params[:training][:contact_id] = contact.id
@@ -51,7 +51,7 @@ class TrainingsController < ApplicationController
   # PATCH/PUT /trainings/1
   # PATCH/PUT /trainings/1.json
   def update
-    contact = Contact.find_by(name_of_contact: params[:training][:contact_attributes][:name_of_contact],
+    contact = Contact.find_by(name: params[:training][:contact_attributes][:name],
                               phone_number: params[:training][:contact_attributes][:phone_number])
 
     unless contact.blank?
@@ -88,7 +88,7 @@ class TrainingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_params
-      params.require(:training).permit(:contact_id, :equipment_name, :model, :training_type, :trainer_name, :training_sponsor, :training_date,
-      contact_attributes: [:id, :facility_id, :organization_unit_id, :name_of_contact, :profession, :title, :work_place, :city, :phone_number, :country, :email, :_destroy])
+      params.require(:training).permit(:contact_id, :equipment_name_id, :model, :training_type, :level, :trainer_name, :training_sponsor, :training_date,
+      contact_attributes: [:id, :organization_unit_id, :name, :profession, :title, :work_place, :city, :phone_number, :nationality, :email, :_destroy])
     end
 end

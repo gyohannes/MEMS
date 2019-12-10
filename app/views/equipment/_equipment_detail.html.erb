@@ -70,16 +70,33 @@
       <td><%= @equipment.institution %></td>
     </tr>
 
-    <tr>
-      <th>Warranty Expire Date:</th>
-      <td><%= @equipment.warranty_expire_date.strftime("%B %d, %Y") %></td>
-    </tr>
+      <tr>
+        <th>Installation Date:</th>
+        <td><%= @equipment.installation_date.strftime("%B %d, %Y") rescue nil %></td>
+      </tr>
 
     <tr>
       <th>Status:</th>
       <td><%= @equipment.status %></td>
     </tr>
     </table>
+    <% unless @equipment.documents.blank? %>
+        <h5>Documents</h5>
+        <table class="table">
+          <% @equipment.documents.each do |d| %>
+          <tr>
+            <td><%= d.name %></td>
+            <td>
+              <% if d.attachment.attached? %>
+              <%= link_to d.attachment, target: '_blank' do %>
+                  <button><i class="material-icons">file_download</i></button>
+              <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+    <% end %>
   </div>
 </div>
 <hr/>

@@ -1,10 +1,13 @@
 class CalibrationRequestsController < ApplicationController
   before_action :set_calibration_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load, only: [:new, :create, :edit, :update, :show]
+  before_action :load
 
   def load
     @equipments = current_user.load_equipment
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+    @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
+    @organization_units = [current_user.parent_org_unit]
+    @institutions = Institution.all
   end
   # GET /calibration_requests
   # GET /calibration_requests.json
@@ -12,7 +15,7 @@ class CalibrationRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @calibration_requests = current_user.calibration_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @calibration_requests = current_user.calibration_requests + current_user.incoming_calibration_requests
+      @calibration_requests = current_user.outgoing_calibration_requests + current_user.incoming_calibration_requests
     elsif !current_user.institution.blank?
       @calibration_requests = current_user.incoming_calibration_requests
     else
@@ -23,8 +26,7 @@ class CalibrationRequestsController < ApplicationController
   # GET /calibration_requests/1
   # GET /calibration_requests/1.json
   def show
-    @status = @calibration_request.status
-    @calibration_request = Constants::PENDING if @status==Constants::FORWARDED
+    @calibration_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /calibration_requests/new
@@ -32,34 +34,32 @@ class CalibrationRequestsController < ApplicationController
     @calibration_request = CalibrationRequest.new
   end
 
-  def load_request_to
-    @request_to_type = params[:request_to]
-    @institutions = Institution.where('category = ?', @request_to_type)
-    render partial: 'request_to'
-  end
-
   def decision
     @calibration_request.update(calibration_request_params)
-    @calibration_request.update(status: params[:status])
-    redirect_to @calibration_request, notice: "Calibration request was successfully #{params[:status]}."
+    if @calibration_request.status == Constants::FORWARDED
+      n = @calibration_request.notifications.build(name: @calibration_request.equipment.to_s << ' Calibration Request Forwarded',
+                                                    organization_unit_id: current_user.parent_org_unit.try(:id))
+      n.save
+    end
+    redirect_to @calibration_request, notice: "Calibration request was successfully #{params[:calibration_request][:status]}."
   end
 
 
   # GET /calibration_requests/1/edit
   def edit
-    @request_to_type = @calibration_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
   end
 
   # POST /calibration_requests
   # POST /calibration_requests.json
   def create
     @calibration_request = CalibrationRequest.new(calibration_request_params)
-    @request_to_type = @calibration_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
+    @calibration_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @calibration_request.status = Constants::PENDING
     respond_to do |format|
       if @calibration_request.save
-        @calibration_request.update(status: Constants::PENDING)
+        n = @calibration_request.notifications.build(name: @calibration_request.equipment.to_s << ' Calibration Request',
+                                                      organization_unit_id: @calibration_request.organization_unit_id)
+        n.save
         format.html { redirect_to @calibration_request, notice: 'Calibration request was successfully created.' }
         format.json { render :show, status: :created, location: @calibration_request }
       else
@@ -72,8 +72,6 @@ class CalibrationRequestsController < ApplicationController
   # PATCH/PUT /calibration_requests/1
   # PATCH/PUT /calibration_requests/1.json
   def update
-    @request_to_type = @calibration_request.request_to
-    @institutions = Institution.where('category = ?', @request_to_type)
     respond_to do |format|
       if @calibration_request.update(calibration_request_params)
         format.html { redirect_to @calibration_request, notice: 'Calibration request was successfully updated.' }
@@ -103,7 +101,8 @@ class CalibrationRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calibration_request_params
-      params.require(:calibration_request).permit(:organization_unit_id, :facility_id, :equipment_id, :calibration_description,
-                                                  :status,:request_to, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to)
+      params.require(:calibration_request).permit(:organization_unit_id, :equipment_id, :description, :attachment,
+                                                  :status, :institution_id, :user_id, :request_date, :comment, :decision_by, :assigned_to,
+                                                  forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

@@ -1,3 +1,9 @@
+<style>
+  table{
+    width: 100%;
+  }
+</style>
+
 <br/>
 <u><h3 style="text-align: center">RECEIPT FOR ITEMS RECEIVED</h3></u>
 <br/>
@@ -7,24 +13,51 @@
     on <u><%= @receife.receive_date.strftime('%B %d, %Y') %></u> from <u><%= @receife.deliverer_name %></u>
   </p>
 <br/><br/>
-<table border="1" style="width: 100%; border-collapse: collapse">
-  <tr>
-    <th>Name</th>
-    <th>Quantity</th>
-    <th>Unit Price</th>
-    <th>Expiry Date</th>
-    <th>Remarks</th>
-    <th>Total Cost (Birr)</th>
-  </tr>
-  <% @receife.receive_spare_parts.each do |sp| %>
-    <tr>
-      <td><%= sp.spare_part %></td>
-      <td><%= q=sp.quantity %></td>
-      <td><%= p=sp.unit_price %></td>
-      <td><%= sp.expiry_date.strftime('%B %d, %Y') %></td>
-      <td><%= sp.remarks %></td>
-      <td><%= t = (q || 0) * (p || 0)  %></td>
-    </tr>
+  <% unless @receife.receive_equipment.blank? %>
+      <caption>Medical Equipment</caption>
+      <table border="1" style="border-collapse: collapse">
+        <tr>
+          <th>Equipment Name</th>
+          <th>Model</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Unit Cost</th>
+          <th>Total</th>
+        </tr>
+        <% @receife.receive_equipment.each do |sp| %>
+            <tr>
+              <td><%= sp.equipment_name %></td>
+              <td><%= sp.model %></td>
+              <td><%= sp.description %></td>
+              <td><%= q = sp.quantity %></td>
+              <td><%= uc = sp.unit_cost %></td>
+              <td><%= q*uc %></td>
+            </tr>
+        <% end %>
+      </table>
   <% end %>
-</table>
+  <br/>
+  <% unless @receife.receive_spare_parts.blank? %>
+      <caption>Spare Parts/Accessories</caption>
+      <table border="1" style="border-collapse: collapse">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Expiry Date</th>
+          <th>Remarks</th>
+          <th>Total</th>
+        </tr>
+        <% @receife.receive_spare_parts.each do |sp| %>
+            <tr>
+              <td><%= sp.spare_part %></td>
+              <td><%= q = sp.quantity %></td>
+              <td><%= up = sp.unit_price %></td>
+              <td><%= sp.expiry_date.strftime('%B %d, %Y') %></td>
+              <td><%= sp.remarks %></td>
+              <td><%= q * up %></td>
+            </tr>
+        <% end %>
+      </table>
+  <% end %>
 </div>

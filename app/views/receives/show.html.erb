@@ -24,7 +24,29 @@
       <strong>Note:</strong>
       <%= @receife.note %>
     </p>
-    <caption>Received spare parts list</caption>
+    <% unless @receife.receive_equipment.blank? %>
+    <caption>Medical Equipment</caption>
+    <table id="spare_parts" class="table table-responsive">
+      <tr>
+        <th>Equipment Name</th>
+        <th>Model</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Unit Cost</th>
+      </tr>
+      <% @receife.receive_equipment.each do |sp| %>
+          <tr>
+            <td><%= sp.equipment_name %></td>
+            <td><%= sp.model %></td>
+            <td><%= sp.description %></td>
+            <td><%= sp.quantity %></td>
+            <td><%= sp.unit_cost %></td>
+          </tr>
+      <% end %>
+    </table>
+    <% end %>
+        <% unless @receife.receive_spare_parts.blank? %>
+    <caption>Spare Parts</caption>
     <table id="spare_parts" class="table table-responsive">
       <tr>
         <th>Name</th>
@@ -43,6 +65,7 @@
           </tr>
       <% end %>
     </table>
+        <% end %>
     <%= link_to 'Back', receives_path %>
     <%= link_to 'Edit', edit_receife_path(@receife), class: 'btn btn-primary' %>
     <%= link_to 'Download Model 19', receife_path(@receife,:format=>:pdf),:class=>'btn', class: 'btn btn-primary' %>

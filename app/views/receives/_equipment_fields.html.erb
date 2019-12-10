@@ -1,0 +1,27 @@
+<table id="equipment_fields" class="table table-responsive">
+  <tr>
+    <th>Equipment Name</th>
+    <th>Model</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>Unit Cost</th>
+    <th></th>
+  </tr>
+<%= f.simple_fields_for :receive_equipment, :wrapper=>false do |eq_form| %>
+      <tr class="fields">
+        <td><%= eq_form.input_field :equipment_name_id, collection: EquipmentName.all, label: false %></td>
+        <td><%= eq_form.input_field :model %></td>
+        <td><%= eq_form.input_field :description %></td>
+        <td><%= eq_form.input_field :quantity %></td>
+        <td><%= eq_form.input_field :unit_cost %></td>
+        <td>
+          <%= eq_form.link_to_remove do%>
+              <i class="material-icons">delete</i>
+          <% end %>
+        </td>
+        <%= javascript_include_tag 'global' %>
+      </tr>
+<% end %>
+</table>
+<p><%= f.link_to_add "Add Equipment", :receive_equipment,"data-target" => "#equipment_fields", class: 'btn btn-primary'  %></p>
+<br/>

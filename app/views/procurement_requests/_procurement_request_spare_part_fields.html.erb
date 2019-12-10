@@ -1,19 +1,18 @@
-<table id="procurement_request_spare_parts" width="100%" %>
+<table id="procurement_request_spare_parts" class="table" %>
   <tr>
-    <th>Spare Part Name</th>
-    <th>Equipment</th>
+    <th>Name</th>
+    <th>Description</th>
     <th>Quantity</th>
   </tr>
-  <%= f.simple_fields_for :procurement_request_equipments, :wrapper => false do |equipment_form| %>
+  <%= f.simple_fields_for :procurement_request_spare_parts, :wrapper => false do |sp_form| %>
       <tr class="fields">
-        <td><%= equipment_form.input :equipment_name, label: false %></td>
-        <td><%= equipment_form.input :specification, label: false %></td>
-        <td><%= equipment_form.input :quantity, label: false %></td>
-        <td style="vertical-align: top"><%= equipment_form.link_to_remove 'Remove' %></td>
+        <td><%= sp_form.input :spare_part_id, collection: @spare_parts, label: false %></td>
+        <td><%= sp_form.input :description, label: false %></td>
+        <td><%= sp_form.input :requested_quantity, label: false %></td>
+        <td style="vertical-align: top"><%= sp_form.link_to_remove 'Remove' %></td>
       </tr>
       <%= javascript_include_tag 'global' %>
   <% end %>
 </table>
-<hr/>
-<p><%= f.link_to_add "Add Equipment", :procurement_request_equipments, :data => { :target => "#procurement_request_equipments" }, class: 'btn btn-primary' %></p>
+<p><%= f.link_to_add "Add Spare Part", :procurement_request_spare_parts, :data => { :target => "#procurement_request_spare_parts" }, class: 'btn btn-primary' %></p>
 <br/>
