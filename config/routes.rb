@@ -116,7 +116,6 @@ Rails.application.routes.draw do
       get 'load_maintenance_requests'
     end
   end
-  resources :acceptance_tests
   resources :installations
   resources :receives
   resources :stores

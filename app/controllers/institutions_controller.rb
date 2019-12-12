@@ -21,10 +21,8 @@ class InstitutionsController < BaseController
   # GET /institutions/new
   def new
     @organization_unit = OrganizationUnit.find_by(id: params[:organization_unit])
-    @facility = Facility.find_by(id: params[:facility])
     @institution = Institution.new
     @institution.organization_unit = @organization_unit
-    @institution.facility = @facility
   end
 
   # GET /institutions/1/edit

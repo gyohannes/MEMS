@@ -42,7 +42,7 @@ class EquipmentController < ApplicationController
   def ideal_vs_available_by_type
     org_unit = current_user.organization_unit
     equipment = []
-    OrganizationUnit::IDEAL_VS_AVAILABLE.each do |status|
+    OrganizationUnit::STANDARD_VS_AVAILABLE.each do |status|
       equipment << {name: status, data: EquipmentName.all.map{|eq| [eq.to_s, org_unit.ideal_vs_available(eq.id,status)]} }
     end
     render json: equipment

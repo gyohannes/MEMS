@@ -7,60 +7,10 @@
     </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">store</i>
-      <span style="vertical-align: super">Logistics</span>
+      <i class="material-icons">plus_one</i>
+      <span style="vertical-align: super">Registration</span>
     </a>
     <ul class="ml-menu">
-
-      <li>
-        <%= link_to receives_path do %>
-            <i class="material-icons">add_shopping_cart</i>
-            <span>Item Receive</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to issues_path do %>
-            <i class="material-icons">remove_from_queue</i>
-            <span>Item Issues</span>
-        <% end %>
-      </li>
-    </ul>
-
-    <li>
-      <%= link_to spare_parts_path do %>
-          <i class="material-icons">devices</i>
-          <span>Spare Parts</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to specifications_path do %>
-          <i class="material-icons">list</i>
-          <span>Equipment Specifications</span>
-      <% end %>
-    </li>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">devices</i>
-      <span style="vertical-align: super">Equipment Management</span>
-    </a>
-    <ul class="ml-menu">
-      <% if current_user.super_admin? %>
-          <li>
-            <%= link_to equipment_types_path do %>
-                <i class="material-icons">category</i>
-                <span>Equipment Types</span>
-            <% end %>
-          </li>
-
-          <li>
-            <%= link_to equipment_names_path do %>
-                <i class="material-icons">devices</i>
-                <span>Equipment Names</span>
-            <% end %>
-          </li>
-      <% end %>
 
       <% if current_user.organization_unit.facility %>
           <li>
@@ -78,40 +28,29 @@
         <% end %>
       </li>
 
-    </ul>
+      <li>
+        <%= link_to inventories_path do %>
+            <i class="material-icons">update</i>
+            <span>Equipment Inventories</span>
+        <% end %>
+      </li>
 
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">build</i>
-      <span style="vertical-align: super">Maintenance Management</span>
-    </a>
-    <ul class="ml-menu">
       <li>
         <%= link_to maintenances_path do %>
             <i class="material-icons">build</i>
             <span>Maintenances</span>
         <% end %>
       </li>
+
       <li>
-        <%= link_to maintenance_work_orders_path do %>
-            <i class="material-icons">work</i>
-            <span>Maintenance Work Orders</span>
+        <%= link_to trainings_path do %>
+            <i class="material-icons">library_books</i>
+            <span>Equipment Trainings</span>
         <% end %>
       </li>
+
     </ul>
 
-    <li>
-      <%= link_to trainings_path do %>
-          <i class="material-icons">library_books</i>
-          <span>Equipment Trainings</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to inventories_path do %>
-          <i class="material-icons">update</i>
-          <span>Equipment Inventories</span>
-      <% end %>
-    </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
       <i class="material-icons">send</i> <span style="vertical-align: super">
@@ -121,49 +60,57 @@
       <li>
         <%= link_to procurement_requests_path do %>
             <i class="material-icons">shopping_cart</i>
-            <span>Procurement Requests</span>
+            <span>Procurement Requests
+              <% unless current_user.incoming_procurement_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_procurement_requests.count %></span><% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to specification_requests_path do %>
             <i class="material-icons">help_outline</i>
-            <span>Specification Requests</span>
+            <span>Specification Requests<% unless current_user.incoming_specification_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_specification_requests.count %></span><% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to training_requests_path do %>
             <i class="material-icons">library_books</i>
-            <span>Training Requests</span>
+            <span>Training Requests <% unless current_user.incoming_training_requests.blank? %> <span class="badge btn-info"><%= current_user.incoming_training_requests.count %></span> <% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to installation_requests_path do %>
             <i class="material-icons">add_to_queue</i>
-            <span>Installation Requests</span>
+            <span>Installation Requests<% unless current_user.incoming_installation_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_installation_requests.count %></span> <% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to maintenance_requests_path do %>
             <i class="material-icons">build</i>
-            <span>Maintenance Requests</span>
+            <span>Maintenance Requests<% unless current_user.incoming_maintenance_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_maintenance_requests.count %></span><% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to calibration_requests_path do %>
             <i class="material-icons">tune</i>
-            <span>Calibration Requests</span>
+            <span>Calibration Requests<% unless current_user.incoming_calibration_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_calibration_requests.count %></span><% end %>
+        </span>
         <% end %>
       </li>
 
       <li>
         <%= link_to disposal_requests_path do %>
             <i class="material-icons">delete_sweep</i>
-            <span>Disposal Requests</span>
+            <span>Disposal Requests<% unless current_user.incoming_disposal_requests.blank? %><span class="badge btn-info"><%= current_user.incoming_disposal_requests.count %></span> <% end %>
+        </span>
         <% end %>
       </li>
 

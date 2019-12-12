@@ -10,7 +10,7 @@ class Ability
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
-                                                                      DisposalRequest, BudgetRequest]
+                                                                      DisposalRequest]
          can :manage, [Receive]
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
@@ -19,7 +19,7 @@ class Ability
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
-                                                                      DisposalRequest, BudgetRequest]
+                                                                      DisposalRequest]
          can :manage, [Equipment, Receive, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
@@ -29,11 +29,11 @@ class Ability
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
          can [:read,:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                 CalibrationRequest, DisposalRequest, BudgetRequest]
+                                 CalibrationRequest, DisposalRequest]
          can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest, BudgetRequest]
+                                  CalibrationRequest, DisposalRequest]
          can [:manage, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                         CalibrationRequest, DisposalRequest, BudgetRequest], organization_unit_id: user.organization_unit_id
+                         CalibrationRequest, DisposalRequest], organization_unit_id: user.organization_unit_id
          can :manage, [OrganizationUnit, User, Department, Store, Institution, EquipmentStatus,
                        Equipment, Receive, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
          cannot [:edit, :update, :destroy], [Maintenance]
@@ -50,7 +50,7 @@ class Ability
          can :manage, News, institution_id: user.institution_id
          can :manage, User, institution_id: user.institution_id
          can [:read, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest, BudgetRequest]
+                                  CalibrationRequest, DisposalRequest]
        end
     #
     # The first argument to `can` is the action you are giving the user

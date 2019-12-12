@@ -5,139 +5,12 @@
       <span>Dashboard</span>
     <% end %>
   </li>
-    <li>
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">settings</i>
-      <span style="vertical-align: super">Settings</span>
-    </a>
-    <ul class="ml-menu">
-
-      <li>
-        <%= link_to departments_path do %>
-            <i class="material-icons">view_list</i>
-            <span>Departments</span>
-        <% end %>
-      </li>
-
-      <% if current_user.super_admin? %>
-
-      <li>
-        <%= link_to maintenance_requirements_path do %>
-            <i class="material-icons">build</i>
-            <span>Maintenance Requirements</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to statuses_path do %>
-            <i class="material-icons">build</i>
-            <span>Equipment Statuses</span>
-        <% end %>
-      </li>
-
-          <li>
-            <%= link_to organization_unit_types_path do %>
-                <i class="material-icons">category</i>
-                <span>Organization Unit Types</span>
-            <% end %>
-          </li>
-      <% end %>
-
-      <li>
-        <%= link_to stores_path do %>
-            <i class="material-icons">store</i>
-            <span>Stores</span>
-        <% end %>
-      </li>
-
-
-      <li>
-        <%= link_to contacts_path do %>
-            <i class="material-icons">contacts</i>
-            <span>Contacts</span>
-        <% end %>
-      </li>
-
-      <% unless current_user.organization_unit.facility %>
-          <li>
-            <%= link_to organization_units_path do %>
-                <i class="material-icons">filter_list</i>
-                <span>Organization Units</span>
-            <% end %>
-          </li>
-      <% end %>
-
-      <li>
-        <%= link_to institutions_path do %>
-            <i class="material-icons">work</i>
-            <span>Suppliers/Local Representatives</span>
-        <% end %>
-      </li>
-
-    </ul>
-    </li>
-    <li>
-      <%= link_to users_path do %>
-          <i class="material-icons">people</i>
-          <span>Users</span>
-      <% end %>
-    </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">store</i>
-      <span style="vertical-align: super">Logistics</span>
+      <i class="material-icons">plus_one</i>
+      <span style="vertical-align: super">Registration</span>
     </a>
     <ul class="ml-menu">
-
-      <li>
-        <%= link_to receives_path do %>
-            <i class="material-icons">add_shopping_cart</i>
-            <span>Item Receives</span>
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to issues_path do %>
-            <i class="material-icons">remove_from_queue</i>
-            <span>Item Issues</span>
-        <% end %>
-      </li>
-    </ul>
-
-    <li>
-      <%= link_to spare_parts_path do %>
-          <i class="material-icons">devices</i>
-          <span>Spare Parts</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to specifications_path do %>
-          <i class="material-icons">list</i>
-          <span>Equipment Specifications</span>
-      <% end %>
-    </li>
-
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">devices</i>
-      <span style="vertical-align: super">Equipment Management</span>
-    </a>
-    <ul class="ml-menu">
-      <% if current_user.super_admin? %>
-          <li>
-            <%= link_to equipment_types_path do %>
-                <i class="material-icons">category</i>
-                <span>Equipment Types</span>
-            <% end %>
-          </li>
-
-          <li>
-            <%= link_to equipment_names_path do %>
-                <i class="material-icons">devices</i>
-                <span>Equipment Names</span>
-            <% end %>
-          </li>
-      <% end %>
 
       <% if current_user.organization_unit.facility %>
           <li>
@@ -155,13 +28,13 @@
         <% end %>
       </li>
 
-    </ul>
+      <li>
+        <%= link_to inventories_path do %>
+            <i class="material-icons">update</i>
+            <span>Equipment Inventories</span>
+        <% end %>
+      </li>
 
-    <a href="javascript:void(0);" class="menu-toggle">
-      <i class="material-icons">build</i>
-      <span style="vertical-align: super">Maintenance Management</span>
-    </a>
-    <ul class="ml-menu">
       <li>
         <%= link_to maintenances_path do %>
             <i class="material-icons">build</i>
@@ -174,21 +47,16 @@
             <span>Maintenance Work Orders</span>
         <% end %>
       </li>
+
+      <li>
+        <%= link_to trainings_path do %>
+            <i class="material-icons">library_books</i>
+            <span>Equipment Trainings</span>
+        <% end %>
+      </li>
+
     </ul>
 
-    <li>
-      <%= link_to trainings_path do %>
-          <i class="material-icons">library_books</i>
-          <span>Equipment Trainings</span>
-      <% end %>
-    </li>
-
-    <li>
-      <%= link_to inventories_path do %>
-          <i class="material-icons">update</i>
-          <span>Equipment Inventories</span>
-      <% end %>
-    </li>
 
     <a href="javascript:void(0);" class="menu-toggle">
     <i class="material-icons">send</i> <span style="vertical-align: super">

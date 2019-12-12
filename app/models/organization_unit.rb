@@ -30,10 +30,10 @@ class OrganizationUnit < ApplicationRecord
   has_many :inventories, through: :equipment
   validates :name, :code, :organization_unit_type, presence: true
 
-  IDEAL_VS_AVAILABLE = [IDEAL='Ideal', AVAILABLE='Available']
+  STANDARD_VS_AVAILABLE = [STANDARD='Standared', AVAILABLE='Available']
 
   def ideal_vs_available(equipment_name,status)
-    if status == IDEAL
+    if status == STANDARD
       return ModelEquipment.joins(:model_equipment_list).where('equipment_name_id = ? and model_equipment_list.organization_unit_id in (?)',
                                                       equipment_name, (sub_units.pluck(:id) << id)).sum(:quantity)
     else
