@@ -3,7 +3,6 @@
 
   <div class="form-inputs">
     <%= f.association :organization_unit, label: 'Organization Unit', collection: [@organization_unit] unless @organization_unit.blank? %>
-    <%= f.association :facility, collection: [@facility] unless @facility.blank? %>
     <%= f.input :name %>
     <%= f.input :category, collection: ['Supplier', 'Local Representative'], as: :radio_buttons %>
     <%= f.input :institution_type, label: 'Type', collection: ['NGO', 'Government','Private'], as: :radio_buttons %>

@@ -8,7 +8,7 @@
     </li>
     <% if current_user.is_role(Constants::BIOMEDICAL_HEAD) or current_user.is_role(Constants::BIOMEDICAL_ENGINEER) %>
     <li class="dropdown">
-      <a href="javascript:void(0);" class="menu-toggle">
+      <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
         <i class="material-icons">store</i>
         <label style="vertical-align: super">Logistics</label>
       </a>
@@ -17,14 +17,14 @@
         <li>
           <%= link_to receives_path do %>
               <i class="material-icons">add_shopping_cart</i>
-              <span>Item Receives</span>
+              <label>Item Receives</label>
           <% end %>
         </li>
 
         <li>
           <%= link_to issues_path do %>
               <i class="material-icons">remove_from_queue</i>
-              <span>Item Issues</span>
+              <label>Item Issues</label>
           <% end %>
         </li>
       </ul>
