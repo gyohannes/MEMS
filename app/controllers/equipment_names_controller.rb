@@ -7,6 +7,14 @@ class EquipmentNamesController < ApplicationController
     @equipment_names = EquipmentName.all
   end
 
+  def import_names
+    if request.post?
+      @names = EquipmentName.import_names(params[:names_csv_file])
+      flash[:notice] = @names.blank? ? 'No Name imported' : 'Names imported. Check the imported list below'
+      render 'index'
+    end
+  end
+
   # GET /equipment_names/1
   # GET /equipment_names/1.json
   def show

@@ -141,7 +141,9 @@ Rails.application.routes.draw do
       get 'load_calendar'
     end
   end
-  resources :equipment_names
+  resources :equipment_names do
+    post 'import_names'
+  end
   resources :equipment_categories
   resources :departments
   devise_for :users, controllers: {

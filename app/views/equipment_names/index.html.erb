@@ -28,6 +28,13 @@
     <% end %>
   </tbody>
 </table>
+
+  <div class="col-sm-6">
+    <%= form_tag import_names_equipment_names_path,:multipart=>true do %>
+        <label>Select CSV File</label> <%= file_field_tag(:names_csv_file) %><br/>
+        <%= submit_tag 'Import',class: 'btn' %>
+    <% end %>
+  </div>
 <hr/>
 <%= link_to 'Add Equipment Name', new_equipment_name_path, class: 'btn btn-primary' %>
 </div>
