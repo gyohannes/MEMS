@@ -19,7 +19,6 @@ fieldset.sub_form{
 }
 .login-page {
     min-width: 800px;
-    background: white;
 }
 [type="radio"]:not(:checked) + label, [type="radio"]:checked + label,[type="checkbox"]:not(:checked) + label, [type="checkbox"]:checked + label {
     font-size: inherit;
