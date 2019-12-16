@@ -16,7 +16,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
-<body>
+<body class="theme-cyan">
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
   <div class="loader">
@@ -41,7 +41,7 @@
       <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
       <a href="javascript:void(0);" class="bars"></a>
       <%= link_to root_path do %>
-          <%= image_tag 'fmoh1.png' %>
+          <%= image_tag 'fmoh.png' %>
       <% end %>
     </div>
     <%= render partial: 'menus/top_menu' %>

@@ -17,9 +17,9 @@
   <tbody>
     <% @equipment_names.each do |equipment_name| %>
       <tr>
-        <td><%= equipment_name.equipment_type %></td>
-        <td><%= equipment_name.code %></td>
         <td><%= equipment_name.name %></td>
+        <td><%= equipment_name.code %></td>
+        <td><%= equipment_name.equipment_type %></td>
         <td>
           <%= link_to 'Edit', edit_equipment_name_path(equipment_name) %> |
           <%= link_to 'Delete', equipment_name, method: :delete, data: { confirm: 'Are you sure?' } %>

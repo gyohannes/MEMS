@@ -1,9 +1,9 @@
 class EquipmentName < ApplicationRecord
-  belongs_to :equipment_type
+  belongs_to :equipment_type, optional: true
   has_many :model_equipments
   has_many :equipment
 
-  validates :name, :code, presence: true
+  validates :name, presence: true
 
 
   def self.import_names(file)
@@ -13,8 +13,11 @@ class EquipmentName < ApplicationRecord
       code = row[1]
       equipment_type = row[2].blank? ? nil : EquipmentType.find_or_create_by(name: row[2])
       attrbts = {equipment_type_id: equipment_type.try(:id), name: name, code: code}
-      eq_name = EquipmentName.create(attrbts)
-      names << eq_name unless eq_name.blank?
+      equipment_name = EquipmentName.find_by(name: name)
+      if equipment_name.blank?
+        eq_name = EquipmentName.create(attrbts)
+        names << eq_name unless eq_name.blank?
+      end
     end
     return names
   end

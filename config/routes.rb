@@ -142,7 +142,9 @@ Rails.application.routes.draw do
     end
   end
   resources :equipment_names do
-    post 'import_names'
+    collection do
+      post 'import_names'
+    end
   end
   resources :equipment_categories
   resources :departments

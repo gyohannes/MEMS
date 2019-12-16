@@ -9,8 +9,8 @@ class EquipmentNamesController < ApplicationController
 
   def import_names
     if request.post?
-      @names = EquipmentName.import_names(params[:names_csv_file])
-      flash[:notice] = @names.blank? ? 'No Name imported' : 'Names imported. Check the imported list below'
+      @equipment_names = EquipmentName.import_names(params[:names_csv_file])
+      flash[:notice] = @equipment_names.blank? ? 'No Name imported' : 'Names imported. Check the imported list below'
       render 'index'
     end
   end
