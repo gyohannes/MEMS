@@ -9,10 +9,10 @@
         <div class="col-sm-4">
           <div id="report_organization_unit_tree"></div>
           <%=  f.input :organization_unit, as: :hidden, required: false %>
-          <%=  f.input :equipment_type, collection: EquipmentType.all, required: false %>
         </div>
 
         <div class="col-sm-4">
+          <%=  f.input :equipment_type, collection: EquipmentType.all, required: false %>
           <%=  f.input :disposal_reason, collection: Constants::DISPOSAL_REASONS, required: false, as: :check_boxes,
                        wrapper_html:{class: "single_columned_list"}, input_html: {class: 'filled-in chk-col-pink'} %>
 

@@ -9,14 +9,14 @@
         <div class="col-sm-4">
           <div id="report_organization_unit_tree"></div>
           <%=  f.input :organization_unit, as: :hidden, required: false %>
+        </div>
+        <div class="col-sm-4">
           <%=  f.input :type, label: 'Equipment Type', collection: EquipmentType.all, required: false %>
           <%=  f.input :equipment_name, collection: EquipmentName.all, required: false %>
           <div id='model'>
             <%= render partial: 'model' %>
           </div>
           <%=  f.input :acquisition_type, collection: Constants::EQUIPMENT_ACQUISITIONS, required: false %>
-        </div>
-        <div class="col-sm-4">
           <%=  f.input :inventory_number, required: false %>
           <fieldset class="sub_form">
             <legend>Installation Date</legend>
