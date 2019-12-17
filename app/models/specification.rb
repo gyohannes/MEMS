@@ -1,14 +1,12 @@
 class Specification < ApplicationRecord
   belongs_to :equipment_name
-  belongs_to :organization_unit, optional: true
-  belongs_to :facility, optional: true
+  belongs_to :organization_unit_type
+  belongs_to :department
 
-  has_one_attached :attachment
-
-  validates :name, :equipment_name_id, :specification_by, :description, :contact_address, :specification_date, presence: true
+  validates :item_detail, presence: true
 
   def to_s
-    name
+    equipment_name
   end
 
 end

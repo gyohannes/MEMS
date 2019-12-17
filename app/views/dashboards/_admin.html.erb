@@ -6,29 +6,43 @@
     </div>
    <div class="row">
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="col-sm-12">
       <div class="card">
         <div class="header">
           Equipments By Status
         </div>
         <div class="body">
-          <%= pie_chart equipment_by_status_equipment_index_path, donut: true %>
+          <%= column_chart equipment_by_status_equipment_index_path, donut: true %>
         </div>
       </div>
      </div>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header">
+    <div class="col-sm-12">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
           Standard vs Available Functional Equipment
         </div>
-        <div class="body">
-          <%= column_chart ideal_vs_available_by_type_equipment_index_path %>
+        <div class="panel-body">
+          <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#equipment_by_standard_by_graph" data-toggle="tab">Graphical</a></li>
+            <li role="presentation"><a href="#equipment_by_standard_by_table" data-toggle="tab">Tabular</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_standard_by_graph">
+              <%= column_chart ideal_vs_available_by_type_equipment_index_path %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="equipment_by_standard_by_table">
+              <%= render partial: '/equipment/standard_available_equipment'  %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
      <% if current_user.organization_unit.facility %>
-     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+     <div class="col-sm-12">
        <div class="card">
          <div class="header">
            Equipment by Department
@@ -39,7 +53,7 @@
        </div>
      </div>
 
-     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+     <div class="col-sm-12">
        <div class="card">
          <div class="header">
            Spare Parts' Min Re-order Level vs Available
@@ -52,32 +66,66 @@
      <% end %>
 
      <% unless current_user.organization_unit.facility %>
-         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-           <div class="card">
-             <div class="header">
+         <div class="col-sm-12">
+
+           <div class="panel panel-default">
+             <div class="panel-heading">
                Equipment by Organization unit and Status
              </div>
-             <div class="body">
-               <%= column_chart equipment_by_org_unit_and_status_equipment_index_path %>
+             <div class="panel-body">
+               <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                 <li role="presentation" class="active"><a href="#equipment_by_org_unit_and_status_by_graph" data-toggle="tab">Graphical</a></li>
+                 <li role="presentation"><a href="#equipment_by_org_unit_and_status_by_table" data-toggle="tab">Tabular</a></li>
+               </ul>
+
+               <!-- Tab panes -->
+               <div class="tab-content">
+                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_status_by_graph">
+                   <%= column_chart equipment_by_org_unit_and_status_equipment_index_path %>
+                 </div>
+
+                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_status_by_table">
+                   <%= render partial: '/equipment/equipment_by_org_unit_by_status'  %>
+                 </div>
+               </div>
              </div>
            </div>
+
          </div>
 
-         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-           <div class="card">
-             <div class="header">
+         <div class="col-sm-12">
+
+
+           <div class="panel panel-default">
+             <div class="panel-heading">
                Equipment by Organization unit and Type
              </div>
-             <div class="body">
-               <%= column_chart equipment_by_org_unit_and_type_equipment_index_path %>
+             <div class="panel-body">
+               <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                 <li role="presentation" class="active"><a href="#equipment_by_org_unit_and_type_by_graph" data-toggle="tab">Graphical</a></li>
+                 <li role="presentation"><a href="#equipment_by_org_unit_and_type_by_table" data-toggle="tab">Tabular</a></li>
+               </ul>
+
+               <!-- Tab panes -->
+               <div class="tab-content">
+                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_type_by_graph">
+                   <%= column_chart equipment_by_org_unit_and_type_equipment_index_path %>
+                 </div>
+
+                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_type_by_table">
+                   <%= render partial: '/equipment/equipment_by_org_unit_by_type'  %>
+                 </div>
+               </div>
              </div>
            </div>
          </div>
      <% end %>
     </div>
-    <div class="card">
-      <legend>Preventive Maintenance Calendar</legend>
-      <div class="body">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Preventive Maintenance Calendar
+      </div>
+      <div class="panel-body">
         <div id="calendar"></div>
       </div>
     </div>
