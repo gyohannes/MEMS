@@ -4,8 +4,8 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    facility = current_user.facility
-    @contacts = !facility.blank? ? facility.contacts :  []
+    org_unit = current_user.organization_unit
+    @contacts = !org_unit.blank? ? org_unit.contacts :  []
   end
 
   def load_contacts
