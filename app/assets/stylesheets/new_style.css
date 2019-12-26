@@ -25,6 +25,9 @@ fieldset.sub_form{
     font-weight: bold;
     text-align: left;
 }
+.theme-cyan .navbar{
+    background-color: #a6c4e2;
+}
 .navbar{
     background: white;
 }
