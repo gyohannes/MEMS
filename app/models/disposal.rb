@@ -1,5 +1,6 @@
 class Disposal < ApplicationRecord
   belongs_to :equipment
+  has_one_attached :attachment
 
   scope :list_by_user, -> (user) { joins(:equipment).where('organization_unit_id in (?)', user.organization_unit.sub_units.pluck(:id) << user.organization_unit_id) unless user.blank? }
   scope :list_by_org_unit, -> (org_unit) { joins(:equipment).where('organization_unit_id in (?)', OrganizationUnit.find_by(id: org_unit).sub_units.pluck(:id) << org_unit) unless org_unit.blank? }

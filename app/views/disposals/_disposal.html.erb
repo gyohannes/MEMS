@@ -9,29 +9,33 @@
 </p>
 
 <p>
-  <strong>Problem:</strong>
-  <%= @disposal.problem %>
+  <strong>Reason fo disposal:</strong>
+  <%= @disposal.reason_for_disposal %>
 </p>
 
 <p>
-  <strong>Action taken:</strong>
-  <%= @disposal.action_taken %>
+  <strong>Disposal method:</strong>
+  <%= @disposal.disposal_method %>
 </p>
 
 <p>
-  <strong>List of disposing commitee:</strong>
-  <%= @disposal.list_of_disposing_commitee %>
-</p>
-
-<p>
-  <strong>Contact address:</strong>
-  <%= @disposal.contact_address %>
+  <strong>Disposing committee:</strong>
+  <%= @disposal.disposing_committee %>
 </p>
 
 <p>
   <strong>Disposed date:</strong>
   <%= @disposal.disposed_date %>
 </p>
+<br/>
+      <p class="row">
+        <% if @disposal.attachment.attached? %>
+            <label class="col-sm-2">Attached Document:</label>
+            <%= link_to @disposal.attachment, target: '_blank' do %>
+                <button><i class="material-icons">file_download</i></button>
+            <% end %>
+        <% end %>
+      </p>
 <hr/>
 <%= link_to 'Edit', edit_disposal_path(@disposal) %>
 <% end %>

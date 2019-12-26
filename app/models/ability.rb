@@ -25,7 +25,7 @@ class Ability
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
          cannot :edit, Equipment
-         can :edit, Equipment, status_id: !(Status.find_by(name: 'Disposed').id)
+         cannot :edit, Equipment, status_id: Status.disposed_status
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
          can [:read,:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
@@ -44,6 +44,7 @@ class Ability
          can :manage, Contact, organization_unit_id: user.organization_unit_id
          can [:read, :create], Contact
          can :manage, [Specification] if user.super_admin?
+         cannot :edit, Equipment, status_id: Status.disposed_status
        end
 
        if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)

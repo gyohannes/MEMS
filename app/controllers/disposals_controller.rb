@@ -35,7 +35,7 @@ class DisposalsController < ApplicationController
     equipment = @disposal.equipment
     respond_to do |format|
       if @disposal.save
-        equipment.update(status: Equipment::DISPOSED)
+        equipment.update_attribute('status_id', Status.disposed_status)
         format.html { redirect_to session.delete(:return_to), notice: 'Disposal was successfully created.' }
         format.json { render :show, status: :created, location: @disposal }
       else
@@ -77,6 +77,6 @@ class DisposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def disposal_params
-      params.require(:disposal).permit(:equipment_id, :problem, :action_taken, :list_of_disposing_commitee, :contact_address, :disposed_date)
+      params.require(:disposal).permit(:equipment_id, :reason_for_disposal, :disposal_method, :disposing_committee, :disposed_date, :attachment)
     end
 end

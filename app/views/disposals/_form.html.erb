@@ -7,8 +7,9 @@
     <%= f.association :equipment, collection: @equipments %>
     <%= f.input :reason_for_disposal, collection: Constants::DISPOSAL_REASONS %>
     <%= f.input :disposal_method, collection: Constants::DISPOSAL_METHODS %>
-    <%= f.input :disposing_commitee %>
+    <%= f.input :disposing_committee %>
     <%= f.input :disposed_date, as: :string, input_html: {class: 'datepicker'} %>
+    <%= f.input :attachment, as: :file %>
   </div>
 
   <div class="form-actions">
