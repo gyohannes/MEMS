@@ -28,11 +28,11 @@ $(function () {
                         success: function (response) {
                             $('#users').html(response)
                             $('.js-exportable').DataTable({
-                                dom: 'lrBfrtip',
                                 responsive: true,
-                                buttons: [
-                                    'copy', 'csv', 'excel', 'pdf', 'print'
-                                ]
+                                retrieve: true,
+                                bootstrap: true,
+                                dom: '<"html5buttons"B>lTfgtip',
+                                buttons: ['colvis', 'copy', 'excel', 'print']
                             });
                         }
                     })
