@@ -5,12 +5,10 @@ $(function () {
 
     //Exportable table
     $('.js-exportable').DataTable({
-        retrieve: true,
-        destroy: true,
-        dom: 'Bfrtip',
         responsive: true,
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+        retrieve: true,
+        bootstrap: true,
+        dom: '<"html5buttons"B>lTfgtip',
+        buttons: ['colvis', 'copy', 'excel', 'print']
     });
 });
