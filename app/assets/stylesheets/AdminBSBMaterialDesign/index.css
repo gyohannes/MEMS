@@ -1,5 +1,6 @@
 /*
 *= require AdminBSBMaterialDesign/bootstrap/bootstrap
+*= require AdminBSBMaterialDesign/jquery-datatable/index
 *= require AdminBSBMaterialDesign/node-waves/waves.min
 *= require AdminBSBMaterialDesign/animate-css/animate.min
 *= require AdminBSBMaterialDesign/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker
@@ -7,6 +8,5 @@
 *= require AdminBSBMaterialDesign/sweetalert/sweetalert
 *= require AdminBSBMaterialDesign/css/style
 *= require AdminBSBMaterialDesign/css/materialize
-*= require AdminBSBMaterialDesign/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap
 *= require AdminBSBMaterialDesign/css/themes/all-themes
 */

@@ -62,7 +62,7 @@ class Equipment < ApplicationRecord
   end
 
   def preventive_maintenance_date
-    (pp_maintenances.first.try(:end_date) || installation_date) + maintenance_requirement.days
+    (pp_maintenances.first.try(:end_date) || installation_date) + maintenance_requirement.days rescue nil
   end
 
   def set_attributes

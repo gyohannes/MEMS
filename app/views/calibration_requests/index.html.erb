@@ -20,7 +20,7 @@
     <% @calibration_requests.each do |calibration_request| %>
       <tr>
         <td><%= calibration_request.user.organization_unit %></td>
-        <td><%= calibration_request.request_date.strftime("%B %d, %Y") %></td>
+        <td><%= calibration_request.request_date.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= calibration_request.equipment %></td>
         <td><%= calibration_request.description %></td>
         <td><%= calibration_request.status %></td>

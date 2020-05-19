@@ -20,7 +20,7 @@
     <% @specification_requests.each do |specification_request| %>
       <tr>
         <td><%= specification_request.user.organization_unit %></td>
-        <td><%= specification_request.requested_date.strftime("%B %d, %Y") %></td>
+        <td><%= specification_request.requested_date.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= specification_request.equipment_name %></td>
         <td><%= specification_request.description %></td>
         <td><%= specification_request.status %></td>

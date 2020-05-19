@@ -108,7 +108,7 @@ class ProcurementRequestsController < ApplicationController
     def procurement_request_params
       params.require(:procurement_request).permit(:organization_unit_id, :user_id, :status, :contact_phone, :contact_email,
                                                   :request_date, :comment, :decision_by, :attachment,
-                                                  procurement_request_equipments_attributes: [:id, :equipment_name_id, :specification_id, :quantity, :approved_quantity, :_destroy],
+                                                  procurement_request_equipments_attributes: [:id, :equipment_name_id, :attachment, :quantity, :approved_quantity, :_destroy],
                                                   procurement_request_spare_parts_attributes: [:id, :spare_part_id, :description, :requested_quantity, :approved_quantity, :_destroy],
                                                   forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end

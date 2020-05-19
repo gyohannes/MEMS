@@ -20,7 +20,7 @@
     <% @disposal_requests.each do |disposal_request| %>
       <tr>
         <td><%= disposal_request.user.organization_unit %></td>
-        <td><%= disposal_request.request_date.strftime("%B %d, %Y") %></td>
+        <td><%= disposal_request.request_date.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= disposal_request.equipment %></td>
         <td><%= disposal_request.description %></td>
         <td><%= disposal_request.status %></td>

@@ -21,5 +21,3 @@
   <% end %>
   </tbody>
 </table>
-
-<%= link_to 'New Organization Unit', new_organization_unit_path(parent: @parent.try(:id)),class: 'btn btn-primary' unless @parent.blank? %>

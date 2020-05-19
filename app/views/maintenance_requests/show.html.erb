@@ -11,7 +11,7 @@
 
       <div class="row">
         <label class="col-sm-6">Failure Date:</label>
-        <%= @maintenance_request.failure_date.strftime("%B %d, %Y") %>
+        <%= @maintenance_request.failure_date.strftime("%B %d, %Y") rescue nil %>
       </div>
 
       <div class="row">
@@ -31,7 +31,7 @@
 
       <div class="row">
         <label class="col-sm-6">Request date:</label>
-        <%= @maintenance_request.created_at.strftime("%B %d, %Y") %>
+        <%= @maintenance_request.created_at.strftime("%B %d, %Y") rescue nil %>
       </div>
       <p class="row">
         <% if @maintenance_request.attachment.attached? %>

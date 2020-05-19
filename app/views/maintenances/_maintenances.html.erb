@@ -19,7 +19,7 @@
           <td><%= maintenance.engineer_name_and_contact %></td>
           <td><%= maintenance.maintenance_cost %></td>
           <td><%= maintenance.status %></td>
-          <td><%= maintenance.end_date.strftime("%B %d, %Y") %></td>
+          <td><%= maintenance.end_date.strftime("%B %d, %Y") rescue nil %></td>
           <td>
             <%= link_to 'Details', maintenance, class: 'btn btn-primary' %>
             <%= link_to 'Edit', edit_maintenance_path(maintenance), class: 'btn btn-primary' if can? :edit, maintenance %>

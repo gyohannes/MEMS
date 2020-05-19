@@ -3,7 +3,7 @@ class MaintenanceWorkOrdersController < ApplicationController
   before_action :load, only: [:new, :create, :edit, :update]
 
   def load
-    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
+    @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER) + current_user.load_users(Constants::BIOMEDICAL_HEAD)
     @equipment = current_user.load_equipment
   end
   # GET /maintenance_work_orders

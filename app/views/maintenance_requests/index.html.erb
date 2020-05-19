@@ -21,8 +21,8 @@
       <tr>
         <td><%= maintenance_request.equipment.department %></td>
         <td><%= maintenance_request.equipment %></td>
-        <td><%= maintenance_request.failure_date.strftime("%B %d, %Y") %></td>
-        <td><%= maintenance_request.created_at.strftime("%B %d, %Y") %></td>
+        <td><%= maintenance_request.failure_date.strftime("%B %d, %Y") rescue nil%></td>
+        <td><%= maintenance_request.created_at.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= maintenance_request.request_status %></td>
         <td>
           <%= link_to 'Details', maintenance_request, class: 'btn btn-primary' %>

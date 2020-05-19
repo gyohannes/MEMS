@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-        <span class="font-15">Next Preventive Maintenance Date:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.preventive_maintenance_date.strftime("%B %d, %Y") %></span>
+        <span class="font-15">Next Preventive Maintenance Date:</span> <span class="right font-15 font-italic font-underline"><%= @equipment.preventive_maintenance_date.strftime("%B %d, %Y") rescue nil %></span>
         </a>
       </div>
       <div class="col-sm-6">

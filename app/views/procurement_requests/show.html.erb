@@ -56,7 +56,13 @@
         <% @procurement_request.procurement_request_equipments.each do |eq| %>
             <tr>
               <td><%= eq.equipment_name %></td>
-              <td><%= eq.specification %></td>
+              <td><p class="row">
+                <% if eq.attachment.attached? %>
+                    <%= link_to eq.attachment, target: '_blank' do %>
+                        <button><i class="material-icons">file_download</i></button>
+                    <% end %>
+                <% end %>
+              </p></td>
               <td><%= eq.quantity %></td>
             </tr>
         <% end %>

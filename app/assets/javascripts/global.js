@@ -28,8 +28,9 @@ $(function () {
     $('.js-exportable').DataTable({
         responsive: true,
         retrieve: true,
+        bootstrap: true,
         dom: '<"html5buttons"B>lTfgtip',
-        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        buttons: ['colvis', 'copy', 'excel', 'print']
     });
 
     $('#calendar').fullCalendar({
