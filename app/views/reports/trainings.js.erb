@@ -2,6 +2,8 @@ $("#trainings_report").html("<%= escape_javascript( render :partial => "/trainin
 $("#trainings_report").fadeIn(500);
 $('.js-exportable').DataTable({
     responsive: true,
+    retrieve: true,
+    bootstrap: true,
     dom: '<"html5buttons"B>lTfgtip',
-    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    buttons: ['colvis', 'copy', 'excel', 'print']
 });
