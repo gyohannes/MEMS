@@ -3,10 +3,10 @@
     <tr>
       <th>Status</th>
       <th>Inventory Number</th>
+      <th>Equipment name</th>
       <th>Facility</th>
       <th>Department</th>
       <th>Location</th>
-      <th>Equipment name</th>
       <th>Equipment Type</th>
       <th>Model</th>
       <th>Serial number</th>
@@ -35,10 +35,10 @@
           </label>
           </td>
           <td><%= link_to equipment.inventory_number, equipment %></td>
+          <td><%= equipment.equipment_name %></td>
           <td><%= equipment.organization_unit %></td>
           <td><%= equipment.department %></td>
           <td><%= equipment.location %></td>
-          <td><%= equipment.equipment_name %></td>
           <td><%= equipment.equipment_type %></td>
           <td><%= equipment.model %></td>
           <td><%= equipment.serial_number %></td>
