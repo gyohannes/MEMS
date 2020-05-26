@@ -1,6 +1,8 @@
 class EquipmentController < ApplicationController
   before_action :set_equipment, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Equipment", :equipment_index_path
 
   def load
     @suppliers = Institution.suppliers
@@ -94,15 +96,18 @@ class EquipmentController < ApplicationController
   # GET /equipment/1
   # GET /equipment/1.json
   def show
+    add_breadcrumb "Details", :equipment_path
   end
 
   # GET /equipment/new
   def new
+    add_breadcrumb "Registration", :new_equipment_path
     @equipment = Equipment.new
   end
 
   # GET /equipment/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_equipment_path
     @organization_unit = @equipment.organization_unit
   end
 

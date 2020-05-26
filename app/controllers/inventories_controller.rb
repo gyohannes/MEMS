@@ -1,6 +1,7 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Inventories", :inventories_path
   # GET /inventories
   # GET /inventories.json
   def index
@@ -10,10 +11,12 @@ class InventoriesController < ApplicationController
   # GET /inventories/1
   # GET /inventories/1.json
   def show
+    add_breadcrumb "Details", :inventory_path
   end
 
   # GET /inventories/new
   def new
+    add_breadcrumb "Register", :new_inventory_path
     @inventory = Inventory.new
     equipment = Equipment.find_by(id: params[:equipment])
     @inventory.equipment = equipment || Equipment.new
@@ -22,6 +25,7 @@ class InventoriesController < ApplicationController
 
   # GET /inventories/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_inventory_path
     session[:return_to] = request.referer
   end
 

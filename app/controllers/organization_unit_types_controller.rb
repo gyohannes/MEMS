@@ -1,5 +1,7 @@
 class OrganizationUnitTypesController < BaseController
   before_action :set_organization_unit_type, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Organization Types", :organization_unit_types_path
 
   # GET /organization_unit_types
   # GET /organization_unit_types.json

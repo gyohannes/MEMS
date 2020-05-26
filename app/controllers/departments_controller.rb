@@ -1,5 +1,7 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Departments", :departments_path
 
   # GET /departments
   # GET /departments.json

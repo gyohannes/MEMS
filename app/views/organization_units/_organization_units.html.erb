@@ -15,9 +15,11 @@
         <td><%= organization_unit.code %></td>
         <td><%= organization_unit.organization_unit_type %></td>
         <td>
-          <%= link_to 'Edit', edit_organization_unit_path(organization_unit), class: 'edit' if can? :edit, organization_unit %>
+          <%= link_to 'Edit', edit_organization_unit_path(organization_unit), class: 'btn btn-primary' if can? :edit, organization_unit %>
         </td>
       </tr>
   <% end %>
   </tbody>
 </table>
+
+<%= link_to 'Add Organization Unit', new_organization_unit_path(parent: @parent.id), class: 'btn btn-primary' if can? :create, OrganizationUnit and !@parent.blank? %>

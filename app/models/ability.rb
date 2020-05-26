@@ -34,6 +34,7 @@ class Ability
                                   CalibrationRequest, DisposalRequest]
          can [:manage, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                          CalibrationRequest, DisposalRequest], organization_unit_id: user.organization_unit_id
+         can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
          can :manage, [OrganizationUnit, User, Department, Store, Institution, EquipmentStatus,
                        Equipment, Receive, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
          cannot [:edit, :update, :destroy], [Maintenance]

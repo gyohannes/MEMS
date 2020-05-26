@@ -1,6 +1,9 @@
 class MaintenanceRequirementsController < ApplicationController
   before_action :set_maintenance_requirement, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Maintenance Requirements", :maintenance_requirements_path
+
   # GET /maintenance_requirements
   # GET /maintenance_requirements.json
   def index

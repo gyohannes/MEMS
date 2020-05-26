@@ -2,6 +2,8 @@ class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   before_action :load_spare_parts, only: [:new, :create, :edit, :update]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Item Issues", :issues_path
 
   def load_spare_parts
     @spare_parts = current_user.organization_unit.spare_parts
@@ -15,15 +17,18 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
+    add_breadcrumb "Details", :issue_path
   end
 
   # GET /issues/new
   def new
+    add_breadcrumb "New", :new_issue_path
     @issue = Issue.new
   end
 
   # GET /issues/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_issue_path
   end
 
   # POST /issues

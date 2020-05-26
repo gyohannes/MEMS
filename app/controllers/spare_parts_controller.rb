@@ -1,6 +1,7 @@
 class SparePartsController < ApplicationController
   before_action :set_spare_part, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Spare Parts", :spare_parts_path
   # GET /spare_parts
   # GET /spare_parts.json
   def index

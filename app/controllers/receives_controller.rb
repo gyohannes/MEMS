@@ -2,6 +2,9 @@ class ReceivesController < ApplicationController
   before_action :set_receife, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Item Receives", :receives_path
+
   def load
     @stores = current_user.organization_unit ? current_user.organization_unit.stores : []
   end
@@ -20,6 +23,8 @@ class ReceivesController < ApplicationController
   # GET /receives/1
   # GET /receives/1.json
   def show
+    add_breadcrumb "Details", :receife_path
+
     respond_to do |format|
       format.html # show.html.erb
       format.pdf do
@@ -48,11 +53,14 @@ class ReceivesController < ApplicationController
 
   # GET /receives/new
   def new
+    add_breadcrumb "New", :new_receife_path
+
     @receife = Receive.new
   end
 
   # GET /receives/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_receife_path
   end
 
   # POST /receives

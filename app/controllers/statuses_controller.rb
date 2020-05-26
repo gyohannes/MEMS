@@ -1,5 +1,7 @@
 class StatusesController < ApplicationController
   before_action :set_status, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Equipment Statuses", :statuses_path
 
   # GET /statuses
   # GET /statuses.json

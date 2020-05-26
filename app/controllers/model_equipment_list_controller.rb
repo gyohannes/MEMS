@@ -1,6 +1,7 @@
 class ModelEquipmentListController < ApplicationController
   before_action :set_model_equipment_list, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Model Equipment List", :model_equipment_list_path
   # GET /model_equipment_list
   # GET /model_equipment_list.json
   def index
@@ -14,12 +15,14 @@ class ModelEquipmentListController < ApplicationController
 
   # GET /model_equipment_list/new
   def new
+    add_breadcrumb "Create List", :new_model_equipment_list_path
     @model_equipment_list = ModelEquipmentList.new
     @model_equipment_list.model_equipments.build
   end
 
   # GET /model_equipment_list/1/edit
   def edit
+    add_breadcrumb "Edit List", :edit_model_equipment_list_path
   end
 
   # POST /model_equipment_list

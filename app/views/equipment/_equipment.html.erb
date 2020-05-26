@@ -1,28 +1,63 @@
-<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+<table class="table table-bordered table-striped table-responsive dataTable js-exportable">
     <thead>
     <tr>
-      <th>Facility</th>
+      <th>Status</th>
       <th>Inventory Number</th>
+      <th>Facility</th>
+      <th>Department</th>
+      <th>Location</th>
       <th>Equipment name</th>
       <th>Equipment Type</th>
       <th>Model</th>
-      <th>Status</th>
-      <th></th>
+      <th>Serial number</th>
+      <th>Tag number</th>
+      <th>Volt/Ampere</th>
+      <th>Power requirement</th>
+      <th>Manufacturer</th>
+      <th>Manufactured year</th>
+      <th>Purchased year</th>
+      <th>Cost</th>
+      <th>Acquisition type</th>
+      <th>Installation Date</th>
+      <th>Warranty expire date</th>
+      <th>Maintenance service provider
+      <th>Risk Classification</th>
+      <th>Maintenance requirement</th>
+      <th>Estimated life span</th>
+      <th>Years used</th>
     </tr>
     </thead>
 
     <tbody>
     <% @equipment.each do |equipment| %>
         <tr>
-          <td><%= equipment.organization_unit %></td>
-          <td><%= equipment.inventory_number %></td>
-          <td><%= equipment.equipment_name %></td>
-          <td><%= equipment.equipment_type %></td>
-          <td><%= equipment.model %></td>
           <td><label class="label" style="background-color: <%= equipment.status.color %>">
             <%= equipment.status %>
           </label>
-          <td><%= link_to 'Details', equipment, class: 'btn btn-primary' %></td>
+          </td>
+          <td><%= link_to equipment.inventory_number, equipment %></td>
+          <td><%= equipment.organization_unit %></td>
+          <td><%= equipment.department %></td>
+          <td><%= equipment.location %></td>
+          <td><%= equipment.equipment_name %></td>
+          <td><%= equipment.equipment_type %></td>
+          <td><%= equipment.model %></td>
+          <td><%= equipment.serial_number %></td>
+          <td><%= equipment.tag_number %></td>
+          <td><%= equipment.volt_ampere %></td>
+          <td><%= equipment.power_requirement %></td>
+          <td><%= equipment.manufacturer %></td>
+          <td><%= equipment.manufactured_year.strftime("%Y") rescue nil %></td>
+          <td><%= equipment.purchased_year.strftime("%Y") rescue nil %></td>
+          <td><%= equipment.cost %></td>
+          <td><%= equipment.acquisition_type %></td>
+          <td><%= equipment.installation_date %></td>
+          <td><%= equipment.warranty_expire_date %></td>
+          <td><%= equipment.maintenance_provider %></td>
+          <td><%= equipment.equipment_risk_classification %></td>
+          <td><%= equipment.maintenance_requirement %></td>
+          <td><%= equipment.estimated_life_span %></td>
+          <td><%= equipment.years_used %></td>
         </tr>
     <% end %>
     </tbody>

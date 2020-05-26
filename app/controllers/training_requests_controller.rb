@@ -2,6 +2,9 @@ class TrainingRequestsController < ApplicationController
   before_action :set_training_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load, only: [:new, :create, :edit, :update, :show]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Training Requests", :training_requests_path
+
   def load
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
     @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
@@ -25,12 +28,16 @@ class TrainingRequestsController < ApplicationController
   # GET /training_requests/1
   # GET /training_requests/1.json
   def show
+    add_breadcrumb "Details", :training_request_path
+
     @training_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
     @status = @training_request.status
   end
 
   # GET /training_requests/new
   def new
+    add_breadcrumb "New", :new_training_request_path
+
     @training_request = TrainingRequest.new
   end
 
@@ -46,6 +53,7 @@ class TrainingRequestsController < ApplicationController
 
   # GET /training_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_training_request_path
   end
 
   # POST /training_requests

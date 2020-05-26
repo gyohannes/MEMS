@@ -2,6 +2,9 @@ class CalibrationRequestsController < ApplicationController
   before_action :set_calibration_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Calibration Requests", :calibration_requests_path
+
   def load
     @equipments = current_user.load_equipment
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
@@ -26,11 +29,13 @@ class CalibrationRequestsController < ApplicationController
   # GET /calibration_requests/1
   # GET /calibration_requests/1.json
   def show
+    add_breadcrumb "Details", :calibration_request_path
     @calibration_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /calibration_requests/new
   def new
+    add_breadcrumb "New", :new_calibration_request_path
     @calibration_request = CalibrationRequest.new
   end
 
@@ -47,6 +52,7 @@ class CalibrationRequestsController < ApplicationController
 
   # GET /calibration_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_calibration_request_path
   end
 
   # POST /calibration_requests

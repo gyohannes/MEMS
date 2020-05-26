@@ -2,6 +2,9 @@ class DisposalsController < ApplicationController
   before_action :set_disposal, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update, :index]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Disposals", :disposals_path
+
   def load
     @equipments = current_user.load_equipment
   end
@@ -14,10 +17,13 @@ class DisposalsController < ApplicationController
   # GET /disposals/1
   # GET /disposals/1.json
   def show
+    add_breadcrumb "Details", :disposal_path
   end
 
   # GET /disposals/new
   def new
+    add_breadcrumb "New", :new_disposal_path
+
     @disposal = Disposal.new
     @disposal.equipment_id = params[:equipment]
     session[:return_to] = request.referer
@@ -25,6 +31,7 @@ class DisposalsController < ApplicationController
 
   # GET /disposals/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_disposal_path
     session[:return_to] = request.referer
   end
 

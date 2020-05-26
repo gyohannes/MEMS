@@ -1,5 +1,7 @@
 class InstitutionsController < BaseController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Suppliers/Local Representatives", :institutions_path
 
   # GET /institutions
   # GET /institutions.json

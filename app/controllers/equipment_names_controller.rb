@@ -1,5 +1,7 @@
 class EquipmentNamesController < ApplicationController
   before_action :set_equipment_name, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Equipment Names", :equipment_names_path
 
   # GET /equipment_names
   # GET /equipment_names.json

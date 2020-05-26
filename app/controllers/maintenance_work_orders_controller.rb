@@ -1,7 +1,8 @@
 class MaintenanceWorkOrdersController < ApplicationController
   before_action :set_maintenance_work_order, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
-
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Maintenance Work Order", :maintenance_work_orders_path
   def load
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER) + current_user.load_users(Constants::BIOMEDICAL_HEAD)
     @equipment = current_user.load_equipment
@@ -20,10 +21,12 @@ class MaintenanceWorkOrdersController < ApplicationController
   # GET /maintenance_work_orders/1
   # GET /maintenance_work_orders/1.json
   def show
+    add_breadcrumb "Details", :maintenance_work_order_path
   end
 
   # GET /maintenance_work_orders/new
   def new
+    add_breadcrumb "New", :new_maintenance_work_order_path
     @maintenance_work_order = MaintenanceWorkOrder.new
     maintenance_request = MaintenanceRequest.find_by(id: params[:maintenance_request])
     unless maintenance_request.blank?
@@ -34,6 +37,7 @@ class MaintenanceWorkOrdersController < ApplicationController
 
   # GET /maintenance_work_orders/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_maintenance_work_order_path
   end
 
   # POST /maintenance_work_orders

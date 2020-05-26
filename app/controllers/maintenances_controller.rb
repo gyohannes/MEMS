@@ -2,6 +2,9 @@ class MaintenancesController < ApplicationController
   before_action :set_maintenance, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update, :index]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Maintenances", :maintenances_path
+
   def load
     @equipments = current_user.load_equipment
     @maintenance_requests = current_user.incoming_maintenance_requests.where('status in (?)',[Constants::PENDING, Constants::APPROVED])
@@ -22,10 +25,13 @@ class MaintenancesController < ApplicationController
   # GET /maintenances/1
   # GET /maintenances/1.json
   def show
+    add_breadcrumb "Details", :maintenance_path
   end
 
   # GET /maintenances/new
   def new
+    add_breadcrumb "Register", :new_maintenance_path
+
     @maintenance = Maintenance.new
     @maintenance.equipment_id = params[:equipment]
     @maintenance.maintenance_request_id = params[:maintenance_request]
@@ -35,6 +41,7 @@ class MaintenancesController < ApplicationController
 
   # GET /maintenances/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_maintenance_path
     session[:return_to] = request.referer
   end
 

@@ -1,6 +1,7 @@
 class TrainingsController < ApplicationController
   before_action :set_training, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Equipment Trainings", :trainings_path
   # GET /trainings
   # GET /trainings.json
   def index
@@ -10,10 +11,12 @@ class TrainingsController < ApplicationController
   # GET /trainings/1
   # GET /trainings/1.json
   def show
+    add_breadcrumb "Details", :training_path
   end
 
   # GET /trainings/new
   def new
+    add_breadcrumb "Register", :new_training_path
     @training = Training.new
     @training.build_contact
     equipment = Equipment.find_by_id(params[:equipment])
@@ -24,6 +27,7 @@ class TrainingsController < ApplicationController
 
   # GET /trainings/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_training_path
     session[:return_to] = request.referer
   end
 

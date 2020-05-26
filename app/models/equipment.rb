@@ -13,7 +13,6 @@ class Equipment < ApplicationRecord
   belongs_to :maintenance_requirement
   belongs_to :status
   has_many :documents, as: :documentable
-
   after_find :set_attributes
 
   accepts_nested_attributes_for :documents, allow_destroy: true
@@ -51,6 +50,10 @@ class Equipment < ApplicationRecord
       counter += 1
     end
     return equipment.uniq
+  end
+
+  def maintenance_provider
+    Institution.find_by(id: maintenance_service_provider)
   end
 
   def disposed

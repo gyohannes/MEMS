@@ -2,6 +2,9 @@ class MaintenanceRequestsController < ApplicationController
   before_action :set_maintenance_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load, only: [:new, :create, :edit, :update, :show]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Maintenance Requests", :maintenance_requests_path
+
   def load
     @equipments = current_user.load_equipment
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
@@ -27,6 +30,7 @@ class MaintenanceRequestsController < ApplicationController
   # GET /maintenance_requests/1
   # GET /maintenance_requests/1.json
   def show
+    add_breadcrumb "Details", :maintenance_request_path
     @maintenance_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
     @status = @maintenance_request.request_status
     @institutions = Institution.all
@@ -34,6 +38,7 @@ class MaintenanceRequestsController < ApplicationController
 
   # GET /maintenance_requests/new
   def new
+    add_breadcrumb "New", :new_maintenance_request_path
     @maintenance_request = MaintenanceRequest.new
   end
 
@@ -50,6 +55,7 @@ class MaintenanceRequestsController < ApplicationController
 
   # GET /maintenance_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_maintenance_request_path
   end
 
   # POST /maintenance_requests

@@ -2,6 +2,9 @@ class InstallationRequestsController < ApplicationController
   before_action :set_installation_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Installation Requests", :installation_requests_path
+
   def load
     @engineers = current_user.load_users(Constants::BIOMEDICAL_ENGINEER)
     @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
@@ -25,11 +28,14 @@ class InstallationRequestsController < ApplicationController
   # GET /installation_requests/1
   # GET /installation_requests/1.json
   def show
+    add_breadcrumb "Details", :installation_request_path
+
     @installation_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /installation_requests/new
   def new
+    add_breadcrumb "New", :new_installation_request_path
     @installation_request = InstallationRequest.new
   end
 
@@ -46,6 +52,7 @@ class InstallationRequestsController < ApplicationController
 
   # GET /installation_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_installation_request_path
   end
 
   # POST /installation_requests

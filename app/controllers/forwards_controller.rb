@@ -1,6 +1,9 @@
 class ForwardsController < ApplicationController
   before_action :set_forward, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Forwarded Requests", :forwards_path
+
   # GET /forwards
   # GET /forwards.json
   def index

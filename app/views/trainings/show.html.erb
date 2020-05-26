@@ -4,7 +4,7 @@
 <div class="panel-heading">
 <p>
   <strong>Full Name:</strong>
-  <%= @training.contact.name_of_contact %>
+  <%= @training.contact.name %>
 </p>
 
   <p>
@@ -56,5 +56,5 @@
   <%= @training.training_date %>
 </p>
 <hr/>
-<%= link_to 'Edit', edit_training_path(@training) %> |
+<%= link_to 'Edit', edit_training_path(@training), class: 'btn btn-primary' %>
 </div>

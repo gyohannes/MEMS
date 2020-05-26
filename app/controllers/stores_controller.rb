@@ -2,6 +2,9 @@ class StoresController < ApplicationController
   before_action :set_store, only: [:show, :edit, :update, :destroy]
   before_action :load
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Stores", :stores_path
+
   def load
     @organization_units = [current_user.organization_unit]
   end

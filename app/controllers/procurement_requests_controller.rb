@@ -3,6 +3,9 @@ class ProcurementRequestsController < ApplicationController
   before_action :set_procurement_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Procurement Requests", :procurement_requests_path
+
   def load
     @user = [current_user]
     @spare_parts = current_user.organization_unit.spare_parts
@@ -37,17 +40,20 @@ class ProcurementRequestsController < ApplicationController
   # GET /procurement_requests/1
   # GET /procurement_requests/1.json
   def show
+    add_breadcrumb "Details", :procurement_request_path
     @procurement_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /procurement_requests/new
   def new
+    add_breadcrumb "New", :new_procurement_request_path
     @procurement_request = ProcurementRequest.new
     @procurement_request.organization_unit_id = current_user.organization_unit
   end
 
   # GET /procurement_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_procurement_request_path
   end
 
   # POST /procurement_requests

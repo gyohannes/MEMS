@@ -20,7 +20,7 @@
     <% @installation_requests.each do |installation_request| %>
       <tr>
         <td><%= installation_request.user.organization_unit %></td>
-        <td><%= installation_request.request_date.strftime("%B %d, %y") rescue nil %></td>
+        <td><%= installation_request.request_date.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= installation_request.equipment_name %></td>
         <td><%= installation_request.model %></td>
         <td><%= installation_request.status %></td>

@@ -4,17 +4,13 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <div class="row">
       <%= f.association :user, label: 'Requested by', collection: [current_user], prompt: false %>
       <%= f.association :equipment, collection: @equipments %>
       <%= f.input :failure_date, as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :description_of_problem, label: 'Description of Problem' %>
       <%= f.association :status %>
       <%= f.input :attachment, as: :file %>
-      </div>
     </div>
-
-  </div>
 
   <div class="form-actions">
     <%= f.button :submit %>

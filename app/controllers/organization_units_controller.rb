@@ -1,5 +1,7 @@
 class OrganizationUnitsController < BaseController
   before_action :set_organization_unit, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Organization Units", :organization_units_path
 
   # GET /organization_units
   # GET /organization_units.json

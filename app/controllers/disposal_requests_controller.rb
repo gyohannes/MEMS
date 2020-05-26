@@ -1,6 +1,8 @@
 class DisposalRequestsController < ApplicationController
   before_action :set_disposal_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Disposal Requests", :disposal_requests_path
 
   def load
     @equipments = current_user.load_equipment
@@ -23,11 +25,15 @@ class DisposalRequestsController < ApplicationController
   # GET /disposal_requests/1
   # GET /disposal_requests/1.json
   def show
+    add_breadcrumb "Details", :disposal_request_path
+
     @disposal_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
   end
 
   # GET /disposal_requests/new
   def new
+    add_breadcrumb "New", :new_disposal_request_path
+
     @disposal_request = DisposalRequest.new
   end
 
@@ -44,6 +50,7 @@ class DisposalRequestsController < ApplicationController
 
   # GET /disposal_requests/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_disposal_request_path
   end
 
   # POST /disposal_requests

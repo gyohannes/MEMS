@@ -1,3 +1,10 @@
+.breadcrumb {
+    background: #a6c4e2 !important;
+    width: fit-content;
+    font-size: large;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
 section.content {
     margin: 120px 15px 0 314px;
 }

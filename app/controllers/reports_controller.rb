@@ -1,5 +1,10 @@
 class ReportsController < ApplicationController
+
+  add_breadcrumb "Home", :root_path
+
   def equipment
+    add_breadcrumb "Equipment Report", :reports_equipment_path
+
     @equipment = []
     if request.post?
       statuses = params[:search][:status].reject{|x| x.blank?}
@@ -14,6 +19,8 @@ class ReportsController < ApplicationController
   end
 
   def trainings
+    add_breadcrumb "Trainings Report", :reports_trainings_path
+
     @trainings = []
     if request.post?
       types = params[:search][:training_type].reject{|x| x.blank?} if params[:search][:training_type]
@@ -29,6 +36,8 @@ class ReportsController < ApplicationController
   end
 
   def maintenances
+    add_breadcrumb "Maintenances Report", :reports_maintenances_path
+
     @maintenances = []
     if request.post?
       types = params[:search][:maintenance_type].reject{|x| x.blank?} if params[:search][:maintenance_type]
@@ -42,6 +51,8 @@ class ReportsController < ApplicationController
   end
 
   def spare_parts
+    add_breadcrumb "Spare Parts Report", :reports_spare_parts_path
+
     @spare_parts = []
     if request.post?
       @spare_parts = SparePart.search(params[:search][:organization_unit], params[:search][:quipment_name], params[:search][:spare_part_name],
@@ -55,6 +66,7 @@ class ReportsController < ApplicationController
 
 
   def disposals
+    add_breadcrumb "Disposals Report", :reports_disposals_path
   @disposals = []
   if request.post?
     reasons = params[:search][:disposal_reason].reject{|x| x.blank?} if params[:search][:disposal_reason]

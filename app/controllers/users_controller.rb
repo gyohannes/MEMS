@@ -3,14 +3,16 @@ class UsersController < BaseController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Users", :users_path
+
   def load
     @stores = current_user.organization_unit.try(:stores)
   end
 
   def load_departments
     @role = params[:role]
-    org_unit = OrganizationUnit.find_by(id: params["org_unit"])
-    @departments = org_unit.blank? ? [] : org_unit.departments
+    @departments = Department.all
     render partial: 'department'
   end
   # GET /users
@@ -28,10 +30,13 @@ class UsersController < BaseController
   # GET /users/1
   # GET /users/1.json
   def show
+    add_breadcrumb "Details", :user_path
   end
 
   # GET /users/new
   def new
+    add_breadcrumb "New", :new_user_path
+
     @user = User.new
     unless params[:organization_unit].blank?
       @user.organization_unit_id = params[:organization_unit]
@@ -45,6 +50,8 @@ class UsersController < BaseController
 
   # GET /users/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_user_path
+
     unless @user.organization_unit.blank?
       @institutions = @user.organization_unit.institutions
     else

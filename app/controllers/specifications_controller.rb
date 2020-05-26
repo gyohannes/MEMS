@@ -1,6 +1,9 @@
 class SpecificationsController < ApplicationController
   before_action :set_specification, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Specifications", :specifications_path
+
   # GET /specifications
   # GET /specifications.json
   def index
@@ -10,15 +13,19 @@ class SpecificationsController < ApplicationController
   # GET /specifications/1
   # GET /specifications/1.json
   def show
+    add_breadcrumb "Details", :specification_path
   end
 
   # GET /specifications/new
   def new
+    add_breadcrumb "New", :new_specification_path
+
     @specification = Specification.new
   end
 
   # GET /specifications/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_specification_path
   end
 
   # POST /specifications

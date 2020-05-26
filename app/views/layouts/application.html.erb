@@ -74,6 +74,9 @@
   <div class="container-fluid">
     <div class="row clearfix">
         <%= render partial: 'shared/flash_messages' %>
+      <ol class="breadcrumb breadcrumb-bg-cyan align-right">
+        <%= render_breadcrumbs tag: 'li', separator: "" %>
+      </ol>
         <%= yield :header %>
         <div class="card">
           <%= yield %>

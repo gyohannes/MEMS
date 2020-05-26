@@ -1,6 +1,9 @@
 class EquipmentTypesController < ApplicationController
   before_action :set_equipment_type, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Equipment Types", :equipment_types_path
+
   # GET /equipment_types
   # GET /equipment_types.json
   def index
