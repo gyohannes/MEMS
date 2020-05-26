@@ -18,6 +18,7 @@ gem 'momentjs-rails'
 gem 'cancancan', '~> 2.0'
 gem 'pg'
 gem "paperclip", "~> 6.0.0"
+gem "breadcrumbs_on_rails"
 # Jquery
 gem 'jquery-rails'
 
