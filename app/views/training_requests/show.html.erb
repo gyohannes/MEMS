@@ -56,11 +56,11 @@
       <% end %>
     </div>
     <div class="col-sm-8 left_form">
-      <% if (can? :decision, @training_request or can? :decision, @training_request.forwards.first) and (@training_request.status == Constants::PENDING or @training_request.status == Constants::FORWARDED) %>
+      <% if can? :decision, @training_request and ([Constants::PENDING, Constants::FORWARDED].include?(@training_request.status)) %>
       <%= simple_nested_form_for(@training_request, url: decision_training_request_path) do |f| %>
               <%= f.input :comment %>
               <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-                <%= f.simple_fields_for [Forward.new] do |ff| %>
+                <%= f.simple_fields_for :forwards, Forward.new do |ff| %>
                     <div id="outsource">
                     <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
                     </div>

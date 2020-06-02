@@ -18,7 +18,7 @@
     <% @procurement_requests.each do |procurement_request| %>
       <tr>
         <td><%= procurement_request.user.organization_unit %></td>
-        <td><%= procurement_request.request_date.strftime("%B %d, %Y") %></td>
+        <td><%= procurement_request.request_date.strftime("%B %d, %Y") rescue nil %></td>
         <td><%= procurement_request.status %></td>
         <td>
           <%= link_to 'Details', procurement_request, class: 'btn btn-primary' %>

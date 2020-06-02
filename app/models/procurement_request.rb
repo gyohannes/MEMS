@@ -14,6 +14,8 @@ class ProcurementRequest < ApplicationRecord
   accepts_nested_attributes_for :procurement_request_equipments, allow_destroy: true
   accepts_nested_attributes_for :procurement_request_spare_parts, allow_destroy: true
 
+  validates :request_date, presence: true
+
   def request_from
     if organization_unit_id?
       return organization_unit.to_s

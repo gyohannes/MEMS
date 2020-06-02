@@ -33,7 +33,9 @@ class Ability
          can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest]
          can [:manage, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                         CalibrationRequest, DisposalRequest], organization_unit_id: user.organization_unit_id
+                         CalibrationRequest, DisposalRequest] do |request|
+           (request.organization_unit_id == user.organization_unit_id and request.status == Constants::PENDING) or (request.status == Constants::FORWARDED and request.forwards.order('created_at DESC').first.organization_unit_id == user.organization_unit_id rescue nil)
+         end
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
          can :manage, [OrganizationUnit, User, Department, Store, Institution, EquipmentStatus,
                        Equipment, Receive, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]

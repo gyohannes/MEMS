@@ -14,6 +14,19 @@ class SpecificationsController < ApplicationController
   # GET /specifications/1.json
   def show
     add_breadcrumb "Details", :specification_path
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "Equipment Specification",
+               :encoding => 'utf-8',
+               :disposition => 'attachment',
+               :margin => {
+                   :top => 10,
+                   :bottom => 10
+               }
+      end
+    end
   end
 
   # GET /specifications/new

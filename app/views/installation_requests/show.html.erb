@@ -53,11 +53,11 @@
 
     </div>
     <div class="col-sm-6 left_form">
-      <% if can? :decision, @installation_request and @installation_request.status == Constants::PENDING  %>
+      <% if can? :decision, @installation_request and ([Constants::PENDING, Constants::FORWARDED].include?(@installation_request.status)) %>
           <%= simple_nested_form_for(@installation_request, url: decision_installation_request_path) do |f| %>
               <%= f.input :comment %>
               <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-              <%= f.simple_fields_for :forwards do |ff| %>
+              <%= f.simple_fields_for :forwards, Forward.new do |ff| %>
                   <div id="outsource">
                     <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
                   </div>

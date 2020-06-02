@@ -15,7 +15,9 @@ class CalibrationRequestsController < ApplicationController
   # GET /calibration_requests
   # GET /calibration_requests.json
   def index
-    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+    if current_user.is_role(Constants::DEPARTMENT)
+      @calibration_requests = current_user.calibration_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @calibration_requests = current_user.calibration_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
       @calibration_requests = current_user.outgoing_calibration_requests + current_user.incoming_calibration_requests

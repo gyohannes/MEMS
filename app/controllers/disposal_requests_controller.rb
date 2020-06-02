@@ -13,7 +13,9 @@ class DisposalRequestsController < ApplicationController
   # GET /disposal_requests
   # GET /disposal_requests.json
   def index
-    if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
+    if current_user.is_role(Constants::DEPARTMENT)
+      @disposal_requests = current_user.disposal_requests
+    elsif current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @disposal_requests = current_user.disposal_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
       @disposal_requests = current_user.outgoing_disposal_requests + current_user.incoming_disposal_requests

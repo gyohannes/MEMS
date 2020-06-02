@@ -11,7 +11,7 @@
 
       <div class="row">
         <label class="col-sm-6">Request Date:</label>
-        <%= @procurement_request.request_date.strftime("%B %d, %Y") %>
+        <%= @procurement_request.request_date.strftime("%B %d, %Y") rescue nil %>
       </div>  
 
       <p class="row">
@@ -35,7 +35,7 @@
         <label class="col-sm-6">Status:</label>
         <%= @procurement_request.status %>
         <% if @procurement_request.status == Constants::OUT_SOURCED %>
-            to <%= @procurement_request.forwards.order('created_at DESC').first.institution %>
+            to <%= @procurement_request.forwards.order('created_at DESC').first.institution rescue nil %>
         <% end %>
         <% if @procurement_request.status == Constants::FORWARDED %>
             to <%= @procurement_request.forwards.order('created_at DESC').first.organization_unit %>
@@ -87,11 +87,11 @@
       <% end %>
     </div>
     <div class="col-sm-6 left_form">
-      <% if can? :decision, @procurement_request and @procurement_request.status == Constants::PENDING  %>
+      <% if can? :decision, @procurement_request and ([Constants::PENDING, Constants::FORWARDED].include?(@procurement_request.status)) %>
           <%= simple_nested_form_for(@procurement_request, url: decision_procurement_request_path) do |f| %>
               <%= f.input :comment %>
               <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
-              <%= f.simple_fields_for :forwards do |ff| %>
+              <%= f.simple_fields_for :forwards, Forward.new do |ff| %>
                   <div id="outsource">
                     <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
                   </div>

@@ -118,6 +118,7 @@
          </div>
      <% end %>
     </div>
+    <% unless current_user.organization_unit == OrganizationUnit.top_organization_unit %>
     <div class="panel panel-default">
       <div class="panel-heading">
         Preventive Maintenance Calendar
@@ -126,4 +127,5 @@
         <div id="calendar"></div>
       </div>
     </div>
+    <% end %>
 <% end %>

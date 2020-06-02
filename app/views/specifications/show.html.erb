@@ -20,11 +20,13 @@
     </p>
   </div>
   <div class="col-sm-9">
-    <label>Item Detail</label><br/>
+    <h3>Detail Description</h3><br/>
     <%= raw @specification.item_detail %>
   </div>
 </div>
 <hr/>
   <%= link_to 'Back', specifications_path, class: 'btn btn-primary' %>
   <%= link_to 'Edit', edit_specification_path(@specification), class: 'btn btn-primary' if can? :edit, @specification %>
+
+  <%= link_to 'Download', specification_path(@specification,:format=>:pdf), :class=>'btn btn-primary' %>
 </div>

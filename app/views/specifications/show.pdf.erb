@@ -1,0 +1,22 @@
+<h2>Equipment Specification</h2>
+<hr/>
+<p class="row">
+  <b>Equipment Name:</b>
+  <%= @specification.equipment_name %>
+</p>
+
+<p class="row">
+  <b>Facility Type:</b>
+  <%= @specification.organization_unit_type %>
+</p>
+
+<p class="row">
+  <b>Department:</b>
+  <%= @specification.department %>
+</p>
+
+<p class="row">
+  <h3>Detail Description</h3>
+<hr/>
+<%= raw @specification.item_detail %>
+</p>
