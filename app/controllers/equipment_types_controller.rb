@@ -1,4 +1,5 @@
 class EquipmentTypesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_equipment_type, only: [:show, :edit, :update, :destroy]
 
   add_breadcrumb "Home", :root_path

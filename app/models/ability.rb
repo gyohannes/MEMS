@@ -28,17 +28,23 @@ class Ability
          cannot :edit, Equipment, status_id: Status.disposed_status
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
-         can [:read,:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+         can [:read], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                  CalibrationRequest, DisposalRequest]
-         can [:edit, :destroy], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest]
-         can [:manage, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+         can [:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
+                                  CalibrationRequest, DisposalRequest] unless user.organization_unit == OrganizationUnit.top_organization_unit
+
+         can [:decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                          CalibrationRequest, DisposalRequest] do |request|
            (request.organization_unit_id == user.organization_unit_id and request.status == Constants::PENDING) or (request.status == Constants::FORWARDED and request.forwards.order('created_at DESC').first.organization_unit_id == user.organization_unit_id rescue nil)
          end
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
-         can :manage, [OrganizationUnit, User, Department, Store, Institution, EquipmentStatus,
-                       Equipment, Receive, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
+         can :manage, [Equipment, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
+                       Receive, Issue, EquipmentStatus, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
+         cannot :edit, Equipment
+         cannot :edit, Equipment, status_id: Status.disposed_status
+         can :read, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType, Notification]
+         can :manage, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType] if user.organization_unit == OrganizationUnit.top_organization_unit
+
          cannot [:edit, :update, :destroy], [Maintenance]
          can [:edit, :update, :destroy], [Maintenance], user_id: user.id
          can :manage, News, organization_unit_id: user.organization_unit_id

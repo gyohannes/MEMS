@@ -1,4 +1,5 @@
 class InventoriesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Inventories", :inventories_path

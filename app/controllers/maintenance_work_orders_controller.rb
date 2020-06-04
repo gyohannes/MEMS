@@ -1,4 +1,5 @@
 class MaintenanceWorkOrdersController < ApplicationController
+  load_and_authorize_resource
   before_action :set_maintenance_work_order, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
   add_breadcrumb "Home", :root_path

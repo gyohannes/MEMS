@@ -1,4 +1,5 @@
 class CalibrationRequestsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_calibration_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
 

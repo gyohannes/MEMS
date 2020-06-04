@@ -1,4 +1,5 @@
 class StatusesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_status, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Equipment Statuses", :statuses_path

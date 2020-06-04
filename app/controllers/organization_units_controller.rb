@@ -1,4 +1,5 @@
 class OrganizationUnitsController < BaseController
+  load_and_authorize_resource
   before_action :set_organization_unit, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Organization Units", :organization_units_path

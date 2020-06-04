@@ -1,4 +1,5 @@
 class TrainingRequestsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_training_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load, only: [:new, :create, :edit, :update, :show]
 

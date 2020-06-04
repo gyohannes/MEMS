@@ -1,4 +1,5 @@
 class MaintenancesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_maintenance, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update, :index]
 

@@ -1,4 +1,5 @@
 class UsersController < BaseController
+  load_and_authorize_resource
   layout 'application'
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
@@ -50,8 +51,9 @@ class UsersController < BaseController
 
   # GET /users/1/edit
   def edit
+    @departments = Department.all
     add_breadcrumb "Edit", :edit_user_path
-
+    @role = @user.role
     unless @user.organization_unit.blank?
       @institutions = @user.organization_unit.institutions
     else
@@ -62,7 +64,9 @@ class UsersController < BaseController
   # POST /users
   # POST /users.json
   def create
+    @departments = Department.all
     @user = User.new(user_params)
+    @role = @user.role
     unless @user.organization_unit.blank?
       @institutions = @user.organization_unit.institutions
     else

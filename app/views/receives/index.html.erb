@@ -26,12 +26,12 @@
         <td><%= receife.note %></td>
         <td>
           <%= link_to 'Details', receife, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_receife_path(receife), class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_receive_path(receife), class: 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
   <hr/>
-<%= link_to 'Items Receiving Form', new_receife_path, class: 'btn btn-primary' if can? :create, Receive %>
+<%= link_to 'Items Receiving Form', new_receive_path, class: 'btn btn-primary' if can? :create, Receive %>
 </div>

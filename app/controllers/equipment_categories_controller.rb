@@ -1,4 +1,5 @@
 class EquipmentCategoriesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_equipment_category, only: [:show, :edit, :update, :destroy]
 
   # GET /equipment_categories

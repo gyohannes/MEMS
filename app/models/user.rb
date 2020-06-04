@@ -17,6 +17,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :department_id, presence: true, if: :department_user
+
+  def department_user
+    role == Constants::DEPARTMENT
+  end
   def is_role(given_role)
     role == given_role
   end

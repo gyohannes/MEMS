@@ -1,4 +1,5 @@
 class OrganizationUnitTypesController < BaseController
+  load_and_authorize_resource
   before_action :set_organization_unit_type, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Organization Types", :organization_unit_types_path

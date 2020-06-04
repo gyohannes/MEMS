@@ -1,4 +1,5 @@
 class EquipmentNamesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_equipment_name, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Equipment Names", :equipment_names_path

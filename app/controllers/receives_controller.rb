@@ -1,5 +1,6 @@
 class ReceivesController < ApplicationController
-  before_action :set_receife, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
+  before_action :set_receive, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
 
   add_breadcrumb "Home", :root_path
@@ -23,7 +24,7 @@ class ReceivesController < ApplicationController
   # GET /receives/1
   # GET /receives/1.json
   def show
-    add_breadcrumb "Details", :receife_path
+    add_breadcrumb "Details", :receive_path
 
     respond_to do |format|
       format.html # show.html.erb
@@ -53,28 +54,28 @@ class ReceivesController < ApplicationController
 
   # GET /receives/new
   def new
-    add_breadcrumb "New", :new_receife_path
+    add_breadcrumb "New", :new_receive_path
 
-    @receife = Receive.new
+    @receive = Receive.new
   end
 
   # GET /receives/1/edit
   def edit
-    add_breadcrumb "Edit", :edit_receife_path
+    add_breadcrumb "Edit", :edit_receive_path
   end
 
   # POST /receives
   # POST /receives.json
   def create
-    @receife = Receive.new(receife_params)
+    @receive = Receive.new(receive_params)
 
     respond_to do |format|
-      if @receife.save
-        format.html { redirect_to @receife, notice: 'Receive was successfully created.' }
-        format.json { render :show, status: :created, location: @receife }
+      if @receive.save
+        format.html { redirect_to @receive, notice: 'Receive was successfully created.' }
+        format.json { render :show, status: :created, location: @receive }
       else
         format.html { render :new }
-        format.json { render json: @receife.errors, status: :unprocessable_entity }
+        format.json { render json: @receive.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -83,12 +84,12 @@ class ReceivesController < ApplicationController
   # PATCH/PUT /receives/1.json
   def update
     respond_to do |format|
-      if @receife.update(receife_params)
-        format.html { redirect_to @receife, notice: 'Receive was successfully updated.' }
-        format.json { render :show, status: :ok, location: @receife }
+      if @receive.update(receive_params)
+        format.html { redirect_to @receive, notice: 'Receive was successfully updated.' }
+        format.json { render :show, status: :ok, location: @receive }
       else
         format.html { render :edit }
-        format.json { render json: @receife.errors, status: :unprocessable_entity }
+        format.json { render json: @receive.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -96,7 +97,7 @@ class ReceivesController < ApplicationController
   # DELETE /receives/1
   # DELETE /receives/1.json
   def destroy
-    @receife.destroy
+    @receive.destroy
     respond_to do |format|
       format.html { redirect_to receives_url, notice: 'Receive was successfully destroyed.' }
       format.json { head :no_content }
@@ -105,12 +106,12 @@ class ReceivesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_receife
-      @receife = Receive.find(params[:id])
+    def set_receive
+      @receive = Receive.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def receife_params
+    def receive_params
       params.require(:receive).permit(:store_id, :reference_number, :deliverer_name, :recipient_name, :receive_date, :note,
                                       receive_spare_parts_attributes: [:id, :receive_id, :spare_part_id, :quantity,
                                                                        :unit_price, :expiry_date, :remarks, :_destroy],

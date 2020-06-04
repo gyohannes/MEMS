@@ -1,4 +1,5 @@
 class DisposalRequestsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_disposal_request, only: [:show, :edit, :update, :destroy, :decision]
   before_action :load
   add_breadcrumb "Home", :root_path

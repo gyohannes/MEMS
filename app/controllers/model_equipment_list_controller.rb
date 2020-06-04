@@ -1,4 +1,5 @@
 class ModelEquipmentListController < ApplicationController
+  load_and_authorize_resource
   before_action :set_model_equipment_list, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Model Equipment List", :model_equipment_list_path

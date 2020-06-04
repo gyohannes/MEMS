@@ -1,4 +1,5 @@
 class MaintenanceRequirementsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_maintenance_requirement, only: [:show, :edit, :update, :destroy]
 
   add_breadcrumb "Home", :root_path

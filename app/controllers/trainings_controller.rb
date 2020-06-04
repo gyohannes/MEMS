@@ -1,4 +1,5 @@
 class TrainingsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_training, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Equipment Trainings", :trainings_path

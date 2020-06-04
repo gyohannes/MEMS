@@ -1,4 +1,5 @@
 class IssuesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   before_action :load_spare_parts, only: [:new, :create, :edit, :update]
 
