@@ -2,29 +2,29 @@
   <div class="body">
     <p>
       <strong>Store:</strong>
-      <%= @receife.store %>
+      <%= @receive.store %>
     </p>
 
     <p>
       <strong>Delivered by:</strong>
-      <%= @receife.deliverer_name %>
+      <%= @receive.deliverer_name %>
     </p>
 
     <p>
       <strong>Received by:</strong>
-      <%= @receife.recipient_name %>
+      <%= @receive.recipient_name %>
     </p>
 
     <p>
       <strong>Receive date:</strong>
-      <%= @receife.receive_date %>
+      <%= @receive.receive_date %>
     </p>
 
     <p>
       <strong>Note:</strong>
-      <%= @receife.note %>
+      <%= @receive.note %>
     </p>
-    <% unless @receife.receive_equipment.blank? %>
+    <% unless @receive.receive_equipment.blank? %>
     <caption>Medical Equipment</caption>
     <table id="spare_parts" class="table table-responsive">
       <tr>
@@ -34,7 +34,7 @@
         <th>Quantity</th>
         <th>Unit Cost</th>
       </tr>
-      <% @receife.receive_equipment.each do |sp| %>
+      <% @receive.receive_equipment.each do |sp| %>
           <tr>
             <td><%= sp.equipment_name %></td>
             <td><%= sp.model %></td>
@@ -45,7 +45,7 @@
       <% end %>
     </table>
     <% end %>
-        <% unless @receife.receive_spare_parts.blank? %>
+        <% unless @receive.receive_spare_parts.blank? %>
     <caption>Spare Parts</caption>
     <table id="spare_parts" class="table table-responsive">
       <tr>
@@ -55,12 +55,12 @@
         <th>Expiry Date</th>
         <th>Remarks</th>
       </tr>
-      <% @receife.receive_spare_parts.each do |sp| %>
+      <% @receive.receive_spare_parts.each do |sp| %>
           <tr>
             <td><%= sp.spare_part %></td>
             <td><%= sp.quantity %></td>
             <td><%= sp.unit_price %></td>
-            <td><%= sp.expiry_date.strftime('%B %d, %Y') %></td>
+            <td><%= sp.expiry_date.strftime('%B %d, %Y') rescue nil %></td>
             <td><%= sp.remarks %></td>
           </tr>
       <% end %>
@@ -68,6 +68,6 @@
         <% end %>
     <%= link_to 'Back', receives_path %>
     <%= link_to 'Edit', edit_receive_path(@receive), class: 'btn btn-primary' %>
-    <%= link_to 'Download Model 19', receife_path(@receive,:format=>:pdf),:class=>'btn', class: 'btn btn-primary' %>
+    <%= link_to 'Download Model 19', receive_path(@receive,:format=>:pdf),:class=>'btn', class: 'btn btn-primary' %>
   </div>
 </div>

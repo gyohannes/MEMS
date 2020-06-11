@@ -17,5 +17,5 @@
         </tr>
     <% end %>
   </table>
-  <p><%= link_to "Edit Model Equipment List",edit_model_equipment_list_path(@model_equipment_list), class: 'btn btn-primary' %></p>
+  <p><%= link_to "Edit Model Equipment List",edit_model_equipment_list_path(@model_equipment_list), class: 'btn btn-primary' if can? :edit, @model_equipment_list %></p>
 </div>

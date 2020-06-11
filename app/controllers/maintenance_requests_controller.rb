@@ -20,7 +20,7 @@ class MaintenanceRequestsController < ApplicationController
     elsif current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @maintenance_requests = current_user.maintenance_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @maintenance_requests = current_user.outgoing_maintenance_requests + current_user.incoming_maintenance_requests
+      @maintenance_requests = (current_user.outgoing_maintenance_requests + current_user.incoming_maintenance_requests).uniq
     elsif !current_user.institution.blank?
       @maintenance_requests = current_user.incoming_maintenance_requests
     else
@@ -33,7 +33,7 @@ class MaintenanceRequestsController < ApplicationController
   def show
     add_breadcrumb "Details", :maintenance_request_path
     @maintenance_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
-    @status = @maintenance_request.request_status
+    @status = @maintenance_request.status
     @institutions = Institution.all
   end
 
@@ -45,12 +45,12 @@ class MaintenanceRequestsController < ApplicationController
 
   def decision
     @maintenance_request.update(maintenance_request_params)
-    if @maintenance_request.request_status == Constants::FORWARDED
+    if @maintenance_request.status == Constants::FORWARDED
       n = @maintenance_request.notifications.build(name: @maintenance_request.equipment.try(:to_s) << ' Maintenance Request Forwarded',
                                                 organization_unit_id: current_user.parent_org_unit.try(:id))
       n.save
     end
-    redirect_to @maintenance_request, notice: "Maintenance request was successfully #{params[:maintenance_request][:request_status]}."
+    redirect_to @maintenance_request, notice: "Maintenance request was successfully #{params[:maintenance_request][:status]}."
   end
 
 
@@ -63,12 +63,12 @@ class MaintenanceRequestsController < ApplicationController
   # POST /maintenance_requests.json
   def create
     @maintenance_request = MaintenanceRequest.new(maintenance_request_params)
-    @maintenance_request.request_status = Constants::REQUEST_PENDING
+    @maintenance_request.status = Constants::PENDING
     @maintenance_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     equipment = @maintenance_request.equipment
     respond_to do |format|
       if @maintenance_request.save
-        equipment.update_attribute('status_id', @maintenance_request.status_id)
+        equipment.update_attribute('status_id', @maintenance_request.equipment_status)
         n = @maintenance_request.notifications.build(name: @maintenance_request.equipment.to_s << ' Maintenance Request',
                                                      organization_unit_id: current_user.organization_unit_id)
         n.save
@@ -113,8 +113,8 @@ class MaintenanceRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_request_params
-      params.require(:maintenance_request).permit(:organization_unit_id, :failure_date, :equipment_id, :attachment, :description_of_problem, :status_id,
-                                                  :institution_id, :user_id, :request_date, :comment, :request_status, :decision_by, :assigned_to,
+      params.require(:maintenance_request).permit(:organization_unit_id, :failure_date, :equipment_id, :attachment, :description_of_problem, :equipment_status,
+                                                  :institution_id, :user_id, :request_date, :comment, :status, :decision_by, :assigned_to,
                                                   forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

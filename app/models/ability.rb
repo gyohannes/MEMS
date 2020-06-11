@@ -5,7 +5,7 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
        user ||= User.new # guest user (not logged in)
-       can :read, News
+       can :read, [News, Equipment, Specification]
        if user.is_role(Constants::DEPARTMENT)
          can [:read, :create, :update, :destroy, :load_request_to ], [ProcurementRequest, SpecificationRequest,
                                                                       TrainingRequest, InstallationRequest,
@@ -20,12 +20,13 @@ class Ability
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest]
-         can :manage, [Equipment, Receive, Maintenance, Training, Inventory, Disposal]
+         can :manage, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal]
          can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
          cannot :edit, Equipment
          cannot :edit, Equipment, status_id: Status.disposed_status
+         can :read, [Specification, ModelEquipmentList]
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
          can [:read], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
@@ -38,7 +39,7 @@ class Ability
            (request.organization_unit_id == user.organization_unit_id and request.status == Constants::PENDING) or (request.status == Constants::FORWARDED and request.forwards.order('created_at DESC').first.organization_unit_id == user.organization_unit_id rescue nil)
          end
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
-         can :manage, [Equipment, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
+         can :manage, [Equipment, ModelEquipmentList, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
                        Receive, Issue, EquipmentStatus, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
          cannot :edit, Equipment
          cannot :edit, Equipment, status_id: Status.disposed_status

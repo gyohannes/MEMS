@@ -4,7 +4,7 @@ class MaintenanceRequest < ApplicationRecord
   belongs_to :institution, optional: true
   belongs_to :equipment
   belongs_to :user
-  belongs_to :status
+  belongs_to :equip_status, :class_name => 'Status', :foreign_key => "equipment_status"
   belongs_to :decided_user, optional: true, :class_name => 'User', :foreign_key => "decision_by"
   belongs_to :assigned_user, optional: true, :class_name => 'User', :foreign_key => "assigned_to"
   has_many :notifications, as: :notifiable

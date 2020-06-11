@@ -18,7 +18,7 @@ class InstallationRequestsController < ApplicationController
     if current_user.is_role(Constants::BIOMEDICAL_ENGINEER)
       @installation_requests = current_user.installation_requests
     elsif current_user.is_role(Constants::BIOMEDICAL_HEAD)
-      @installation_requests = current_user.outgoing_installation_requests + current_user.incoming_installation_requests
+      (@installation_requests = current_user.outgoing_installation_requests + current_user.incoming_installation_requests).uniq
     elsif !current_user.institution.blank?
       @installation_requests = current_user.incoming_installation_requests
     else

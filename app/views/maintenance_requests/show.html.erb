@@ -50,7 +50,7 @@
             to <%= @maintenance_request.forwards.order('created_at DESC').first.organization_unit %>
         <% end %>
       </div>
-      <% unless @status==Constants::REQUEST_PENDING %>
+      <% unless @status==Constants::PENDING %>
           <div class="row"><label class="col-sm-6"><%= @status %> by:</label> <%= @maintenance_request.decided_user.organization_unit %></div>
           <div class="row"><label class="col-sm-6">Comment:</label> <%= @maintenance_request.comment %></div>
       <% end %>
@@ -59,7 +59,7 @@
       <% if can? :decision, @maintenance_request and ([Constants::PENDING, Constants::FORWARDED].include?(@maintenance_request.status)) %>
           <%= simple_nested_form_for(@maintenance_request, url: decision_maintenance_request_path) do |f| %>
               <%= f.input :comment %>
-              <%= f.input :request_status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
+              <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
               <%= f.simple_fields_for :forwards, Forward.new do |ff| %>
                   <div id="outsource">
                     <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
@@ -78,9 +78,9 @@
   </div>
   <hr/>
   <%= link_to 'Back', maintenance_requests_path, class: 'btn btn-primary' %>
-  <%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request), class: 'btn btn-primary' if can? :edit, @maintenance_request and @maintenance_request.request_status == Constants::REQUEST_PENDING  %>
+  <%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request), class: 'btn btn-primary' if can? :edit, @maintenance_request and @maintenance_request.status == Constants::PENDING  %>
   <% if can? :manage, @maintenance_request %>
-      <%= link_to 'Start Work Order', new_maintenance_work_order_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' if @maintenance_request.request_status == Constants::ACCEPTED %>
+      <%= link_to 'Start Work Order', new_maintenance_work_order_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' if @maintenance_request.status == Constants::ACCEPTED %>
       <%= link_to 'Maintenance Report', new_maintenance_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' %>
   <% end %>
 </div>

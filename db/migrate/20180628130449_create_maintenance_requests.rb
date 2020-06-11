@@ -6,11 +6,11 @@ class CreateMaintenanceRequests < ActiveRecord::Migration[5.1]
       t.references :organization_unit, type: :uuid, foreign_key: true
       t.date :failure_date
       t.text :description_of_problem
-      t.references :status, type: :uuid, foreign_key: true
+      t.string :equipment_status, type: :uuid
       t.references :institution, type: :uuid, foreign_key: true
       t.text :comment
       t.string :decision_by, type: :uuid
-      t.string :request_status
+      t.string :status
       t.timestamps
     end
   end
