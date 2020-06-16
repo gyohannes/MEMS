@@ -11,7 +11,7 @@
       <%= f.input :location %>
       <%= f.input :installation_date, as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :warranty_expire_date, as: :string, input_html: {class: 'datepicker'} %>
-      <%= f.input :maintenance_service_provider, collection: Institution.all %>
+      <%= f.association :maintenance_provider, label: "Maintenance Service Provider" %>
       <%= f.association :maintenance_requirement %>
       <%= f.input :description, label: 'Brief description of item' %>
       <%= f.input :country, label: 'Country of Origin' %>

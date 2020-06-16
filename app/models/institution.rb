@@ -15,7 +15,7 @@ class Institution < ApplicationRecord
   scope :suppliers, -> { where(category: 'Supplier') }
   scope :local_representatives, -> { where(category: 'Local Representative') }
 
-  validates :name, :category, :institution_type, presence: true
+  validates :name, presence: true
 
   def to_s
     name

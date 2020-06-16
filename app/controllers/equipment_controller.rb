@@ -22,6 +22,14 @@ class EquipmentController < ApplicationController
     render json: calendars
   end
 
+  def import
+    add_breadcrumb "Import", :import_equipment_index_path
+    if request.post?
+      @equipments = Equipment.import_equipments(params[:equipments_csv_file], current_user)
+      flash[:notice] = @equipments.blank? ? 'No equipments imported' : 'Equipments imported. Check the imported list below'
+    end
+  end
+
   def search
     equipments = Equipment.search(params[:term]).uniq{ |e| e.equipment_name}
     render json: equipments

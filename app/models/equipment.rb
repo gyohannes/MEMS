@@ -3,7 +3,7 @@ class Equipment < ApplicationRecord
   belongs_to :equipment_type, optional: true
   belongs_to :equipment_name
   belongs_to :department, optional: true
-  belongs_to :institution
+  belongs_to :institution, optional: true
   has_one :installation
   has_one :acceptance_test
   has_many :maintenances
@@ -13,6 +13,8 @@ class Equipment < ApplicationRecord
   belongs_to :maintenance_requirement
   belongs_to :status
   has_many :documents, as: :documentable
+  belongs_to :maintenance_provider, optional: true, :class_name => 'Institution', :foreign_key => "maintenance_service_provider"
+
   after_find :set_attributes
 
   accepts_nested_attributes_for :documents, allow_destroy: true
@@ -37,6 +39,52 @@ class Equipment < ApplicationRecord
   scope :list_by_from, -> (from_date) { where('installation_date >= ?', from_date)}
   scope :list_by_to, -> (to_date) { where('installation_date <= ?', to_date)}
   scope :list_by_acquisition_type, -> (acquisition_type) {where(acquisition_type: acquisition_type) unless acquisition_type.blank?}
+
+  def self.import_equipments(file, user)
+    equipments = []
+    CSV.foreach(file.path, :headers=>true, encoding: 'iso-8859-1:utf-8') do |row|
+      inventory_number = row[0]
+      equipment_type = row[1].blank? ? nil : EquipmentType.find_or_create_by(name: row[1])
+      equipment_name = row[2].blank? ? nil : EquipmentName.find_or_create_by(name: row[2])
+      department = row[3].blank? ? nil : Department.find_or_create_by(name: row[3])
+      location = row[4]
+      installation_date = row[5]
+      warranty_expire_date = row[6]
+      maintenance_provider = row[7].blank? ? nil : Institution.find_or_create_by(name: row[7])
+      maintenance_requirement = row[8].blank? ? nil : MaintenanceRequirement.find_or_create_by(name: row[8])
+      description = row[9]
+      country = row[10]
+      manufacturer = row[11]
+      model = row[12]
+      serial_number = row[13]
+      tag_number = row[14]
+      power_requirement = row[15]
+      manufactured_year = row[16].blank? ? nil : Date.new(row[16].to_i)
+      acquisition_type = row[17]
+      years_used = row[18]
+      supplier = row[19].blank? ? nil : Institution.find_or_create_by(name: row[19])
+      purchased_year = row[20].blank? ? nil : Date.new(row[20].to_i)
+      order_number = row[21]
+      cost = row[22]
+      estimated_life_span = row[23]
+      equipment_risk_classification = row[24]
+      status = row[25].blank? ? nil : Status.find_or_create_by(name: row[25])
+
+      attrbts = {organization_unit_id: user.organization_unit_id, equipment_name_id: equipment_name.try(:id), inventory_number: inventory_number, description: description,
+                 equipment_type_id: equipment_type.try(:id), department_id: department.try(:id), location: location,
+                 installation_date: installation_date, warranty_expire_date: warranty_expire_date, maintenance_service_provider: maintenance_provider.try(:id),
+                 acquisition_type: acquisition_type, equipment_risk_classification: equipment_risk_classification, model: model, order_number: order_number,
+                 cost: cost, serial_number: serial_number, tag_number: tag_number, manufacturer: manufacturer, country: country, manufactured_year: manufactured_year,
+                 purchased_year: purchased_year, power_requirement: power_requirement, maintenance_requirement_id: maintenance_requirement.try(:id),
+                 estimated_life_span: estimated_life_span, years_used: years_used, institution_id: supplier.try(:id), status_id: status.try(:id)}
+      equipment = Equipment.find_by(attrbts)
+      if equipment.blank?
+        eq = Equipment.create(attrbts)
+        equipments << eq unless eq.blank?
+      end
+    end
+    return equipments
+  end
 
   def self.search(name=nil, org_structure=nil, type=nil, model=nil, status=nil, user=nil, inventory_number=nil, from=nil, to=nil, aq_type=nil)
     equipment = []

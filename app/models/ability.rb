@@ -41,8 +41,8 @@ class Ability
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
          can :manage, [Equipment, ModelEquipmentList, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
                        Receive, Issue, EquipmentStatus, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
-         cannot :edit, Equipment
          cannot :edit, Equipment, status_id: Status.disposed_status
+
          can :read, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType, Notification]
          can :manage, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType] if user.organization_unit == OrganizationUnit.top_organization_unit
 
@@ -54,7 +54,6 @@ class Ability
          can :manage, Contact, organization_unit_id: user.organization_unit_id
          can [:read, :create], Contact
          can :manage, [Specification] if user.super_admin?
-         cannot :edit, Equipment, status_id: Status.disposed_status
        end
 
        if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)

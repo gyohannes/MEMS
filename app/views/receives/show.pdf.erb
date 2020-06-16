@@ -9,11 +9,11 @@
 <br/>
 <div>
   <p>
-    I <u><%= @receife.recipient_name %></u> received the following items
-    on <u><%= @receife.receive_date.strftime('%B %d, %Y') %></u> from <u><%= @receife.deliverer_name %></u>
+    I <u><%= @receive.recipient_name %></u> received the following items
+    on <u><%= @receive.receive_date.strftime('%B %d, %Y') rescue nil %></u> from <u><%= @receive.deliverer_name %></u>
   </p>
 <br/><br/>
-  <% unless @receife.receive_equipment.blank? %>
+  <% unless @receive.receive_equipment.blank? %>
       <caption>Medical Equipment</caption>
       <table border="1" style="border-collapse: collapse">
         <tr>
@@ -24,7 +24,7 @@
           <th>Unit Cost</th>
           <th>Total</th>
         </tr>
-        <% @receife.receive_equipment.each do |sp| %>
+        <% @receive.receive_equipment.each do |sp| %>
             <tr>
               <td><%= sp.equipment_name %></td>
               <td><%= sp.model %></td>
@@ -37,7 +37,7 @@
       </table>
   <% end %>
   <br/>
-  <% unless @receife.receive_spare_parts.blank? %>
+  <% unless @receive.receive_spare_parts.blank? %>
       <caption>Spare Parts/Accessories</caption>
       <table border="1" style="border-collapse: collapse">
         <tr>
@@ -48,7 +48,7 @@
           <th>Remarks</th>
           <th>Total</th>
         </tr>
-        <% @receife.receive_spare_parts.each do |sp| %>
+        <% @receive.receive_spare_parts.each do |sp| %>
             <tr>
               <td><%= sp.spare_part %></td>
               <td><%= q = sp.quantity %></td>

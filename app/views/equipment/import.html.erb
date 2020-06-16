@@ -1,0 +1,155 @@
+<% content_for :header do %>
+    <div class="card">
+<div class="header">
+    Import equipments list in CSV format in the same order as follows.
+    Fields in red are mandatory
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped js-exportable">
+    <thead>
+    <tr>
+      <th>Inventory Number</th>
+      <th>Equipment Type</th>
+      <th class="mandatory-field">Equipment Name</th>
+      <th>Department</th>
+      <th>Location</th>
+      <th>Installation Date</th>
+      <th>Warranty Expire Date</th>
+      <th>Maintenance Provider</th>
+      <th class="mandatory-field">Maintenance Requirement</th>
+      <th>Description</th>
+      <th>Country of Origin</th>
+      <th>Manufacturer</th>
+      <th class="mandatory-field">Model</th>
+      <th class="mandatory-field">Serial Number</th>
+      <th>Tag Number</th>
+      <th>Power Requirement</th>
+      <th>Manufactured Year</th>
+      <th>Acquisition Type</th>
+      <th>Years Used</th>
+      <th>Supplier</th>
+      <th>Purchased Year</th>
+      <th>Order Number</th>
+      <th>Cost</th>
+      <th>Estimated Life Span(Years)</th>
+      <th>Equipment Risk Classification</th>
+      <th class="mandatory-field">Status</th>
+    </tr>
+    </thead>
+    <tr>
+      <th>D0001</th>
+      <th>Type 1</th>
+      <th>Name 1</th>
+      <th>Dep 1</th>
+      <th>Block 01</th>
+      <th>01/06/2020</th>
+      <th>01/06/2021</th>
+      <th>Provider 1</th>
+      <th>Monthly</th>
+      <th>Test Description</th>
+      <th>USA</th>
+      <th>ABC</th>
+      <th>M001</th>
+      <th>S001</th>
+      <th>T001</th>
+      <th>220</th>
+      <th>2010</th>
+      <th>Purchasing</th>
+      <th>0</th>
+      <th>EPSA</th>
+      <th>2012</th>
+      <th>O0001</th>
+      <th>10000</th>
+      <th>10</th>
+      <th>High Risk</th>
+      <th>Functional</th>
+    </tr>
+  </table>
+
+    <%= form_tag import_equipment_index_path,:multipart=>true do %>
+      <div class="col-sm-2">
+        <label>Select CSV File</label> <%= file_field_tag(:equipments_csv_file) %>
+      </div>
+      <div class="col-sm-2">
+        <%= submit_tag 'Import',class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+    </div>
+    <% unless @equipments.blank? %>
+    <div class="card">
+<div class="header">
+  <h2>
+    Imported equipments
+  </h2>
+</div>
+<div class="body table-responsive">
+      <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+        <thead>
+        <tr>
+          <th>Inventory Number</th>
+          <th>Equipment Type</th>
+          <th>Equipment Name</th>
+          <th>Department</th>
+          <th>Location</th>
+          <th>Installation Date</th>
+          <th>Warranty Expire Date</th>
+          <th>Maintenance Provider</th>
+          <th>Maintenance Requirement</th>
+          <th>Description</th>
+          <th>Country of Origin</th>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Serial Number</th>
+          <th>Tag Number</th>
+          <th>Power Requirement</th>
+          <th>Manufactured Year</th>
+          <th>Acquisition Type</th>
+          <th>Years Used</th>
+          <th>Supplier</th>
+          <th>Purchased Year</th>
+          <th>Order Number</th>
+          <th>Cost</th>
+          <th>Estimated Life Span</th>
+          <th>Equipment Risk Classification</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @equipments.each do |equipment| %>
+            <tr>
+              <td><%= equipment.inventory_number %></td>
+              <td><%= equipment.equipment_type %></td>
+              <td><%= equipment.equipment_name %></td>
+              <td><%= equipment.department %></td>
+              <td><%= equipment.location %></td>
+              <td><%= equipment.installation_date %></td>
+              <td><%= equipment.warranty_expire_date %></td>
+              <td><%= equipment.maintenance_provider %></td>
+              <td><%= equipment.maintenance_requirement %></td>
+              <td><%= equipment.description %></td>
+              <td><%= equipment.country %></td>
+              <td><%= equipment.manufacturer %></td>
+              <td><%= equipment.model %></td>
+              <td><%= equipment.serial_number %></td>
+              <td><%= equipment.tag_number %></td>
+              <td><%= equipment.power_requirement %></td>
+              <td><%= equipment.manufactured_year %></td>
+              <td><%= equipment.acquisition_type %></td>
+              <td><%= equipment.years_used %></td>
+              <td><%= equipment.institution %></td>
+              <td><%= equipment.purchased_year %></td>
+              <td><%= equipment.order_number %></td>
+              <td><%= equipment.cost %></td>
+              <td><%= equipment.estimated_life_span %></td>
+              <td><%= equipment.equipment_risk_classification %></td>
+              <td><%= equipment.status %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+</div>
+    </div>
+    <% end %>
+<% end %>

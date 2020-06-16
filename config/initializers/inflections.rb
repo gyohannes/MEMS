@@ -7,6 +7,7 @@
 #   inflect.plural /^(ox)$/i, '\1en'
 #   inflect.singular /^(ox)en/i, '\1'
    inflect.irregular 'model_equipment_list', 'model_equipment_list'
+   inflect.irregular 'receive', 'receives'
 #   inflect.uncountable %w( fish sheep )
  end
 

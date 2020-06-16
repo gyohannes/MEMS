@@ -1,6 +1,6 @@
 class MaintenanceRequirement < ApplicationRecord
 
-  validates :name, :days, presence: true
+  validates :name, presence: true
 
   def to_s
     name

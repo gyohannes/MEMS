@@ -1,3 +1,6 @@
+.mandatory-field{
+    color: red;
+}
 .breadcrumb {
     background: #a6c4e2 !important;
     width: fit-content;
