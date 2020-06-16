@@ -139,6 +139,8 @@ Rails.application.routes.draw do
       get 'equipment_by_org_unit_and_type'
       get 'ideal_vs_available_by_type'
       get 'load_calendar'
+      get 'import'
+      post 'import'
     end
   end
   resources :equipment_names do
