@@ -47,12 +47,12 @@
     <table class="table table-responsive">
     <tr>
       <th>Manufactured year:</th>
-      <td><%= @equipment.manufactured_year %></td>
+      <td><%= @equipment.manufactured_year.strftime("%Y")  rescue nil %></td>
     </tr>
 
     <tr>
       <th>Purchased year:</th>
-      <td><%= @equipment.purchased_year %></td>
+      <td><%= @equipment.purchased_year.strftime("%Y")  rescue nil %></td>
     </tr>
 
     <tr>
