@@ -1,0 +1,30 @@
+<div class="header">
+  <h2>System Settings</h2>
+</div>
+<div class="body">
+<p>
+  <strong>Host:</strong>
+  <%= @setting.host %>
+</p>
+
+<p>
+  <strong>Server ip:</strong>
+  <%= @setting.server_ip %>
+</p>
+
+<p>
+  <strong>App email:</strong>
+  <%= @setting.app_email %>
+</p>
+
+<p>
+  <strong>User Guide:</strong>
+  <% if @setting.user_guide.attached? %>
+      <%= link_to @setting.user_guide, target: '_blank' do %>
+          <button><i class="material-icons">file_download</i></button>
+      <% end %>
+  <% end %>
+</p>
+<hr/>
+<%= link_to 'Edit', edit_setting_path(@setting), class: 'btn btn-primary' %>
+</div>

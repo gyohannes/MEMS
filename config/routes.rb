@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :settings
   resources :forwards
   resources :statuses
   resources :maintenance_requirements

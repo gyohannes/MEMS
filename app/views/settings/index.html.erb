@@ -1,0 +1,41 @@
+<div class="header">
+  <h2>
+    System Settings
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Host</th>
+      <th>Server ip</th>
+      <th>App email</th>
+      <th>User Guide</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.host %></td>
+        <td><%= setting.server_ip %></td>
+        <td><%= setting.app_email %></td>
+          <% if setting.user_guide.attached? %>
+              <%= link_to setting.user_guide, target: '_blank' do %>
+                  <button><i class="material-icons">file_download</i></button>
+              <% end %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Details', setting %> | <%= link_to 'Edit', edit_setting_path(setting) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Setting', new_setting_path unless Setting.exists? %>
+</div>

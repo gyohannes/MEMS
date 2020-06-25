@@ -1,6 +1,15 @@
 <div class="collapse navbar-collapse" id="navbar-collapse">
   <ul class="nav navbar-nav navbar-right">
     <li>
+      <% setting = Setting.first %>
+      <% unless setting.blank? %>
+          <%= link_to setting.user_guide, target: '_blank' do %>
+              <i class="material-icons">help</i>
+              <label style="vertical-align: super">User Guide</label>
+          <% end %>
+      <% end %>
+    </li>
+    <li>
       <%= link_to specifications_path do %>
           <i class="material-icons">list</i>
           <label style="vertical-align: super">Equipment Specifications</label>
@@ -117,6 +126,21 @@
           <%= link_to institutions_path do %>
               <i class="material-icons">work</i>
               <label>Suppliers/Local Representatives</label>
+          <% end %>
+        </li>
+
+        <li>
+          <% setting = Setting.first %>
+          <% unless setting.blank? %>
+              <%= link_to setting do %>
+                  <i class="material-icons">settings</i>
+                  <label>System Settings</label>
+              <% end %>
+              <% else %>
+              <%= link_to new_setting_path do %>
+                  <i class="material-icons">settings</i>
+                  <label>System Settings</label>
+              <% end %>
           <% end %>
         </li>
 
