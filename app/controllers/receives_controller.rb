@@ -8,6 +8,7 @@ class ReceivesController < ApplicationController
 
   def load
     @stores = current_user.organization_unit ? current_user.organization_unit.stores : []
+    @spare_parts = current_user.organization_unit.spare_parts
   end
   # GET /receives
   # GET /receives.json

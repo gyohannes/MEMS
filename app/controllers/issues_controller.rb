@@ -8,11 +8,12 @@ class IssuesController < ApplicationController
 
   def load_spare_parts
     @spare_parts = current_user.organization_unit.spare_parts
+    @stores = current_user.organization_unit ? current_user.organization_unit.stores : []
   end
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.joins(:store).where('organization_unit_id = ?', current_user.organization_unit_id)
   end
 
   # GET /issues/1
