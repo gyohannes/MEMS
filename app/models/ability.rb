@@ -20,7 +20,7 @@ class Ability
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest]
-         can :manage, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal]
+         can :manage, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal, SparePart]
          can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
