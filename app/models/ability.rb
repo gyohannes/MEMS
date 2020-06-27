@@ -54,6 +54,8 @@ class Ability
          can :manage, Contact, organization_unit_id: user.organization_unit_id
          can [:read, :create], Contact
          can :manage, [Specification, Setting] if user.super_admin?
+         cannot :destroy, [:equipment, OrganizationUnit]
+         can :destroy, [:equipment, OrganizationUnit] if user.super_admin?
        end
 
        if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)

@@ -128,21 +128,22 @@
               <label>Suppliers/Local Representatives</label>
           <% end %>
         </li>
-
-        <li>
-          <% setting = Setting.first %>
-          <% unless setting.blank? %>
-              <%= link_to setting do %>
-                  <i class="material-icons">settings</i>
-                  <label>System Settings</label>
-              <% end %>
-              <% else %>
-              <%= link_to new_setting_path do %>
-                  <i class="material-icons">settings</i>
-                  <label>System Settings</label>
-              <% end %>
-          <% end %>
-        </li>
+        <% if current_user.super_admin? %>
+          <li>
+            <% setting = Setting.first %>
+            <% unless setting.blank? %>
+                <%= link_to setting do %>
+                    <i class="material-icons">settings</i>
+                    <label>System Settings</label>
+                <% end %>
+                <% else %>
+                <%= link_to new_setting_path do %>
+                    <i class="material-icons">settings</i>
+                    <label>System Settings</label>
+                <% end %>
+            <% end %>
+          </li>
+        <% end %>
 
       </ul>
     </li>

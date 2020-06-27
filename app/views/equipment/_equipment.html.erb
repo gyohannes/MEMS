@@ -24,6 +24,7 @@
       <th>Maintenance requirement</th>
       <th>Estimated life span</th>
       <th>Years used</th>
+      <th></th>
     </tr>
     </thead>
 
@@ -56,6 +57,7 @@
           <td><%= equipment.maintenance_requirement %></td>
           <td><%= equipment.estimated_life_span %></td>
           <td><%= equipment.years_used %></td>
+          <td><%= link_to 'Delete', equipment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, equipment %></td>
         </tr>
     <% end %>
     </tbody>

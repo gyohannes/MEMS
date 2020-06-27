@@ -2,31 +2,26 @@ class OrganizationUnit < ApplicationRecord
   belongs_to :organization_unit_type
   belongs_to :parent_organization_unit, optional: true, :class_name => 'OrganizationUnit', :foreign_key => "parent_organization_unit_id"
   has_many :sub_organization_units, :class_name => 'OrganizationUnit', :foreign_key => "parent_organization_unit_id"
-  has_many :users
-  has_many :stores
+  has_many :users,dependent: :destroy
+  has_many :stores, dependent: :destroy
   has_many :store_registrations, through: :stores
   has_many :receive, through: :stores
-  has_many :facilities
-  has_many :institutions
-  has_many :contacts
+  has_many :institutions, dependent: :destroy
+  has_many :contacts, dependent: :destroy
   has_many :equipment, through: :facilities
-  has_many :procurement_requests
-  has_many :specification_requests
-  has_many :spare_part_requests
-  has_many :acceptance_requests
-  has_many :training_requests
-  has_many :installation_requests
-  has_many :maintenance_requests
-  has_many :calibration_requests
-  has_many :disposal_requests
-  has_many :budget_requests
-  has_many :maintenance_toolkit_requests
-  has_many :departments
+  has_many :procurement_requests, dependent: :destroy
+  has_many :specification_requests, dependent: :destroy
+  has_many :training_requests, dependent: :destroy
+  has_many :installation_requests, dependent: :destroy
+  has_many :maintenance_requests, dependent: :destroy
+  has_many :calibration_requests, dependent: :destroy
+  has_many :disposal_requests, dependent: :destroy
+  has_many :departments, dependent: :destroy
   has_many :equipment
-  has_one :model_equipment_list
+  has_one :model_equipment_list, dependent: :destroy
   has_many :model_equipments, through: :model_equipment_list
-  has_many :notifications
-  has_many :spare_parts
+  has_many :notifications, dependent: :destroy
+  has_many :spare_parts, dependent: :destroy
   has_many :inventories, through: :equipment
   validates :name, :code, :organization_unit_type, presence: true
 

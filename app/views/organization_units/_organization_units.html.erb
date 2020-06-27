@@ -16,6 +16,7 @@
         <td><%= organization_unit.organization_unit_type %></td>
         <td>
           <%= link_to 'Edit', edit_organization_unit_path(organization_unit), class: 'btn btn-primary' if can? :edit, organization_unit %>
+        <td><%= link_to 'Delete', organization_unit, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, organization_unit %></td>
         </td>
       </tr>
   <% end %>

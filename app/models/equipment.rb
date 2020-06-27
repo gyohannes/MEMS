@@ -4,15 +4,16 @@ class Equipment < ApplicationRecord
   belongs_to :equipment_name
   belongs_to :department, optional: true
   belongs_to :institution, optional: true
-  has_one :installation
-  has_one :acceptance_test
-  has_many :maintenances
-  has_many :planned_preventive_maintenaces
-  has_one :disposal
-  has_many :inventories
+  has_many :maintenances, dependent: :destroy
+  has_one :disposal, dependent: :destroy
+  has_many :inventories, dependent: :destroy
+  has_many :calibration_requests, dependent: :destroy
+  has_many :disposal_requests, dependent: :destroy
+  has_many :maintenance_requests, dependent: :destroy
+  has_many :maintenance_work_orders, dependent: :destroy
   belongs_to :maintenance_requirement
   belongs_to :status
-  has_many :documents, as: :documentable
+  has_many :documents, as: :documentable, dependent: :destroy
   belongs_to :maintenance_provider, optional: true, :class_name => 'Institution', :foreign_key => "maintenance_service_provider"
 
   after_find :set_attributes

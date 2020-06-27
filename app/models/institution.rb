@@ -11,6 +11,7 @@ class Institution < ApplicationRecord
   has_many :calibration_requests
   has_many :maintenance_toolkit_requests
   has_many :users
+  has_many :forwards, dependent: :destroy
 
   scope :suppliers, -> { where(category: 'Supplier') }
   scope :local_representatives, -> { where(category: 'Local Representative') }
