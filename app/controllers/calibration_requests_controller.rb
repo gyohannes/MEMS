@@ -62,7 +62,7 @@ class CalibrationRequestsController < ApplicationController
   # POST /calibration_requests.json
   def create
     @calibration_request = CalibrationRequest.new(calibration_request_params)
-    @calibration_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @calibration_request.organization_unit_id = (current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)) ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     @calibration_request.status = Constants::PENDING
     respond_to do |format|
       if @calibration_request.save

@@ -106,10 +106,10 @@ class User < ApplicationRecord
 
   def load_equipment
     equipment = []
-    if organization_unit
-      equipment = organization_unit.sub_equipment
-    elsif department
+    if department
       equipment = department.equipment
+    elsif organization_unit
+      equipment = organization_unit.sub_equipment
     end
     return equipment
   end

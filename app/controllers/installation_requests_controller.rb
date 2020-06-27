@@ -60,7 +60,7 @@ class InstallationRequestsController < ApplicationController
   # POST /installation_requests.json
   def create
     @installation_request = InstallationRequest.new(installation_request_params)
-    @installation_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @installation_request.organization_unit_id = (current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)) ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     @installation_request.status = Constants::PENDING
     respond_to do |format|
       if @installation_request.save

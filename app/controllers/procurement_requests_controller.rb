@@ -60,7 +60,7 @@ class ProcurementRequestsController < ApplicationController
   # POST /procurement_requests.json
   def create
     @procurement_request = ProcurementRequest.new(procurement_request_params)
-    @procurement_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @procurement_request.organization_unit_id = (current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)) ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
 
     @procurement_request.status = Constants::PENDING
     respond_to do |format|

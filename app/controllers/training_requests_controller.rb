@@ -63,7 +63,7 @@ class TrainingRequestsController < ApplicationController
     @training_request = TrainingRequest.new(training_request_params)
     @training_request.user_id = current_user.id
     @training_request.status = Constants::PENDING
-    @training_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @training_request.organization_unit_id = (current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)) ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     respond_to do |format|
       if @training_request.save
         n = @training_request.notifications.build(name: @training_request.equipment_name.try(:to_s) << ' Training Request',

@@ -64,7 +64,7 @@ class MaintenanceRequestsController < ApplicationController
   def create
     @maintenance_request = MaintenanceRequest.new(maintenance_request_params)
     @maintenance_request.status = Constants::PENDING
-    @maintenance_request.organization_unit_id = current_user.department ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
+    @maintenance_request.organization_unit_id = (current_user.is_role(Constants::BIOMEDICAL_ENGINEER) or current_user.is_role(Constants::DEPARTMENT)) ? current_user.organization_unit_id : current_user.parent_org_unit.try(:id)
     equipment = @maintenance_request.equipment
     respond_to do |format|
       if @maintenance_request.save
