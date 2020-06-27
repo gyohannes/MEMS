@@ -80,8 +80,10 @@ class Equipment < ApplicationRecord
                  estimated_life_span: estimated_life_span, years_used: years_used, institution_id: supplier.try(:id), status_id: status.try(:id)}
       equipment = Equipment.find_by(attrbts)
       if equipment.blank?
-        eq = Equipment.create(attrbts)
-        equipments << eq unless eq.blank?
+        eq = Equipment.new(attrbts)
+        if eq.save
+          equipments << eq unless eq.blank?
+        end
       end
     end
     return equipments
