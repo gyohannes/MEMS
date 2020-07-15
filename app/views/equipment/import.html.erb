@@ -67,10 +67,10 @@
   </table>
 
     <%= form_tag import_equipment_index_path,:multipart=>true do %>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <label>Select CSV File</label> <%= file_field_tag(:equipments_csv_file) %>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <%= submit_tag 'Import',class: 'btn btn-primary' %>
       </div>
     <% end %>

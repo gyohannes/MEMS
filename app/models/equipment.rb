@@ -41,6 +41,11 @@ class Equipment < ApplicationRecord
   scope :list_by_to, -> (to_date) { where('installation_date <= ?', to_date)}
   scope :list_by_acquisition_type, -> (acquisition_type) {where(acquisition_type: acquisition_type) unless acquisition_type.blank?}
 
+  def country_name
+    c = ISO3166::Country[country]
+    c.translations[I18n.locale.to_s] || c.name rescue nil
+  end
+
   def self.import_equipments(file, user)
     equipments = []
     CSV.foreach(file.path, :headers=>true, encoding: 'iso-8859-1:utf-8') do |row|

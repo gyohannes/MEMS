@@ -20,11 +20,25 @@
         <td><%= specification.equipment_name %></td>
         <td><%= specification.organization_unit_type %></td>
         <td><%= specification.department %></td>
-        <td><%= link_to 'Details', specification, class: 'btn btn-primary' %></td>
+        <td>
+          <%= link_to 'Details', specification, class: 'btn btn-primary' %>
+          <%= link_to 'Delete', specification, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, specification %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
   <hr/>
 <%= link_to 'Register Specification', new_specification_path, class: 'btn btn-primary' if can? :manage, Specification %>
+  <% if can? :manage, Specification %>
+<hr/>
+<%= form_tag import_specifications_path,:multipart=>true do %>
+    <div class="col-sm-3">
+      <label>Select CSV File</label> <%= file_field_tag(:specifications_csv_file) %>
+    </div>
+    <div class="col-sm-3">
+      <%= submit_tag 'Import',class: 'btn btn-primary' %>
+    </div>
+<% end %>
+  <% end %>
 </div>

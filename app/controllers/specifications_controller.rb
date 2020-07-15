@@ -11,6 +11,15 @@ class SpecificationsController < ApplicationController
     @specifications = Specification.all
   end
 
+  def import
+    add_breadcrumb "Import", :import_specifications_path
+    if request.post?
+      @specifications = Specification.import_specifications(params[:specifications_csv_file])
+      flash[:notice] = @specifications.blank? ? 'No specification imported' : 'Specifications imported'
+    end
+    redirect_to specifications_path
+  end
+
   # GET /specifications/1
   # GET /specifications/1.json
   def show
