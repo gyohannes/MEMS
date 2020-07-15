@@ -28,7 +28,11 @@ Rails.application.routes.draw do
 
   resources :news
   resources :inventories
-  resources :specifications
+  resources :specifications do
+    collection do
+      post 'import'
+    end
+  end
   resources :store_registrations
   resources :maintenance_toolkit_requests do
     member do
