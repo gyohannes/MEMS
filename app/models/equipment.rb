@@ -22,6 +22,8 @@ class Equipment < ApplicationRecord
 
   validates :equipment_name_id, :model, :serial_number, :maintenance_requirement_id, presence: true
 
+  validates :inventory_number, :serial_number, unique: true
+
   STATUSES = [IN_STORE = 'In Store', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',PARTIALLY_FUNCTIONAL='Partially Functional',
               NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable', DISPOSED='Disposed']
 
@@ -125,7 +127,6 @@ class Equipment < ApplicationRecord
   end
 
   def set_attributes
-    self.location = equipment_name.name
     self.trained_end_users = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ?',
                                                              organization_unit_id, Constants::END_USER, equipment_name_id).blank?
     self.trained_technical_personnel = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ?',
