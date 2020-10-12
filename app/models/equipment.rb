@@ -105,7 +105,7 @@ class Equipment < ApplicationRecord
       equipment = counter == 0 ? v : equipment.merge(v)
       counter += 1
     end
-    return equipment.uniq
+    return equipment
   end
 
   def maintenance_provider

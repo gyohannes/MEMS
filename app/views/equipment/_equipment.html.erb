@@ -1,14 +1,9 @@
 <% unless @equipment.blank? %>
-<div class="col-sm-12">
   <div class="card">
-    <div class="header">
-      Equipments By Status
-    </div>
     <div class="body">
       <%= column_chart @equipment.joins(:status).group('statuses.name').count %>
     </div>
   </div>
-</div>
 <% end %>
 
 <table class="table table-bordered table-striped table-responsive dataTable js-exportable">
