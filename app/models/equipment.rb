@@ -126,10 +126,10 @@ class Equipment < ApplicationRecord
 
   def set_attributes
     self.location = equipment_name.name
-    self.trained_end_users = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ? and (model = ? or model = ?)',
-                                                             organization_unit_id, Constants::END_USER, equipment_name_id, "",model).blank?
-    self.trained_technical_personnel = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ? and (model = ? or model = ?)',
-                                                                       organization_unit_id, Constants::MAINTENANCE_PERSONNEL, equipment_name_id, "",model).blank?
+    self.trained_end_users = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ?',
+                                                             organization_unit_id, Constants::END_USER, equipment_name_id).blank?
+    self.trained_technical_personnel = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ?',
+                                                                       organization_unit_id, Constants::MAINTENANCE_PERSONNEL, equipment_name_id).blank?
     self.years_used = ((Date.today - (manufactured_year || Date.today))/365).floor
   end
 

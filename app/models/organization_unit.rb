@@ -115,7 +115,8 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_equipment
-    Equipment.where('equipment.organization_unit_id in (?)', (sub_units.pluck(:id) << id))
+    Equipment.where('organization_unit_id in (?)', (sub_units.pluck(:id) << id))
+
   end
 
   def sub_receive

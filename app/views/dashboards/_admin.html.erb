@@ -22,17 +22,17 @@
         </div>
         <div class="panel-body">
           <ul class="nav nav-tabs tab-nav-right" role="tablist">
-            <li role="presentation" class="active"><a href="#equipment_by_standard_by_graph" data-toggle="tab">Graphical</a></li>
-            <li role="presentation"><a href="#equipment_by_standard_by_table" data-toggle="tab">Tabular</a></li>
+            <li role="presentation" class="active"><a href="#equipment_by_standard_by_table" data-toggle="tab">Tabular</a></li>
+            <li role="presentation"><a href="#equipment_by_standard_by_graph" data-toggle="tab">Graphical</a></li>
           </ul>
 
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_standard_by_graph">
-              <%= column_chart ideal_vs_available_by_type_equipment_index_path %>
-            </div>
-            <div role="tabpanel" class="tab-pane fade in" id="equipment_by_standard_by_table">
+            <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_standard_by_table">
               <%= render partial: '/equipment/standard_available_equipment'  %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="equipment_by_standard_by_graph">
+              <%= column_chart ideal_vs_available_by_type_equipment_index_path %>
             </div>
           </div>
         </div>
@@ -71,18 +71,17 @@
              </div>
              <div class="panel-body">
                <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                 <li role="presentation" class="active"><a href="#equipment_by_org_unit_and_status_by_graph" data-toggle="tab">Graphical</a></li>
-                 <li role="presentation"><a href="#equipment_by_org_unit_and_status_by_table" data-toggle="tab">Tabular</a></li>
+                 <li role="presentation"  class="active"><a href="#equipment_by_org_unit_and_status_by_table" data-toggle="tab">Tabular</a></li>
+                 <li role="presentation"><a href="#equipment_by_org_unit_and_status_by_graph" data-toggle="tab">Graphical</a></li>
                </ul>
 
                <!-- Tab panes -->
                <div class="tab-content">
-                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_status_by_graph">
-                   <%= column_chart equipment_by_org_unit_and_status_equipment_index_path %>
-                 </div>
-
-                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_status_by_table">
+                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_status_by_table">
                    <%= render partial: '/equipment/equipment_by_org_unit_by_status'  %>
+                 </div>
+                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_status_by_graph">
+                   <%= column_chart equipment_by_org_unit_and_status_equipment_index_path %>
                  </div>
                </div>
              </div>
@@ -99,18 +98,17 @@
              </div>
              <div class="panel-body">
                <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                 <li role="presentation" class="active"><a href="#equipment_by_org_unit_and_type_by_graph" data-toggle="tab">Graphical</a></li>
-                 <li role="presentation"><a href="#equipment_by_org_unit_and_type_by_table" data-toggle="tab">Tabular</a></li>
+                 <li role="presentation" class="active"><a href="#equipment_by_org_unit_and_type_by_table" data-toggle="tab">Tabular</a></li>
+                 <li role="presentation"><a href="#equipment_by_org_unit_and_type_by_graph" data-toggle="tab">Graphical</a></li>
                </ul>
 
                <!-- Tab panes -->
                <div class="tab-content">
-                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_type_by_graph">
-                   <%= column_chart equipment_by_org_unit_and_type_equipment_index_path %>
-                 </div>
-
-                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_type_by_table">
+                 <div role="tabpanel" class="tab-pane fade in active" id="equipment_by_org_unit_and_type_by_table">
                    <%= render partial: '/equipment/equipment_by_org_unit_by_type'  %>
+                 </div>
+                 <div role="tabpanel" class="tab-pane fade in" id="equipment_by_org_unit_and_type_by_graph">
+                   <%= column_chart equipment_by_org_unit_and_type_equipment_index_path %>
                  </div>
                </div>
              </div>

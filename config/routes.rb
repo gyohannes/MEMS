@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   post 'reports/spare_parts'
 
   resources :news
-  resources :inventories
+  resources :inventories do
+    collection do
+      get 'load_facility_equipment'
+    end
+  end
   resources :specifications do
     collection do
       post 'import'

@@ -1,4 +1,5 @@
 class InventoriesController < ApplicationController
+  include ApplicationHelper
   load_and_authorize_resource
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Home", :root_path
@@ -7,6 +8,11 @@ class InventoriesController < ApplicationController
   # GET /inventories.json
   def index
     @inventories = current_user.organization_unit.sub_inventories
+  end
+
+  def load_facility_equipment
+    @equipment = Equipment.search(nil, current_user.organization_unit_id,nil,nil,nil,nil,params[:term]).first
+    render partial: 'equipment'
   end
 
   # GET /inventories/1
@@ -28,25 +34,20 @@ class InventoriesController < ApplicationController
   def edit
     add_breadcrumb "Edit", :edit_inventory_path
     session[:return_to] = request.referer
+    @equipment = @inventory.equipment
   end
 
   # POST /inventories
   # POST /inventories.json
   def create
-    equipment = Equipment.find_by(organization_unit_id: params[:inventory][:equipment_attributes][:organization_unit_id],
-                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number])
-
-    unless equipment.blank?
-      params[:inventory][:equipment_id] = equipment.id
-      params[:inventory][:trained_end_users] = equipment.trained_end_users
-      params[:inventory][:trained_technical_personnel] = equipment.trained_technical_personnel
-    end
-    params[:inventory].delete('equipment_attributes')
     @inventory = Inventory.new(inventory_params)
+    params[:inventory][:trained_end_users] = to_boolean(params[:trained_end_users])
+    params[:inventory][:trained_maintenance_personnel] = to_boolean(params[:trained_technical_personnel])
     @inventory.user_id = current_user.id
+    @equipment = @inventory.equipment
     respond_to do |format|
       if @inventory.save
-        equipment.update(status: @inventory.status)
+        @equipment.update(status: @inventory.status)
         format.html { redirect_to session.delete(:return_to), notice: 'Inventory was successfully created.' }
         format.json { render :show, status: :created, location: @inventory }
       else
@@ -59,15 +60,10 @@ class InventoriesController < ApplicationController
   # PATCH/PUT /inventories/1
   # PATCH/PUT /inventories/1.json
   def update
-    equipment = Equipment.find_by(organization_unit_id: params[:inventory][:equipment_attributes][:organization_unit_id],
-                                  inventory_number: params[:inventory][:equipment_attributes][:inventory_number])
-
-    unless equipment.blank?
-      params[:inventory][:equipment_id] = equipment.id
-      params[:inventory][:trained_end_users] = equipment.trained_end_users
-      params[:inventory][:trained_technical_personnel] = equipment.trained_technical_personnel
-    end
-    params[:inventory].delete('equipment_attributes')
+    params[:inventory][:trained_end_users] = to_boolean(params[:trained_end_users])
+    params[:inventory][:trained_maintenance_personnel] = to_boolean(params[:trained_technical_personnel])
+    @inventory.user_id = current_user.id
+    @equipment = @inventory.equipment
 
     respond_to do |format|
       if @inventory.update(inventory_params)
@@ -102,7 +98,8 @@ class InventoriesController < ApplicationController
       params.require(:inventory).permit(:equipment_id, :status_id, :user_id, :description_of_problem, :trained_end_users,
                                         :trained_maintenance_personnel, :suggestion, :risk_level, :inventory_date,
                                         :inventory_done_by, :contact_address, :note,
-                                        equipment_attributes: [:id, :organization_unit_id, :equipment_name, :model, :serial_number,:status_id,
-                                                               :trained_end_users, :trained_maintenance_personnel, :tag_number, :_destroy])
+                                        equipment_attributes: [:id, :organization_unit_id, :inventory_number, :equipment_name_id, :model, :serial_number,:status_id,
+                                                               :trained_end_users, :trained_maintenance_personnel, :tag_number,
+                                                               :years_used, :equipment_risk_classification, :_destroy])
     end
 end

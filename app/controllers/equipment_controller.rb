@@ -94,7 +94,7 @@ class EquipmentController < ApplicationController
   # GET /equipment
   # GET /equipment.json
   def index
-    @equipment = current_user.load_equipment
+    @equipment = current_user.organization_unit == OrganizationUnit.top_organization_unit ? [] : current_user.load_equipment
   end
 
   def load_equipment

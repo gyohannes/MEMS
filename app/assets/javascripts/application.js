@@ -23,8 +23,6 @@
 //= require budget_requests
 //= require reports
 //= require maintenances
-//= require highcharts
-//= require chartkick
 //= require jquery.minicolors
 //= require jquery.minicolors.simple_form
 //= require AdminBSBMaterialDesign/index

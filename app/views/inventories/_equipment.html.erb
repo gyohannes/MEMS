@@ -1,0 +1,46 @@
+
+<%= simple_fields_for(:inventory, @inventory) do |f| %>
+    <%= f.input :equipment_id, as: :hidden, input_html: {value: @equipment.try(:id)} %>
+<% end %>
+<div class="form-group row">
+  <label class="col-sm-3">Equipment Name</label>
+  <span class="col-sm-9">
+          <span class="form-control"><%= @equipment.try(:equipment_name) %></span>
+        </span>
+</div>
+<div class="form-group row">
+  <label class="col-sm-3">Model</label>
+  <span class="col-sm-9">
+          <span class="form-control"><%= @equipment.try(:model) %></span>
+        </span>
+</div>
+<div class="form-group row">
+  <label class="col-sm-3">Serial Number</label>
+  <span class="col-sm-9">
+          <span class="form-control"><%= @equipment.try(:serial_number) %></span>
+        </span>
+</div>
+<div class="form-group row">
+  <label class="col-sm-3">Tag Number</label>
+  <span class="col-sm-9">
+          <span class="form-control"><%= @equipment.try(:tag_number) %></span>
+        </span>
+</div>
+<div class="form-group row">
+  <label class="col-sm-3">Equipment Risk Classification</label>
+  <span class="col-sm-9">
+          <span class="form-control"><%= @equipment.try(:equipment_risk_classification) %></span>
+        </span>
+</div>
+<div class="form-group row">
+  <div class="col-sm-3"></div>
+  <span class="col-sm-9">
+    <%= check_box_tag :trained_end_users, @equipment.try(:trained_end_users), @equipment.try(:trained_end_users), class: "filled-in chk-col-blue" %><label for="trained_end_users">Trained End Users</label>
+        </span>
+</div>
+<div class="form-group row">
+  <div class="col-sm-3"></div>
+  <span class="col-sm-9">
+    <%= check_box_tag :trained_technical_personnel, @equipment.try(:trained_technical_personnel), @equipment.try(:trained_technical_personnel), class: "filled-in chk-col-blue" %><label for="trained_technical_personnel">Trained Technical Personnel</label>
+        </span>
+</div>
