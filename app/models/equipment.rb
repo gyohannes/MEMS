@@ -91,6 +91,8 @@ class Equipment < ApplicationRecord
         if eq.save
           equipments << eq unless eq.blank?
         end
+      else
+        equipment.update(attrbts)
       end
     end
     return equipments
