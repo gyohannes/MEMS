@@ -11,6 +11,14 @@ class SparePart < ApplicationRecord
   scope :list_by_from, -> (from_date) {joins(:receive_spare_parts).where('expiry_date >= ?', from_date) unless from_date.blank?}
   scope :list_by_to, -> (to_date) {joins(:receive_spare_parts).where('expiry_date <= ?', to_date) unless to_date.blank?}
 
+  validates :name, :min_reorder_level, presence: true
+  validates :name, uniqueness: { case_sensitive: false }
+
+  before_save :set_name
+
+  def set_name
+    self[:name] = name.titlecase
+  end
 
   def self.search(org_unit=nil, name=nil, spare_name=nil, user=nil, from=nil, to=nil)
     spare_parts = []

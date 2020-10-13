@@ -7,7 +7,7 @@ class InstitutionsController < BaseController
   # GET /institutions
   # GET /institutions.json
   def index
-    @institutions = !current_user.organization_unit.blank? ? current_user.organization_unit.sub_institutions : current_user.facility.institutions
+    @institutions = Institution.all
   end
 
   def load_institutions

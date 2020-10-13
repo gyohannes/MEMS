@@ -25,7 +25,7 @@ class OrganizationUnit < ApplicationRecord
   has_many :inventories, through: :equipment
   validates :name, :code, :organization_unit_type, presence: true
 
-  STANDARD_VS_AVAILABLE = [STANDARD='Standared', AVAILABLE='Available']
+  STANDARD_VS_AVAILABLE = [STANDARD='Standard', AVAILABLE='Available']
 
   def ideal_vs_available(equipment_name,status)
     if status == STANDARD

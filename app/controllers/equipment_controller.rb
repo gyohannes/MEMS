@@ -41,7 +41,7 @@ class EquipmentController < ApplicationController
   end
 
   def equipment_by_status
-    equipment = current_user.load_equipment.group('status').count
+    equipment = current_user.load_equipment.joins(:status).group('statuses.name').count
     render json: equipment
   end
 

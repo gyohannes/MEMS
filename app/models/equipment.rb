@@ -20,9 +20,9 @@ class Equipment < ApplicationRecord
 
   accepts_nested_attributes_for :documents, allow_destroy: true
 
-  validates :equipment_name_id, :model, :serial_number, :maintenance_requirement_id, presence: true
+  validates :equipment_name_id, :model, :maintenance_requirement_id, presence: true
 
-  validates :inventory_number, :serial_number, uniqueness: { case_sensitive: false }
+  validates :inventory_number, uniqueness: { case_sensitive: false }
 
   STATUSES = [IN_STORE = 'In Store', UNDER_MAINTENANCE = 'Under Maintenance', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',PARTIALLY_FUNCTIONAL='Partially Functional',
               NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable', DISPOSED='Disposed']
