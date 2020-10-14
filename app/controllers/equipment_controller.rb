@@ -61,8 +61,8 @@ class EquipmentController < ApplicationController
 
   def equipment_by_department
     equipment = []
-    Department.all.each do |d|
-      equipment << {name: d.to_s, data: Status.all.map{|s| [s.to_s, current_user.load_equipment.where(status_id: s, department_id: d.id).count]}}
+    Status.all.each do |s|
+      equipment << {name: s.name, data: Department.all.map{|d| [d.name, current_user.load_equipment.where(status_id: s, department_id: d.id).count]}}
     end
     render json: equipment
   end
