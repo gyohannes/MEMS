@@ -10,7 +10,7 @@ class SparePartsController < ApplicationController
   end
 
   def ideal_vs_available_by_type
-    spare_parts = SparePart.all
+    spare_parts = current_user.organization_unit.spare_parts
     spare_part_stats = []
     ['Min Re-order Level', 'Available'].each do |type|
       spare_part_stats << {name: type, data: spare_parts.map{|sp| [sp.name, sp.min_re_order_level_vs_available(type)]} }
