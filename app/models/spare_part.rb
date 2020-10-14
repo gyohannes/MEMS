@@ -12,7 +12,7 @@ class SparePart < ApplicationRecord
   scope :list_by_to, -> (to_date) {joins(:receive_spare_parts).where('expiry_date <= ?', to_date) unless to_date.blank?}
 
   validates :name, :min_reorder_level, presence: true
-  validates :name, uniqueness: { case_sensitive: false }
+  validates :name, uniqueness: {scope: :organization_unit_id, case_sensitive: false }
 
   before_save :set_name
 

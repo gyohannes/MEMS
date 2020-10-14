@@ -86,6 +86,7 @@ form label{
 .form-actions{
     border-top: 1px solid rgba(204, 204, 204, 0.35);
     padding-top: 20px;
+    text-align: center;
 }
 
 form > label{
