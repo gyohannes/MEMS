@@ -23,4 +23,4 @@
   </tbody>
 </table>
 
-<%= link_to 'New User', new_user_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' unless @organization_unit.blank? %>
+<%= link_to 'Add New User', new_user_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' unless @organization_unit.blank? %>
