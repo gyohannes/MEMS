@@ -1,4 +1,5 @@
 class Equipment < ApplicationRecord
+  default_scope { where.not(status_id: Status.disposed_status)}
   belongs_to :organization_unit, optional: true
   belongs_to :equipment_type, optional: true
   belongs_to :equipment_name
@@ -30,8 +31,6 @@ class Equipment < ApplicationRecord
   FUNCTIONAL_STATUSES = [NOT_ACCEPTED='Not Accepted', FUNCTIONAL='Functional', NON_FUNCTIONAL='Non Functional',
                          NON_FUNCTIONAL_REPAIRABLE = 'Non Functional repairable', NON_FUNCTIONAL_NOT_REPAIRABLE = 'Non Functional not repairable']
 
-  scope :active, -> { where.not(status: self::DISPOSED)}
-
   scope :list_by_user, -> (user) { user.load_equipment unless user.blank? }
   scope :list_by_org_structure, -> (org_structure) { OrganizationUnit.find_by(id: org_structure).sub_equipment unless org_structure.blank? }
   scope :list_by_type, -> (type) { EquipmentType.find_by(id: type).equipment unless type.blank? }
@@ -46,6 +45,10 @@ class Equipment < ApplicationRecord
   def country_name
     c = ISO3166::Country[country]
     c.translations[I18n.locale.to_s] || c.name rescue nil
+  end
+
+  def self.total_by_status(user,status)
+    list_by_user(user).list_by_status(status).count
   end
 
   def self.import_equipments(file, user)
