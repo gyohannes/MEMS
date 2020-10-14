@@ -3,15 +3,15 @@ class User < ApplicationRecord
   belongs_to :institution, optional: true
   belongs_to :department, optional: true
   belongs_to :store, optional: true
-  has_many :maintenance_work_orders
-  has_many :maintenance_requests
-  has_many :training_requests
-  has_many :procurement_requests
-  has_many :disposal_requests
-  has_many :specification_requests
-  has_many :calibration_requests
-  has_many :installation_requests
-  has_many :notifications
+  has_many :maintenance_work_orders, dependent: :destroy
+  has_many :maintenance_requests, dependent: :destroy
+  has_many :training_requests, dependent: :destroy
+  has_many :procurement_requests, dependent: :destroy
+  has_many :disposal_requests, dependent: :destroy
+  has_many :specification_requests, dependent: :destroy
+  has_many :calibration_requests, dependent: :destroy
+  has_many :installation_requests, dependent: :destroy
+  has_many :notifications, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
