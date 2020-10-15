@@ -39,7 +39,7 @@
     <tbody>
     <% @equipment.each do |equipment| %>
         <tr>
-          <td><label class="label" style="background-color: <%= equipment.status.color %>">
+          <td><label class="label" style="background-color: <%= equipment.status.try(:color) %>">
             <%= equipment.status %>
           </label>
           </td>
