@@ -1,0 +1,21 @@
+<table class="table table-striped table-bordered dataTable js-exportable">
+  <thead>
+  <tr>
+    <th></th>
+    <% Status.all.each do |status| %>
+        <th><%= status %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% og = current_user.organization_unit_id %>
+  <% @deps.each do |dep| %>
+      <tr>
+        <th><%= dep %></th>
+        <% Status.all.each do |status| %>
+            <th><%= dep.total_by_status(og, status.id) %></th>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

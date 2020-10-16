@@ -5,6 +5,10 @@ class Department < ApplicationRecord
 
   validates :name, presence: true
 
+  def total_by_status(og, status)
+    equipment.where(status_id: status, organization_unit_id: og).count
+  end
+
   def to_s
     name
   end
