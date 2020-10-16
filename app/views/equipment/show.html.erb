@@ -12,7 +12,7 @@
       </div>
       <div class="col-sm-6">
         <a href="javascript:void(0);" class="list-group-item">
-          <span class="font-15">Status:</span> <label class="right font-15 font-italic label" style="background-color: <%= @equipment.status.color %>"><%= @equipment.status %></label>
+          <span class="font-15">Status:</span> <label class="right font-15 font-italic label" style="background-color: <%= @equipment.status.try(:color) %>"><%= @equipment.status %></label>
         </a>
       </div>
       <div class="col-sm-6">
