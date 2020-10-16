@@ -2,8 +2,13 @@ class EquipmentController < ApplicationController
   load_and_authorize_resource
   before_action :set_equipment, only: [:show, :edit, :update, :destroy]
   before_action :load, only: [:new, :create, :edit, :update]
+  before_action :get_equipments, only: [:index, :load_calendar, :equipment_by_status, :equipment_by_type, :equipment_by_department ]
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Equipment", :equipment_index_path
+
+  def get_equipments
+    @equipment = current_user.load_equipment
+  end
 
   def load
     @suppliers = Institution.suppliers
@@ -12,9 +17,8 @@ class EquipmentController < ApplicationController
 
   def load_calendar
     calendars = []
-    equipment = current_user.load_equipment
 
-    equipment.each do |m|
+    @equipment.each do |m|
       calendars << {title: m.to_s + ' Preventive Maintenance',
                     start: m.preventive_maintenance_date }
     end
@@ -41,12 +45,12 @@ class EquipmentController < ApplicationController
   end
 
   def equipment_by_status
-    equipment = current_user.load_equipment.joins(:status).group('statuses.name').count
+    equipment = @equipment.joins(:status).group('statuses.name').count
     render json: equipment
   end
 
   def equipment_by_type
-    equipment = current_user.load_equipment.joins(:equipment_type).group('equipment_types.name').count
+    equipment = @equipment.joins(:equipment_type).group('equipment_types.name').count
     render json: equipment
   end
 
@@ -62,7 +66,7 @@ class EquipmentController < ApplicationController
   def equipment_by_department
     equipment = []
     Status.all.each do |s|
-      equipment << {name: s.name, data: Department.all.map{|d| [d.name, current_user.load_equipment.where(status_id: s, department_id: d.id).count]}}
+      equipment << {name: s.name, data: Department.all.map{|d| [d.name, @equipment.where(status_id: s, department_id: d.id).count]}}
     end
     render json: equipment
   end
@@ -71,14 +75,6 @@ class EquipmentController < ApplicationController
     equipment = []
     current_user.organization_unit.sub_organization_units.each do |ou|
       equipment << {name: ou.to_s, data: Status.all.map{|s| [s.to_s, ou.sub_equipment.where(status_id: s).count]} }
-    end
-    render json: equipment
-  end
-
-  def equipment_by_facility_and_type
-    equipment = []
-    current_user.organization_unit.facilities.each do |ou|
-      equipment << {name: ou.to_s, data: EquipmentType.all.map{|t| [t.to_s, ou.equipment.where(equipment_type_id: t).count]} }
     end
     render json: equipment
   end
@@ -94,7 +90,7 @@ class EquipmentController < ApplicationController
   # GET /equipment
   # GET /equipment.json
   def index
-    @equipment = current_user.organization_unit == OrganizationUnit.top_organization_unit ? [] : current_user.load_equipment
+    @equipment = current_user.organization_unit == OrganizationUnit.top_organization_unit ? [] : @equipment
   end
 
   def load_equipment
