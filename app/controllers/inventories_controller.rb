@@ -25,8 +25,8 @@ class InventoriesController < ApplicationController
   def new
     add_breadcrumb "Register", :new_inventory_path
     @inventory = Inventory.new
-    equipment = Equipment.find_by(id: params[:equipment])
-    @inventory.equipment = equipment || Equipment.new
+    @equipment = Equipment.find_by(id: params[:equipment])
+    @inventory.equipment = @equipment || Equipment.new
     session[:return_to] = request.referer
   end
 
