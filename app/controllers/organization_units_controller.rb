@@ -7,7 +7,7 @@ class OrganizationUnitsController < BaseController
   # GET /organization_units
   # GET /organization_units.json
   def index
-    @organization_units = OrganizationUnit.all
+    @organization_units = current_user.organization_unit.sub_units
   end
 
   def load_tree

@@ -19,8 +19,7 @@ class UsersController < BaseController
   # GET /users
   # GET /users.json
   def index
-    @type = params[:type]
-    @users = User.load_users(current_user, @type)
+    @users = current_user.organization_unit.sub_users
   end
 
   def load_users
