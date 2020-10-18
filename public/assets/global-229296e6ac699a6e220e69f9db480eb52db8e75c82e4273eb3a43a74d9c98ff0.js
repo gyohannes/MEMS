@@ -30,7 +30,7 @@ $(function () {
         retrieve: true,
         bootstrap: true,
         dom: '<"html5buttons"B>lTfgtip',
-        buttons: ['colvis', 'copy', { extend: 'excelHtml5', footer: true }],
+        buttons: ['colvis', 'copy', 'excel', { extend: 'csvHtml5', footer: true }, 'print'],
     });
 
     $('#calendar').fullCalendar({

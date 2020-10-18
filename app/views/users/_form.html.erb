@@ -11,7 +11,7 @@
       <%= f.input :password_confirmation %>
     </div>
     <div class="col-sm-6" style="border-left: 1px solid skyblue;">
-      <%= f.association :organization_unit, label: 'Organization Unit', collection: [@user.organization_unit || current_user.organization_unit] if current_user.organization_unit %>
+      <%= f.association :organization_unit, label: 'Organization Unit/Facility', collection: @org_units %>
       <%= f.input :role, collection: Constants::ROLES %>
       <div id="department">
         <%= render partial: 'department' %>

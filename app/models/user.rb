@@ -12,12 +12,14 @@ class User < ApplicationRecord
   has_many :calibration_requests, dependent: :destroy
   has_many :installation_requests, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :notification_user_visits, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :department_id, presence: true, if: :department_user
+  validates :email, :first_name, :father_name, :grand_father_name, :role, presence: true
 
   def department_user
     role == Constants::DEPARTMENT

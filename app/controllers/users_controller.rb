@@ -9,6 +9,7 @@ class UsersController < BaseController
 
   def load
     @stores = current_user.organization_unit.try(:stores)
+    @org_units = current_user.organization_unit.sub_units + [current_user.organization_unit]
   end
 
   def load_departments

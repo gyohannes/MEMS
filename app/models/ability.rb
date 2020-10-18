@@ -57,13 +57,6 @@ class Ability
          cannot :destroy, [:equipment, OrganizationUnit]
          can :destroy, [:equipment, OrganizationUnit] if user.super_admin?
        end
-
-       if user.is_role(Constants::SUPPLIER) || user.is_role(Constants::LOCAL_REPRESENTATIVE)
-         can :manage, News, institution_id: user.institution_id
-         can :manage, User, institution_id: user.institution_id
-         can [:read, :decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
-                                  CalibrationRequest, DisposalRequest]
-       end
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.
