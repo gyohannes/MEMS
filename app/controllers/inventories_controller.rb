@@ -41,8 +41,8 @@ class InventoriesController < ApplicationController
   # POST /inventories.json
   def create
     @inventory = Inventory.new(inventory_params)
-    params[:inventory][:trained_end_users] = to_boolean(params[:trained_end_users])
-    params[:inventory][:trained_maintenance_personnel] = to_boolean(params[:trained_technical_personnel])
+    @inventory.trained_end_users = @inventory.equipment.trained_end_users
+    @inventory.trained_maintenance_personnel = @inventory.equipment.trained_technical_personnel
     @inventory.user_id = current_user.id
     @equipment = @inventory.equipment
     respond_to do |format|
@@ -60,8 +60,8 @@ class InventoriesController < ApplicationController
   # PATCH/PUT /inventories/1
   # PATCH/PUT /inventories/1.json
   def update
-    params[:inventory][:trained_end_users] = to_boolean(params[:trained_end_users])
-    params[:inventory][:trained_maintenance_personnel] = to_boolean(params[:trained_technical_personnel])
+    @inventory.trained_end_users = @inventory.equipment.trained_end_users
+    @inventory.trained_maintenance_personnel = @inventory.equipment.trained_technical_personnel
     @inventory.user_id = current_user.id
     @equipment = @inventory.equipment
 

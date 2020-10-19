@@ -20,12 +20,14 @@ class Ability
                                                                       TrainingRequest, InstallationRequest,
                                                                       MaintenanceRequest, CalibrationRequest,
                                                                       DisposalRequest]
-         can :manage, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal, SparePart]
+         can :read, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal, SparePart]
+         can :create, [Equipment, Receive, Issue, Maintenance, Training, Inventory, Disposal, SparePart],
+                          user.organization_unit.facility
          can :manage, News, organization_unit_id: user.organization_unit_id
          can :read, MaintenanceWorkOrder, user_id: user.id
          can :edit, MaintenanceWorkOrder, not_completed: true, user_id: user.id
          cannot :edit, Equipment
-         cannot :edit, Equipment, status_id: Status.disposed_status
+         can :edit, Equipment, organization_unit_id: user.organization_unit_id
          can :read, [Specification, ModelEquipmentList]
        end
        if user.is_role(Constants::BIOMEDICAL_HEAD)
@@ -41,7 +43,8 @@ class Ability
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
          can :manage, [Equipment, ModelEquipmentList, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
                        Receive, Issue, EquipmentStatus, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
-         cannot :edit, Equipment, status_id: Status.disposed_status
+         cannot :edit, Equipment
+         can :edit, Equipment, organization_unit_id: user.organization_unit_id
 
          can :read, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType, Notification]
          can :manage, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType] if user.organization_unit == OrganizationUnit.top_organization_unit
