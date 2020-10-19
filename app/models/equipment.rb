@@ -42,6 +42,12 @@ class Equipment < ApplicationRecord
   scope :list_by_to, -> (to_date) { where('installation_date <= ?', to_date)}
   scope :list_by_acquisition_type, -> (acquisition_type) {where(acquisition_type: acquisition_type) unless acquisition_type.blank?}
 
+  before_save :set_name
+
+  def set_name
+    self[:name] = name.titlecase
+  end
+
   def country_name
     c = ISO3166::Country[country]
     c.translations[I18n.locale.to_s] || c.name rescue nil

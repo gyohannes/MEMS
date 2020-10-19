@@ -35,12 +35,12 @@
 <div class="form-group row">
   <div class="col-sm-3"></div>
   <span class="col-sm-9">
-    <%= check_box_tag :trained_end_users, @equipment.try(:trained_end_users), @equipment.try(:trained_end_users), class: "filled-in chk-col-blue" %><label for="trained_end_users">Trained End Users</label>
+    <%= check_box_tag :trained_end_users, @equipment.try(:trained_end_users), @equipment.try(:trained_end_users), readonly: true, class: "filled-in chk-col-blue" %><label for="trained_end_users">Trained End Users</label>
         </span>
 </div>
 <div class="form-group row">
   <div class="col-sm-3"></div>
   <span class="col-sm-9">
-    <%= check_box_tag :trained_technical_personnel, @equipment.try(:trained_technical_personnel), @equipment.try(:trained_technical_personnel), class: "filled-in chk-col-blue" %><label for="trained_technical_personnel">Trained Technical Personnel</label>
+    <%= check_box_tag :trained_technical_personnel, @equipment.try(:trained_technical_personnel), @equipment.try(:trained_technical_personnel), readonly: true, class: "filled-in chk-col-blue" %><label for="trained_technical_personnel">Trained Technical Personnel</label>
         </span>
 </div>
