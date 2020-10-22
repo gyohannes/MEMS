@@ -8,7 +8,7 @@ class EquipmentName < ApplicationRecord
   before_save :set_name
 
   def set_name
-    self[:name] = name.titlecase
+    self[:name] = name.titlecase  unless name.blank?
   end
 
   def self.import_names(file)
