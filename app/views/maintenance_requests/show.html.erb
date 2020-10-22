@@ -21,12 +21,17 @@
 
       <div class="row">
         <label class="col-sm-6">Equipment Status:</label>
-        <%= @maintenance_request.status %>
+        <%= @maintenance_request.equipment_status %>
       </div>
 
       <div class="row">
         <label class="col-sm-6">Requested by:</label>
-        <%= @maintenance_request.user.organization_unit %>
+        <% if @maintenance_request.user.is_role(Constants::DEPARTMENT) %>
+            <%= @maintenance_request.user.organization_unit %><br/>
+            <%= @maintenance_request.user.department %>
+        <% else %>
+            <%= @maintenance_request.user.organization_unit %>
+        <% end %>
       </div>
 
       <div class="row">
