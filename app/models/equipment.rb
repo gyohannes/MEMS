@@ -42,6 +42,10 @@ class Equipment < ApplicationRecord
   scope :list_by_to, -> (to_date) { where('installation_date <= ?', to_date)}
   scope :list_by_acquisition_type, -> (acquisition_type) {where(acquisition_type: acquisition_type) unless acquisition_type.blank?}
 
+  def number_of_years_used
+    ((Date.today - (installation_date || Date.today))/365).floor + (years_used.blank? ? 0 : years_used)
+  end
+
   def country_name
     c = ISO3166::Country[country]
     c.translations[I18n.locale.to_s] || c.name rescue nil
@@ -88,7 +92,7 @@ class Equipment < ApplicationRecord
                  cost: cost, serial_number: serial_number, tag_number: tag_number, manufacturer: manufacturer, country: country, manufactured_year: manufactured_year,
                  purchased_year: purchased_year, power_requirement: power_requirement, maintenance_requirement_id: maintenance_requirement.try(:id),
                  estimated_life_span: estimated_life_span, years_used: years_used, institution_id: supplier.try(:id), status_id: status.try(:id)}
-      equipment = Equipment.find_by(attrbts)
+      equipment = Equipment.find_by(organization_unit_id: user.organization_unit_id, inventory_number: inventory_number)
       if equipment.blank?
         eq = Equipment.new(attrbts)
         if eq.save
@@ -96,6 +100,7 @@ class Equipment < ApplicationRecord
         end
       else
         equipment.update(attrbts)
+        equipments << equipment
       end
     end
     return equipments
@@ -136,7 +141,6 @@ class Equipment < ApplicationRecord
                                                              organization_unit_id, Constants::END_USER, equipment_name_id).blank?
     self.trained_technical_personnel = !Training.joins(:contact).where('contacts.organization_unit_id = ? and training_type = ? and equipment_name_id = ?',
                                                                        organization_unit_id, Constants::MAINTENANCE_PERSONNEL, equipment_name_id).blank?
-    self.years_used = ((Date.today - (manufactured_year || Date.today))/365).floor
   end
 
   def trainings

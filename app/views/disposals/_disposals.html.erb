@@ -2,10 +2,10 @@
   <thead>
   <tr>
     <th>Equipment</th>
-    <th>Problem</th>
-    <th>Action taken</th>
-    <th>List of disposing commitee</th>
-    <th>Contact address</th>
+    <th>Type</th>
+    <th>Reason for Disposal</th>
+    <th>Disposal Method</th>
+    <th>Disposing Committee</th>
     <th>Disposed date</th>
     <th></th>
   </tr>
@@ -14,16 +14,14 @@
   <tbody>
   <% @disposals.each do |disposal| %>
       <tr>
-        <td><%= disposal.equipment %></td>
-        <td><%= disposal.problem %></td>
-        <td><%= disposal.action_taken %></td>
-        <td><%= disposal.list_of_disposing_commitee %></td>
-        <td><%= disposal.contact_address %></td>
-        <td><%= disposal.disposed_date %></td>
+        <td><%= disposal.equipment_name %></td>
+        <td><%= disposal.equipment_name.equipment_type %></td>
+        <td><%= disposal.reason_for_disposal %></td>
+        <td><%= disposal.disposal_method %></td>
+        <td><%= disposal.disposing_committee %></td>
+        <td><%= disposal.disposed_date.strftime("%B %d, %Y") rescue nil %></td>
         <td>
-          <%= link_to 'Details', disposal %>
           <%= link_to 'Edit', edit_disposal_path(disposal) %>
-          <%= link_to 'Delete', disposal, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
   <% end %>

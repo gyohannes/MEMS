@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Equipment name:</strong>
+  <%= @distribution.equipment_name %>
+</p>
+
+<p>
+  <strong>Organization unit:</strong>
+  <%= @distribution.organization_unit %>
+</p>
+
+<p>
+  <strong>Number of equipment:</strong>
+  <%= @distribution.number_of_equipment %>
+</p>
+
+<%= link_to 'Edit', edit_distribution_path(@distribution) %> |
+<%= link_to 'Back', distributions_path %>

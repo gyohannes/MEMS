@@ -21,6 +21,14 @@ class User < ApplicationRecord
   validates :department_id, presence: true, if: :department_user
   validates :email, :first_name, :father_name, :grand_father_name, :role, presence: true
 
+  def parent_unit
+    if is_role(Constants::BIOMEDICAL_HEAD) and organization_unit_id != OrganizationUnit.top_organization_unit.try(:id)
+      organization_unit.parent_organization_unit_id
+    else
+      organization_unit_id
+    end
+  end
+
   def department_user
     role == Constants::DEPARTMENT
   end

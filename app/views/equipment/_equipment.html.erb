@@ -70,6 +70,3 @@
     <% end %>
     </tbody>
   </table>
-  <hr/>
-<%= link_to 'Register Equipment', new_equipment_path(organization_unit_id: current_user.organization_unit.try(:id)), class: 'btn btn-primary' if current_user.organization_unit.facility if can? :create, Equipment %>
-<%= link_to 'Import Equipments', import_equipment_index_path, class: 'btn btn-primary' if current_user.organization_unit.facility if can? :create, Equipment %>

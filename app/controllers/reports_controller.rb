@@ -53,7 +53,7 @@ class ReportsController < ApplicationController
     add_breadcrumb "Spare Parts Report", :reports_spare_parts_path
     @spare_parts = current_user.organization_unit.spare_parts
     if request.post?
-      @spare_parts = SparePart.search(params[:search][:organization_unit], params[:search][:quipment_name], params[:search][:spare_part_name],
+      @spare_parts = SparePart.search(params[:search][:organization_unit], params[:search][:equipment_name], params[:search][:spare_part_name],
                                          current_user, params[:search][:from], params[:search][:to])
       respond_to do |format|
         format.js
@@ -69,8 +69,7 @@ class ReportsController < ApplicationController
   if request.post?
     reasons = params[:search][:disposal_reason].reject{|x| x.blank?} if params[:search][:disposal_reason]
     methods = params[:search][:disposal_method].reject{|x| x.blank?} if params[:search][:disposal_method]
-    @disposals = Disposal.search(params[:search][:organization_unit], params[:search][:quipment_type],
-                                 reasons, methods, current_user, params[:search][:from], params[:search][:to])
+    @disposals = Disposal.search(params[:search][:organization_unit], params[:search][:equipment_type],reasons, methods, current_user, params[:search][:from], params[:search][:to])
     respond_to do |format|
       format.js
       format.html
@@ -80,7 +79,7 @@ class ReportsController < ApplicationController
 
   def load_models
     equipment_name  = params[:equipment_name]
-    @models = Equipment.where('equipment_name_id = ?', equipment_name).pluck(:model)
+    @models = Equipment.unscoped.where('equipment_name_id = ?', equipment_name).pluck(:model)
     render partial: 'model'
   end
 

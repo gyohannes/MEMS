@@ -15,8 +15,7 @@
         <td><%= user.organization_unit %></td>
         <td><%= user.role %></td>
         <td>
-          <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-pirmary' %>
-          <%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-pirmary' if can? :edit, user %>
         </td>
       </tr>
   <% end %>

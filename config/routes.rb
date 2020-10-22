@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :distributions
   resources :settings
   resources :forwards
   resources :statuses

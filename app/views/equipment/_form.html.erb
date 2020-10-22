@@ -30,8 +30,8 @@
     <%= f.input :purchased_year, start_year: Date.today.year - 100, end_year: Date.today.year,
                 discard_day: true, discard_month: true, prompt: true %>
     <%= f.input :order_number %>
-    <%= f.input :cost %>
-    <%= f.input :estimated_life_span %>
+    <%= f.input :cost, hint: 'In ETB' %>
+    <%= f.input :estimated_life_span, hint: 'In Years' %>
     <%= f.input :equipment_risk_classification, collection: Constants::RISK_LEVELS %>
     <%= f.association :status %>
     <legend>Documents</legend>

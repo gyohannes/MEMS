@@ -52,7 +52,7 @@ class MaintenanceWorkOrdersController < ApplicationController
                                                      user_id: current_user.id)
         n.save
         unless @maintenance_work_order.maintenance_request.blank?
-          @maintenance_work_order.maintenance_request.update_attribute('request_status', 'Work Order Started')
+          @maintenance_work_order.maintenance_request.update_attribute('status', 'Work Order Started')
         end
         format.html { redirect_to @maintenance_work_order, notice: 'Maintenance work order was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance_work_order }

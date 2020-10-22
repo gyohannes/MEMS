@@ -35,6 +35,7 @@ class Ability
                                  CalibrationRequest, DisposalRequest]
          can [:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest] unless user.organization_unit == OrganizationUnit.top_organization_unit
+         can :manage, MaintenanceWorkOrder
 
          can [:decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                          CalibrationRequest, DisposalRequest] do |request|
@@ -43,6 +44,9 @@ class Ability
          can [:manage, :decision], Forward, organization_unit_id: user.organization_unit_id
          can :manage, [Equipment, ModelEquipmentList, SparePart, OrganizationUnit, User, Store, Institution, EquipmentName, EquipmentType,
                        Receive, Issue, EquipmentStatus, MaintenanceWorkOrder, Maintenance, Training, Inventory, Disposal]
+
+         cannot [:destroy,:edit], User
+         can [:destroy, :edit], User, parent_unit: user.organization_unit_id
          cannot :edit, Equipment
          can :edit, Equipment, organization_unit_id: user.organization_unit_id
 

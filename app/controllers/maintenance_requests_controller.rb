@@ -70,7 +70,7 @@ class MaintenanceRequestsController < ApplicationController
       if @maintenance_request.save
         equipment.update_attribute('status_id', @maintenance_request.equipment_status)
         n = @maintenance_request.notifications.build(name: @maintenance_request.equipment.to_s << ' Maintenance Request',
-                                                     organization_unit_id: current_user.organization_unit_id)
+                                                     organization_unit_id: @maintenance_request.organization_unit_id)
         n.save
         format.html { redirect_to @maintenance_request, notice: 'Maintenance request was successfully created.' }
         format.json { render :show, status: :created, location: @maintenance_request }

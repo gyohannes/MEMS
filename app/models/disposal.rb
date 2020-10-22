@@ -2,9 +2,9 @@ class Disposal < ApplicationRecord
   belongs_to :equipment
   has_one_attached :attachment
 
-  scope :list_by_user, -> (user) { joins(:equipment).where('organization_unit_id in (?)', user.organization_unit.sub_units.pluck(:id) << user.organization_unit_id) unless user.blank? }
-  scope :list_by_org_unit, -> (org_unit) { joins(:equipment).where('organization_unit_id in (?)', OrganizationUnit.find_by(id: org_unit).sub_units.pluck(:id) << org_unit) unless org_unit.blank? }
-  scope :list_by_type, -> (type) { joins(:equipment).where('equipment_type_id = ?',type) unless type.blank? }
+  scope :list_by_user, -> (user) { joins(:equipment).where('organization_unit_id in (?)', user.organization_unit.sub_units.pluck(:id) << user.organization_unit_id).unscoped unless user.blank? }
+  scope :list_by_org_unit, -> (org_unit) { joins(:equipment).where('organization_unit_id in (?)', OrganizationUnit.find_by(id: org_unit).sub_units.pluck(:id) << org_unit).unscoped unless org_unit.blank? }
+  scope :list_by_type, -> (eq_type) { joins(:equipment).where('equipment.equipment_type_id = ?',eq_type).unscoped unless eq_type.blank? }
   scope :list_by_disposal_reasons, -> (reasons) { where('reason_for_disposal in (:term)', term: reasons) unless reasons.blank? }
   scope :list_by_disposal_methods, -> (methods) { where('disposal_method in (:term)', term: methods) unless methods.blank? }
   scope :list_by_from, -> (from_date) {where('disposed_date >= ?', from_date) unless from_date.blank?}
@@ -22,4 +22,10 @@ class Disposal < ApplicationRecord
     end
     return disposals.uniq
   end
+
+
+  def equipment_name
+    Equipment.unscoped.find_by(id: equipment_id)
+  end
+
 end

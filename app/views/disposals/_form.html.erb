@@ -4,7 +4,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :equipment, collection: @equipments %>
+    <%= f.association :equipment, collection: [f.object.equipment] %>
     <%= f.input :reason_for_disposal, collection: Constants::DISPOSAL_REASONS %>
     <%= f.input :disposal_method, collection: Constants::DISPOSAL_METHODS %>
     <%= f.input :disposing_committee %>

@@ -79,8 +79,8 @@
   <hr/>
   <%= link_to 'Back', maintenance_requests_path, class: 'btn btn-primary' %>
   <%= link_to 'Edit', edit_maintenance_request_path(@maintenance_request), class: 'btn btn-primary' if can? :edit, @maintenance_request and @maintenance_request.status == Constants::PENDING  %>
-  <% if can? :manage, @maintenance_request %>
-      <%= link_to 'Start Work Order', new_maintenance_work_order_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' if @maintenance_request.status == Constants::ACCEPTED %>
-      <%= link_to 'Maintenance Report', new_maintenance_path(maintenance_request: @maintenance_request.id), class: 'btn btn-primary' %>
-  <% end %>
+      <%= link_to 'Assign Work Order', new_maintenance_work_order_path(maintenance_request: @maintenance_request.id),
+                  class: 'btn btn-primary' if @maintenance_request.status == Constants::ACCEPTED and can? :manage, MaintenanceWorkOrder %>
+      <%= link_to 'Maintenance Report', new_maintenance_path(maintenance_request: @maintenance_request.id),
+                  class: 'btn btn-primary' if can? :manage, @maintenance_request %>
 </div>

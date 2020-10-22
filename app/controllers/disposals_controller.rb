@@ -1,18 +1,15 @@
 class DisposalsController < ApplicationController
   load_and_authorize_resource
   before_action :set_disposal, only: [:show, :edit, :update, :destroy]
-  before_action :load, only: [:new, :create, :edit, :update, :index]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Disposals", :disposals_path
 
-  def load
-    @equipments = current_user.load_equipment
-  end
   # GET /installations
   # GET /installations.json
   def index
-    @disposals = Disposal.joins(:equipment).where('equipment_id in (?)', @equipments.pluck(:id))
+    equipments = current_user.load_equipment.unscoped
+    @disposals = Disposal.joins(:equipment).unscoped.where('equipment_id in (?)', equipments.pluck(:id))
   end
 
   # GET /disposals/1
@@ -40,11 +37,11 @@ class DisposalsController < ApplicationController
   # POST /disposals.json
   def create
     @disposal = Disposal.new(disposal_params)
-    equipment = @disposal.equipment
+    equipment = Equipment.unscoped.find_by(id: @disposal.equipment_id)
     respond_to do |format|
       if @disposal.save
         equipment.update_attribute('status_id', Status.disposed_status)
-        format.html { redirect_to session.delete(:return_to), notice: 'Disposal was successfully created.' }
+        format.html { redirect_to disposals_path, notice: 'Disposal was successfully created.' }
         format.json { render :show, status: :created, location: @disposal }
       else
         format.html { render :new }
