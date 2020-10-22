@@ -18,9 +18,9 @@
   <div class="col-sm-8">
     <div id="equipment">
       <%= render partial: '/equipment/equipment' %>
-      <%= link_to 'Register Equipment', new_equipment_path(organization_unit_id: current_user.organization_unit.try(:id)), class: 'btn btn-primary' if current_user.organization_unit.facility and can? :create, Equipment %>
-      <%= link_to 'Import Equipments', import_equipment_index_path, class: 'btn btn-primary' if current_user.organization_unit.facility and can? :create, Equipment %>
     </div>
+    <%= link_to 'Register Equipment', new_equipment_path(organization_unit_id: current_user.organization_unit.try(:id)), class: 'btn btn-primary' if current_user.organization_unit.facility and can? :create, Equipment %>
+    <%= link_to 'Import Equipments', import_equipment_index_path, class: 'btn btn-primary' if current_user.organization_unit.facility and can? :create, Equipment %>
   </div>
 </div>
 <div id="loader" class="lds-dual-ring hidden overlay"></div>

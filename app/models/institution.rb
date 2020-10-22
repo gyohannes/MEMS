@@ -16,6 +16,12 @@ class Institution < ApplicationRecord
   scope :suppliers, -> { where(category: 'Supplier') }
   scope :local_representatives, -> { where(category: 'Local Representative') }
 
+  before_save :set_name
+
+  def set_name
+    self[:name] = name.titlecase
+  end
+
   validates :name, presence: true
 
   def to_s

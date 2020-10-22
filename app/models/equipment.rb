@@ -59,14 +59,14 @@ class Equipment < ApplicationRecord
     equipments = []
     CSV.foreach(file.path, :headers=>true, encoding: 'iso-8859-1:utf-8') do |row|
       inventory_number = row[0]
-      equipment_type = row[1].blank? ? nil : EquipmentType.find_or_create_by(name: row[1].strip)
-      equipment_name = row[2].blank? ? nil : EquipmentName.find_or_create_by(name: row[2].strip)
-      department = row[3].blank? ? nil : Department.find_or_create_by(name: row[3].strip)
+      equipment_type = row[1].blank? ? nil : EquipmentType.find_or_create_by(name: row[1].strip.titlecase)
+      equipment_name = row[2].blank? ? nil : EquipmentName.find_or_create_by(name: row[2].strip.titlecase)
+      department = row[3].blank? ? nil : Department.find_or_create_by(name: row[3].strip.titlecase)
       location = row[4]
       installation_date = row[5]
       warranty_expire_date = row[6]
-      maintenance_provider = row[7].blank? ? nil : Institution.find_or_create_by(name: row[7].strip)
-      maintenance_requirement = row[8].blank? ? nil : MaintenanceRequirement.find_or_create_by(name: row[8].strip)
+      maintenance_provider = row[7].blank? ? nil : Institution.find_or_create_by(name: row[7].strip.titlecase)
+      maintenance_requirement = row[8].blank? ? nil : MaintenanceRequirement.find_or_create_by(name: row[8].strip.titlecase)
       description = row[9]
       country = row[10]
       manufacturer = row[11]
@@ -77,13 +77,13 @@ class Equipment < ApplicationRecord
       manufactured_year = row[16].blank? ? nil : Date.new(row[16].to_i)
       acquisition_type = row[17]
       years_used = row[18]
-      supplier = row[19].blank? ? nil : Institution.find_or_create_by(name: row[19].strip)
+      supplier = row[19].blank? ? nil : Institution.find_or_create_by(name: row[19].strip.titlecase)
       purchased_year = row[20].blank? ? nil : Date.new(row[20].to_i)
       order_number = row[21]
       cost = row[22]
       estimated_life_span = row[23]
       equipment_risk_classification = row[24]
-      status = row[25].blank? ? nil : Status.find_or_create_by(name: row[25].strip)
+      status = row[25].blank? ? nil : Status.find_or_create_by(name: row[25].strip.titlecase)
 
       attrbts = {organization_unit_id: user.organization_unit_id, equipment_name_id: equipment_name.try(:id), inventory_number: inventory_number, description: description,
                  equipment_type_id: equipment_type.try(:id), department_id: department.try(:id), location: location,
