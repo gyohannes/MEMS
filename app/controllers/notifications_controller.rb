@@ -1,4 +1,5 @@
 class NotificationsController < ApplicationController
+  add_breadcrumb "Notifications", :notifications_path
   load_and_authorize_resource
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
 
