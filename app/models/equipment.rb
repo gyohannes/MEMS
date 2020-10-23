@@ -98,7 +98,6 @@ class Equipment < ApplicationRecord
         if eq.save
           equipments << eq unless eq.blank?
         end
-        logger.info("-------------------------------#{eq.errors.inspect}")
       else
         equipment.update(attrbts)
         equipments << equipment

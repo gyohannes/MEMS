@@ -22,7 +22,6 @@ class TrainingsController < ApplicationController
     @training.build_contact
     equipment = Equipment.find_by_id(params[:equipment])
     @training.equipment_name = equipment.equipment_name rescue nil
-    @training.model = equipment.model rescue nil
     session[:return_to] = request.referer
   end
 
