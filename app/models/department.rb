@@ -5,12 +5,6 @@ class Department < ApplicationRecord
 
   validates :name, presence: true
 
-  before_save :set_name
-
-  def set_name
-    self[:name] = name.titlecase  unless name.blank?
-  end
-
   def total_by_status(og, status)
     equipment.where(status_id: status, organization_unit_id: og).count
   end

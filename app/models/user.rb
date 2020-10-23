@@ -116,7 +116,7 @@ class User < ApplicationRecord
 
   def load_equipment
     equipment = []
-    if department
+    if is_role(Constants::DEPARTMENT) and !department.blank?
       equipment = department.equipment.where('organization_unit_id = ?', organization_unit_id)
     elsif organization_unit
       equipment = organization_unit.sub_equipment
