@@ -103,11 +103,11 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_institutions
-    institutions + sub_organization_units.map { |x| x.sub_institutions }.flatten
+    institutions + sub_units_and_groups.map { |x| x.sub_institutions }.flatten
   end
 
   def sub_users
-    (users + sub_organization_units.collect{|x| x.sub_users}).flatten
+    (users + sub_units_and_groups.collect{|x| x.sub_users}).flatten
   end
 
   def all_contacts
@@ -123,11 +123,11 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_receive
-    (receive + sub_organization_units.collect{|x| x.sub_receive}).flatten
+    (receive + sub_units_and_groups.collect{|x| x.sub_receive}).flatten
   end
 
   def sub_store_registrations
-    (store_registrations + sub_organization_units.collect{|x| x.sub_store_registrations} + facilities.collect{|x| x.store_registrations}).flatten
+    (store_registrations + sub_units_and_groups.collect{|x| x.sub_store_registrations}).flatten
   end
 
   def sub_inventories
