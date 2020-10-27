@@ -23,7 +23,7 @@ class OrganizationUnitsController < BaseController
   end
 
   def load_sub_units
-    @parent  = OrganizationUnit.find(params[:node]) if params[:type] == 'org unit'
+    @parent  = OrganizationUnit.find(params[:node])
     @organization_units = @parent.sub_units
     render partial: 'organization_units'
   end
@@ -94,7 +94,7 @@ class OrganizationUnitsController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_unit_params
-      params.require(:organization_unit).permit(:name, :code, :organization_unit_type_id, :parent_organization_unit_id,
+      params.require(:organization_unit).permit(:name, :code, :organization_unit_type_id, :parent_organization_unit_id, :group_id,
                                                 :category, :url, :latitude, :longtitude, :note, :population, :facility, :administration_unit)
     end
 end

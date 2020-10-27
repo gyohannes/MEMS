@@ -1,7 +1,9 @@
 class OrganizationUnit < ApplicationRecord
   belongs_to :organization_unit_type
   belongs_to :parent_organization_unit, optional: true, :class_name => 'OrganizationUnit', :foreign_key => "parent_organization_unit_id"
-  has_many :sub_organization_units, :class_name => 'OrganizationUnit', :foreign_key => "parent_organization_unit_id"
+  has_many :sub_organization_units, -> {where('group_id is NULL or group_id = ?', '')}, :class_name => 'OrganizationUnit', :foreign_key => "parent_organization_unit_id"
+  belongs_to :group, optional: true, :class_name => 'OrganizationUnit', :foreign_key => "group_id"
+  has_many :sub_groups, :class_name => 'OrganizationUnit', :foreign_key => "group_id"
   has_many :users,dependent: :destroy
   has_many :stores, dependent: :destroy
   has_many :store_registrations, through: :stores
@@ -62,11 +64,13 @@ class OrganizationUnit < ApplicationRecord
   def org_children
     {
         text: name,
-        type: 'org unit',
         id: id,
-        nodes: sub_organization_units.blank? ? nil
-                   : sub_organization_units.collect{|x| x.org_children }
+        nodes: sub_units_and_groups.blank? ? nil : sub_units_and_groups.collect{|x| x.org_children }
     }
+  end
+
+  def sub_units_and_groups
+    sub_organization_units + sub_groups
   end
 
   def facility_children
@@ -95,7 +99,7 @@ class OrganizationUnit < ApplicationRecord
   end
 
   def sub_units
-    sub_organization_units + sub_organization_units.collect{|x| x.sub_units}.flatten
+    sub_units_and_groups + sub_units_and_groups.collect{|x| x.sub_units}.flatten
   end
 
   def sub_institutions

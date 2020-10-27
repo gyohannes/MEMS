@@ -10,6 +10,7 @@
     <%= f.input :facility, label_html: {class: 'transparent_label'}, input_html: {class: 'filled-in chk-col-pink"'} %>
     </div>
     <div class="col-sm-6 left_form">
+      <%= f.association :group %>
     <%= f.input :category, collection: ['Public', 'Private', 'NGO'] %>
     <%= f.input :url, label: 'URL' %>
     <%= f.input :latitude %>
