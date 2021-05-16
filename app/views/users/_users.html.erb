@@ -21,5 +21,8 @@
   <% end %>
   </tbody>
 </table>
-
-<%= link_to 'Add New User', new_user_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' unless @organization_unit.blank? %>
+  <% if current_user.organization_unit.facility? %>
+      <%= link_to 'Add New User', new_user_path(organization_unit: current_user.organization_unit_id), class: 'btn btn-primary' %>
+  <% else %>
+    <%= link_to 'Add New User', new_user_path(organization_unit: @organization_unit.try(:id)), class: 'btn btn-primary' unless @organization_unit.blank? %>
+  <% end %>

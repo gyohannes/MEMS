@@ -24,6 +24,10 @@ class MaintenanceRequest < ApplicationRecord
     end
   end
 
+  def equip_status
+    Status.find_by(id: equipment_status)
+  end
+
   def to_s
     [request_from, equipment.to_s].join(' - ')
   end

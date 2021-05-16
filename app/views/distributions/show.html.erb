@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
+<div class="header">
+  <h2>Distribution Details</h2>
+</div>
+<div class="body">
 
 <p>
   <strong>Equipment name:</strong>
@@ -6,14 +9,19 @@
 </p>
 
 <p>
-  <strong>Organization unit:</strong>
-  <%= @distribution.organization_unit %>
+  <strong>Distribution Date:</strong>
+  <%= @distribution.distribution_date %>
 </p>
 
-<p>
-  <strong>Number of equipment:</strong>
-  <%= @distribution.number_of_equipment %>
-</p>
-
-<%= link_to 'Edit', edit_distribution_path(@distribution) %> |
-<%= link_to 'Back', distributions_path %>
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+    <caption>List of organization units/facilities</caption>
+    <% @distribution.sub_distributions.each do |sd| %>
+      <tr>
+        <td><%= sd.organization_unit %></td>
+        <td><%= sd.number_of_equipment %></td>
+      </tr>
+        <% end %>
+  </table>
+<%= link_to 'Edit', edit_distribution_path(@distribution), class: 'btn btn-primary' %>
+<%= link_to 'Back', distributions_path, class: 'btn btn-default' %>
+</div>

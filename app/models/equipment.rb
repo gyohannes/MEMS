@@ -144,7 +144,7 @@ class Equipment < ApplicationRecord
   end
 
   def trainings
-    return Training.where('equipment_name_id = ? and (model = ? or model is null)', equipment_name_id, model)
+    return Training.where('equipment_name_id = ? and (model = ? or model = ?)', equipment_name_id, model, '')
   end
 
   def to_s

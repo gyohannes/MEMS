@@ -1,6 +1,1 @@
-<h1>Editing Distribution</h1>
-
-<%= render 'form', distribution: @distribution %>
-
-<%= link_to 'Show', @distribution %> |
-<%= link_to 'Back', distributions_path %>
+<%= render partial: 'form', layout: 'layouts/form_layout', locals: { title: "Edit Distribution" } %>

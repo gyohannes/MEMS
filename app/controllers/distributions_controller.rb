@@ -1,6 +1,9 @@
 class DistributionsController < ApplicationController
   before_action :set_distribution, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Distributions", :distributions_path
+
   # GET /distributions
   # GET /distributions.json
   def index
@@ -10,22 +13,25 @@ class DistributionsController < ApplicationController
   # GET /distributions/1
   # GET /distributions/1.json
   def show
+    add_breadcrumb "Details", :distribution_path
   end
 
   # GET /distributions/new
   def new
+    add_breadcrumb "New", :new_distribution_path
     @distribution = Distribution.new
+    @distribution.sub_distributions.build
   end
 
   # GET /distributions/1/edit
   def edit
+    add_breadcrumb "Edit", :edit_distribution_path
   end
 
   # POST /distributions
   # POST /distributions.json
   def create
     @distribution = Distribution.new(distribution_params)
-
     respond_to do |format|
       if @distribution.save
         format.html { redirect_to @distribution, notice: 'Distribution was successfully created.' }
@@ -69,6 +75,6 @@ class DistributionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def distribution_params
-      params.require(:distribution).permit(:equipment_name_id, :organization_unit_id, :number_of_equipment)
+      params.require(:distribution).permit(:equipment_name_id, :distribution_date, sub_distributions_attributes: [:id, :organization_unit_id, :number_of_equipment, :_destroy])
     end
 end
