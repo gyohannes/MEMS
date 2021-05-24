@@ -14,7 +14,7 @@ class UsersController < BaseController
 
   def load_departments
     @role = params[:role]
-    @departments = Department.all
+    @departments = current_user.organization_unit.departments
     render partial: 'department'
   end
   # GET /users
@@ -51,7 +51,7 @@ class UsersController < BaseController
 
   # GET /users/1/edit
   def edit
-    @departments = Department.all
+    @departments = current_user.organization_unit.departments
     add_breadcrumb "Edit", :edit_user_path
     @role = @user.role
     unless @user.organization_unit.blank?
@@ -64,7 +64,7 @@ class UsersController < BaseController
   # POST /users
   # POST /users.json
   def create
-    @departments = Department.all
+    @departments = current_user.organization_unit.departments
     @user = User.new(user_params)
     @role = @user.role
     unless @user.organization_unit.blank?
