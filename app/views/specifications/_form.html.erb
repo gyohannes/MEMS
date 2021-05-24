@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col-sm-4">
       <%= f.association :equipment_name %>
-      <%= f.association :department %>
+      <%= f.association :department, collection: @departments %>
       <%= f.association :organization_unit_type %>
     </div>
     <div class="col-sm-8">

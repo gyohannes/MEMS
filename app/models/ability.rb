@@ -33,7 +33,7 @@ class Ability
                                  CalibrationRequest, DisposalRequest]
          can [:create], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                                   CalibrationRequest, DisposalRequest] unless user.organization_unit == OrganizationUnit.top_organization_unit
-         can :manage, MaintenanceWorkOrder
+         can :manage, [MaintenanceWorkOrder, Department]
 
          can [:decision], [ProcurementRequest, SpecificationRequest, TrainingRequest, InstallationRequest, MaintenanceRequest,
                          CalibrationRequest, DisposalRequest] do |request|
@@ -49,7 +49,7 @@ class Ability
          can :edit, Equipment, organization_unit_id: user.organization_unit_id
 
          can :read, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType, Notification]
-         can :manage, [Department, Status, Specification, MaintenanceRequirement, OrganizationUnitType] if user.organization_unit == OrganizationUnit.top_organization_unit
+         can :manage, [Status, Specification, MaintenanceRequirement, OrganizationUnitType] if user.organization_unit == OrganizationUnit.top_organization_unit
 
          cannot [:edit, :update, :destroy], [Maintenance]
          can [:edit, :update, :destroy], [Maintenance], user_id: user.id

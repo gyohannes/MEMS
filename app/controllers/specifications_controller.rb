@@ -41,6 +41,7 @@ class SpecificationsController < ApplicationController
 
   # GET /specifications/new
   def new
+    @departments = current_user.organization_unit.departments
     add_breadcrumb "New", :new_specification_path
 
     @specification = Specification.new
@@ -48,12 +49,14 @@ class SpecificationsController < ApplicationController
 
   # GET /specifications/1/edit
   def edit
+    @departments = current_user.organization_unit.departments
     add_breadcrumb "Edit", :edit_specification_path
   end
 
   # POST /specifications
   # POST /specifications.json
   def create
+    @departments = current_user.organization_unit.departments
     @specification = Specification.new(specification_params)
     respond_to do |format|
       if @specification.save
@@ -69,6 +72,7 @@ class SpecificationsController < ApplicationController
   # PATCH/PUT /specifications/1
   # PATCH/PUT /specifications/1.json
   def update
+    @departments = current_user.organization_unit.departments
     respond_to do |format|
       if @specification.update(specification_params)
         format.html { redirect_to @specification, notice: 'Specification was successfully updated.' }
