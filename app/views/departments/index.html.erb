@@ -8,7 +8,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Added by</th>
       <th></th>
     </tr>
   </thead>
@@ -17,7 +16,6 @@
     <% @departments.each do |department| %>
       <tr>
         <td><%= department.name %></td>
-        <td><%= department.organization_unit %></td>
         <td>
           <%= link_to 'Edit', edit_department_path(department), class: 'btn btn-primary' %>
         </td>

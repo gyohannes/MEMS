@@ -114,7 +114,7 @@ class MaintenanceRequestsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def maintenance_request_params
       params.require(:maintenance_request).permit(:organization_unit_id, :failure_date, :equipment_id, :attachment, :description_of_problem, :equipment_status,
-                                                  :institution_id, :user_id, :request_date, :comment, :status, :decision_by, :assigned_to,
+                                                  :institution_id, :user_id, :request_date, :troubleshooting_performed, :comment, :status, :decision_by, :assigned_to,
                                                   forwards_attributes: [:id, :forwardable_id, :institution_id, :organization_unit_id, :_destroy])
     end
 end

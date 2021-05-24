@@ -54,56 +54,56 @@ class User < ApplicationRecord
     ProcurementRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_procurement_requests
-    ProcurementRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_procurement_requests(status=Constants::PENDING)
+    ProcurementRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_specification_requests
     SpecificationRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_specification_requests
-    SpecificationRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_specification_requests(status=Constants::PENDING)
+    SpecificationRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_training_requests
     TrainingRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_training_requests
-    TrainingRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_training_requests(status=Constants::PENDING)
+    TrainingRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_installation_requests
     InstallationRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_installation_requests
-    InstallationRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_installation_requests(status=Constants::PENDING)
+    InstallationRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_maintenance_requests
     MaintenanceRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_maintenance_requests
-    MaintenanceRequest.where('organization_unit_id = ? ', organization_unit_id)
+  def incoming_maintenance_requests(status=Constants::PENDING)
+    MaintenanceRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_calibration_requests
     CalibrationRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_calibration_requests
-    CalibrationRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_calibration_requests(status=Constants::PENDING)
+    CalibrationRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def outgoing_disposal_requests
     DisposalRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
-  def incoming_disposal_requests
-    DisposalRequest.where('organization_unit_id = ?', organization_unit_id)
+  def incoming_disposal_requests(status=Constants::PENDING)
+    DisposalRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
 
   def super_admin?

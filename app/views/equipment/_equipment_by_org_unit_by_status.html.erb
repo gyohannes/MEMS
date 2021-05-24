@@ -2,6 +2,7 @@
   <thead>
   <tr>
     <th></th>
+    <th>Total</th>
     <% Status.all.each do |status| %>
         <th><%= status %></th>
     <% end %>
@@ -11,6 +12,7 @@
   <% current_user.organization_unit.sub_organization_units.each do |org_unit| %>
       <tr>
         <th><%= org_unit %></th>
+        <th><%= org_unit.sub_equipment.count %></th>
         <% Status.all.each do |status| %>
             <th><%= org_unit.sub_equipment.where(status_id: status.id).count %></th>
         <% end %>
