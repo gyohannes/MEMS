@@ -2,6 +2,7 @@ class Department < ApplicationRecord
   belongs_to :organization_unit, optional: true
   has_many :notifications
   has_many :equipment
+  has_many :users
 
   validates :name, presence: true
 
