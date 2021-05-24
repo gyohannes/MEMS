@@ -3,6 +3,7 @@ class Department < ApplicationRecord
   has_many :notifications
   has_many :equipment
   has_many :users
+  has_many :specifications
 
   validates :name, presence: true
 
