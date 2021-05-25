@@ -10,7 +10,7 @@ class Status < ApplicationRecord
   end
 
   def self.disposed_status
-    Status.find_by(name: 'Disposed').try(:id)
+    Status.unscoped.find_by(name: 'Disposed').try(:id)
   end
 
   def to_s
