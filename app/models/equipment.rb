@@ -61,7 +61,7 @@ class Equipment < ApplicationRecord
       inventory_number = row[0]
       equipment_type = row[1].blank? ? nil : EquipmentType.find_or_create_by(name: row[1].strip.titlecase)
       equipment_name = row[2].blank? ? nil : EquipmentName.find_or_create_by(name: row[2].strip.titlecase)
-      department = row[3].blank? ? nil : Department.find_or_create_by(name: row[3].strip)
+      department = row[3].blank? ? nil : Department.find_or_create_by(name: row[3].strip, organization_unit_id: user.organization_unit_id)
       location = row[4]
       installation_date = row[5]
       warranty_expire_date = row[6]
