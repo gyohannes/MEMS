@@ -1,5 +1,5 @@
 class Status < ApplicationRecord
-  default_scope {where.not(name: 'Disposed')}
+  #default_scope {where.not(name: 'Disposed')}
 
   has_many :equipment
 

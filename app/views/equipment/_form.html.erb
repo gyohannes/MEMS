@@ -7,7 +7,7 @@
       <%= f.input :inventory_number %>
       <%= f.association :equipment_type %>
       <%= f.association :equipment_name %>
-      <%= f.association :department, label: 'Installed Department' %>
+      <%= f.association :department, collection: @departments %>
       <%= f.input :location %>
       <%= f.input :installation_date, as: :string, input_html: {class: 'datepicker'} %>
       <%= f.input :warranty_expire_date, as: :string, input_html: {class: 'datepicker'} %>

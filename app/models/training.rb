@@ -7,7 +7,7 @@ class Training < ApplicationRecord
   scope :list_by_user, -> (user) { where('contact_id in (?)', user.organization_unit.all_contacts) unless user.blank? }
   scope :list_by_org_structure, -> (org_structure) { where('contact_id in (?)', OrganizationUnit.find_by(id: org_structure).sub_contacts.pluck(:id)) unless org_structure.blank? }
   scope :list_by_type, -> (type) { joins(:equipment).where('equipment_type_id = ?', type) unless type.blank? }
-  scope :list_by_name, -> (name) { joins(:equipment).where('equipment_name_id = ?',name) unless name.blank? }
+  scope :list_by_name, -> (name) { where('equipment_name_id = ?',name) unless name.blank? }
   scope :list_by_model, -> (model) { where('LOWER(model) LIKE :term', term: "%#{model.downcase}%") unless model.blank?}
   scope :list_by_training_type, -> (types) { where('training_type in (:term)', term: types) unless types.blank? }
   scope :list_by_level, -> (levels) { where('level in (:term)', term: levels) unless levels.blank? }

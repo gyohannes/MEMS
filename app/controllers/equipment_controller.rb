@@ -106,12 +106,14 @@ class EquipmentController < ApplicationController
 
   # GET /equipment/new
   def new
+    @departments = current_user.organization_unit.departments
     add_breadcrumb "Registration", :new_equipment_path
     @equipment = Equipment.new
   end
 
   # GET /equipment/1/edit
   def edit
+    @departments = current_user.organization_unit.departments
     add_breadcrumb "Edit", :edit_equipment_path
     @organization_unit = @equipment.organization_unit
   end
@@ -119,6 +121,7 @@ class EquipmentController < ApplicationController
   # POST /equipment
   # POST /equipment.json
   def create
+    @departments = current_user.organization_unit.departments
     @equipment = Equipment.new(equipment_params)
     @equipment.organization_unit_id = current_user.organization_unit_id
     respond_to do |format|
@@ -135,6 +138,7 @@ class EquipmentController < ApplicationController
   # PATCH/PUT /equipment/1
   # PATCH/PUT /equipment/1.json
   def update
+    @departments = current_user.organization_unit.departments
     respond_to do |format|
       if @equipment.update(equipment_params)
         format.html { redirect_to @equipment, notice: 'Equipment was successfully updated.' }
