@@ -24,8 +24,8 @@ class ReportsController < ApplicationController
     if request.post?
       types = params[:search][:training_type].reject{|x| x.blank?} if params[:search][:training_type]
       levels = params[:search][:training_level].reject{|x| x.blank?} if params[:search][:training_level]
-      @trainings = Training.search(params[:search][:organization_unite], params[:search][:quipment_name],
-                                   params[:search][:type],params[:search][:model],
+      @trainings = Training.search(params[:search][:organization_unit], params[:search][:equipment_name],
+                                   params[:search][:equipment_type],params[:search][:model],
                                    types, levels, current_user, params[:search][:from], params[:search][:to])
       respond_to do |format|
         format.js
@@ -40,7 +40,7 @@ class ReportsController < ApplicationController
     @maintenances = []
     if request.post?
       types = params[:search][:maintenance_type].reject{|x| x.blank?} if params[:search][:maintenance_type]
-      @maintenances = Maintenance.search(params[:search][:organization_unit], params[:search][:quipment_name], params[:search][:model],
+      @maintenances = Maintenance.search(params[:search][:organization_unit], params[:search][:equipment_name], params[:search][:model],
                                    types, current_user, params[:search][:from], params[:search][:to])
       respond_to do |format|
         format.js
