@@ -17,7 +17,7 @@ class ReceivesController < ApplicationController
     if current_user.store
       @receives = current_user.store.receive
     elsif current_user.organization_unit
-      @receives = current_user.organization_unit.sub_receive
+      @receives = current_user.organization_unit.receive
     end
     return @receives
   end
