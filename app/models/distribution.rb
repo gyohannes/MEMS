@@ -1,13 +1,18 @@
 class Distribution < ApplicationRecord
   belongs_to :equipment_name
-  has_many :sub_distributions
+  belongs_to :institution
+  has_many :sub_distributions, dependent: :destroy
 
   accepts_nested_attributes_for :sub_distributions, allow_destroy: true
 
-  validates :distribution_date, presence: true
+  validates :request_date, presence: true
 
-  def total_number_distributed
-    sub_distributions.pluck(:number_of_equipment).sum
+  def total_quantity
+    sub_distributions.pluck(:quantity).sum
+  end
+
+  def to_s
+    equipment_name.name
   end
 
 end

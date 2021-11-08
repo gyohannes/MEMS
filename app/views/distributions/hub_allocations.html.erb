@@ -1,0 +1,34 @@
+<div class="header">
+  <h2>
+    Hub Allocations
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+    <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Org Unit/Facility</th>
+      <th>Quantity</th>
+      <th>Remark</th>
+      <th>Hub</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @requests.each do |sub_distribution| %>
+        <tr>
+          <td><%= sub_distribution.distribution.equipment_name %></td>
+          <td><%= sub_distribution.organization_unit %></td>
+          <td><%= sub_distribution.quantity %></td>
+          <td><%= sub_distribution.remark %></td>
+          <td><%= sub_distribution.epsa_hub %></td>
+          <td><%= sub_distribution.request_status %></td>
+          <td><%= link_to 'Issue', new_equipment_issue_path(subd: sub_distribution.id), class: 'btn btn-primary' %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

@@ -27,10 +27,26 @@ $(function () {
 
     $('.js-exportable').DataTable({
         responsive: true,
+        colReorder: true,
         retrieve: true,
         bootstrap: true,
         dom: '<"html5buttons"B>lTfgtip',
-        buttons: ['colvis', 'copy', { extend: 'excelHtml5', footer: true }],
+        buttons: ['colvis',
+            {
+                extend: 'excelHtml5',
+                footer: true,
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }
+        ]
     });
 
     $('#calendar').fullCalendar({

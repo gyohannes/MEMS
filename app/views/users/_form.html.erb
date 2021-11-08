@@ -3,19 +3,20 @@
 
   <div class="row">
     <div class="col-sm-6">
-    <%= f.input :email %>
-    <%= f.input :first_name %>
-    <%= f.input :father_name %>
-    <%= f.input :grand_father_name %>
-      <%= f.input :password %>
-      <%= f.input :password_confirmation %>
+      <%= f.input :email %>
+      <%= f.input :first_name %>
+      <%= f.input :father_name %>
+      <%= f.input :grand_father_name %>
     </div>
     <div class="col-sm-6" style="border-left: 1px solid skyblue;">
-      <%= f.association :organization_unit, label: 'Organization Unit/Facility', collection: @org_units %>
-      <%= f.input :role, collection: Constants::ROLES %>
+      <%= f.association :organization_unit, label: 'Organization Unit/Facility', collection: @org_units if @user_type == 'org_unit' %>
+      <%= f.association :institution, collection: @institutions, label: 'Supplier' if @user_type == 'supplier' %>
+      <%= f.input :role, collection: @roles %>
       <div id="department">
         <%= render partial: 'department' %>
       </div>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
     </div>
   </div>
 

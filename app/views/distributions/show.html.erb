@@ -9,19 +9,26 @@
 </p>
 
 <p>
-  <strong>Distribution Date:</strong>
-  <%= @distribution.distribution_date %>
+  <strong>Request Date:</strong>
+  <%= @distribution.request_date.strftime("%B %d, %Y") %>
 </p>
 
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-    <caption>List of organization units/facilities</caption>
+    <tr>
+      <th>Org Unit/Facility</th>
+      <th>Quantity</th>
+      <th>Status</th>
+    </tr>
     <% @distribution.sub_distributions.each do |sd| %>
       <tr>
         <td><%= sd.organization_unit %></td>
-        <td><%= sd.number_of_equipment %></td>
+        <td><%= sd.quantity %></td>
+        <td><%= sd.request_status %></td>
       </tr>
         <% end %>
   </table>
-<%= link_to 'Edit', edit_distribution_path(@distribution), class: 'btn btn-primary' %>
-<%= link_to 'Back', distributions_path, class: 'btn btn-default' %>
+  <hr/>
+  <%= link_to 'Back', distributions_path, class: 'btn btn-default' %>
+  <%= link_to 'Assign Hub', edit_distribution_path(@distribution), class: 'btn btn-primary' if can? :edit, @distribution %>
+  <%= link_to 'Delete', @distribution, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, @distribution %>
 </div>

@@ -1,0 +1,29 @@
+<div class="header">
+  <h2>
+    Hubs
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @epsa_hubs.each do |epsa_hub| %>
+      <tr>
+        <td><%= epsa_hub.name %></td>
+        <td>
+          <%= link_to 'Edit', edit_epsa_hub_path(epsa_hub), class: 'btn btn-primary' %>
+          <%= link_to 'Delete', epsa_hub, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <hr/>
+<%= link_to 'Add Hub', new_epsa_hub_path, class: 'btn btn-primary' %>
+</div>

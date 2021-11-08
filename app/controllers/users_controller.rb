@@ -8,24 +8,28 @@ class UsersController < BaseController
   add_breadcrumb "Users", :users_path
 
   def load
+    @hubs = EpsaHub.all
+    @roles = current_user.organization_unit ? Constants::ROLES : ['Supplier','Hub']
     @stores = current_user.organization_unit.try(:stores)
-    @org_units = current_user.organization_unit.sub_units + [current_user.organization_unit]
+    @org_units = current_user.organization_unit.sub_units + [current_user.organization_unit] rescue nil
   end
 
   def load_departments
     @role = params[:role]
-    @departments = current_user.organization_unit.departments
+    @hubs = EpsaHub.all
+    @departments = current_user.organization_unit.departments rescue nil
     render partial: 'department'
   end
   # GET /users
   # GET /users.json
   def index
-    @users = current_user.organization_unit.sub_users
+    @org_unit_users = current_user.organization_unit.sub_users rescue nil
+    @other_users = User.includes(:organization_unit).where(organization_units: {id: nil})
   end
 
   def load_users
     @organization_unit  = OrganizationUnit.find(params[:node])
-    @users = @organization_unit.sub_users
+    @org_unit_users = @organization_unit.sub_users
     render partial: 'users'
   end
   # GET /users/1
@@ -37,7 +41,7 @@ class UsersController < BaseController
   # GET /users/new
   def new
     add_breadcrumb "New", :new_user_path
-
+    @user_type = params[:type]
     @user = User.new
     unless params[:organization_unit].blank?
       @user.organization_unit_id = params[:organization_unit]
@@ -46,12 +50,14 @@ class UsersController < BaseController
     unless current_user.institution.blank?
       @user.institution_id = current_user.institution_id
       @institutions = [@user.institution]
+    else
+      @institutions = Institution.all
     end
   end
 
   # GET /users/1/edit
   def edit
-    @departments = current_user.organization_unit.departments
+    @departments = current_user.organization_unit.departments rescue nil
     add_breadcrumb "Edit", :edit_user_path
     @role = @user.role
     unless @user.organization_unit.blank?
@@ -64,7 +70,7 @@ class UsersController < BaseController
   # POST /users
   # POST /users.json
   def create
-    @departments = current_user.organization_unit.departments
+    @departments = current_user.organization_unit.departments rescue nil
     @user = User.new(user_params)
     @role = @user.role
     unless @user.organization_unit.blank?
@@ -125,6 +131,6 @@ class UsersController < BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :father_name, :grand_father_name,
-                                   :department_id, :store_id, :organization_unit_id, :facility_id, :institution_id, :role)
+                                   :department_id, :epsa_hub_id, :store_id, :organization_unit_id, :facility_id, :institution_id, :role)
     end
 end

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Sub distribution:</strong>
+  <%= @equipment_issue.sub_distribution %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @equipment_issue.quantity %>
+</p>
+
+<p>
+  <strong>Issued by:</strong>
+  <%= @equipment_issue.issued_by %>
+</p>
+
+<p>
+  <strong>Issue date:</strong>
+  <%= @equipment_issue.issue_date %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @equipment_issue.remark %>
+</p>
+
+<p>
+  <strong>Grv number:</strong>
+  <%= @equipment_issue.GRV_number %>
+</p>
+
+<p>
+  <strong>Stv number:</strong>
+  <%= @equipment_issue.STV_number %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @equipment_issue.model %>
+</p>
+
+<p>
+  <strong>Received by:</strong>
+  <%= @equipment_issue.received_by %>
+</p>
+
+<p>
+  <strong>Receiver contact address:</strong>
+  <%= @equipment_issue.receiver_contact_address %>
+</p>
+
+<%= link_to 'Edit', edit_equipment_issue_path(@equipment_issue) %> |
+<%= link_to 'Back', equipment_issues_path %>

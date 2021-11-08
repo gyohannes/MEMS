@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Institution:</strong>
+  <%= @epsa_hub.institution %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @epsa_hub.name %>
+</p>
+
+<%= link_to 'Edit', edit_epsa_hub_path(@epsa_hub) %> |
+<%= link_to 'Back', epsa_hubs_path %>

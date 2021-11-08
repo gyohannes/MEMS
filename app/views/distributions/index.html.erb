@@ -7,9 +7,9 @@
   <table class="table table-bordered table-striped table-hover dataTable js-exportable">
   <thead>
     <tr>
-      <th>Equipment name</th>
-      <th>Distribution Date</th>
-      <th>Total Distributed</th>
+      <th>Equipment</th>
+      <th>Request Date</th>
+      <th>Total Quantity</th>
       <th></th>
     </tr>
   </thead>
@@ -18,17 +18,15 @@
     <% @distributions.each do |distribution| %>
       <tr>
         <td><%= distribution.equipment_name %></td>
-        <td><%= distribution.distribution_date.strftime("%B %d, %Y") %></td>
-        <td><%= distribution.total_number_distributed %></td>
+        <td><%= distribution.request_date.strftime("%B %d, %Y") %></td>
+        <td><%= distribution.total_quantity %></td>
         <td>
           <%= link_to 'Details', distribution, class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_distribution_path(distribution), class: 'btn btn-primary' %>
-          <%= link_to 'Delete', distribution, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
   <hr/>
-<%= link_to 'New Distribution', new_distribution_path, class: 'btn btn-primary' %>
+<%= link_to 'New Distribution', new_distribution_path, class: 'btn btn-primary' if can? :create, Distribution %>
 </div>

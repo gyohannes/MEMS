@@ -1,0 +1,6 @@
+
+<%= simple_fields_for(:request_status, @request_status) do |f| %>
+    <%= f.input :epsa_status_id, collection: @statuses, label: 'Status' %>
+<% end %>
+
+<%= javascript_include_tag 'global' %>

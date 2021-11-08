@@ -1,5 +1,24 @@
 Rails.application.routes.draw do
-  resources :distributions
+  resources :sub_distributions
+  resources :equipment_issues do
+    member do
+      get 'confirm_delivery'
+    end
+  end
+  get 'new_deliveries', to: 'equipment_issues#new_deliveries'
+  resources :epsa_hubs
+  resources :request_statuses do
+    collection do
+      get 'load_status'
+    end
+  end
+  resources :epsa_statuses
+  resources :epsa_teams
+  resources :distributions do
+    collection do
+      get 'hub_allocations'
+    end
+  end
   resources :settings
   resources :forwards
   resources :statuses

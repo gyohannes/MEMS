@@ -1,14 +1,14 @@
 class ProcurementRequestsController < ApplicationController
   load_and_authorize_resource
   before_action :set_procurement_request, only: [:show, :edit, :update, :destroy, :decision]
-  before_action :load
+  before_action :load, only: [:new, :create, :edit, :update, :show]
 
   add_breadcrumb "Home", :root_path
   add_breadcrumb "Procurement Requests", :procurement_requests_path
 
   def load
     @user = [current_user]
-    @spare_parts = current_user.organization_unit.spare_parts
+    @spare_parts = current_user.organization_unit.spare_parts rescue nil
     @actions = current_user.parent_org_unit ? Constants::ACTIONS : Constants::ACTIONS.reject{|x| x == Constants::FORWARDED}
     @organization_units = [current_user.parent_org_unit]
     @institutions = Institution.all
@@ -29,11 +29,9 @@ class ProcurementRequestsController < ApplicationController
 
   def decision
       @procurement_request.update(procurement_request_params)
-      if @procurement_request.status == Constants::FORWARDED
-        n = @procurement_request.notifications.build(name: @procurement_request.user.organization_unit.try(:to_s) << ' Procurement Request Forwarded',
-                                                  organization_unit_id: current_user.parent_org_unit.try(:id))
-        n.save
-      end
+      @procurement_request.notify(params[:procurement_request][:forwards_attributes][0][:organization_unit_id],
+                                  params[:procurement_request][:forwards_attributes][0][:institution_id],
+                                  params[:procurement_request][:status])
       redirect_to @procurement_request, notice: "Procurement request was successfully #{params[:procurement_request][:status]}."
   end
 
@@ -41,7 +39,7 @@ class ProcurementRequestsController < ApplicationController
   # GET /procurement_requests/1.json
   def show
     add_breadcrumb "Details", :procurement_request_path
-    @procurement_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id))
+    @procurement_request.forwards.build(organization_unit_id: current_user.parent_org_unit.try(:id)) rescue nil
   end
 
   # GET /procurement_requests/new

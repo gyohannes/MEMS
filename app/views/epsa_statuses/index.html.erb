@@ -1,0 +1,28 @@
+<div class="header">
+  <h2>
+    EPSA Status
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>EPSA team</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @epsa_statuses.each do |epsa_status| %>
+      <tr>
+        <td><%= epsa_status.name %></td>
+        <td><%= epsa_status.epsa_team %></td>
+        <td><%= link_to 'Edit', edit_epsa_status_path(epsa_status) %> | <%= link_to 'Delete', epsa_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<%= link_to 'Add EPSA Status', new_epsa_status_path, class: 'btn btn-primary' %>
+</div>

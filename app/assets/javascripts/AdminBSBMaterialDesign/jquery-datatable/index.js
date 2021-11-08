@@ -1,8 +1,8 @@
 //= require AdminBSBMaterialDesign/jquery-datatable/jquery.dataTables
 //= require AdminBSBMaterialDesign/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap
-//= require AdminBSBMaterialDesign/jquery-datatable/extensions/export/pdfmake.min
 //= require AdminBSBMaterialDesign/jquery-datatable/extensions/export/dataTables.buttons.min
 //= require jquery-ui/dataTables.responsive.min
+//= require AdminBSBMaterialDesign/jquery-datatable/dataTables.colReorder.min
 //= require jquery-ui/buttons.colVis.min
 //= require AdminBSBMaterialDesign/jquery-datatable/extensions/export/jszip.min
 //= require AdminBSBMaterialDesign/jquery-datatable/extensions/export/buttons.flash.min

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Procurement request:</strong>
+  <%= @request_status.procurement_request %>
+</p>
+
+<p>
+  <strong>Epsa team:</strong>
+  <%= @request_status.epsa_team %>
+</p>
+
+<p>
+  <strong>Epsa status:</strong>
+  <%= @request_status.epsa_status %>
+</p>
+
+<p>
+  <strong>Status date:</strong>
+  <%= @request_status.status_date %>
+</p>
+
+<%= link_to 'Edit', edit_request_status_path(@request_status) %> |
+<%= link_to 'Back', request_statuses_path %>

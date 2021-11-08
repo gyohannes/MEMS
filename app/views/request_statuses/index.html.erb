@@ -1,0 +1,33 @@
+<div class="header">
+  <h2>
+    Procurement Tracking
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-striped table-bordered table-hover dataTable js-exportable">
+    <thead>
+    <tr>
+      <th rowspan="2">Request By</th>
+      <th rowspan="2">Request Date</th>
+      <th colspan="3"><center>Status at EPSA</center></th>
+    </tr>
+    <tr>
+      <th>Current Team</th>
+      <th>Current Status</th>
+      <th>Updated Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_statuses.each do |request_status| %>
+      <tr>
+        <td><%= link_to request_status.procurement_request.user.organization_unit.to_s, request_status.procurement_request %></td>
+        <td><%= request_status.created_at.strftime("%b %d, %Y") rescue nil %></td>
+        <td><%= request_status.epsa_team %></td>
+        <td><%= request_status.status %></td>
+        <td><%= request_status.status_date.strftime("%b %d, %Y") rescue nil %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

@@ -4,19 +4,25 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :equipment_name %>
-    <%= f.input :distribution_date, as: :string, input_html: {class: 'datepicker'} %>
+    <%= f.association :equipment_name, disabled: current_user.organization_unit.blank? %>
+    <%= f.input :request_date, as: :string, input_html: {class: 'datepicker'}, disabled: current_user.organization_unit.blank? %>
     <% counter = 0 %>
     <%= f.simple_fields_for :sub_distributions do |sd| %>
         <% counter += 1 %>
           <div class="row">
-            <div class="col-sm-5"><%= sd.association :organization_unit, label: false, prompt: 'Org Unit/Facility' %></div>
-            <div class="col-sm-5"><%= sd.input :number_of_equipment, label: false, placeholder: 'Number of Equipment'  %></div>
-            <div class="col-sm-2"><%= sd.link_to_remove 'Remove', class: 'btn btn-primary' if counter > 1 %></div>
+            <% if current_user.organization_unit %>
+                <div class="col-sm-5"><%= sd.association :organization_unit, label: false, prompt: 'Org Unit/Facility' %></div>
+                <div class="col-sm-5"><%= sd.input :quantity, label: false, placeholder: 'Quantity'  %></div>
+                <div class="col-sm-1"><%= sd.link_to_remove 'X', class: 'btn btn-primary' if counter > 1 %></div>
+            <% elsif current_user.institution %>
+                <div class="col-sm-4"><%= sd.association :organization_unit, label: false, prompt: 'Org Unit/Facility', disabled: true %></div>
+                <div class="col-sm-4"><%= sd.input :quantity, label: false, placeholder: 'Quantity', disabled: true %></div>
+                <div class="col-sm-4"><%= sd.input :epsa_hub_id, collection: EpsaHub.all, label: false, prompt: 'Assign Hub'  %></div>
+            <% end %>
           </div>
         <%= javascript_include_tag 'global' %>
     <% end %>
-    <%= f.link_to_add 'Add Org Unit / Facility', :sub_distributions, class: 'btn btn-primary' %>
+    <%= f.link_to_add 'Add', :sub_distributions, class: 'btn btn-primary' unless current_user.organization_unit.blank? %>
   </div>
 
   <div class="form-actions">

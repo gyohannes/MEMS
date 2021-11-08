@@ -1,18 +1,74 @@
-  <div class="header">
-    <h2>
-      Users
-    </h2>
-  </div>
-  <div class="body table-responsive row">
-    <div class="col-sm-3">
-      <div id="user_tree"></div>
-    </div>
+<div class="body row">
+  <% if current_user.institution %>
+      <table class="table table-bordered table-striped table-hover dataTable js-exportable" width="100%">
+        <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Supplier</th>
+          <th></th>
+        </tr>
+        </thead>
 
-    <div class="col-sm-9">
-      <div id="users">
-        <%= render partial: 'users' %>
+        <tbody>
+        <% @other_users.each do |user| %>
+            <tr>
+              <td><%= user.email %></td>
+              <td><%= user.role %></td>
+              <td><%= user.institution %></td>
+              <td>
+                <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-pirmary' if can? :edit, user %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= link_to 'Add New User', new_user_path(type: 'supplier'), class: 'btn btn-primary' %>
+  <% else %>
+    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+      <li role="presentation" class="active"><a href="#org_unit_users" data-toggle="tab">Users</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="org_unit_users">
+        <div class="col-sm-4">
+          <div id="user_tree"></div>
+        </div>
+
+        <div class="col-sm-8">
+          <div id="users">
+            <%= render partial: 'users' %>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade in body" id="other_users">
+        <table class="table table-bordered table-striped table-hover dataTable js-exportable" width="100%">
+          <thead>
+          <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Supplier</th>
+            <th></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @other_users.each do |user| %>
+              <tr>
+                <td><%= user.email %></td>
+                <td><%= user.role %></td>
+                <td><%= user.institution %></td>
+                <td>
+                  <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-pirmary' if can? :edit, user %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
-  <%= javascript_include_tag 'jquery' %>
-  <%= javascript_include_tag 'users' %>
+  <% end %>
+</div>
+<%= javascript_include_tag 'jquery' %>
+<%= javascript_include_tag 'users' %>

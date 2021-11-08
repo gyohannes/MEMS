@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @epsa_team.name %>
+</p>
+
+<p>
+  <strong>Previous team:</strong>
+  <%= @epsa_team.previous_team_id %>
+</p>
+
+<%= link_to 'Edit', edit_epsa_team_path(@epsa_team) %> |
+<%= link_to 'Back', epsa_teams_path %>

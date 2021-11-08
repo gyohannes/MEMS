@@ -1,0 +1,18 @@
+<% if current_user.is_role(Constants::HUB) %>
+    <li>
+      <%= link_to hub_allocations_distributions_path do %>
+          <i class="material-icons">format_list_bulleted</i>
+          <span>Distribution Requests
+            <% unless current_user.institution.new_distribution_requests.blank? %>
+                <span class="badge btn-info"><%= current_user.epsa_hub.new_requests.count %></span>
+            <% end %>
+        </span>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to equipment_issues_path do %>
+          <i class="material-icons">history</i><span>Equipment Issues</span>
+      <% end %>
+    </li>
+<% end %>

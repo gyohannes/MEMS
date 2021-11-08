@@ -1,0 +1,47 @@
+<div class="header">
+  <h2>
+    Equipment Issue
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Org Unit/Facility</th>
+      <th>Quantity</th>
+      <th>Issued by</th>
+      <th>Issue date</th>
+      <th>Remark</th>
+      <th>GRV number</th>
+      <th>STV number</th>
+      <th>Model</th>
+      <th>Received by</th>
+      <th>Receiver phone number</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @equipment_issues.each do |equipment_issue| %>
+      <tr>
+        <td><%= equipment_issue.sub_distribution %></td>
+        <td><%= equipment_issue.sub_distribution.organization_unit %></td>
+        <td><%= equipment_issue.quantity %></td>
+        <td><%= equipment_issue.issued_by %></td>
+        <td><%= equipment_issue.issue_date %></td>
+        <td><%= equipment_issue.remark %></td>
+        <td><%= equipment_issue.GRV_number %></td>
+        <td><%= equipment_issue.STV_number %></td>
+        <td><%= equipment_issue.model %></td>
+        <td><%= equipment_issue.received_by %></td>
+        <td><%= equipment_issue.receiver_contact_address %></td>
+        <td>
+          <%= link_to 'Edit', edit_equipment_issue_path(equipment_issue), class: 'btn btn-primary' %>
+          <%= link_to 'Delete', equipment_issue, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

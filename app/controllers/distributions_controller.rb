@@ -10,6 +10,11 @@ class DistributionsController < ApplicationController
     @distributions = Distribution.all
   end
 
+  def hub_allocations
+    hub = EpsaHub.first
+    @requests = hub.new_requests
+  end
+
   # GET /distributions/1
   # GET /distributions/1.json
   def show
@@ -31,7 +36,9 @@ class DistributionsController < ApplicationController
   # POST /distributions
   # POST /distributions.json
   def create
+    epsa = Institution.find_by(name: 'EPSA')
     @distribution = Distribution.new(distribution_params)
+    @distribution.institution_id = epsa.try(:id)
     respond_to do |format|
       if @distribution.save
         format.html { redirect_to @distribution, notice: 'Distribution was successfully created.' }
@@ -75,6 +82,6 @@ class DistributionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def distribution_params
-      params.require(:distribution).permit(:equipment_name_id, :distribution_date, sub_distributions_attributes: [:id, :organization_unit_id, :number_of_equipment, :_destroy])
+      params.require(:distribution).permit(:institution_id, :equipment_name_id, :request_date, sub_distributions_attributes: [:id, :organization_unit_id, :epsa_hub_id, :quantity, :_destroy])
     end
 end

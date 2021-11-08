@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@request_status) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :procurement_request, label: 'Request By', disabled: true %>
+    <%= f.association :epsa_team, label: 'EPSA Team' %>
+    <div id="epsa_status">
+      <%= render partial: 'status' %>
+    </div>
+    <%= f.input :status_date, label: 'Date' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Save', class: 'btn btn-primary' %>
+  </div>
+<% end %>

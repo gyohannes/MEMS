@@ -5,12 +5,12 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="row">
-        <label class="col-sm-6">Organization Unit / Facility:</label>
+        <label class="col-sm-6">Organization Unit/Facility:</label>
         <%= @procurement_request.user.organization_unit %>
       </div>
 
       <div class="row">
-        <label class="col-sm-6">Requested by:</label>
+        <label class="col-sm-6">Request by:</label>
         <%= @procurement_request.user %>
       </div>
 
@@ -46,6 +46,7 @@
             to <%= @procurement_request.forwards.order('created_at DESC').first.organization_unit %>
         <% end %>
       </p>
+
       <% unless @procurement_request.status==Constants::PENDING %>
           <div class="row"><label class="col-sm-6"><%= @procurement_request.status %> by:</label> <%= @procurement_request.decided_user.organization_unit %></div>
           <div class="row"><label class="col-sm-6">Comment:</label> <%= @procurement_request.comment %></div>
@@ -55,7 +56,7 @@
       <table class="table">
         <tr>
           <th>Equipment</th>
-          <th>Specification</th>
+          <th>Spec</th>
           <th>Quantity</th>
         </tr>
         <% @procurement_request.procurement_request_equipments.each do |eq| %>
@@ -91,8 +92,25 @@
       </table>
       <% end %>
     </div>
-    <div class="col-sm-6 left_form">
+    <div class="col-sm-6">
+      <% if @procurement_request.status == Constants::OUT_SOURCED %>
+          <fieldset class="sub_form">
+            <legend>Status at EPSA</legend>
+            <table class="table">
+              <tr>
+                <th>Team</th>
+                <td><%= @procurement_request.request_statuses.order('created_at DESC').first.epsa_team rescue nil %></td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td><%= @procurement_request.request_statuses.order('created_at DESC').first.status rescue nil %></td>
+              </tr>
+            </table>
+            <%= link_to 'Update Status', edit_request_status_path(@procurement_request.request_statuses.order('created_at DESC').first), class: 'btn btn-primary' if can? :manage, RequestStatus %>
+          </fieldset>
+      <% end %>
       <% if can? :decision, @procurement_request and ([Constants::PENDING, Constants::FORWARDED].include?(@procurement_request.status)) %>
+          <fieldset class="sub_form">
           <%= simple_nested_form_for(@procurement_request, url: decision_procurement_request_path) do |f| %>
               <%= f.input :comment %>
               <%= f.input :status, collection: @actions, as: :radio_buttons, wrapper_html: {class: 'single_columned_list'} %>
@@ -109,10 +127,11 @@
               <hr/>
               <%= f.button :submit, 'Submit' %>
           <% end %>
+          </fieldset>
       <% end %>
     </div>
   </div>
   <hr/>
-  <%= link_to 'Back', procurement_requests_path %>
+  <%= link_to 'Back', url_for(:back) %>
   <%= link_to 'Edit', edit_procurement_request_path(@procurement_request), class: 'btn btn-primary' if can? :edit, @procurement_request and @procurement_request.status == Constants::PENDING  %>
 </div>

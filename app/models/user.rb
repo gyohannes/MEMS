@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  belongs_to :organization_unit
+  belongs_to :organization_unit, optional: true
   belongs_to :institution, optional: true
   belongs_to :department, optional: true
   belongs_to :store, optional: true
+  belongs_to :epsa_hub, optional: true
   has_many :maintenance_work_orders, dependent: :destroy
   has_many :maintenance_requests, dependent: :destroy
   has_many :training_requests, dependent: :destroy
@@ -19,6 +20,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :department_id, presence: true, if: :department_user
+  validates :institution_id, presence: true, if: :supplier_user
+  validates :organization_unit_id, presence: true, if: :org_unit_user
   validates :email, :first_name, :father_name, :grand_father_name, :role, presence: true
 
   def parent_unit
@@ -29,9 +32,18 @@ class User < ApplicationRecord
     end
   end
 
+  def supplier_user
+    role == Constants::SUPPLIER
+  end
+
+  def org_unit_user
+    [Constants::BIOMEDICAL_HEAD, Constants::BIOMEDICAL_ENGINEER].include?(role)
+  end
+
   def department_user
     role == Constants::DEPARTMENT
   end
+
   def is_role(given_role)
     role == given_role
   end
@@ -54,6 +66,10 @@ class User < ApplicationRecord
     ProcurementRequest.where('user_id in (?)', organization_unit.users.pluck(:id))
   end
 
+  def epsa_request_statuses
+    RequestStatus.joins(:procurement_request).where('organization_unit_id in (?)',
+                                                    organization_unit.sub_units.pluck(:id) << organization_unit_id)
+  end
   def incoming_procurement_requests(status=Constants::PENDING)
     ProcurementRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end
@@ -111,7 +127,7 @@ class User < ApplicationRecord
   end
 
   def parent_org_unit
-    organization_unit.parent_organization_unit
+    organization_unit.parent_organization_unit rescue nil
   end
 
   def load_equipment

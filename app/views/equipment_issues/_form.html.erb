@@ -1,0 +1,37 @@
+
+<%= simple_form_for(@equipment_issue) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+    <%= f.input :sub_distribution_id, as: :hidden %>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="row form-group">
+          <label class="col-sm-3">Equipment Name</label>
+          <div class="col-sm-9">
+            <span class="form-control"><%= f.object.sub_distribution.distribution.equipment_name %></span>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label class="col-sm-3">Org Unit/Facility</label>
+          <div class="col-sm-9">
+            <span class="form-control"><%= f.object.sub_distribution.organization_unit %></span>
+          </div>
+        </div>
+        <%= f.input :quantity %>
+        <%= f.input :issued_by %>
+        <%= f.input :issue_date, as: :string, input_html: {class: 'datepicker'} %>
+        <%= f.input :remark %>
+      </div>
+      <div class="col-sm-6 left_form">
+        <%= f.input :GRV_number, label: 'GRV Number' %>
+        <%= f.input :STV_number, label: 'STV Number' %>
+        <%= f.input :model %>
+        <%= f.input :received_by %>
+        <%= f.input :receiver_contact_address, label: 'Receiver Phone Number' %>
+      </div>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

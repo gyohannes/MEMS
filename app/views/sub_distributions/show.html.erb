@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Distribution:</strong>
+  <%= @sub_distribution.distribution %>
+</p>
+
+<p>
+  <strong>Organization unit:</strong>
+  <%= @sub_distribution.organization_unit %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @sub_distribution.quantity %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @sub_distribution.remark %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @sub_distribution.status %>
+</p>
+
+<p>
+  <strong>Epsa hub:</strong>
+  <%= @sub_distribution.epsa_hub %>
+</p>
+
+<%= link_to 'Edit', edit_sub_distribution_path(@sub_distribution) %> |
+<%= link_to 'Back', sub_distributions_path %>

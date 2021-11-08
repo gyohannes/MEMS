@@ -1,7 +1,9 @@
-<% if @role == Constants::DEPARTMENT %>
 <%= simple_fields_for :user,@user do |f|  %>
+    <% if @role == Constants::DEPARTMENT %>
         <%= f.input :department_id, collection: @departments %>
-<% end %>
+    <% elsif @role == Constants::HUB %>
+        <%= f.input :epsa_hub_id, label: 'Hub', collection: @hubs %>
+    <% end %>
 <% end %>
 
 <%= javascript_include_tag 'global'  %>

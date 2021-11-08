@@ -1,0 +1,31 @@
+<div class="header">
+  <h2>
+    EPSA Teams
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Accepts From</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @epsa_teams.each do |epsa_team| %>
+      <tr>
+        <td><%= epsa_team.name %></td>
+        <td><%= epsa_team.previous_team %></td>
+        <td>
+          <%= link_to 'Edit', edit_epsa_team_path(epsa_team) %> |
+          <%= link_to 'Delete', epsa_team, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<%= link_to 'Add EPSA Team', new_epsa_team_path, class: 'btn btn-primary' %>
+</div>

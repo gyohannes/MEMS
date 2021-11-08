@@ -26,8 +26,14 @@ class OrganizationUnit < ApplicationRecord
   has_many :spare_parts, dependent: :destroy
   has_many :inventories, through: :equipment
   validates :name, :code, :organization_unit_type, presence: true
+  has_many :sub_distributions
+  has_many :equipment_issues, through: :sub_distributions
 
   STANDARD_VS_AVAILABLE = [STANDARD='Standard', AVAILABLE='Available']
+
+  def new_equipment_deliveries
+    equipment_issues.where(status: nil)
+  end
 
   def ideal_vs_available(equipment_name,status)
     if status == STANDARD

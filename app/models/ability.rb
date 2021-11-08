@@ -45,6 +45,7 @@ class Ability
 
          cannot [:destroy,:edit], User
          can [:destroy, :edit], User, parent_unit: user.organization_unit_id
+         can [:destroy, :edit], User if user.super_admin?
          cannot :edit, Equipment
          can :edit, Equipment, organization_unit_id: user.organization_unit_id
 
@@ -61,6 +62,15 @@ class Ability
          can :manage, [Specification, Setting] if user.super_admin?
          cannot :destroy, [:equipment, OrganizationUnit]
          can :destroy, [:equipment, OrganizationUnit] if user.super_admin?
+         can :read, RequestStatus
+       end
+
+       if user.is_role(Constants::SUPPLIER)
+         can :read, ProcurementRequest
+         can :manage, RequestStatus
+         can [:create, :read, :load_departments], User
+         can :edit, User, institution_id: user.institution_id
+         can :edit, Distribution
        end
     #
     # The first argument to `can` is the action you are giving the user

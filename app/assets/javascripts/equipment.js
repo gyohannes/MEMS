@@ -16,10 +16,26 @@ $(function () {
                             $('#equipment').html(response)
                             $('.js-exportable').DataTable({
                                 responsive: true,
+                                colReorder: true,
                                 retrieve: true,
                                 bootstrap: true,
                                 dom: '<"html5buttons"B>lTfgtip',
-                                buttons: ['colvis', 'copy', 'excel']
+                                buttons: ['colvis',
+                                    {
+                                        extend: 'excelHtml5',
+                                        footer: true,
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        }
+                                    },
+                                    {
+                                        extend: 'copy',
+                                        footer: true,
+                                        exportOptions: {
+                                            columns: ':visible'
+                                        }
+                                    }
+                                ]
                             });
                         },
                         complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.

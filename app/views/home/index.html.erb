@@ -2,4 +2,6 @@
     <%= render 'dashboards/admin' %>
 <% elsif current_user.is_role(Constants::DEPARTMENT) %>
     <%= render 'dashboards/department' %>
+<% elsif current_user.is_role(Constants::SUPPLIER) %>
+    <%= render 'dashboards/institution' %>
 <% end %>

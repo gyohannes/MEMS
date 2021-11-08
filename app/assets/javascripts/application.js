@@ -13,8 +13,8 @@
 //= require maintenance_requests
 //= require calibration_requests
 //= require disposal_requests
-//= require maintenance_toolkit_requests
 //= require maintenances
+//= require request_statuses
 //= require jquery.minicolors
 //= require jquery.minicolors.simple_form
 //= require AdminBSBMaterialDesign/index

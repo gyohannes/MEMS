@@ -9,12 +9,20 @@ class ProcurementRequest < ApplicationRecord
   has_one_attached :attachment
   has_many :procurement_request_equipments, dependent: :destroy
   has_many :procurement_request_spare_parts, dependent: :destroy
+  has_many :request_statuses
 
   accepts_nested_attributes_for :forwards, allow_destroy: true
   accepts_nested_attributes_for :procurement_request_equipments, allow_destroy: true
   accepts_nested_attributes_for :procurement_request_spare_parts, allow_destroy: true
 
   validates :request_date, presence: true
+
+
+  def notify(og=nil, ins=nil, status=nil)
+      notification = notifications.build(name: user.organization_unit.try(:to_s) << " Procurement Request #{status} ",
+                                                   organization_unit_id: og.try(:id), institution_id: ins.try(:id))
+      notification.save
+  end
 
   def request_from
     if organization_unit_id?
@@ -30,6 +38,10 @@ class ProcurementRequest < ApplicationRecord
     elsif facility_id?
       return 'Health Facility'
     end
+  end
+
+  def to_s
+    user.organization_unit
   end
 
 end

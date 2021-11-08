@@ -22,7 +22,19 @@
         <label style="vertical-align: super">Logistics</label>
       </a>
       <ul class="dropdown-menu">
+        <li>
+          <%= link_to request_statuses_path do %>
+              <i class="material-icons">shopping_cart</i>
+              <label>Procurement Tracking</label>
+          <% end %>
+        </li>
 
+        <li>
+          <%= link_to distributions_path do %>
+              <i class="material-icons">local_shipping</i>
+              <label>Distribution Tracking</label>
+          <% end %>
+        </li>
         <li>
           <%= link_to receives_path do %>
               <i class="material-icons">add_shopping_cart</i>
@@ -118,7 +130,7 @@
             <li>
               <%= link_to organization_units_path do %>
                   <i class="material-icons">filter_list</i>
-                  <label>Organization Units/Facilities</label>
+                  <label>Organization Structure</label>
               <% end %>
             </li>
         <% end %>

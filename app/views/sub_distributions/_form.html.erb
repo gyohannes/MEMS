@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@sub_distribution) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :distribution %>
+    <%= f.association :organization_unit %>
+    <%= f.input :quantity %>
+    <%= f.input :remark %>
+    <%= f.input :status %>
+    <%= f.association :epsa_hub %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

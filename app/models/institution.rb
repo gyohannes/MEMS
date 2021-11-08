@@ -12,6 +12,13 @@ class Institution < ApplicationRecord
   has_many :maintenance_toolkit_requests
   has_many :users
   has_many :forwards, dependent: :destroy
+  has_many :epsa_teams
+  has_many :epsa_hubs
+  has_many :request_statuses, through: :epsa_teams
+  has_many :distributions
+  has_many :sub_distributions, through: :distributions
+
+  validates :name, presence: true
 
   scope :suppliers, -> { where(category: 'Supplier') }
   scope :local_representatives, -> { where(category: 'Local Representative') }
@@ -22,7 +29,13 @@ class Institution < ApplicationRecord
     self[:name] = name.titlecase  unless name.blank?
   end
 
-  validates :name, presence: true
+  def new_requests
+    request_statuses.where(epsa_status_id: nil)
+  end
+
+  def new_distribution_requests
+    distributions.joins(:sub_distributions).where(sub_distributions: {status: nil}).uniq
+  end
 
   def to_s
     name
