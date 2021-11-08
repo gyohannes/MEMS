@@ -26,7 +26,8 @@
       <%= link_to 'Add New User', new_user_path(type: 'supplier'), class: 'btn btn-primary' %>
   <% else %>
     <ul class="nav nav-tabs tab-nav-right" role="tablist">
-      <li role="presentation" class="active"><a href="#org_unit_users" data-toggle="tab">Users</a></li>
+      <li role="presentation" class="active"><a href="#org_unit_users" data-toggle="tab">Org Unit Users</a></li>
+      <li role="presentation"><a href="#other_users" data-toggle="tab">Other Users</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -66,6 +67,7 @@
           <% end %>
           </tbody>
         </table>
+        <%= link_to 'Add New User', new_user_path(type: 'supplier'), class: 'btn btn-primary' %>
       </div>
     </div>
   <% end %>
