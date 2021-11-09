@@ -63,6 +63,7 @@ class Ability
          cannot :destroy, [:equipment, OrganizationUnit]
          can :destroy, [:equipment, OrganizationUnit] if user.super_admin?
          can :read, RequestStatus
+         can :manage, Distribution if user.super_admin?
        end
 
        if user.is_role(Constants::SUPPLIER)
