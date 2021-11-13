@@ -11,7 +11,7 @@ class Forward < ApplicationRecord
   end
 
   def forward_to_epsa
-    if forwardable_type == 'ProcurementRequest' and institution.blank?
+    if forwardable_type == 'ProcurementRequest' and !institution.blank?
       RequestStatus.create(procurement_request_id: forwardable_id, epsa_team_id: EpsaTeam.entry_team.try(:id))
     end
   end
