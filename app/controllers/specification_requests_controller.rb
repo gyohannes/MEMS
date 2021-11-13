@@ -42,11 +42,6 @@ class SpecificationRequestsController < ApplicationController
 
   def decision
     @specification_request.update(specification_request_params)
-    if @specification_request.status == Constants::FORWARDED
-      n = @specification_request.notifications.build(name: @specification_request.equipment_name.to_s << ' Specification Request Forwarded',
-                                                   organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @specification_request, notice: "Specification request was successfully #{params[:specification_request][:status]}."
   end
 

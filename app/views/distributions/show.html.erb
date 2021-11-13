@@ -19,7 +19,7 @@
       <th>Quantity</th>
       <th>Status</th>
     </tr>
-    <% @distribution.sub_distributions.each do |sd| %>
+    <% @distribution.sub_distrs(current_user).each do |sd| %>
       <tr>
         <td><%= sd.organization_unit %></td>
         <td><%= sd.quantity %></td>

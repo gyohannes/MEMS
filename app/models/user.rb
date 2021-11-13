@@ -67,9 +67,14 @@ class User < ApplicationRecord
   end
 
   def epsa_request_statuses
-    RequestStatus.joins(:procurement_request).where('organization_unit_id in (?)',
-                                                    organization_unit.sub_units.pluck(:id) << organization_unit_id)
+    RequestStatus.joins(:procurement_request).where('user_id = ? or organization_unit_id in (?)',
+                                                    id, organization_unit.sub_units.pluck(:id) << organization_unit_id )
   end
+
+  def distributions
+    Distribution.joins(:sub_distributions).where('sub_distributions.organization_unit_id in (?)', organization_unit.sub_units.pluck('id') << organization_unit_id).uniq
+  end
+
   def incoming_procurement_requests(status=Constants::PENDING)
     ProcurementRequest.where('organization_unit_id = ? and status = ?', organization_unit_id, status)
   end

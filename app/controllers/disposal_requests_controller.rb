@@ -42,11 +42,6 @@ class DisposalRequestsController < ApplicationController
 
   def decision
     @disposal_request.update(disposal_request_params)
-    if @disposal_request.status == Constants::FORWARDED
-      n = @disposal_request.notifications.build(name: @disposal_request.equipment.to_s << ' Disposal Request Forwarded',
-                                                   organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @disposal_request, notice: "Disposal request was successfully #{params[:disposal_request][:status]}."
   end
 

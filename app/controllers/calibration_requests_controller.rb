@@ -44,11 +44,6 @@ class CalibrationRequestsController < ApplicationController
 
   def decision
     @calibration_request.update(calibration_request_params)
-    if @calibration_request.status == Constants::FORWARDED
-      n = @calibration_request.notifications.build(name: @calibration_request.equipment.to_s << ' Calibration Request Forwarded',
-                                                    organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @calibration_request, notice: "Calibration request was successfully #{params[:calibration_request][:status]}."
   end
 

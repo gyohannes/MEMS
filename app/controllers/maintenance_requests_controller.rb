@@ -45,11 +45,6 @@ class MaintenanceRequestsController < ApplicationController
 
   def decision
     @maintenance_request.update(maintenance_request_params)
-    if @maintenance_request.status == Constants::FORWARDED
-      n = @maintenance_request.notifications.build(name: @maintenance_request.equipment.try(:to_s) << ' Maintenance Request Forwarded',
-                                                organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @maintenance_request, notice: "Maintenance request was successfully #{params[:maintenance_request][:status]}."
   end
 

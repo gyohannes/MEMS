@@ -28,11 +28,8 @@ class ProcurementRequestsController < ApplicationController
   end
 
   def decision
-      @procurement_request.update(procurement_request_params)
-      @procurement_request.notify(params[:procurement_request][:forwards_attributes][0][:organization_unit_id],
-                                  params[:procurement_request][:forwards_attributes][0][:institution_id],
-                                  params[:procurement_request][:status])
-      redirect_to @procurement_request, notice: "Procurement request was successfully #{params[:procurement_request][:status]}."
+    @procurement_request.update(procurement_request_params)
+    redirect_to @procurement_request, notice: "Procurement request was successfully #{params[:procurement_request][:status]}."
   end
 
   # GET /procurement_requests/1

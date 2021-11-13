@@ -19,7 +19,7 @@
       <tr>
         <td><%= distribution.equipment_name %></td>
         <td><%= distribution.request_date.strftime("%B %d, %Y") %></td>
-        <td><%= distribution.total_quantity %></td>
+        <td><%= distribution.total_quantity(current_user) %></td>
         <td>
           <%= link_to 'Details', distribution, class: 'btn btn-primary' %>
         </td>

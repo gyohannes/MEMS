@@ -42,11 +42,6 @@ class InstallationRequestsController < ApplicationController
 
   def decision
     @installation_request.update(installation_request_params)
-    if @installation_request.status == Constants::FORWARDED
-      n = @installation_request.notifications.build(name: @installation_request.equipment_name.to_s << ' Installation Request Forwarded',
-                                                     organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @installation_request, notice: "Installation request was successfully #{params[:installation_request][:status]}."
   end
 

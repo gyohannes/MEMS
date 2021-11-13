@@ -44,11 +44,6 @@ class TrainingRequestsController < ApplicationController
 
   def decision
     @training_request.update(training_request_params)
-    if @training_request.status == Constants::FORWARDED
-      n = @training_request.notifications.build(name: @training_request.equipment_name.try(:to_s) << ' Training Request Forwarded',
-                                                organization_unit_id: current_user.parent_org_unit.try(:id))
-      n.save
-    end
     redirect_to @training_request, notice: "Training request was successfully #{params[:training_request][:status]}."
   end
 

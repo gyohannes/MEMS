@@ -25,7 +25,7 @@
         <td><%= request_status.created_at.strftime("%b %d, %Y") rescue nil %></td>
         <td><%= request_status.epsa_team %></td>
         <td><%= request_status.status %></td>
-        <td><%= request_status.status_date.strftime("%b %d, %Y") rescue nil %></td>
+        <td><%= request_status.created_at.strftime("%b %d, %Y") rescue nil %></td>
       </tr>
     <% end %>
   </tbody>

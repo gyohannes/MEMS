@@ -62,7 +62,7 @@ class Ability
          can :manage, [Specification, Setting] if user.super_admin?
          cannot :destroy, [:equipment, OrganizationUnit]
          can :destroy, [:equipment, OrganizationUnit] if user.super_admin?
-         can :read, RequestStatus
+         can [:create, :read], RequestStatus
          can :manage, Distribution if user.super_admin?
        end
 

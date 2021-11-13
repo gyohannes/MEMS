@@ -119,7 +119,7 @@
                     <%= ff.input :institution_id, label: "Out Sourced to", collection: @institutions %>
                   </div>
                   <div id="forward">
-                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: false %>
+                    <%= ff.input :organization_unit_id, label: 'Forward to', collection: @organization_units, include_blank: true %>
                   </div>
               <% end %>
               <%= f.association :decided_user, as: :hidden, input_html: {value: current_user.id} %>

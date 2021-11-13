@@ -17,13 +17,6 @@ class ProcurementRequest < ApplicationRecord
 
   validates :request_date, presence: true
 
-
-  def notify(og=nil, ins=nil, status=nil)
-      notification = notifications.build(name: user.organization_unit.try(:to_s) << " Procurement Request #{status} ",
-                                                   organization_unit_id: og.try(:id), institution_id: ins.try(:id))
-      notification.save
-  end
-
   def request_from
     if organization_unit_id?
       return organization_unit.to_s
