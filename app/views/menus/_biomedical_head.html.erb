@@ -12,15 +12,6 @@
     </a>
     <ul class="ml-menu">
 
-      <% if current_user.organization_unit.facility %>
-          <li>
-            <%= link_to current_user.organization_unit.model_equipment_list || new_model_equipment_list_path do %>
-                <i class="material-icons">store</i>
-                <span>Model Equipment List</span>
-            <% end %>
-          </li>
-
-      <% end %>
       <li>
         <%= link_to equipment_index_path do %>
             <i class="material-icons">devices</i>

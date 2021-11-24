@@ -60,6 +60,7 @@ class UsersController < BaseController
     @departments = current_user.organization_unit.departments rescue nil
     add_breadcrumb "Edit", :edit_user_path
     @role = @user.role
+    @user_type = @user.user_type
     unless @user.organization_unit.blank?
       @institutions = @user.organization_unit.institutions
     else
@@ -131,6 +132,6 @@ class UsersController < BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :father_name, :grand_father_name,
-                                   :department_id, :epsa_hub_id, :store_id, :organization_unit_id, :facility_id, :institution_id, :role)
+                                   :department_id, :epsa_hub_id, :store_id, :organization_unit_id, :user_type, :institution_id, :role)
     end
 end

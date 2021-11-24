@@ -51,7 +51,7 @@ class ReportsController < ApplicationController
 
   def spare_parts
     add_breadcrumb "Spare Parts Report", :reports_spare_parts_path
-    @spare_parts = current_user.organization_unit.spare_parts
+    @spare_parts = current_user.organization_unit.sub_spare_parts
     if request.post?
       @spare_parts = SparePart.search(params[:search][:organization_unit], params[:search][:equipment_name], params[:search][:spare_part_name],
                                          current_user, params[:search][:from], params[:search][:to])

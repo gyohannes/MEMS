@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
   def user_type
-    institution ? Constants::SUPPLIER : (organization_unit.facility==true ? Constants::FACILITY : 'Org Unit')
+    !institution.blank? ? Constants::SUPPLIER : 'Org Unit'
   end
 
   def from_type

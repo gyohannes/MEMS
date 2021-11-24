@@ -12,6 +12,7 @@
       <%= f.association :organization_unit, label: 'Organization Unit/Facility', collection: @org_units if @user_type == 'org_unit' %>
       <%= f.association :institution, collection: @institutions, label: 'Supplier' if @user_type == 'supplier' %>
       <%= f.input :role, collection: @roles %>
+      <%= f.input :user_type, as: :hidden %>
       <div id="department">
         <%= render partial: 'department' %>
       </div>

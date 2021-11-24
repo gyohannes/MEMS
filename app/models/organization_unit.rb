@@ -108,6 +108,10 @@ class OrganizationUnit < ApplicationRecord
     sub_units_and_groups + sub_units_and_groups.collect{|x| x.sub_units}.flatten
   end
 
+  def sub_spare_parts
+    spare_parts + sub_units.collect{|x| x.sub_spare_parts}.flatten
+  end
+
   def sub_institutions
     institutions + sub_units_and_groups.map { |x| x.sub_institutions }.flatten
   end

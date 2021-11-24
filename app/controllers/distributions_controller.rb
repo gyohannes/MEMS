@@ -7,7 +7,7 @@ class DistributionsController < ApplicationController
   # GET /distributions
   # GET /distributions.json
   def index
-    @distributions = current_user.distributions
+    @distributions = current_user.organization_unit ? current_user.distributions : Distribution.all
   end
 
   def hub_allocations
