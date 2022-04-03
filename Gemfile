@@ -19,6 +19,8 @@ gem 'cancancan', '~> 2.0'
 gem 'pg'
 gem "paperclip", "~> 6.0.0"
 gem "breadcrumbs_on_rails"
+gem 'activeadmin'
+
 # Jquery
 gem 'jquery-rails'
 

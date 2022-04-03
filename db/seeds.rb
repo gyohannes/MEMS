@@ -9,5 +9,6 @@ org_unit_type = OrganizationUnitType.create(name: 'Ministry')
 top_org_unit = OrganizationUnit.create(name: 'Ethiopian Federal Ministry of Health', code: 'FMOH',
                                        organization_unit_type_id: org_unit_type.id)
 
-User.create(organization_unit_id: top_org_unit.id,email: 'fmohhead@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)
+User.create(organization_unit_id: top_org_unit.id, first_name: 'Admin', father_name: 'Admin', grand_father_name: 'Admin', email: 'fmohhead@mems.com', password: 'admin123', role: Constants::BIOMEDICAL_HEAD)
 Status.create(name: 'Disposed', static: true, color: '#FF0000')
+AdminUser.create!(email: 'fmohhead@mems.com', password: 'admin123', password_confirmation: 'admin123')

@@ -46,6 +46,7 @@ class Ability
          cannot [:destroy,:edit], User
          can [:destroy, :edit], User, parent_unit: user.organization_unit_id
          can [:destroy, :edit], User if user.super_admin?
+         can :manage, Backup if user.super_admin?
          cannot :edit, Equipment
          can :edit, Equipment, organization_unit_id: user.organization_unit_id
 

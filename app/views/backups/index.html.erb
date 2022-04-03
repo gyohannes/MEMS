@@ -1,0 +1,38 @@
+<div class="header">
+  <h2>
+    Backups
+  </h2>
+</div>
+<div class="body table-responsive">
+  <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+      <thead>
+      <tr>
+        <th>Backup date</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @backups.each do |backup| %>
+          <tr>
+            <td><%= backup.backup_date.strftime("%B %d, %Y") %></td>
+            <td>
+              <% if backup.attachment.attached? %>
+                  <%= link_to url_for(backup.attachment), class: 'btn btn-success' do %>
+                      <i class="fas fa-fw fa-download"></i>
+                      <span>Download(<%= (backup.attachment.byte_size.to_f/(1024*1000)).round(4) %> MB)</span>
+                  <% end %>
+              <% end %>
+            </td>
+            <td><%= link_to 'Delete', backup, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <hr/>
+    <%= simple_form_for(@backup) do |f| %>
+        <%= f.input :backup_date, as: :hidden %>
+        <%= f.button :submit, 'Backup Database', disable_with: 'Loading...', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
