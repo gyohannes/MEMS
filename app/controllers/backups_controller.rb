@@ -11,9 +11,8 @@ class BackupsController < InheritedResources::Base
   def create
     system('rake db:dump')
     @backup = Backup.new(backup_params)
-
       if @backup.save
-        @backup.attachment.attach(io: File.open("/tmp/swmoss_db.dump"), filename: "swmoss_db.dump")
+        @backup.attachment.attach(io: File.open("/tmp/memis.dump"), filename: "memis.dump")
         redirect_to backups_path, notice: 'Backup created Successfully'
       end
   end
