@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'devise'
-gem 'simple_form', '~> 4.0', '>= 4.0.1'
+gem 'simple_form', '~> 5.0'
 gem 'country_select'
 gem "nested_form"
 gem "simple_calendar", "~> 2.0"
