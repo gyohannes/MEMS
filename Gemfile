@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
@@ -20,6 +19,10 @@ gem 'pg'
 gem "paperclip", "~> 6.0.0"
 gem "breadcrumbs_on_rails"
 gem 'activeadmin'
+gem 'grape'
+gem 'grape_on_rails_routes'  #It makes it easy to read and write routes created by the Grape API.
+gem 'grape-entity', '~> 0.9.0'
+gem 'draper'
 
 # Jquery
 gem 'jquery-rails'
@@ -62,6 +65,9 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rspec-rails', '~> 5.0.0'
+  gem 'factory_bot_rails'
+  gem 'factory_girl', '~> 4.9'
 end
 
 group :development do

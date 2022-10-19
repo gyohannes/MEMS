@@ -165,9 +165,9 @@ class User < ApplicationRecord
     return users
   end
 
-  def full_name
-    [first_name, father_name, grand_father_name].join(' ')
-  end
+  #def full_name
+  #  [first_name, father_name, grand_father_name].join(' ')
+  #end
 
   def to_s
     full_name
