@@ -7,9 +7,6 @@ module API
     module V1
         class Devices < Grape::API
             rescue_from :all
-            before do
-                header 'abc', 'test header'
-            end
             helpers do
                 def logger
                   API::V1.logger
@@ -19,8 +16,7 @@ module API
             resources :devices do
                 desc 'Returns all devices'
                 get do
-                    #devices = Equipment.all.limit(10)
-                    #present devices, with: API::Entities::Device
+                    Equipment.all
                 end
 
                 desc "Returns a device"
@@ -67,15 +63,6 @@ module API
                 end
                 delete ':id' do
                     Equipment.find(params[:id]).destroy
-                end
-                
-                params do
-                    optional :json, type: JSON do
-                        optional :num, type: Integer, values: [1, 2, 3]
-                    end
-                end
-                post 'get_params' do
-                    request.body
                 end
             end
         end
